@@ -1,0 +1,2 @@
+advent-of-code-data>=0.3
+rich>=10
