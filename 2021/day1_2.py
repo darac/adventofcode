@@ -103,6 +103,8 @@ class ThreeMeasurementWindow:
         """
         if len(self.measurements) == 3:
             return sum(self.measurements)
+        else:
+            return None
 
 
 windows = []

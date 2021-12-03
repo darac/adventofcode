@@ -77,8 +77,9 @@ def common_bit(crit: str, position: int, data: Iterable) -> str:
         counts[report[position]] += 1
     if crit == "most":
         return "0" if counts["0"] > counts["1"] else "1"
-    elif crit == "least":
+    if crit == "least":
         return "0" if counts["0"] <= counts["1"] else "1"
+    return None
 
 
 def filter_reports(crit: str, data: Iterable) -> str:
