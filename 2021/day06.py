@@ -117,9 +117,10 @@ def main(input: str, part: str) -> int:
         #         else:
         #             school[i] -= 1
         #     print(f"After {day:2} days: {len(school)}")
-        for i in range(0, 9):
-            # Each bucket of population counts down one
-            school[i - 1] = school[i]
+        school = Counter([school[x + 1] for x in range(-1, 8)])
+        # for i in range(0, 9):
+        #     # Each bucket of population counts down one
+        #     school[i - 1] = school[i]
 
         # school[-1] now holds the number of fish who spawn
         spawn = school[-1]
