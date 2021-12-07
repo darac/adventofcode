@@ -86,6 +86,7 @@ class ThreeMeasurementWindow:
     Holds the first three Measurements added.
     When asked, will return the sum of the measurements held.
     """
+
     def __init__(self) -> None:
         self.measurements = []
 
@@ -103,8 +104,7 @@ class ThreeMeasurementWindow:
         """
         if len(self.measurements) == 3:
             return sum(self.measurements)
-        else:
-            return None
+        return None
 
 
 windows = []

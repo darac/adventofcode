@@ -229,7 +229,7 @@ class BingoBoard:
         """
         column_checks = [0, 0, 0, 0, 0]
         for row in self.board:
-            row_check = all([x.test() for x in row])
+            row_check = all(x.test() for x in row)
             if row_check:
                 # This row is all lit up
                 self._has_won = True
@@ -237,7 +237,7 @@ class BingoBoard:
             for colnum, cell in enumerate(row):
                 if cell.test():
                     column_checks[colnum] += 1
-        if any([x == 5 for x in column_checks]):
+        if any(x == 5 for x in column_checks):
             self._has_won = True
             raise Bingo(self)
 

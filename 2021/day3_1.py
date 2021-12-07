@@ -57,7 +57,7 @@ from rich.progress import track
 COUNTS = {}
 for report in track(Puzzle(year=2021, day=3).input_data.splitlines()):
     for i, c in enumerate(report):
-        if i not in COUNTS.keys():
+        if i not in COUNTS:
             COUNTS[i] = {"0": 0, "1": 0}
         COUNTS[i][c] += 1
 
