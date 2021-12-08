@@ -1,4 +1,4 @@
 # adventofcode
 Storage for my AdventOfCode code
 
-![CodeQL](/workflows/CodeQL/badge.svg)
+![CodeQL](https://github.com/darac/adventofcode/workflows/CodeQL/badge.svg)
