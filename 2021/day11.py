@@ -14,6 +14,13 @@ from rich import print
 def get_neighbours(r: int, c: int, rows: int, cols: int) -> list[tuple[int, int]]:
     """Return a list of neighbouring locations
 
+    For each of the cardinal points, we create a tuple of coordinates.
+    Each coordinate is constrained to the size of the array (for example,
+    the point to the left of an item in column 0 is at "column - 1 or else 0")
+    We also use a "list(set(...))" construction to only return the unique set,
+    because, at the edge, many of these constraints will mean the neighbours map
+    to the same edge point.
+
     Args:
         r (int): The row of the point to find neighbours for
         c (int): The column of the point to find neighbours for
