@@ -41,4 +41,4 @@ jobs:
 
             - name: Smoke test docker image
               run: |
-                  docker run --rm adventofcode:test 10
+                  docker run --rm adventofcode:test -y 2022
