@@ -6,5 +6,6 @@
     "python.formatting.blackArgs": [
         "--target-version",
         "py310"
-    ]
+    ],
+    "editor.formatOnSave": true
 }
