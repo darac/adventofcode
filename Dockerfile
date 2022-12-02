@@ -25,5 +25,5 @@ COPY --from=poetry /app /app
 ENV PATH="/app/.venv/bin:$PATH"
 
 # Run the executable
-ENTRYPOINT [ "aoc" ]
+ENTRYPOINT [ "poetry", "run", "aoc" ]
 CMD [ "-y", "2022" ]
