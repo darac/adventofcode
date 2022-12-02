@@ -41,6 +41,6 @@ jobs:
 
             - name: Smoke test docker image
               run: |
-                  docker run --rm adventofcode:test -y 2022
+                  docker run --rm -e AOC_SESSION adventofcode:test -y 2022
               env:
                   AOC_SESSION: ${{ secrets.AOC_SESSION }}
