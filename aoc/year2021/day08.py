@@ -164,8 +164,7 @@ from rich import print
 
 # from rich import print
 
-TEST_INPUT = \
-    """be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb | fdgacbe cefdb cefbgd gcbe
+TEST_INPUT = """be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb | fdgacbe cefdb cefbgd gcbe
 edbfga begcd cbg gc gcadebf fbgde acbgfd abcde gfcbed gfec | fcgedb cgb dgebacf gc
 fgaebd cg bdaec gdafb agbcfd gdcbef bgcad gfac gcb cdgabef | cg cg fdcagb cbg
 fbegcd cbd adcefb dageb afcb bc aefdc ecdab fgdeca fcdbega | efabcd cedba gadfec cb
@@ -205,29 +204,28 @@ def main(input: str, part: str) -> int:
         patterns, output = [x.split() for x in line.split("|")]
         lengths = {len(s): set(s) for s in patterns}
 
-        for digit in map(set, output):
-            match len(digit), len(digit & lengths[4]), len(
-                digit & lengths[2]
-            ):  # Mask with known digits
-                case 2, _, _:
+        for digit in map(set, output):  # type: ignore
+            # Mask with known digits
+            match (len(digit), len(digit & lengths[4]), len(digit & lengths[2])):
+                case (2, _, _):
                     retstr += "1"
-                case 3, _, _:
+                case (3, _, _):
                     retstr += "7"
-                case 4, _, _:
+                case (4, _, _):
                     retstr += "4"
-                case 7, _, _:
+                case (7, _, _):
                     retstr += "8"
-                case 5, 2, _:
+                case (5, 2, _):
                     retstr += "2"
-                case 5, 3, 1:
+                case (5, 3, 1):
                     retstr += "5"
-                case 5, 3, 2:
+                case (5, 3, 2):
                     retstr += "3"
-                case 6, 4, _:
+                case (6, 4, _):
                     retstr += "9"
-                case 6, 3, 1:
+                case (6, 3, 1):
                     retstr += "6"
-                case 6, 3, 2:
+                case (6, 3, 2):
                     retstr += "0"
                 case _:
                     retstr += "?"

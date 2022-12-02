@@ -48,7 +48,9 @@ print("[green]Captain:[/green] Helmsman! Prepare to recieve orders!")
 POSITION = 0
 DEPTH = 0
 
-for command, count in [n.split() for n in Puzzle(year=2021,day=2).input_data.splitlines()]:
+for command, count in [
+    n.split() for n in Puzzle(year=2021, day=2).input_data.splitlines()
+]:
     print(f"[green]Captain:[/green] {command} {count}")
     match command:
         case "forward":
@@ -69,4 +71,6 @@ for command, count in [n.split() for n in Puzzle(year=2021,day=2).input_data.spl
 
 print("[green]Captain:[/green] Helmsman, Report Position!")
 print(f"[green]Helmsman:[/green] Sir! Forward {POSITION}, Depth {DEPTH}, Sir!")
-print(f"[green]Captain:[/green] Thank you, sailor. Yeoman, record that as {POSITION * DEPTH}!")
+print(
+    f"[green]Captain:[/green] Thank you, sailor. Yeoman, record that as {POSITION * DEPTH}!"
+)

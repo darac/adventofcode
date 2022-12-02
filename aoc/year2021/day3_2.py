@@ -63,12 +63,13 @@ rating and CO2 scrubber rating, then multiply them together. What is the life su
 rating of the submarine? (Be sure to represent your answer in decimal, not binary.)
 """
 
-from typing import Iterable
+from typing import Sized
+
 from aocd.models import Puzzle
 from rich import print
 
 
-def common_bit(crit: str, position: int, data: Iterable) -> str:
+def common_bit(crit: str, position: int, data: list[str]) -> str:
     """
     Finds either the "most" or the "least" common bit in a specific position.
     """
@@ -79,10 +80,10 @@ def common_bit(crit: str, position: int, data: Iterable) -> str:
         return "0" if counts["0"] > counts["1"] else "1"
     if crit == "least":
         return "0" if counts["0"] <= counts["1"] else "1"
-    return None
+    return ""
 
 
-def filter_reports(crit: str, data: Iterable) -> str:
+def filter_reports(crit: str, data: list[str]) -> str:
     """
     Filters the reports according to the criteria specified above
     """

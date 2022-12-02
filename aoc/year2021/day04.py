@@ -93,6 +93,7 @@ score be?
 
 import logging
 import sys
+from typing import Optional
 
 from aocd import submit
 from aocd.models import Puzzle
@@ -142,7 +143,7 @@ class Bingo(Exception):
 class BingoSquare:
     """Implements a square of the bingo board"""
 
-    def __init__(self, value: int = None):
+    def __init__(self, value: Optional[int] = None):
         """Init Method
 
         Args:
@@ -163,7 +164,7 @@ class BingoSquare:
         else:
             LOG.warning("Can't set a bingo square twice")
 
-    def get(self) -> int:
+    def get(self) -> Optional[int]:
         """Returns the number in the square
 
         Returns:
@@ -171,7 +172,7 @@ class BingoSquare:
         """
         return self.value
 
-    def test(self, value: int = None) -> bool:
+    def test(self, value: Optional[int] = None) -> bool:
         """Test the value against a call. Latches TRUE
 
         Args:
@@ -247,7 +248,7 @@ class BingoBoard:
         Returns:
             bool: True if this board has ever won
         """
-        return self._has_won
+        return bool(self._has_won)
 
     def test(self, value: int):
         """Check all cells in this board against the call.
@@ -285,12 +286,13 @@ class BingoBoard:
         Returns:
             int: Score
         """
-        value = 0
+        assert self.last_call is not None
+        value = 0  # type: int
         for row in self.board:
             for cell in row:
                 if not cell.test():
                     value += cell.get()
-        return value * self.last_call
+        return int(value * self.last_call)
 
 
 def parse_input(input: str) -> dict:
@@ -304,9 +306,9 @@ def parse_input(input: str) -> dict:
     """
     draws = [int(n) for n in input.splitlines()[0].split(",")]
     print(f"Got {len(draws)} draws")
-    boards = []
+    boards = []  # type: list[BingoBoard]
 
-    this_board = None
+    this_board = None  # type: Optional[BingoBoard]
     for line in input.splitlines()[1:]:
         logging.debug("Reading Row >>%s<<", line)
         if line == "":
@@ -315,6 +317,7 @@ def parse_input(input: str) -> dict:
                 boards.append(this_board)
             this_board = BingoBoard(board_id=len(boards))
         else:
+            assert this_board is not None
             this_board.load_row(line.split())
     if this_board is not None:
         print(this_board.as_table())
@@ -385,6 +388,7 @@ if __name__ == "__main__":
             if DEBUG:
                 live.update(generate_table(data["boards"]))
                 input("Press enter to continue")
+    assert LAST_BOARD is not None
     print(LAST_BOARD.as_table())
     print(f"Score: {LAST_BOARD.score()}")
     if not SUBMITTED_B and not DEBUG:

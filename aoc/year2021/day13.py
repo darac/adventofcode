@@ -129,7 +129,7 @@ if __name__ == "__main__":
     np.set_printoptions(
         linewidth=os.get_terminal_size()[0],
         formatter=dict(bool=lambda b: "#" if b else "."),
-        threshold=os.get_terminal_size()[0] / 4,
+        threshold=int(os.get_terminal_size()[0] / 4),
     )
 
     TEST_INPUT = """6,10

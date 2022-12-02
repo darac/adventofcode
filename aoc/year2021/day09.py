@@ -83,12 +83,11 @@ above example, this is 9 * 14 * 9 = 1134.
 What do you get if you multiply together the sizes of the three largest
 basins?"""
 
-from aocd.models import Puzzle
-from aocd import submit
-from rich import print
-
-import pandas as pd
 import numpy as np
+import pandas as pd
+from aocd import submit
+from aocd.models import Puzzle
+from rich import print
 
 
 def get_neighbours(
@@ -182,7 +181,7 @@ def main(input: str, part: str) -> int:
     print(data)
     basins = sorted([flood(data, low_point, []) for low_point in low_points])
     print(f"Largest basins: {basins[-3:]} -> {np.prod(basins[-3:])}")
-    return np.prod(basins[-3:])
+    return int(np.prod(basins[-3:]))
 
 
 if __name__ == "__main__":

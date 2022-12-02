@@ -76,7 +76,7 @@ def base_alphabet_to_10(letters):
     """Convert an alphabet number to its decimal representation"""
 
     return sum(
-        (ord(letter) - A_UPPERCASE + 1) * ALPHABET_SIZE ** i
+        (ord(letter) - A_UPPERCASE + 1) * ALPHABET_SIZE**i
         for i, letter in enumerate(reversed(letters.upper()))
     )
 
@@ -88,7 +88,7 @@ class ThreeMeasurementWindow:
     """
 
     def __init__(self) -> None:
-        self.measurements = []
+        self.measurements = []  # type: list[int]
 
     def measure(self, val: int):
         """
@@ -104,7 +104,7 @@ class ThreeMeasurementWindow:
         """
         if len(self.measurements) == 3:
             return sum(self.measurements)
-        return None
+        return 0
 
 
 windows = []

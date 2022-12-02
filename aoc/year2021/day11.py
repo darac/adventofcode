@@ -3,7 +3,7 @@
 --- Day 11: Dumbo Octopus ---
 """
 
-from typing import Union
+from typing import Optional, Union
 
 import numpy as np
 from aocd import submit
@@ -47,7 +47,7 @@ def get_neighbours(r: int, c: int, rows: int, cols: int) -> list[tuple[int, int]
     )
 
 
-def run_step(data: np.ndarray, step: int, part: str) -> Union[int, list[int]]:
+def run_step(data: np.ndarray, step: int, part: str) -> list[int]:
     """Runs a "step".
 
     - First, the energy level of each octopus increases by 1.
@@ -81,7 +81,7 @@ def run_step(data: np.ndarray, step: int, part: str) -> Union[int, list[int]]:
         flashers = data > 9
         phase_flashes.append(np.count_nonzero(flashers))
         # Flashed octipi cause their neighbours to increase by one
-        with np.nditer(data, flags=["multi_index"], op_flags=["readwrite"]) as it:
+        with np.nditer(data, flags=["multi_index"], op_flags=[["readwrite"]]) as it:
             for _ in it:
                 coord = it.multi_index
                 if flashers[coord] and not flashed[coord]:
@@ -96,11 +96,11 @@ def run_step(data: np.ndarray, step: int, part: str) -> Union[int, list[int]]:
         print(f"After Step {step}:")
         print(data)
     if part in ["training", "a"]:
-        return np.count_nonzero(flashed)
+        return [np.count_nonzero(flashed)]
     return phase_flashes
 
 
-def main(input: str, part: str) -> int:
+def main(input: str, part: str) -> Optional[int]:
     """Calculates the solution
 
     Args:
@@ -115,11 +115,11 @@ def main(input: str, part: str) -> int:
     num_flashes = 0
     if part == "training":
         for step in range(1, 3):
-            num_flashes += run_step(data, step, part)
+            num_flashes += run_step(data, step, part)[0]
         return num_flashes
     if part == "a":
         for step in range(100):
-            num_flashes += run_step(data, step, part)
+            num_flashes += run_step(data, step, part)[0]
         return num_flashes
     if part == "b":
         step = 1
@@ -133,6 +133,7 @@ def main(input: str, part: str) -> int:
                     )
                     return step
             step += 1
+    return None
 
 
 if __name__ == "__main__":
