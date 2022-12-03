@@ -2,8 +2,6 @@
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
-[tool]
-
 [tool.black]
 target-version = ["py310"]
 
@@ -24,8 +22,8 @@ warn_unused_configs = true
 files = ["aoc/"]
 
 [tool.poetry]
-name = "adventofcode"
-version = "2022"
+name = "aoc"
+version = "2022.03"
 description = "darac's solutions for htttp://adventofcode.com"
 authors = ["Paul Saunders <darac+github@darac.org.uk>"]
 readme = "README.md"
@@ -51,9 +49,10 @@ pre-commit = "^2.20.0"
 pytest = "^7.2.0"
 isort = ">=5.0.0"
 toml-sort = "^0.20.1"
+bpython = "^0.23"
 
 [tool.poetry.plugins."adventofcode.user"]
-darac = "aoc:solve"
+darac_aoc = "aoc:solve"
 
 [tool.pytest]
 testpaths = "test/"

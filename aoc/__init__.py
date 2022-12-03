@@ -8,7 +8,7 @@ years and days.
 import importlib
 from typing import Tuple
 
-__version__ = 2022
+__version__ = 2022.03
 
 
 def solve(year: int, day: int, data: str) -> Tuple[int, int]:

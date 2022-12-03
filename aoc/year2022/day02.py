@@ -1,5 +1,6 @@
 #!env python
-"""--- Day 2: Rock Paper Scissors ---
+"""
+--- Day 2: Rock Paper Scissors ---
 
 The Elves begin to set up camp on the beach. To decide whose tent gets to
 be closest to the snack storage, a giant Rock Paper Scissors tournament is
@@ -102,7 +103,6 @@ C Z
 
 
 def test_solve_a(example_data):
-
     if example_data.get("a") is not None:
         assert solve(input=example_data["input"], part="a") == example_data["a"]
 
