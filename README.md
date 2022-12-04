@@ -3,8 +3,8 @@ Storage for my AdventOfCode solutions
 
 ![GitHub branch checks state](https://img.shields.io/github/checks-status/darac/adventofcode/main)
 [![CodeQL](https://github.com/darac/adventofcode/workflows/CodeQL/badge.svg)](https://github.com/darac/adventofcode/security/code-scanning)
-![](https://img.shields.io/badge/day%20📅-22-blue)
-![](https://img.shields.io/badge/stars%20⭐-34-yellow)
+![](https://img.shields.io/badge/day%20📅-4-blue)
+![](https://img.shields.io/badge/stars%20⭐-8-yellow)
 
 ## Setup
 ```sh
