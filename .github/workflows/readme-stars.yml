@@ -18,6 +18,13 @@ jobs:
                   userId: 1594870
                   leaderboardId: 967783
                   sessionCookie: ${{ secrets.AOC_SESSION }}
+            - name: AoC-badges
+              uses: J0B10/aoc-badges-action@v3.0.0
+              with:
+                  userid: 1594870
+                  session: ${{ secrets.AOC_SESSION }}
+                  leaderboard: "https://adventofcode.com/2022/leaderboard/private/view/967783.json" # The url of the leaderboard from witch the data is fetched. Typically your private leaderboard.
+
             - uses: stefanzweifel/git-auto-commit-action@v4
               with:
                   commit_message: Update README stars
