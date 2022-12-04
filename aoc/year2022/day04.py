@@ -62,7 +62,7 @@ this example, there are 2 such pairs.
 In how many assignment pairs does one range fully contain the other?
 """
 import sys
-from typing import Optional
+from typing import Literal, Optional
 
 import pytest
 from parse import compile
@@ -102,18 +102,18 @@ def visualise(low: int, high: int, upper: int, char: str = "+") -> str:
     return output
 
 
-def solve(input: str, part=str) -> Optional[int]:
+def solve(input: str, part: Literal["a", "b"]) -> Optional[int]:
     count = 0
     parser = compile("{:d}-{:d},{:d}-{:d}")
     for line in input.splitlines():
         results = parser.parse(line)
         if results:
-            a_low, a_high, b_low, b_high = parser.parse(line)
+            a_low, a_high, b_low, b_high = parser.parse(line)  # type: ignore
             o_low = o_high = 0
             assert a_low <= a_high, "Whoops, Pairs are not sorted"
             assert b_low <= b_high, "Whoops, Pairs are not sorted"
-            # print(visualise(a_low, a_high, max(a_high, b_high), "A"))
-            # print(visualise(b_low, b_high, max(a_high, b_high), "B"))
+            print(visualise(a_low, a_high, max(a_high, b_high), "A"))
+            print(visualise(b_low, b_high, max(a_high, b_high), "B"))
             if part == "a":
                 if (a_low >= b_low and a_high <= b_high) or (
                     b_low >= a_low and b_high <= a_high
@@ -128,11 +128,11 @@ def solve(input: str, part=str) -> Optional[int]:
                     o_low = max(a_low, b_low)
                     o_high = min(a_high, b_high)
                     count += 1
-            # print(
-            #     visualise(o_low, o_high, max(a_high, b_high), "O"),
-            #     "<--" if o_low != o_high else "",
-            # )
-            # print("\n")
+            print(
+                visualise(o_low, o_high, max(a_high, b_high), "O"),
+                "<--" if o_low != o_high else "",
+            )
+            print("\n")
 
     return count
 

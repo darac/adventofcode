@@ -13,10 +13,10 @@ FROM python as poetry
 ENV POETRY_HOME=/opt/poetry
 ENV POETRY_VIRTUALENVS_IN_PROJECT=true
 ENV PATH="$POETRY_HOME/bin:$PATH"
-RUN python -c 'from urllib.request import urlopen; print(urlopen("https://install.python-poetry.org").read().decode())' | python -
+RUN python3 -c 'from urllib.request import urlopen; print(urlopen("https://install.python-poetry.org").read().decode())' | python3 -
 COPY . ./
-RUN poetry build
-RUN poetry install --no-interaction --no-ansi -vvv
+RUN ${POETRY_HOME}/bin/poetry build
+RUN ${POETRY_HOME}/bin/poetry install --no-interaction --no-ansi -vvv
 
 
 FROM python AS runtime
@@ -26,5 +26,5 @@ COPY --from=poetry /app /app
 ENV PATH="/app/.venv/bin:$PATH"
 
 # Run the executable
-ENTRYPOINT [ "poetry", "run", "aoc" ]
+ENTRYPOINT [ "${POETRY_HOME}/bin/poetry", "run", "aoc" ]
 CMD [ "-y", "2022" ]
