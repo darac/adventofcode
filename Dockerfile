@@ -18,13 +18,8 @@ COPY . ./
 RUN ${POETRY_HOME}/bin/poetry build
 RUN ${POETRY_HOME}/bin/poetry install --no-interaction --no-ansi -vvv
 
-
-FROM python AS runtime
-
-# Copy virtual env from python-deps stage
-COPY --from=poetry /app /app
 ENV PATH="/app/.venv/bin:$PATH"
 
 # Run the executable
-ENTRYPOINT [ "${POETRY_HOME}/bin/poetry", "run", "aoc" ]
+ENTRYPOINT [ "/opt/poetry/bin/poetry", "run", "aoc" ]
 CMD [ "-y", "2022" ]
