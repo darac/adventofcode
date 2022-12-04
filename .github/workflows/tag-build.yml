@@ -14,13 +14,13 @@ jobs:
             - uses: actions/checkout@v2
             - name: Get tag name from date
               id: tag_name
-              run: echo "::set-output name=date::$(date +'%y.%d')"
+              run: echo "date=$(date +'%Y.%d')" >> $GITHUB_OUTPUT
             - name: Bump version and push tag
               id: tag_version
               uses: mathieudutour/github-tag-action@v6.1
               with:
                   github_token: ${{ secrets.GITHUB_TOKEN }}
-                  custom_tag: v${{ steps.tag_name.outputs.date }}
+                  custom_tag: ${{ steps.tag_name.outputs.date }}
             - name: Create a GitHub release
               uses: ncipollo/release-action@v1
               with:
