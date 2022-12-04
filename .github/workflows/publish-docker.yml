@@ -2,7 +2,8 @@ name: Publish docker image
 
 on:
     push:
-        tags: "*"
+        tags:
+            - "*"
 
 jobs:
     docker:
