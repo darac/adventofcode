@@ -6,12 +6,13 @@ years and days.
 """
 
 import importlib
+import os
 from typing import Tuple
 
 __version__ = 2022.03
 
 
-def solve(year: int, day: int, data: str) -> Tuple[int, int]:
+def solve(year: int, day: int, data: str) -> Tuple:
     """
     Finds today's solver, and runs it twice; once for part a and once for part b.
     The results are combined and returned to aocd-runner for submission.
@@ -19,7 +20,7 @@ def solve(year: int, day: int, data: str) -> Tuple[int, int]:
     solver_name = f"aoc.year{year:4d}.day{day:02d}"
     solver = importlib.import_module(solver_name)
 
-    a = solver.solve(input=data, part="a")
-    b = solver.solve(input=data, part="b")
+    a = solver.solve(input=data, part="a", runner=True)
+    b = solver.solve(input=data, part="b", runner=True)
 
     return a, b

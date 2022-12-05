@@ -16,7 +16,6 @@ poetry run pre-commit install -t pre-commit
 poetry run pre-commit install -t pre-push
 ```
 
-## Status
 <!--- advent_readme_stars table --->
 ## 2022 Results
 

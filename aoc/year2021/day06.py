@@ -83,6 +83,7 @@ After 256 days in the example above, there would be a total of 26984457539
 lanternfish!"""
 
 from collections import Counter
+from typing import Literal, Optional
 
 from aocd import submit
 from aocd.models import Puzzle
@@ -94,8 +95,8 @@ PUZZLE = Puzzle(year=2021, day=6)
 INPUT = PUZZLE.input_data
 
 
-def main(input: str, part: str) -> int:
-    """Calculates the number of Landernfish
+def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional[int]:
+    """Calculates the number of Lanternfish
 
     Args:
         input (str): Puzzle Input
@@ -107,7 +108,8 @@ def main(input: str, part: str) -> int:
     school = Counter({-1: 0, 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0})
     for fish in [int(n) for n in input.split(",")]:
         school[fish] += 1
-    print(f"Initial state: {school}")
+    if not runner:
+        print(f"Initial state: {school}")
     days = 80 if part == "a" else 256
     for day in track(range(days)):
         #     for i in range(len(school)):
@@ -133,24 +135,25 @@ def main(input: str, part: str) -> int:
 
         # Finally, zero out the holding cell
         school[-1] = 0
-        print(f"After {day:2} days: {school.total()}")
+        if not runner:
+            print(f"After {day:2} days: {school.total()}")
 
     return school.total()
 
 
 if __name__ == "__main__":
-    RESULT = main(TEST_INPUT, "a")
+    RESULT = solve(TEST_INPUT, "a")
     print(f"Result (Part A): {RESULT}")
     assert RESULT == 5934
 
-    RESULT = main(TEST_INPUT, "b")
+    RESULT = solve(TEST_INPUT, "b")
     print(f"Result (Part B): {RESULT}")
     assert RESULT == 26984457539
 
-    RESULT = main(INPUT, "a")
+    RESULT = solve(INPUT, "a")
     print(f"Result (Part A): {RESULT}")
     submit(RESULT, year=2021, day=6, part="a")
 
-    RESULT = main(INPUT, "b")
+    RESULT = solve(INPUT, "b")
     print(f"Result (Part B): {RESULT}")
     submit(RESULT, year=2021, day=6, part="b")

@@ -103,7 +103,7 @@ What is the sum of the priorities of those item types?
 """
 
 import sys
-from typing import Optional
+from typing import Literal, Optional
 
 import pytest
 from rich import print
@@ -138,7 +138,7 @@ def priority(char: str) -> int:
     return ord(char) - ord("a") + 1 if char.islower() else ord(char) - ord("A") + 27
 
 
-def solve(input: str, part=str) -> Optional[int]:
+def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional[int]:
     score = 0
     rucksack_a = set()
     rucksack_b = set()

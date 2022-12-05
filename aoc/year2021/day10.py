@@ -126,13 +126,15 @@ because there are the same number of scores smaller and larger than it.
 Find the completion string for each incomplete line, score the completion
 strings, and sort the scores. What is the middle score?"""
 
+from typing import Literal, Optional
+
 from aocd import submit
 from aocd.exceptions import AocdError
 from aocd.models import Puzzle
 from rich import print
 
 
-def main(input: str, part: str) -> int:
+def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional[int]:
     """Calculates the solution
 
     Args:
@@ -205,7 +207,8 @@ def main(input: str, part: str) -> int:
                         else:
                             printout += f"[green]{char}[/]"
                     case _:
-                        print(f"Unknown chunk {char}")
+                        if not runner:
+                            print(f"Unknown chunk {char}")
                         printout += f"[on red]{char}[/]"
         if not line_corrupted and len(chunk_deck) > 0:
             # print(f'Autocomplete needed: {"".join(chunk_deck)}')
@@ -226,7 +229,8 @@ def main(input: str, part: str) -> int:
                         printout += ">"
                         this_autocomplete_score += 4
                     case _:
-                        print(f"Unknown Chunk {chunk}")
+                        if not runner:
+                            print(f"Unknown Chunk {chunk}")
             error = (
                 "[italic bright_black]» Autocorrected with a score of "
                 + str(this_autocomplete_score)
@@ -235,7 +239,8 @@ def main(input: str, part: str) -> int:
             autocomplete_scores.append(this_autocomplete_score)
         if error:
             printout = f"{printout}  {error}"
-        print(printout)
+        if not runner:
+            print(printout)
     return (
         checker_score
         if part == "a"
@@ -255,7 +260,7 @@ if __name__ == "__main__":
 <{([([[(<>()){}]>(<<{{
 <{([{{}}[<[[[<>{}]]]>[]]"""
 
-    RESULT = main(TEST_INPUT, "a")
+    RESULT = solve(TEST_INPUT, "a")
     print(f"Result (Part A): {RESULT}")
     assert RESULT == 26397
 
@@ -263,18 +268,18 @@ if __name__ == "__main__":
         PUZZLE = Puzzle(year=2021, day=10)
         INPUT = PUZZLE.input_data
 
-        RESULT = main(INPUT, "a")
+        RESULT = solve(INPUT, "a")
         print(f"Result (Part A): {RESULT}")
         submit(RESULT, year=2021, day=10, part="a")
     except AocdError:
         pass
 
-    RESULT = main(TEST_INPUT, "b")
+    RESULT = solve(TEST_INPUT, "b")
     print(f"Result (Part B): {RESULT}")
     assert RESULT == 288957
 
     try:
-        RESULT = main(INPUT, "b")
+        RESULT = solve(INPUT, "b")
         print(f"Result (Part B): {RESULT}")
         submit(RESULT, year=2021, day=10, part="b")
     except AocdError:

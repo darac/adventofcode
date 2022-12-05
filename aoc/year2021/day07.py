@@ -78,6 +78,8 @@ Determine the horizontal position that the crabs can align to using the
 least fuel possible so they can make you an escape route! How much fuel
 must they spend to align to that position?"""
 
+from typing import Literal, Optional
+
 from aocd import submit
 from aocd.models import Puzzle
 from rich import print
@@ -88,7 +90,7 @@ PUZZLE = Puzzle(year=2021, day=7)
 INPUT = PUZZLE.input_data
 
 
-def fuel_required(crabs: list, target: int, part: str) -> int:
+def fuel_required(crabs: list, target: int, part: str, runner: bool = False) -> int:
     """Calculates the fuel required to achieve an alignment.
     If part A, the fuel is the sum of the absolute distances travelled.
     If part B, the fuel is the sum of the sum of the distance travelled.
@@ -97,6 +99,7 @@ def fuel_required(crabs: list, target: int, part: str) -> int:
         crabs (list): List of crab positions
         target (int): Target position
         part (str): "a" or "b"
+        runner (bool): if running under the aocd runner
 
     Returns:
         int: Fuel used to get to target
@@ -108,11 +111,12 @@ def fuel_required(crabs: list, target: int, part: str) -> int:
             fuel_used += distance
         else:
             fuel_used += sum(range(distance + 1))
-    print(f"Target: {target}, Fuel: {fuel_used}")
+    if not runner:
+        print(f"Target: {target}, Fuel: {fuel_used}")
     return fuel_used
 
 
-def main(input: str, part: str) -> int:
+def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional[int]:
     """Main Procedure
     * Parses the input into a list of ints
     * Calculates the fuel required to get to any position
@@ -129,23 +133,23 @@ def main(input: str, part: str) -> int:
     crabs = [int(n) for n in input.split(",")]
     targets = {}
     for test_posn in track(range(min(crabs), max(crabs) + 1)):
-        targets[test_posn] = fuel_required(crabs, test_posn, part)
+        targets[test_posn] = fuel_required(crabs, test_posn, part, runner)
     return min(targets.values())
 
 
 if __name__ == "__main__":
-    RESULT = main(TEST_INPUT, part="a")
+    RESULT = solve(TEST_INPUT, part="a")
     print(f"Result (Part A): {RESULT}")
     assert RESULT == 37
 
-    RESULT = main(INPUT, part="a")
+    RESULT = solve(INPUT, part="a")
     print(f"Result (Part A): {RESULT}")
     submit(RESULT, year=2021, day=7, part="a")
 
-    RESULT = main(TEST_INPUT, part="b")
+    RESULT = solve(TEST_INPUT, part="b")
     print(f"Result (Part B): {RESULT}")
     assert RESULT == 168
 
-    RESULT = main(INPUT, part="b")
+    RESULT = solve(INPUT, part="b")
     print(f"Result (Part B): {RESULT}")
     submit(RESULT, year=2021, day=7, part="b")

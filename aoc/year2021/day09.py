@@ -83,6 +83,8 @@ above example, this is 9 * 14 * 9 = 1134.
 What do you get if you multiply together the sizes of the three largest
 basins?"""
 
+from typing import Literal, Optional
+
 import numpy as np
 import pandas as pd
 from aocd import submit
@@ -130,7 +132,7 @@ def flood(data: np.ndarray, point: tuple[int, int], visited: list) -> int:
     return 1 + sum([flood(data, n, visited) for n in neighbours if n not in visited])
 
 
-def main(input: str, part: str) -> int:
+def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional[int]:
     """Calculates the solution
 
     Args:
@@ -143,10 +145,12 @@ def main(input: str, part: str) -> int:
     data_frame = pd.DataFrame(
         [[int(char) for char in line] for line in input.splitlines()]
     )
-    print(data_frame)
+    if not runner:
+        print(data_frame)
     risk_level = 0
     low_points = []
-    for column_name, column in data_frame.iteritems():
+    for column_name, column in data_frame.items():
+        column_name = int(column_name)  # type: ignore
         for row_name, cell in enumerate(column):
             neighbours = []
             try:
@@ -178,9 +182,11 @@ def main(input: str, part: str) -> int:
 
     # Part B
     data = np.array([list(map(int, list(row))) for row in input.splitlines()])
-    print(data)
+    if not runner:
+        print(data)
     basins = sorted([flood(data, low_point, []) for low_point in low_points])
-    print(f"Largest basins: {basins[-3:]} -> {np.prod(basins[-3:])}")
+    if not runner:
+        print(f"Largest basins: {basins[-3:]} -> {np.prod(basins[-3:])}")
     return int(np.prod(basins[-3:]))
 
 
@@ -191,21 +197,21 @@ if __name__ == "__main__":
 8767896789
 9899965678"""
 
-    RESULT = main(TEST_INPUT, "a")
+    RESULT = solve(TEST_INPUT, "a")
     print(f"Result (Part A): {RESULT}")
     assert RESULT == 15
 
     PUZZLE = Puzzle(year=2021, day=9)
     INPUT = PUZZLE.input_data
 
-    RESULT = main(INPUT, "a")
+    RESULT = solve(INPUT, "a")
     print(f"Result (Part A): {RESULT}")
     submit(RESULT, year=2021, day=9, part="a")
 
-    RESULT = main(TEST_INPUT, "b")
+    RESULT = solve(TEST_INPUT, "b")
     print(f"Result (Part B): {RESULT}")
     assert RESULT == 1134
 
-    RESULT = main(INPUT, "b")
+    RESULT = solve(INPUT, "b")
     print(f"Result (Part B): {RESULT}")
     submit(RESULT, year=2021, day=9, part="b")

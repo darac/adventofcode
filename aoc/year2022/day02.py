@@ -85,7 +85,7 @@ total score be if everything goes exactly according to your strategy guide?
 """
 
 import sys
-from typing import Optional
+from typing import Literal, Optional
 
 import pytest
 
@@ -112,7 +112,7 @@ def test_solve_b(example_data):
         assert solve(input=example_data["input"], part="b") == example_data["b"]
 
 
-def solve(input: str, part=str) -> Optional[int]:
+def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional[int]:
     guide_a = {
         #      | Rock | Papr | Scis
         #      |-------------------

@@ -3,7 +3,7 @@
 --- Day 11: Dumbo Octopus ---
 """
 
-from typing import Optional, Union
+from typing import Literal, Optional, Union
 
 import numpy as np
 from aocd import submit
@@ -47,7 +47,7 @@ def get_neighbours(r: int, c: int, rows: int, cols: int) -> list[tuple[int, int]
     )
 
 
-def run_step(data: np.ndarray, step: int, part: str) -> list[int]:
+def run_step(data: np.ndarray, step: int, part: str, runner: bool = False) -> list[int]:
     """Runs a "step".
 
     - First, the energy level of each octopus increases by 1.
@@ -92,7 +92,7 @@ def run_step(data: np.ndarray, step: int, part: str) -> list[int]:
     # print(f"Step {step}: {phase_flashes} octopi flash (total: {sum(phase_flashes)})")
     # Finally, if the octopus flashed, set its energy to zero
     data[flashed] = 0
-    if step < 10 or step % 10 == 0:
+    if (step < 10 or step % 10 == 0) and not runner:
         print(f"After Step {step}:")
         print(data)
     if part in ["training", "a"]:
@@ -100,7 +100,9 @@ def run_step(data: np.ndarray, step: int, part: str) -> list[int]:
     return phase_flashes
 
 
-def main(input: str, part: str) -> Optional[int]:
+def solve(
+    input: str, part: Literal["a", "b", "training"], runner: bool = False
+) -> Optional[int]:
     """Calculates the solution
 
     Args:
@@ -115,18 +117,18 @@ def main(input: str, part: str) -> Optional[int]:
     num_flashes = 0
     if part == "training":
         for step in range(1, 3):
-            num_flashes += run_step(data, step, part)[0]
+            num_flashes += run_step(data, step, part, runner)[0]
         return num_flashes
     if part == "a":
         for step in range(100):
-            num_flashes += run_step(data, step, part)[0]
+            num_flashes += run_step(data, step, part, runner)[0]
         return num_flashes
     if part == "b":
         step = 1
         while True:
-            stepdata = run_step(data, step, part)
+            stepdata = run_step(data, step, part, runner)
             for phase, flashers in enumerate(stepdata):
-                if flashers == data.size:
+                if flashers == data.size and not runner:
                     print(data)
                     print(
                         f"{data.size} points. {flashers} flashers on phase {phase} of step {step}"
@@ -143,7 +145,7 @@ if __name__ == "__main__":
 19991
 11111
 """
-    RESULT = main(TRAINING_INPUT, "training")
+    RESULT = solve(TRAINING_INPUT, "training")
     print(f"Result (Part A): {RESULT}")
     assert RESULT == 9
 
@@ -158,21 +160,21 @@ if __name__ == "__main__":
 4846848554
 5283751526"""
 
-    RESULT = main(TEST_INPUT, "a")
+    RESULT = solve(TEST_INPUT, "a")
     print(f"Result (Part A): {RESULT}")
     assert RESULT == 1656
 
     PUZZLE = Puzzle(year=2021, day=11)
     INPUT = PUZZLE.input_data
 
-    RESULT = main(INPUT, "a")
+    RESULT = solve(INPUT, "a")
     print(f"Result (Part A): {RESULT}")
     submit(RESULT, year=2021, day=11, part="a")
 
-    RESULT = main(TEST_INPUT, "b")
+    RESULT = solve(TEST_INPUT, "b")
     print(f"Result (Part B): {RESULT}")
     assert RESULT == 195
 
-    RESULT = main(INPUT, "b")
+    RESULT = solve(INPUT, "b")
     print(f"Result (Part B): {RESULT}")
     submit(RESULT, year=2021, day=11, part="b")

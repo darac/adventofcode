@@ -88,7 +88,7 @@ those Elves carrying in total?
 
 import sys
 from collections import defaultdict
-from typing import Dict, Optional
+from typing import Dict, Literal, Optional
 
 import pytest
 
@@ -127,19 +127,19 @@ def test_solve_b(example_data):
         assert solve(input=example_data["input"], part="b") == example_data["b"]
 
 
-def solve(input: str, part=str) -> Optional[int]:
-    elf = defaultdict(int)  # type: Dict[int, int]
-    elfno = 1  # type: int
+def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional[int]:
+    elf: Dict[int, int] = defaultdict(int)
+    elf_num: int = 1
     for line in input.splitlines():
         if line == "":
-            elfno += 1
+            elf_num += 1
             continue
-        elf[elfno] += int(line)
+        elf[elf_num] += int(line)
 
     if part == "a":
-        return (sorted(val for key, val in elf.items()))[-1]
+        return (sorted(val for _, val in elf.items()))[-1]
     elif part == "b":
-        return sum(sorted(val for key, val in elf.items())[-3:])
+        return sum(sorted(val for _, val in elf.items())[-3:])
 
     return None
 

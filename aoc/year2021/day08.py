@@ -158,6 +158,8 @@ the four-digit output values. What do you get if you add up all of the
 output values?"""
 
 
+from typing import Literal, Optional
+
 from aocd import submit
 from aocd.models import Puzzle
 from rich import print
@@ -178,7 +180,7 @@ PUZZLE = Puzzle(year=2021, day=8)
 INPUT = PUZZLE.input_data
 
 
-def main(input: str, part: str) -> int:
+def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional[int]:
     """Decodes the digits
 
     Args:
@@ -193,7 +195,8 @@ def main(input: str, part: str) -> int:
         for line in input.splitlines():
             patterns, output = [x.split() for x in line.split(" | ")]
             num_uniques += len(list(filter(lambda x: len(x) in [2, 3, 4, 7], output)))
-            print(f"Now at {num_uniques} uniques")
+            if not runner:
+                print(f"Now at {num_uniques} uniques")
 
         return num_uniques
 
@@ -230,23 +233,24 @@ def main(input: str, part: str) -> int:
                 case _:
                     retstr += "?"
         retval += int(retstr)
-        print(f"Retval: {retstr} -> {retval}")
+        if not runner:
+            print(f"Retval: {retstr} -> {retval}")
     return retval
 
 
 if __name__ == "__main__":
-    RESULT = main(TEST_INPUT, "a")
+    RESULT = solve(TEST_INPUT, "a")
     print(f"Result (Part A): {RESULT}")
     assert RESULT == 26
 
-    RESULT = main(INPUT, "a")
+    RESULT = solve(INPUT, "a")
     print(f"Result (Part A): {RESULT}")
     submit(RESULT, year=2021, day=8, part="a")
 
-    RESULT = main(TEST_INPUT, "b")
+    RESULT = solve(TEST_INPUT, "b")
     print(f"Result (Part B): {RESULT}")
     assert RESULT == 61229
 
-    RESULT = main(INPUT, "b")
+    RESULT = solve(INPUT, "b")
     print(f"Result (Part B): {RESULT}")
     submit(RESULT, year=2021, day=8, part="b")
