@@ -3,8 +3,8 @@ Storage for my AdventOfCode solutions
 
 ![GitHub branch checks state](https://img.shields.io/github/checks-status/darac/adventofcode/main)
 [![CodeQL](https://github.com/darac/adventofcode/workflows/CodeQL/badge.svg)](https://github.com/darac/adventofcode/security/code-scanning)
-![](https://img.shields.io/badge/day%20📅-4-blue)
-![](https://img.shields.io/badge/stars%20⭐-8-yellow)
+![](https://img.shields.io/badge/day%20📅-5-blue)
+![](https://img.shields.io/badge/stars%20⭐-10-yellow)
 
 ## Setup
 ```sh
@@ -26,6 +26,7 @@ poetry run pre-commit install -t pre-push
 | [Day 2](https://adventofcode.com/2022/day/2) | ⭐ | ⭐ |
 | [Day 3](https://adventofcode.com/2022/day/3) | ⭐ | ⭐ |
 | [Day 4](https://adventofcode.com/2022/day/4) | ⭐ | ⭐ |
+| [Day 5](https://adventofcode.com/2022/day/5) | ⭐ | ⭐ |
 <!--- advent_readme_stars table --->
 
 ## Credits
