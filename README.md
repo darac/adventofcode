@@ -6,6 +6,8 @@ Storage for my AdventOfCode solutions
 ![](https://img.shields.io/badge/day%20📅-6-blue)
 ![](https://img.shields.io/badge/stars%20⭐-12-yellow)
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=darac_adventofcode&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=darac_adventofcode)[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=darac_adventofcode&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=darac_adventofcode)[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=darac_adventofcode&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=darac_adventofcode)
+
 ## Setup
 ```sh
 # Install dependencies
