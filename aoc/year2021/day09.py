@@ -132,6 +132,26 @@ def flood(data: np.ndarray, point: tuple[int, int], visited: list) -> int:
     return 1 + sum([flood(data, n, visited) for n in neighbours if n not in visited])
 
 
+def get_neighbour(data_frame: pd.DataFrame, row_name, column_name):
+    try:
+        # Above
+        return data_frame.at[row_name - 1, column_name]
+    except KeyError as _:
+        try:
+            # Left
+            return data_frame.at[row_name, column_name - 1]
+        except KeyError as _:
+            try:
+                # Right
+                return data_frame.at[row_name, column_name + 1]
+            except KeyError as _:
+                try:
+                    # Below
+                    return data_frame.at[row_name + 1, column_name]
+                except KeyError as _:
+                    return None
+
+
 def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional[int]:
     """Calculates the solution
 
@@ -151,28 +171,9 @@ def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional
     low_points = []
     for column_name, column in data_frame.items():
         column_name = int(column_name)  # type: ignore
+        neighbours = []
         for row_name, cell in enumerate(column):
-            neighbours = []
-            try:
-                # Above
-                neighbours.append(data_frame.at[row_name - 1, column_name])
-            except KeyError as _:
-                pass
-            try:
-                # Left
-                neighbours.append(data_frame.at[row_name, column_name - 1])
-            except KeyError as _:
-                pass
-            try:
-                # Right
-                neighbours.append(data_frame.at[row_name, column_name + 1])
-            except KeyError as _:
-                pass
-            try:
-                # Below
-                neighbours.append(data_frame.at[row_name + 1, column_name])
-            except KeyError as _:
-                pass
+            neighbours.append(get_neighbour(data_frame, row_name, column_name))
             local_min = cell < min(neighbours)
             if local_min:
                 low_points.append((int(row_name), int(column_name)))

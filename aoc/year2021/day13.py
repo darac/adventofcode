@@ -70,7 +70,7 @@ def main(input: str, part: str) -> int:
             r, c = map(int, line.split(","))
             sheet[r][c] = True
         elif read_mode == 1:
-            m = re.match(r"fold along (x|y)=(\d+)", line)
+            m = re.match(r"fold along ([xy])=(\d+)", line)
             if m:
                 folds.append(
                     {"axis": 0 if m.group(1) == "x" else 1, "line": int(m.group(2))}
@@ -167,8 +167,6 @@ fold along x=5"""
 
     RESULT = main(TEST_INPUT, "b")
     print(f"Result (Part B): {RESULT}")
-    # assert RESULT == 1134
 
     RESULT = main(INPUT, "b")
     print(f"Result (Part B): {RESULT}")
-    # submit(RESULT, year=2021, day=13, part="b")

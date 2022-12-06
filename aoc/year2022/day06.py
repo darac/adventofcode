@@ -108,12 +108,12 @@ def test_solve_b(example_data):
 
 def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional[int]:
     buffer_size = 4 if part == "a" else 14
-    buffer: deque[str] = deque(maxlen=buffer_size)
+    msg_buffer: deque[str] = deque(maxlen=buffer_size)
     for count, item in enumerate(input):
-        buffer.append(item)
+        msg_buffer.append(item)
         if not runner:
-            print(f"{buffer} -> {count}\r")
-        if len(set(buffer)) == buffer_size:
+            print(f"{msg_buffer} -> {count}\r")
+        if len(set(msg_buffer)) == buffer_size:
             return count + 1
     return None
 

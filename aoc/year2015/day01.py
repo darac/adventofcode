@@ -66,19 +66,20 @@ if __name__ == "__main__":
     YEAR = 2015
     DAY = 1
     TEST_INPUT = """(()))"""
+    OK = r" \[[green]OK[/]]"
 
     # Test the example #
     RESULT = main(TEST_INPUT, "a")
     print(f"Test   (Part A): {RESULT:4d}", end="")
     assert RESULT == -1
-    print(r" \[[green]OK[/]]")
+    print(OK)
 
     # Run the real code #
     PUZZLE = Puzzle(year=YEAR, day=DAY)
     RESULT = main(PUZZLE.input_data, "a")
     print(f"Result (Part A): {RESULT:4d}", end="")
     PUZZLE.answer_a = RESULT
-    print(r" \[[green]OK[/]]")
+    print(OK)
 
     ## PART B ##
 
@@ -86,9 +87,9 @@ if __name__ == "__main__":
     RESULT = main(TEST_INPUT, "b")
     print(f"Test   (Part B): {RESULT:4d}", end="")
     assert RESULT == 5
-    print(r" \[[green]OK[/]]")
+    print(OK)
 
     RESULT = main(PUZZLE.input_data, "b")
     print(f"Result (Part B): {RESULT:4d}", end="")
     PUZZLE.answer_b = RESULT
-    print(r" \[[green]OK[/]]")
+    print(OK)

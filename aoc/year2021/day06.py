@@ -112,17 +112,7 @@ def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional
         print(f"Initial state: {school}")
     days = 80 if part == "a" else 256
     for day in track(range(days)):
-        #     for i in range(len(school)):
-        #         if school[i] == 0:
-        #             school.append(8)
-        #             school[i] = 6
-        #         else:
-        #             school[i] -= 1
-        #     print(f"After {day:2} days: {len(school)}")
         school = Counter([school[x + 1] for x in range(-1, 8)])
-        # for i in range(0, 9):
-        #     # Each bucket of population counts down one
-        #     school[i - 1] = school[i]
 
         # school[-1] now holds the number of fish who spawn
         spawn = school[-1]

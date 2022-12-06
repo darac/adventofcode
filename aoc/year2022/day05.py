@@ -209,6 +209,8 @@ def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional
             if part == "a":
                 # Grab boxes and put them directly on the target
                 for _ in range(r[0]):
+                    if not runner:
+                        print(stacks)
                     stacks[str(r[2])].append(stacks[str(r[1])].pop())
             else:
                 # Grab boxes into a holding group, then

@@ -192,10 +192,10 @@ class BingoSquare:
     def __str__(self):
         """Stringify"""
         if self.hit:
-            format = "red"
+            fmt = "red"
         else:
-            format = "default"
-        return f"[{format}]{self.value:2}[/]"
+            fmt = "default"
+        return f"[{fmt}]{self.value:2}[/]"
 
 
 class BingoBoard:
@@ -214,7 +214,6 @@ class BingoBoard:
         Args:
             row (list): A list of ints
         """
-        row = []
         for item in row:
             row.append(BingoSquare(int(item)))
         self.board.append(row)
@@ -375,12 +374,9 @@ if __name__ == "__main__":
                             # We've not reported the first board yet.
                             print(board.board.as_table())
                             print(f"Score: {board.board.score()}")
-                            if not DEBUG:
-                                if not SUBMITTED_A:
-                                    submit(
-                                        board.board.score(), part="a", day=4, year=2021
-                                    )
-                                    SUBMITTED_A = True
+                            if not DEBUG and not SUBMITTED_A:
+                                submit(board.board.score(), part="a", day=4, year=2021)
+                                SUBMITTED_A = True
                             FIRST_BOARD = True
             if REMAINING_BOARDS == 0:
                 break
