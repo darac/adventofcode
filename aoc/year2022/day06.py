@@ -87,11 +87,11 @@ from rich import print
 @pytest.fixture
 def example_data():
     return [
-        {"input": "mjqjpqmgbljsphdztnvjfqwrcgsmlb", "a": 7, "b": None},
-        {"input": "bvwbjplbgvbhsrlpgdmjqwftvncz", "a": 5, "b": None},
-        {"input": "nppdvjthqldpwncqszvftbrmjlhg", "a": 6, "b": None},
-        {"input": "nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg", "a": 10, "b": None},
-        {"input": "zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw", "a": 11, "b": None},
+        {"input": "mjqjpqmgbljsphdztnvjfqwrcgsmlb", "a": 7, "b": 19},
+        {"input": "bvwbjplbgvbhsrlpgdmjqwftvncz", "a": 5, "b": 23},
+        {"input": "nppdvjthqldpwncqszvftbrmjlhg", "a": 6, "b": 23},
+        {"input": "nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg", "a": 10, "b": 29},
+        {"input": "zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw", "a": 11, "b": 26},
     ]
 
 
@@ -109,13 +109,15 @@ def test_solve_b(example_data):
 def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional[int]:
     buffer_size = 4 if part == "a" else 14
     msg_buffer: deque[str] = deque(maxlen=buffer_size)
+    pointer = None
     for count, item in enumerate(input):
         msg_buffer.append(item)
         if not runner:
             print(f"{msg_buffer} -> {count}\r")
         if len(set(msg_buffer)) == buffer_size:
-            return count + 1
-    return None
+            pointer = count + 1
+            break
+    return pointer
 
 
 if __name__ == "__main__":

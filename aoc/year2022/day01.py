@@ -130,6 +130,7 @@ def test_solve_b(example_data):
 def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional[int]:
     elf: Dict[int, int] = defaultdict(int)
     elf_num: int = 1
+    retval: int
     for line in input.splitlines():
         if line == "":
             elf_num += 1
@@ -137,11 +138,11 @@ def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional
         elf[elf_num] += int(line)
 
     if part == "a":
-        return (sorted(val for _, val in elf.items()))[-1]
+        retval = (sorted(val for _, val in elf.items()))[-1]
     elif part == "b":
-        return sum(sorted(val for _, val in elf.items())[-3:])
+        retval = sum(sorted(val for _, val in elf.items())[-3:])
 
-    return None
+    return retval
 
 
 if __name__ == "__main__":
