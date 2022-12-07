@@ -3,7 +3,7 @@
 --- Day 11: Dumbo Octopus ---
 """
 
-from typing import Literal, Optional, Union
+from typing import Literal, Optional
 
 import numpy as np
 from aocd import submit
@@ -113,7 +113,8 @@ def solve(
         int: The Puzzle Solution
     """
     data = np.array([list(row) for row in input.splitlines()], dtype="int")
-    print(data)
+    if not runner:
+        print(data)
     num_flashes = 0
     if part == "training":
         for step in range(1, 3):
