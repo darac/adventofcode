@@ -61,39 +61,10 @@ this example, there are 2 such pairs.
 
 In how many assignment pairs does one range fully contain the other?
 """
-import os
-import sys
 from typing import Literal, Optional
 
-import pytest
 from parse import compile
 from rich import print
-
-
-@pytest.fixture
-def example_data():
-    return {
-        "input": """
-2-4,6-8
-2-3,4-5
-5-7,7-9
-2-8,3-7
-6-6,4-6
-2-6,4-8
-""",
-        "a": 2,
-        "b": 4,
-    }
-
-
-def test_solve_a(example_data):
-    if example_data.get("a") is not None:
-        assert solve(input=example_data["input"], part="a") == example_data["a"]
-
-
-def test_solve_b(example_data):
-    if example_data.get("b") is not None:
-        assert solve(input=example_data["input"], part="b") == example_data["b"]
 
 
 def visualise(low: int, high: int, upper: int, char: str = "+") -> str:
@@ -107,38 +78,32 @@ def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional
     count = 0
     parser = compile("{:d}-{:d},{:d}-{:d}")
     for line in input.splitlines():
-        results = parser.parse(line)
-        if results:
-            a_low, a_high, b_low, b_high = parser.parse(line)  # type: ignore
-            o_low = o_high = 0
-            assert a_low <= a_high, "Whoops, Pairs are not sorted"
-            assert b_low <= b_high, "Whoops, Pairs are not sorted"
-            if not runner:
-                print(visualise(a_low, a_high, max(a_high, b_high), "A"))
-                print(visualise(b_low, b_high, max(a_high, b_high), "B"))
-            if part == "a":
-                if (a_low >= b_low and a_high <= b_high) or (
-                    b_low >= a_low and b_high <= a_high
-                ):
-                    o_low = max(a_low, b_low)
-                    o_high = min(a_high, b_high)
-                    count += 1
-            else:
-                if (a_high >= b_low and a_low <= b_high) or (
-                    b_high >= a_low and b_low <= a_high
-                ):
-                    o_low = max(a_low, b_low)
-                    o_high = min(a_high, b_high)
-                    count += 1
-            if not runner:
-                print(
-                    visualise(o_low, o_high, max(a_high, b_high), "O"),
-                    "<--" if o_low != o_high else "",
-                )
-                print("\n")
+        a_low, a_high, b_low, b_high = parser.parse(line)  # type: ignore
+        o_low = o_high = 0
+        assert a_low <= a_high, "Whoops, Pairs are not sorted"
+        assert b_low <= b_high, "Whoops, Pairs are not sorted"
+        if not runner:
+            print(visualise(a_low, a_high, max(a_high, b_high), "A"))
+            print(visualise(b_low, b_high, max(a_high, b_high), "B"))
+        if part == "a":
+            if (a_low >= b_low and a_high <= b_high) or (
+                b_low >= a_low and b_high <= a_high
+            ):
+                o_low = max(a_low, b_low)
+                o_high = min(a_high, b_high)
+                count += 1
+        else:
+            if (a_high >= b_low and a_low <= b_high) or (
+                b_high >= a_low and b_low <= a_high
+            ):
+                o_low = max(a_low, b_low)
+                o_high = min(a_high, b_high)
+                count += 1
+        if not runner:
+            print(
+                visualise(o_low, o_high, max(a_high, b_high), "O"),
+                "<--" if o_low != o_high else "",
+            )
+            print("\n")
 
     return count
-
-
-if __name__ == "__main__":
-    sys.exit(pytest.main([__file__]))

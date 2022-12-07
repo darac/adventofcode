@@ -90,42 +90,6 @@ import sys
 from collections import defaultdict
 from typing import Dict, Literal, Optional
 
-import pytest
-
-
-@pytest.fixture
-def example_data():
-    return {
-        "input": """1000
-2000
-3000
-
-4000
-
-5000
-6000
-
-7000
-8000
-9000
-
-10000
-""",
-        "a": 24000,
-        "b": 45000,
-    }
-
-
-def test_solve_a(example_data):
-
-    if example_data.get("a") is not None:
-        assert solve(input=example_data["input"], part="a") == example_data["a"]
-
-
-def test_solve_b(example_data):
-    if example_data.get("b") is not None:
-        assert solve(input=example_data["input"], part="b") == example_data["b"]
-
 
 def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional[int]:
     elf: Dict[int, int] = defaultdict(int)
@@ -139,11 +103,7 @@ def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional
 
     if part == "a":
         retval = (sorted(val for _, val in elf.items()))[-1]
-    elif part == "b":
+    else:
         retval = sum(sorted(val for _, val in elf.items())[-3:])
 
     return retval
-
-
-if __name__ == "__main__":
-    sys.exit(pytest.main([__file__]))

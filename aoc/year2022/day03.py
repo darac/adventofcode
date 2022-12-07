@@ -102,36 +102,7 @@ Find the item type that corresponds to the badges of each three-Elf group.
 What is the sum of the priorities of those item types?
 """
 
-import sys
 from typing import Literal, Optional
-
-import pytest
-from rich import print
-
-
-@pytest.fixture
-def example_data():
-    return {
-        "input": """vJrwpWtwJgWrhcsFMMfFFhFp
-jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
-PmmdzqPrVvPwwTWBwg
-wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
-ttgJtRGJQctTZtZT
-CrZsJsPPZsGzwwsLwLmpwMDw
-""",
-        "a": 157,
-        "b": 70,
-    }
-
-
-def test_solve_a(example_data):
-    if example_data.get("a") is not None:
-        assert solve(input=example_data["input"], part="a") == example_data["a"]
-
-
-def test_solve_b(example_data):
-    if example_data.get("b") is not None:
-        assert solve(input=example_data["input"], part="b") == example_data["b"]
 
 
 def priority(char: str) -> int:
@@ -167,7 +138,3 @@ def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional
             rucksack_c = set()
 
     return score
-
-
-if __name__ == "__main__":
-    sys.exit(pytest.main([__file__]))

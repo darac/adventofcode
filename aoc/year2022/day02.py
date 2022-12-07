@@ -87,30 +87,6 @@ total score be if everything goes exactly according to your strategy guide?
 import sys
 from typing import Literal, Optional
 
-import pytest
-
-
-@pytest.fixture
-def example_data():
-    return {
-        "input": """A Y
-B X
-C Z
-""",
-        "a": 15,
-        "b": 12,
-    }
-
-
-def test_solve_a(example_data):
-    if example_data.get("a") is not None:
-        assert solve(input=example_data["input"], part="a") == example_data["a"]
-
-
-def test_solve_b(example_data):
-    if example_data.get("b") is not None:
-        assert solve(input=example_data["input"], part="b") == example_data["b"]
-
 
 def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional[int]:
     guide_a = {
@@ -142,7 +118,3 @@ def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional
             score += guide_a[elf][guide_b[elf][me]]
 
     return score
-
-
-if __name__ == "__main__":
-    sys.exit(pytest.main([__file__]))

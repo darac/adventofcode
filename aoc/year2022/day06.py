@@ -80,30 +80,7 @@ import sys
 from collections import deque
 from typing import Literal, Optional
 
-import pytest
 from rich import print
-
-
-@pytest.fixture
-def example_data():
-    return [
-        {"input": "mjqjpqmgbljsphdztnvjfqwrcgsmlb", "a": 7, "b": 19},
-        {"input": "bvwbjplbgvbhsrlpgdmjqwftvncz", "a": 5, "b": 23},
-        {"input": "nppdvjthqldpwncqszvftbrmjlhg", "a": 6, "b": 23},
-        {"input": "nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg", "a": 10, "b": 29},
-        {"input": "zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw", "a": 11, "b": 26},
-    ]
-
-
-def test_solve_a(example_data):
-    for datum in example_data:
-        assert solve(input=datum["input"], part="a") == datum["a"]
-
-
-def test_solve_b(example_data):
-    for datum in example_data:
-        if datum["b"] is not None:
-            assert solve(input=datum["input"], part="b") == datum["b"]
 
 
 def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional[int]:
@@ -118,7 +95,3 @@ def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional
             pointer = count + 1
             break
     return pointer
-
-
-if __name__ == "__main__":
-    sys.exit(pytest.main([__file__]))

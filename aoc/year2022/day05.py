@@ -141,41 +141,10 @@ the Elves know where they should stand to be ready to unload the final
 supplies. After the rearrangement procedure completes, what crate ends up
 on top of each stack?
 """
-import sys
 from collections import deque
 from typing import Dict, Literal, Optional
 
-import pytest
 from parse import Result, compile
-
-
-@pytest.fixture
-def example_data():
-    return {
-        "input": """
-    [D]
-[N] [C]
-[Z] [M] [P]
- 1   2   3
-
-move 1 from 2 to 1
-move 3 from 1 to 3
-move 2 from 2 to 1
-move 1 from 1 to 2
-""",
-        "a": "CMZ",
-        "b": "MCD",
-    }
-
-
-def test_solve_a(example_data):
-    if example_data.get("a") is not None:
-        assert solve(input=example_data["input"], part="a") == example_data["a"]
-
-
-def test_solve_b(example_data):
-    if example_data.get("b") is not None:
-        assert solve(input=example_data["input"], part="b") == example_data["b"]
 
 
 def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional[str]:
@@ -184,6 +153,7 @@ def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional
     stacks: Dict[str, deque[str]] = {}
     parser = compile("move {:d} from {} to {}")
     for line in input.splitlines():
+        print(line)
         if line == "" and len(stacks) and mode == "crates":
             mode = "instructions"
             continue
@@ -200,7 +170,7 @@ def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional
                     unnumbered_stacks[stack_number].appendleft(crate[1])
                 else:
                     # This is the list of crate "names"
-                    stacks[crate[1]] = unnumbered_stacks[stack_number]
+                    stacks[crate.strip()] = unnumbered_stacks[stack_number]
         elif mode == "instructions":
             r = parser.parse(line)
             assert type(r) is Result
@@ -223,7 +193,3 @@ def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional
             assert len(stacks[str(r[2])]) == size_before + r[0]
 
     return "".join([x.pop() for x in stacks.values()])
-
-
-if __name__ == "__main__":
-    sys.exit(pytest.main([__file__]))

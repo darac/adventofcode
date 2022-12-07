@@ -140,53 +140,8 @@ the filesystem to run the update. What is the total size of that directory?
 """
 
 import os
-import sys
 from pathlib import Path
 from typing import Any, Dict, Literal, Optional, Union
-
-import pytest
-
-
-@pytest.fixture
-def example_data():
-    return {
-        "input": """$ cd /
-$ ls
-dir a
-14848514 b.txt
-8504156 c.dat
-dir d
-$ cd a
-$ ls
-dir e
-29116 f
-2557 g
-62596 h.lst
-$ cd e
-$ ls
-584 i
-$ cd ..
-$ cd ..
-$ cd d
-$ ls
-4060174 j
-8033020 d.log
-5626152 d.ext
-7214296 k
-""",
-        "a": 95437,
-        "b": 24933642,
-    }
-
-
-def test_solve_a(example_data):
-    if example_data["a"] is not None:
-        assert solve(input=example_data["input"], part="a") == example_data["a"]
-
-
-def test_solve_b(example_data):
-    if example_data["b"] is not None:
-        assert solve(input=example_data["input"], part="b") == example_data["b"]
 
 
 def path_get(dictionary: dict, path: Union[Path, str]) -> Any:
@@ -286,7 +241,3 @@ def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional
                 if i >= needed_space
             ]
         )
-
-
-if __name__ == "__main__":
-    sys.exit(pytest.main([__file__]))
