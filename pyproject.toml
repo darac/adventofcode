@@ -5,6 +5,11 @@ build-backend = "poetry.core.masonry.api"
 [tool.black]
 target-version = ["py310"]
 
+[tool.coverage.run]
+relative_files = true
+source         = ["aoc"]
+branch         = true
+
 [tool.flake8]
 ignore          = ["E203", "E266", "E501", "W503", "F841", "F401"]
 max-line-length = 88
@@ -45,7 +50,7 @@ pytest-gh-log-group = "^0.2.0"
 
 [tool.poetry.group.dev.dependencies]
 flake8           = "^6.0.0"
-black            = { version = "^22.10.0", allow-prereleases = true }
+black            = "^22.10.0"
 mypy             = "^0.991"
 flake8-pyproject = "*"
 pre-commit       = "^2.20.0"
@@ -64,6 +69,3 @@ testpaths = "aoc/"
 python_files     = "aoc/year2022/*.py"
 junit_suite_name = "aoc"
 addopts          = "--cov --cov-report=term --cov-report=xml:coverage.xml --junitxml=junit.xml"
-
-[tool.coverage.run]
-source = ["aoc"]
