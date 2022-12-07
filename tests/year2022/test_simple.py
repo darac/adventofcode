@@ -22,6 +22,7 @@ def example_data(request):
 @pytest.mark.parametrize(
     "example_data",
     [
+        (2021, 9),
         (2021, 10),
         (2021, 11),
         (2022, 1),

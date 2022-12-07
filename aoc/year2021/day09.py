@@ -133,23 +133,28 @@ def flood(data: np.ndarray, point: tuple[int, int], visited: list) -> int:
 
 
 def get_neighbour(data_frame: pd.DataFrame, row_name, column_name):
+    neighbours = []
     try:
         # Above
-        return data_frame.at[row_name - 1, column_name]
+        neighbours.append(data_frame.at[row_name - 1, column_name])
     except KeyError as _:
-        try:
-            # Left
-            return data_frame.at[row_name, column_name - 1]
-        except KeyError as _:
-            try:
-                # Right
-                return data_frame.at[row_name, column_name + 1]
-            except KeyError as _:
-                try:
-                    # Below
-                    return data_frame.at[row_name + 1, column_name]
-                except KeyError as _:
-                    return None
+        pass
+    try:
+        # Left
+        neighbours.append(data_frame.at[row_name, column_name - 1])
+    except KeyError as _:
+        pass
+    try:
+        # Right
+        neighbours.append(data_frame.at[row_name, column_name + 1])
+    except KeyError as _:
+        pass
+    try:
+        # Below
+        neighbours.append(data_frame.at[row_name + 1, column_name])
+    except KeyError as _:
+        pass
+    return neighbours
 
 
 def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional[int]:
@@ -171,9 +176,8 @@ def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional
     low_points = []
     for column_name, column in data_frame.items():
         column_name = int(column_name)  # type: ignore
-        neighbours = []
         for row_name, cell in enumerate(column):
-            neighbours.append(get_neighbour(data_frame, row_name, column_name))
+            neighbours = get_neighbour(data_frame, row_name, column_name)
             local_min = cell < min(neighbours)
             if local_min:
                 low_points.append((int(row_name), int(column_name)))
