@@ -45,9 +45,6 @@ jobs:
             - run:
                   poetry run pytest --cov --cov-report=xml:coverage.xml
                   --junitxml=junit.xml
-            - run:
-                  sed -i "s|<source>.*/(.*)</source>|<source>./$1</source>|"
-                  coverage.xml
             - name: SonarCloud Scan
               uses: SonarSource/sonarcloud-github-action@master
               env:
