@@ -9,7 +9,7 @@ import importlib
 import os
 from typing import Tuple
 
-__version__ = 2022.03
+__version__ = 2022.07
 
 
 def solve(year: int, day: int, data: str) -> Tuple:

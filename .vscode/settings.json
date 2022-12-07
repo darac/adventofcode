@@ -17,5 +17,8 @@
     "sonarlint.connectedMode.project": {
         "connectionId": "darac",
         "projectKey": "darac_adventofcode"
-    }
+    },
+    "cSpell.words": [
+        "NOSONAR"
+    ]
 }
