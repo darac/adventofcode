@@ -32,6 +32,7 @@ def example_data(request):
         (2022, 5),
         (2022, 6),
         (2022, 7),
+        (2022, 8),
     ],
     indirect=True,
 )

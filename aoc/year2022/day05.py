@@ -153,7 +153,8 @@ def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional
     stacks: Dict[str, deque[str]] = {}
     parser = compile("move {:d} from {} to {}")
     for line in input.splitlines():
-        print(line)
+        if not runner:
+            print(line)
         if line == "" and len(stacks) and mode == "crates":
             mode = "instructions"
             continue
