@@ -1,54 +1,86 @@
 # See https://pre-commit.com/ for usage and config
 repos:
-    - repo: local
+    - repo: https://github.com/pre-commit/pre-commit-hooks
+      rev: v4.4.0
+      hooks:
+          - id: check-added-large-files
+          - id: check-merge-conflict
+          - id: check-toml
+            stages:
+                - commit
+            types:
+                - toml
+          - id: check-xml
+            stages:
+                - commit
+            types:
+                - xml
+          - id: check-yaml
+            stages:
+                - commit
+            types:
+                - yaml
+          - id: detect-private-key
+          - id: end-of-file-fixer
+          - id: trailing-whitespace
+    - repo: https://github.com/PyCQA/isort
+      rev: 5.10.1
       hooks:
           - id: isort
-            name: isort
-            stages: [commit]
-            language: system
-            entry: poetry run isort
-            types: [python]
-
+            stages:
+                - commit
+            types:
+                - python
+    - repo: https://github.com/psf/black
+      rev: 22.10.0
+      hooks:
           - id: black
-            name: black
-            stages: [commit]
-            language: system
-            entry: poetry run black
-            types: [python]
-
+            stages:
+                - commit
+            types:
+                - python
+    - repo: https://github.com/PyCQA/flake8
+      rev: 6.0.0
+      hooks:
           - id: flake8
-            name: flake8
-            stages: [commit]
-            language: system
-            entry: poetry run flake8
-            types: [python]
+            stages:
+                - commit
+            types:
+                - python
             exclude: setup.py
-
+    - repo: https://github.com/pre-commit/mirrors-mypy
+      rev: v0.991
+      hooks:
           - id: mypy
-            name: mypy
-            stages: [commit]
-            language: system
-            entry: poetry run mypy
-            types: [python]
+            stages:
+                - commit
+            types:
+                - python
             require_serial: true
 
-      # - id: pytest
-      #   name: pytest
-      #   stages: [commit]
-      #   language: system
-      #   entry: poetry run pytest
-      #   types: [python]
-      #   pass_filenames: false
-
-      # - id: pytest-cov
-      #   name: pytest
-      #   stages: [push]
-      #   language: system
-      #   entry: poetry run pytest --cov --cov-fail-under=100
-      #   types: [python]
-      #   pass_filenames: false
-    - repo: https://github.com/python-poetry/poetry
-      rev: "1.2.2"
+    - repo: local
       hooks:
-         - id: poetry-check
-         - id: poetry-lock
+          - id: pytest
+            name: pytest
+            stages:
+                - commit
+            language: system
+            entry: poetry run pytest
+            types:
+                - python
+            pass_filenames: false
+
+          - id: pytest-cov
+            name: pytest
+            stages:
+                - push
+            language: system
+            entry: poetry run pytest --cov --cov-fail-under=80
+            types:
+                - python
+            pass_filenames: false
+    - repo: https://github.com/python-poetry/poetry
+      rev: 1.2.2
+      hooks:
+          - id: poetry-check
+          - id: poetry-lock
