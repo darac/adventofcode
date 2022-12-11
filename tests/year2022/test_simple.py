@@ -33,13 +33,14 @@ def example_data(request):
         (2022, 6),
         (2022, 7),
         (2022, 8),
+        (2022, 9),
     ],
     indirect=True,
 )
 @pytest.mark.parametrize("part", ["a", "b"])
 def test_solve(part, example_data):
     for datum in example_data:
-        if datum[part] is not None:
+        if part in datum and datum[part] is not None:
             assert datum["solver"](input=datum["input"], part=part) == datum[part]
-        else:
+        elif part in datum:
             pytest.skip(f"No answer for part {part} (yet)")

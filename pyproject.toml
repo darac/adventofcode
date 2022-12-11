@@ -1,6 +1,6 @@
 [build-system]
-requires      = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+requires      = ["poetry-core"]
 
 [tool.black]
 target-version = ["py310"]
@@ -9,7 +9,6 @@ target-version = ["py310"]
 source = ["aoc", "*/site-packages"]
 
 [tool.coverage.report]
-show_missing = true
 exclude_lines = [
     "pragma: no cover",
     "def __repr__",
@@ -20,68 +19,69 @@ exclude_lines = [
     "if __name__ == .__main__.:",
 ]
 fail_under = 90
+show_missing = true
 
 [tool.coverage.run]
-relative_files = true
-source         = ["aoc"]
 branch         = true
 omit           = ["aoc/__init__.py"]
-
+relative_files = true
+source         = ["aoc"]
 
 [tool.flake8]
-ignore          = ["E203", "E266", "E501", "W503", "F841", "F401"]
-max-line-length = 88
-max-complexity  = 18
-select          = ["B", "C", "E", "F", "W", "T4"]
 extend-ignore   = ["E203"]
+ignore          = ["E203", "E266", "E501", "W503", "F841", "F401"]
+max-complexity  = 18
+max-line-length = 88
+select          = ["B", "C", "E", "F", "W", "T4"]
 
 [tool.isort]
 profile = "black"
 
 [tool.mypy]
+files                  = ["aoc/"]
 ignore_missing_imports = true
 warn_return_any        = true
 warn_unused_configs    = true
-files                  = ["aoc/"]
 
 [tool.poetry]
-name = "aoc"
-version = "2022.03"
-description = "darac's solutions for htttp://adventofcode.com"
 authors = ["Paul Saunders <darac+github@darac.org.uk>"]
-readme = "README.md"
 classifiers = [
     "Programming Language :: Python :: 3",
     "Topic :: Games/Entertainment :: Puzzle Games",
 ]
+description = "darac's solutions for http://adventofcode.com"
+name = "aoc"
+readme = "README.md"
+version = "2022.09"
 
 [tool.poetry.dependencies]
-python              = "^3.10"
 advent-of-code-data = ">=0.8.0"
+importlib-metadata  = { version = "^1.0", python = "<3.8" }
+more-itertools      = "^9.0.0"
 numpy               = ">=1.21.4"
 pandas              = ">=1.3.4"
 parse               = "*"
+python              = "^3.10"
 rich                = ">=10"
-more-itertools      = "^9.0.0"
 
 [tool.poetry.group.dev.dependencies]
-flake8              = "^6.0.0"
 black               = "^22.10.0"
-mypy                = "^0.991"
+bpython             = "^0.23"
+coverage            = { extras = ["toml"], version = "^6.5.0" }
+flake8              = "^6.0.0"
 flake8-pyproject    = "*"
+isort               = ">=5.0.0"
+mypy                = "^0.991"
 pre-commit          = "^2.20.0"
 pytest              = "^7.2.0"
-isort               = ">=5.0.0"
-toml-sort           = "^0.20.1"
-bpython             = "^0.23"
 pytest-cov          = "^4.0.0"
 pytest-gh-log-group = "^0.2.0"
-coverage            = { extras = ["toml"], version = "^6.5.0" }
+toml-sort           = "^0.20.1"
 types-pyyaml        = "^6.0.12.2"
 
 [tool.poetry.plugins."adventofcode.user"]
 darac_aoc = "aoc:solve"
 
 [tool.pytest.ini_options]
-junit_suite_name = "aoc"
 addopts          = "--cov --cov-report=term --cov-report=xml:coverage.xml --junitxml=junit.xml"
+junit_suite_name = "aoc"

@@ -12,14 +12,23 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
+            - name: Install poetry
+              run: pipx install poetry
+            - name: Setup Python
+              uses: actions/setup-python@v4
+              with:
+                  cache: poetry
+                  python-version: "3.10"
             - id: tag_name
-              name: Get tag name from date
-              run: echo "date=$(date +'%Y.%d')" >> $GITHUB_OUTPUT
+              name: Get tag name from poetry
+              run:
+                  echo "tag=$(poetry version | awk '{print $2}')" >>
+                  $GITHUB_OUTPUT
             - id: tag_version
               name: Bump version and push tag
               uses: mathieudutour/github-tag-action@v6.1
               with:
-                  custom_tag: ${{ steps.tag_name.outputs.date }}
+                  custom_tag: ${{ steps.tag_name.outputs.tag }}
                   github_token: ${{ secrets.GITHUB_TOKEN }}
             - name: Create a GitHub release
               uses: ncipollo/release-action@v1

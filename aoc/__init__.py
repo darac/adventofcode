@@ -9,7 +9,12 @@ import importlib
 import os
 from typing import Tuple
 
-__version__ = 2022.07
+try:
+    import importlib.metadata as importlib_metadata
+except ModuleNotFoundError:
+    import importlib_metadata  # type: ignore[no-redef]
+
+__version__ = importlib_metadata.version(__name__)
 
 
 def solve(year: int, day: int, data: str) -> Tuple:
