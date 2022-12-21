@@ -6,3 +6,4 @@
 !poetry.lock
 !aoc
 !README.md
+!docker-entrypoint.sh

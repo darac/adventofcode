@@ -21,5 +21,4 @@ RUN ${POETRY_HOME}/bin/poetry install --no-interaction --no-ansi -vvv
 ENV PATH="/app/.venv/bin:$PATH"
 
 # Run the executable
-ENTRYPOINT [ "/opt/poetry/bin/poetry", "run", "aoc" ]
-CMD [ "-y", "2022" ]
+ENTRYPOINT [ "/app/docker-entrypoint.sh" ]
