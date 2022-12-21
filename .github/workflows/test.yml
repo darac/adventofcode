@@ -22,7 +22,9 @@ jobs:
                   AOC_SESSION: ${{ secrets.AOC_SESSION }}
               name: Smoke test docker image
               run: |
-                  docker run --rm -e AOC_SESSION adventofcode:test -y 2022
+                  year=$(poetry version | sed "s/.*\s\([[:digit:]]\+\)\..*/\1/") ;
+                  day=$(poetry version | sed "s/.*\.\([[:digit:]]\+\).*/\1/") ;
+                  docker run --rm -e AOC_SESSION adventofcode:test -y $year -d $day
     test:
         runs-on: ubuntu-latest
         steps:

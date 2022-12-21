@@ -26,6 +26,10 @@ repos:
           - id: trailing-whitespace
       repo: https://github.com/pre-commit/pre-commit-hooks
       rev: v4.4.0
+    - repo: https://github.com/awslabs/git-secrets.git
+      rev: 99d01d58ebcc06e237c0e3f3ff5ae628aeef6aa6
+      hooks:
+          - id: git-secrets
     - hooks:
           - id: isort
             stages:

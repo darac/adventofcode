@@ -23,9 +23,15 @@ def solve(year: int, day: int, data: str) -> Tuple:
     The results are combined and returned to aocd-runner for submission.
     """
     solver_name = f"aoc.year{year:4d}.day{day:02d}"
-    solver = importlib.import_module(solver_name)
+    try:
+        solver = importlib.import_module(solver_name)
+    except ModuleNotFoundError:
+        return None, None
 
-    a = solver.solve(input=data, part="a", runner=True)
-    b = solver.solve(input=data, part="b", runner=True)
+    try:
+        a = solver.solve(input=data, part="a", runner=True)
+        b = solver.solve(input=data, part="b", runner=True)
+    except AttributeError:
+        return None, None
 
     return a, b
