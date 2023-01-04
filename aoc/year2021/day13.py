@@ -4,6 +4,7 @@
 """
 import os
 import re
+from typing import Literal, Optional
 
 import numpy as np
 from aocd import submit
@@ -47,7 +48,7 @@ def create_sheet(input: str) -> np.ndarray:
     return np.zeros((rows + 1, cols + 1), dtype="bool")
 
 
-def main(input: str, part: str) -> int:
+def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional[int]:
     """Calculates the solution
 
     Args:
@@ -154,19 +155,19 @@ if __name__ == "__main__":
 fold along y=7
 fold along x=5"""
 
-    RESULT = main(TEST_INPUT, "a")
+    RESULT = solve(TEST_INPUT, "a")
     print(f"Result (Part A): {RESULT}")
     assert RESULT == 17
 
     PUZZLE = Puzzle(year=2021, day=13)
     INPUT = PUZZLE.input_data
 
-    RESULT = main(INPUT, "a")
+    RESULT = solve(INPUT, "a")
     print(f"Result (Part A): {RESULT}")
     submit(RESULT, year=2021, day=13, part="a")
 
-    RESULT = main(TEST_INPUT, "b")
+    RESULT = solve(TEST_INPUT, "b")
     print(f"Result (Part B): {RESULT}")
 
-    RESULT = main(INPUT, "b")
+    RESULT = solve(INPUT, "b")
     print(f"Result (Part B): {RESULT}")

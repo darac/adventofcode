@@ -19,6 +19,13 @@
         "projectKey": "darac_adventofcode"
     },
     "cSpell.words": [
-        "NOSONAR"
+        "aocd",
+        "dtype",
+        "Lanternfish",
+        "linewidth",
+        "ndarray",
+        "nonzero",
+        "NOSONAR",
+        "printoptions"
     ]
 }

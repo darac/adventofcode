@@ -93,7 +93,7 @@ score be?
 
 import logging
 import sys
-from typing import Optional
+from typing import Literal, Optional
 
 from aocd import submit
 from aocd.models import Puzzle
@@ -143,7 +143,7 @@ class Bingo(Exception):
 class BingoSquare:
     """Implements a square of the bingo board"""
 
-    def __init__(self, value: Optional[int] = None):
+    def __init__(self, value: Optional[int]):
         """Init Method
 
         Args:
@@ -164,12 +164,13 @@ class BingoSquare:
         else:
             LOG.warning("Can't set a bingo square twice")
 
-    def get(self) -> Optional[int]:
+    def get(self) -> int:
         """Returns the number in the square
 
         Returns:
             int: The number in the square
         """
+        assert self.value is not None
         return self.value
 
     def test(self, value: Optional[int] = None) -> bool:
@@ -201,22 +202,23 @@ class BingoSquare:
 class BingoBoard:
     """Implements the Bingo Board"""
 
-    def __init__(self, board_id):
+    def __init__(self, board_id: int):
         """Init Method"""
-        self.board = []
+        self.board: list[list[BingoSquare]] = []
         self.board_id = board_id
         self._has_won = False
-        self.last_call = None
+        self.last_call: Optional[int] = None
 
-    def load_row(self, row: list):
+    def load_row(self, row: list[str]):
         """Loads a row into the Board
 
         Args:
             row (list): A list of ints
         """
+        board_row: list[BingoSquare] = []
         for item in row:
-            row.append(BingoSquare(int(item)))
-        self.board.append(row)
+            board_row.append(BingoSquare(int(item)))
+        self.board.append(board_row)
         if len(self.board) > 5:
             LOG.warning("The board looks big :(")
 
@@ -234,9 +236,9 @@ class BingoBoard:
                 # This row is all lit up
                 self._has_won = True
                 raise Bingo(winner=self)
-            for colnum, cell in enumerate(row):
+            for col_num, cell in enumerate(row):
                 if cell.test():
-                    column_checks[colnum] += 1
+                    column_checks[col_num] += 1
         if any(x == 5 for x in column_checks):
             self._has_won = True
             raise Bingo(self)
@@ -249,7 +251,7 @@ class BingoBoard:
         """
         return bool(self._has_won)
 
-    def test(self, value: int):
+    def test(self, value: Optional[int] = None):
         """Check all cells in this board against the call.
         Calls "check_bingo()" at the end
 
@@ -263,7 +265,7 @@ class BingoBoard:
         self.check_bingo()
 
     def as_table(self) -> Table:
-        """Retuns the table as a Rich Table (for printing)
+        """Returns the table as a Rich Table (for printing)
 
         Returns:
             Table: a Rich Table
@@ -286,7 +288,7 @@ class BingoBoard:
             int: Score
         """
         assert self.last_call is not None
-        value = 0  # type: int
+        value: int = 0
         for row in self.board:
             for cell in row:
                 if not cell.test():
@@ -305,9 +307,9 @@ def parse_input(input: str) -> dict:
     """
     draws = [int(n) for n in input.splitlines()[0].split(",")]
     print(f"Got {len(draws)} draws")
-    boards = []  # type: list[BingoBoard]
+    boards: list[BingoBoard] = []
 
-    this_board = None  # type: Optional[BingoBoard]
+    this_board: Optional[BingoBoard] = None
     for line in input.splitlines()[1:]:
         logging.debug("Reading Row >>%s<<", line)
         if line == "":
@@ -342,6 +344,32 @@ def generate_table(boards: list) -> Table:
     return grid
 
 
+def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional[int]:
+    LOG.setLevel(logging.ERROR if runner else logging.INFO)
+
+    data = parse_input(input)
+    remaining_boards = len(data["boards"])
+    last_board = None
+    for draw in data["draws"]:
+        LOG.info("Calling %2d", draw)
+        for board in data["boards"]:
+            if board.has_won() or remaining_boards == 0:
+                continue
+            try:
+                board.test(draw)
+            except Bingo as board:
+                last_board = board.board
+                remaining_boards = sum([not x.has_won() for x in data["boards"]])
+                LOG.info("Got a Bingo on board%d", board.board.board_id)
+                LOG.info("%d boards remain in play", remaining_boards)
+                if part == "a":
+                    LOG.debug(board.board.as_table())
+                    return int(board.board.score())
+    assert last_board is not None
+    LOG.debug(last_board.as_table())
+    return int(last_board.score())
+
+
 if __name__ == "__main__":
     SUBMITTED_A = False
     SUBMITTED_B = False
@@ -365,7 +393,7 @@ if __name__ == "__main__":
                         REMAINING_BOARDS = sum(
                             [not x.has_won() for x in data["boards"]]
                         )
-                        logging.info("Got a Bingo on board %d", board.board.id)
+                        logging.info("Got a Bingo on board %d", board.board.board_id)
                         logging.info(
                             "%d boards remain in play",
                             REMAINING_BOARDS,

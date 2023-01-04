@@ -1,4 +1,5 @@
 #!env python
+# spell-checker: disable
 """
 --- Day 1: Calorie Counting ---
 
@@ -85,6 +86,7 @@ Find the top three Elves carrying the most Calories. How many Calories are
 those Elves carrying in total?
 
 """
+# spell-checker: enable
 
 import sys
 from collections import defaultdict

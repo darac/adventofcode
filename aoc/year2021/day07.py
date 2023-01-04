@@ -132,8 +132,8 @@ def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional
     """
     crabs = [int(n) for n in input.split(",")]
     targets = {}
-    for test_posn in track(range(min(crabs), max(crabs) + 1)):
-        targets[test_posn] = fuel_required(crabs, test_posn, part, runner)
+    for test_pos in track(range(min(crabs), max(crabs) + 1)):
+        targets[test_pos] = fuel_required(crabs, test_pos, part, runner)
     return min(targets.values())
 
 

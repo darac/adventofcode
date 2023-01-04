@@ -43,8 +43,14 @@ For example:
 What is the position of the character that causes Santa to first enter the basement?
 """
 
+from typing import Literal, Optional
+
 from aocd.models import Puzzle
 from rich import print
+
+
+def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional[int]:
+    return main(input=input, part=part)
 
 
 def main(input: str, part: str) -> int:
