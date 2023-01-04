@@ -21,4 +21,4 @@ RUN ${POETRY_HOME}/bin/poetry install --no-interaction --no-ansi -vvv
 ENV PATH="/app/.venv/bin:$PATH"
 
 # Run the executable
-ENTRYPOINT [ "/app/docker-entrypoint.sh" ]
+ENTRYPOINT [ "${POETRY_HOME}/bin/poetry", "run", "pytest" ]

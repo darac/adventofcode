@@ -45,6 +45,8 @@ jobs:
             - run:
                   poetry run pytest --cov --cov-report=xml:coverage.xml
                   --junitxml=junit.xml
+              env:
+                  AOC_SESSION: ${{ secrets.AOC_SESSION }}
             - name: SonarCloud Scan
               uses: SonarSource/sonarcloud-github-action@master
               env:
