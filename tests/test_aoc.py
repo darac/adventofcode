@@ -1,8 +1,6 @@
 #!env python
 
-import datetime
 import importlib
-import itertools
 
 import pytest
 import yaml
@@ -10,6 +8,7 @@ import yaml
 
 @pytest.fixture
 def example_data(request):
+    """Returns the example data, stored in a YAML file."""
     solver_name = f"aoc.year{request.param[0]:4d}.day{request.param[1]:02d}"
     try:
         solver = importlib.import_module(solver_name)
@@ -24,11 +23,6 @@ def example_data(request):
         yield [{"solver": None}]
 
 
-@pytest.mark.parametrize(
-    "example_data",
-    list(itertools.product(range(2015, datetime.date.today().year), range(1, 25))),
-    indirect=True,
-)
 @pytest.mark.parametrize("part", ["a", "b"])
 def test_solve(part, example_data):
     for datum in example_data:

@@ -1,0 +1,37 @@
+#!env python3
+import datetime
+import itertools
+
+
+def pytest_addoption(parser):
+    """Add '--year' and '--day' options to pytest."""
+    parser.addoption(
+        "--year",
+        type=int,
+        nargs="*",
+        action="store",
+        choices=range(2015, datetime.date.today().year + 1),
+        default=range(2015, datetime.date.today().year + 1),
+        help="Run AOC tests from this year",
+    )
+    parser.addoption(
+        "--day",
+        type=int,
+        nargs="*",
+        action="store",
+        choices=range(1, 25 + 1),
+        default=range(1, 25 + 1),
+        help="Run AOC tests from this day",
+    )
+
+
+def pytest_generate_tests(metafunc):
+    """For AOC tests, allow the year(s) and day(s) to be specified
+    at the command line."""
+    years = metafunc.config.getoption("year")
+    days = metafunc.config.getoption("day")
+
+    if "example_data" in metafunc.fixturenames:
+        metafunc.parametrize(
+            "example_data", list(itertools.product(years, days)), indirect=True
+        )
