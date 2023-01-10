@@ -1,0 +1,14 @@
+---
+input: ">"
+a: 2
+---
+input: "^v"
+b: 3
+---
+input: "^>v<"
+a: 4
+b: 3
+---
+input: "^v^v^v^v^v"
+a: 2
+b: 11

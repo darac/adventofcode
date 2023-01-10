@@ -1,4 +1,5 @@
 #!env python3
+# spell-checker: disable
 """
 --- Day 2: I Was Told There Would Be No Math ---
 The elves are running low on wrapping paper, and so they need to submit an
@@ -46,6 +47,7 @@ For example:
 
 How many total feet of ribbon should they order?
 """
+# spell-checker: enable
 
 from typing import Literal, Optional
 
