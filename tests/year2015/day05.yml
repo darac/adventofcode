@@ -1,0 +1,16 @@
+# spell-checker: disable
+---
+input: |
+    ugknbfddgicrmopn
+    aaa
+    jchzalrnumimnmhp
+    haegwjzuvuyypxyu
+    dvszwmarrgswjxmb
+a: 2
+---
+input: |
+    qjhvhtzxzqqjkmpb
+    xxyxx
+    uurcxstgmygtbstg
+    ieodomkazucvgmuy
+b: 2
