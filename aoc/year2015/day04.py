@@ -1,6 +1,6 @@
 #!env python
 
-# spell-check: disable
+# spell-checker: disable
 """
 --- Day 4: The Ideal Stocking Stuffer ---
 Santa needs help mining some AdventCoins (very similar to bitcoins) to use
@@ -25,6 +25,7 @@ For example:
 
 Now find one that starts with six zeroes.
 """
+# spell-checker: enable
 
 import hashlib
 from typing import Literal
