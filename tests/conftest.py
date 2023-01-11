@@ -1,6 +1,30 @@
 #!env python3
 import datetime
 import itertools
+import os
+
+
+def pytest_terminal_summary(terminalreporter, exitstatus, config):
+    # on failures, don't add "Captured stdout call" as pytest does that already
+    # otherwise, the section "Captured stdout call" will be added twice
+    if exitstatus > 0:
+        return
+    # get all reports
+    reports = terminalreporter.getreports("")
+    # combine captured stdout of reports for tests named `<smth>::test_summary`
+    content = os.linesep.join(
+        report.capstdout for report in reports if report.capstdout
+    )
+    # add custom section that mimics pytest's one
+    if content:
+        terminalreporter.ensure_newline()
+        terminalreporter.section(
+            "Captured stdout call",
+            sep="-",
+            blue=True,
+            bold=True,
+        )
+        terminalreporter.line(content)
 
 
 def pytest_addoption(parser):

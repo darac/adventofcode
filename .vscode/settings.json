@@ -21,13 +21,19 @@
     "cSpell.words": [
         "addoption",
         "aocd",
+        "capstdout",
         "dtype",
         "eggnoggedly",
+        "exitstatus",
+        "fixturenames",
+        "getreports",
         "Lanternfish",
         "linewidth",
+        "metafunc",
         "ndarray",
         "nonzero",
         "NOSONAR",
-        "printoptions"
+        "printoptions",
+        "terminalreporter"
     ]
 }

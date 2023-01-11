@@ -45,12 +45,12 @@ For example:
 # spell-checker: enable
 
 from collections import Counter
-from typing import Literal, Optional
+from typing import Literal
 
 from rich import print
 
 
-def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional[int]:
+def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> int | None:
     position = {"santa": {"x": 0, "y": 0}, "robot": {"x": 0, "y": 0}}
     locations_visited: dict[str, Counter] = {
         "santa": Counter({str(position["santa"]): 1}),
