@@ -22,6 +22,8 @@
         "addoption",
         "adventofcode",
         "aocd",
+        "astype",
+        "blit",
         "capstdout",
         "dtype",
         "eggnoggedly",
@@ -35,6 +37,8 @@
         "nonzero",
         "NOSONAR",
         "printoptions",
+        "pygame",
+        "surfarray",
         "terminalreporter"
     ]
 }
