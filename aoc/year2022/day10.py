@@ -371,6 +371,7 @@ on your CRT?
 # spell-checker: enable
 
 import logging
+import os
 from dataclasses import dataclass, field
 from typing import Literal
 
@@ -378,7 +379,7 @@ import numpy as np
 import parse
 from PIL import Image
 
-from aoc.visualisations import Kivy, Numpy
+from aoc.visualisations import Numpy
 
 logging.basicConfig(level="DEBUG", format="%(message)s", datefmt="[%X]")
 LOG = logging.getLogger()
@@ -470,193 +471,12 @@ def solve(
 
     if part == "a":
         return sum(signal_strengths.values())
-    vis = Kivy.ManualOCR()
-    vis.image = Image.fromarray(clock.CRT.read())
-    vis.run()
-    return Kivy.answer
+    if os.environ.get("DISPLAY", "") != "":
+        from aoc.visualisations import Kivy
 
-    # cpu_cycle = 1
-    # register_X = 1
-    # command_reader = read_instruction(input)
-    # command = None
-    # running = True
-    # signal_strengths = {}
-    # crt = CRT()
-    # while running:
-    #     if cpu_cycle in [20, 60, 100, 140, 180, 220]:
-    #         signal_strengths[cpu_cycle] = register_X * cpu_cycle
-    #     crt.draw(cpu_cycle, register_X)
-    #     if not command:
-    #         try:
-    #             command = next(command_reader)
-    #             if command == "noop":
-    #                 command = None
-    #         except StopIteration:
-    #             running = False
-    #             break
-    #     else:
-    #         p = parse.parse("addx {:d}", command)  # cSpell: disable-line
-    #         if p and type(p) is parse.Result:
-    #             register_X += p[0]
-    #             command = None
-    #     if not runner:
-    #         Numpy.boolean_array(crt.read())
-    #     cpu_cycle += 1
-    # if part == "a":
-    #     return sum(signal_strengths.values())
-    # vis = Kivy.ManualOCR()
-    # vis.image = Image.fromarray(crt.read())
-    # vis.run()
-    # return Kivy.answer
-
-
-if __name__ == "__main__":
-    solve(
-        input="""addx 15
-addx -11
-addx 6
-addx -3
-addx 5
-addx -1
-addx -8
-addx 13
-addx 4
-noop
-addx -1
-addx 5
-addx -1
-addx 5
-addx -1
-addx 5
-addx -1
-addx 5
-addx -1
-addx -35
-addx 1
-addx 24
-addx -19
-addx 1
-addx 16
-addx -11
-noop
-noop
-addx 21
-addx -15
-noop
-noop
-addx -3
-addx 9
-addx 1
-addx -3
-addx 8
-addx 1
-addx 5
-noop
-noop
-noop
-noop
-noop
-addx -36
-noop
-addx 1
-addx 7
-noop
-noop
-noop
-addx 2
-addx 6
-noop
-noop
-noop
-noop
-noop
-addx 1
-noop
-noop
-addx 7
-addx 1
-noop
-addx -13
-addx 13
-addx 7
-noop
-addx 1
-addx -33
-noop
-noop
-noop
-addx 2
-noop
-noop
-noop
-addx 8
-noop
-addx -1
-addx 2
-addx 1
-noop
-addx 17
-addx -9
-addx 1
-addx 1
-addx -3
-addx 11
-noop
-noop
-addx 1
-noop
-addx 1
-noop
-noop
-addx -13
-addx -19
-addx 1
-addx 3
-addx 26
-addx -30
-addx 12
-addx -1
-addx 3
-addx 1
-noop
-noop
-noop
-addx -9
-addx 18
-addx 1
-addx 2
-noop
-noop
-addx 9
-noop
-noop
-noop
-addx -1
-addx 2
-addx -37
-addx 1
-addx 3
-noop
-addx 15
-addx -21
-addx 22
-addx -6
-addx 1
-noop
-addx 2
-addx 1
-noop
-addx -10
-noop
-noop
-addx 20
-addx 1
-addx 2
-addx 2
-addx -6
-addx -11
-noop
-noop
-noop""",
-        part="a",
-    )
+        vis = Kivy.ManualOCR()
+        vis.image = Image.fromarray(clock.CRT.read())
+        vis.run()
+        return Kivy.answer
+    else:
+        return "TEST"

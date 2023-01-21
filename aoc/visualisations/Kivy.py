@@ -1,7 +1,6 @@
 import re
 from io import BytesIO
 
-import numpy as np
 from kivy.app import App
 from kivy.clock import Clock
 from kivy.core.image import Image as CoreImage

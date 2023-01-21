@@ -27,12 +27,8 @@ class TwoDAnimationViewer:
         """
         self.iterator = update_func(puzzle_input)
         self.answer = None
-        self.display: pygame.surface.Surface | None = None
-        try:
-            pygame.init()
-            self.display = pygame.display.set_mode(display_size)
-        except pygame.error:
-            pass
+        pygame.init()
+        self.display = pygame.display.set_mode(display_size)
 
     @property
     def title(self) -> str:
