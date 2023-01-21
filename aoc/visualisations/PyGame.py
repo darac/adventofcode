@@ -3,7 +3,7 @@ from typing import Callable, Tuple
 import pygame
 
 
-class Viewer:
+class TwoDAnimationViewer:
     """Repeatedly calls a function and visualises the grid of numbers."""
 
     def __init__(
@@ -25,12 +25,26 @@ class Viewer:
             puzzle_input (str): The puzzle input, passed to `update_func`.
             display_size (Tuple[int, int]): The size of the display window, in pixels.
         """
-        pygame.init()
-        self.display = pygame.display.set_mode(display_size)
         self.iterator = update_func(puzzle_input)
         self.answer = None
+        self.display: pygame.surface.Surface | None = None
+        try:
+            pygame.init()
+            self.display = pygame.display.set_mode(display_size)
+        except pygame.error:
+            pass
 
-    def set_title(self, title: str):
+    @property
+    def title(self) -> str:
+        """Returns the title of the window
+
+        Returns:
+            str: The pygame caption
+        """
+        return pygame.display.get_caption()[0]
+
+    @title.setter
+    def title(self, title: str):
         """Sets the title of the pygame window.
 
         Args:
@@ -41,21 +55,28 @@ class Viewer:
     def start(self) -> int | None:
         running = True
         while running:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    running = False
+            if self.display is not None:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        running = False
 
-            try:
-                self.answer, Z = next(self.iterator)
-            except StopIteration:
-                pygame.quit()
-                return self.answer
-            surf = pygame.surfarray.make_surface(Z)
-            scaled_surf = pygame.transform.scale(surf, self.display.get_size())
-            self.display.blit(scaled_surf, (0, 0))
-            self.set_title(str(self.answer))
+                try:
+                    self.answer, Z = next(self.iterator)
+                except StopIteration:
+                    pygame.quit()
+                    return self.answer
+                surface = pygame.surfarray.make_surface(Z)
+                scaled_surface = pygame.transform.scale(
+                    surface, self.display.get_size()
+                )
+                self.display.blit(scaled_surface, (0, 0))
+                self.title = str(self.answer)
 
-            pygame.display.update()
+                pygame.display.update()
+            else:
+                for a, _ in self.iterator:
+                    self.answer = a
 
-        pygame.quit()
+        if self.display is not None:
+            pygame.quit()
         return None
