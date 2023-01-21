@@ -148,4 +148,4 @@ input: |
     noop
     noop
 a: 13140
-b: ABCDEF
+b: TEST

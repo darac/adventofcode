@@ -3,6 +3,7 @@ from io import BytesIO
 
 import numpy as np
 from kivy.app import App
+from kivy.clock import Clock
 from kivy.core.image import Image as CoreImage
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
@@ -66,6 +67,8 @@ class ManualOCR(App):
 
         root_grid.add_widget(input_grid)
 
+        Clock.schedule_once(self.timeout, 30)
+
         return root_grid
 
     @property
@@ -80,6 +83,14 @@ class ManualOCR(App):
         print(f'Submitting "{self.text}"')
         global answer
         answer = self.text
+        app = App.get_running_app()
+        assert app is not None
+        app.stop()
+
+    def timeout(self, instance):
+        print('Timeout. Auto-Submitting "TEST"')
+        global answer
+        answer = "TEST"
         app = App.get_running_app()
         assert app is not None
         app.stop()
