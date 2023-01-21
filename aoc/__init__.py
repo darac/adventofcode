@@ -12,7 +12,7 @@ from typing import Tuple
 try:
     import importlib.metadata as importlib_metadata
 except ModuleNotFoundError:
-    import importlib_metadata  # type: ignore[no-redef]
+    import importlib_metadata  # type: ignore[no-redef] # cSpell: disable-line
 
 __version__ = importlib_metadata.version(__name__)
 
@@ -23,6 +23,9 @@ def solve(year: int, day: int, data: str) -> Tuple:
     The results are combined and returned to aocd-runner for submission.
     """
     solver_name = f"aoc.year{year:4d}.day{day:02d}"
+    os.environ["KIVY_NO_ARGS"] = "1"
+    os.environ["KIVY_NO_CONSOLELOG"] = "1"
+    os.environ["KIVY_LOG_MODE"] = "PYTHON"
     try:
         solver = importlib.import_module(solver_name)
     except ModuleNotFoundError:

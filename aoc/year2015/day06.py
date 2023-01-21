@@ -67,7 +67,7 @@ import parse
 import pygame
 from rich.logging import RichHandler
 
-from aoc.visualisations.pygame import Viewer
+from aoc.visualisations.PyGame import TwoDAnimationViewer
 
 logging.basicConfig(
     level="DEBUG", format="%(message)s", datefmt="[%X]", handlers=[RichHandler()]
@@ -80,22 +80,17 @@ def solve_steps_a(input: str) -> Iterable:
     for line in input.splitlines():
         # Process instructions
         p = parse.parse("{command} {top:d},{left:d} through {bottom:d},{right:d}", line)
-        assert type(p) is parse.Result
-        if p:
-            if p["command"] == "turn on":
-                lights[p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1] = True
-            elif p["command"] == "turn off":
-                lights[p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1] = False
-            elif p["command"] == "toggle":
-                lights[
-                    p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1
-                ] = np.logical_not(
-                    lights[p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1]
-                )
-            else:
-                raise ValueError("Unknown command")
-        else:
-            raise ValueError("Unmatched instruction")
+        assert type(p) is parse.Result and p
+        if p["command"] == "turn on":
+            lights[p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1] = True
+        elif p["command"] == "turn off":
+            lights[p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1] = False
+        elif p["command"] == "toggle":
+            lights[
+                p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1
+            ] = np.logical_not(
+                lights[p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1]
+            )
         LOG.debug(f"{line} -> {lights.sum()}")
         yield lights.sum(), lights.astype("uint8")
 
@@ -151,7 +146,7 @@ def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> int | No
         LOG.setLevel("WARN")
     if part == "a":
         try:
-            vis = Viewer(
+            vis = TwoDAnimationViewer(
                 update_func=solve_steps_a, puzzle_input=input, display_size=(1000, 1000)
             )
             return vis.start()
@@ -162,7 +157,7 @@ def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> int | No
             return retval
     else:
         try:
-            vis = Viewer(
+            vis = TwoDAnimationViewer(
                 update_func=solve_steps_b, puzzle_input=input, display_size=(1000, 1000)
             )
             return vis.start()

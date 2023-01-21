@@ -1,6 +1,7 @@
 #!env python
 
 import importlib
+import os
 
 import pytest
 import yaml
@@ -31,4 +32,7 @@ def test_solve(part, example_data):
         elif part in datum and datum[part] is None:
             pytest.skip(f"No answer for part {part} (yet)")
         elif part in datum:
+            os.environ["KIVY_NO_ARGS"] = "1"
+            os.environ["KIVY_NO_CONSOLELOG"] = "1"
+            os.environ["KIVY_LOG_MODE"] = "PYTHON"
             assert datum["solver"](input=datum["input"], part=part) == datum[part]
