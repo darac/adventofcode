@@ -1,48 +1,49 @@
 {
-    "python.formatting.provider": "black",
-    "python.linting.pylintEnabled": false,
-    "python.linting.enabled": true,
-    "python.linting.flake8Enabled": true,
-    "python.formatting.blackArgs": [
-        "--target-version",
-        "py310"
-    ],
-    "editor.formatOnSave": true,
-    "python.analysis.typeCheckingMode": "basic",
-    "python.testing.pytestArgs": [
-        "aoc"
-    ],
-    "python.testing.unittestEnabled": false,
-    "python.testing.pytestEnabled": true,
-    "sonarlint.connectedMode.project": {
-        "connectionId": "darac",
-        "projectKey": "darac_adventofcode"
-    },
-    "cSpell.words": [
-        "addoption",
-        "adventofcode",
-        "aocd",
-        "astype",
-        "blit",
-        "boxlayout",
-        "capstdout",
-        "dtype",
-        "eggnoggedly",
-        "exitstatus",
-        "fixturenames",
-        "getreports",
-        "gridlayout",
-        "halign",
-        "kivy",
-        "Lanternfish",
-        "linewidth",
-        "metafunc",
-        "ndarray",
-        "nonzero",
-        "NOSONAR",
-        "printoptions",
-        "pygame",
-        "surfarray",
-        "terminalreporter"
-    ]
+  "cSpell.words": [
+    "addoption",
+    "adventofcode",
+    "aocd",
+    "astype",
+    "blit",
+    "boxlayout",
+    "capstdout",
+    "dtype",
+    "eggnoggedly",
+    "exitstatus",
+    "fixturenames",
+    "getreports",
+    "gridlayout",
+    "halign",
+    "kivy",
+    "Lanternfish",
+    "linewidth",
+    "metafunc",
+    "ndarray",
+    "nonzero",
+    "NOSONAR",
+    "printoptions",
+    "pygame",
+    "surfarray",
+    "terminalreporter"
+  ],
+  "editor.formatOnSave": true,
+  "python.analysis.typeCheckingMode": "basic",
+  "python.formatting.blackArgs": [
+    "--target-version",
+    "py310"
+  ],
+  "python.formatting.provider": "black",
+  "python.linting.enabled": true,
+  "python.linting.flake8Enabled": true,
+  "python.linting.pylintEnabled": false,
+  "python.testing.pytestArgs": [
+    "aoc"
+  ],
+  "python.testing.pytestEnabled": true,
+  "python.testing.unittestEnabled": false,
+  "sonarlint.connectedMode.project": {
+    "connectionId": "darac",
+    "projectKey": "darac_adventofcode"
+  },
+  "ansible.python.interpreterPath": "/home/ipa/darac/git/darac/pyusbtree/.venv/bin/python"
 }
