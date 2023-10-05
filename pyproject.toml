@@ -85,7 +85,7 @@
 
     [tool.poetry.group.dev.dependencies]
         black               = "^22.10.0"
-        bpython             = "^0.23"
+        bpython             = "^0.24"
         coverage            = { extras = ["toml"], version = "^7.3.2" }
         mypy                = "^0.991"
         pre-commit          = "^3.4.0"
