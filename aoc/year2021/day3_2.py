@@ -63,8 +63,6 @@ rating and CO2 scrubber rating, then multiply them together. What is the life su
 rating of the submarine? (Be sure to represent your answer in decimal, not binary.)
 """
 
-from typing import Sized
-
 from aocd.models import Puzzle
 from rich import print
 

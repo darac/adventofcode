@@ -84,11 +84,10 @@ total score be if everything goes exactly according to your strategy guide?
 
 """
 
-import sys
 from typing import Literal, Optional
 
 
-def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional[int]:
+def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optional[int]:
     guide_a = {
         #      | Rock | Papr | Scis
         #      |-------------------

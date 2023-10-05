@@ -92,9 +92,7 @@ from aocd.models import Puzzle
 from rich import print
 
 
-def get_neighbours(
-    row: int, column: int, rows: int, cols: int
-) -> list[tuple[int, int]]:
+def get_neighbours(row: int, column: int, rows: int, cols: int) -> list[tuple[int, int]]:
     """Return a list of neighbouring locations
 
     Args:
@@ -157,7 +155,7 @@ def get_neighbour(data_frame: pd.DataFrame, row_name, column_name):
     return neighbours
 
 
-def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional[int]:
+def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optional[int]:
     """Calculates the solution
 
     Args:
@@ -167,10 +165,8 @@ def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional
     Returns:
         int: The Puzzle Solution
     """
-    data_frame = pd.DataFrame(
-        [[int(char) for char in line] for line in input.splitlines()]
-    )
-    if not runner:
+    data_frame = pd.DataFrame([[int(char) for char in line] for line in input.splitlines()])
+    if not _runner:
         print(data_frame)
     risk_level = 0
     low_points = []
@@ -187,10 +183,10 @@ def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional
 
     # Part B
     data = np.array([list(map(int, list(row))) for row in input.splitlines()])
-    if not runner:
+    if not _runner:
         print(data)
     basins = sorted([flood(data, low_point, []) for low_point in low_points])
-    if not runner:
+    if not _runner:
         print(f"Largest basins: {basins[-3:]} -> {np.prod(basins[-3:])}")
     return int(np.prod(basins[-3:]))
 

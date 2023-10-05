@@ -3,8 +3,8 @@
         "editorconfig.editorconfig",
         "matangover.mypy",
         "ms-python.python",
-        "ms-python.isort",
         "streetsidesoftware.code-spell-checker",
-        "sonarsource.sonarlint-vscode"
+        "sonarsource.sonarlint-vscode",
+        "charliermarsh.ruff"
     ]
 }

@@ -104,9 +104,7 @@ from rich.table import Table
 
 traceback.install(show_locals=True)
 FORMAT = "%(message)s"
-logging.basicConfig(
-    level="INFO", format=FORMAT, datefmt="[%X]", handlers=[RichHandler()]
-)
+logging.basicConfig(level="INFO", format=FORMAT, datefmt="[%X]", handlers=[RichHandler()])
 LOG = logging.getLogger()
 
 PUZZLE = Puzzle(year=2021, day=4)
@@ -344,8 +342,8 @@ def generate_table(boards: list) -> Table:
     return grid
 
 
-def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional[int]:
-    LOG.setLevel(logging.ERROR if runner else logging.INFO)
+def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optional[int]:
+    LOG.setLevel(logging.ERROR if _runner else logging.INFO)
 
     data = parse_input(input)
     remaining_boards = len(data["boards"])
@@ -390,9 +388,7 @@ if __name__ == "__main__":
                         board.test(draw)
                     except Bingo as board:
                         LAST_BOARD = board.board
-                        REMAINING_BOARDS = sum(
-                            [not x.has_won() for x in data["boards"]]
-                        )
+                        REMAINING_BOARDS = sum([not x.has_won() for x in data["boards"]])
                         logging.info("Got a Bingo on board %d", board.board.board_id)
                         logging.info(
                             "%d boards remain in play",

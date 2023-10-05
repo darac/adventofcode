@@ -1,4 +1,5 @@
 #!env python3
+# spell-checker: disable
 """--- Day 8: Seven Segment Search ---
 You barely reach the safety of the cave when the whale smashes into the
 cave mouth, collapsing it. Sensors indicate another exit to this cave at a
@@ -54,7 +55,9 @@ For example, here is what you might see in a single entry in your notes:
 
   acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab |
   cdfeb fcadb cdfeb cdbaf
-(The entry is wrapped here to two lines so it fits; in your notes, it will all be on a single line.)
+
+(The entry is wrapped here to two lines so it fits; in your notes, it will
+all be on a single line.)
 
 Each entry consists of ten unique signal patterns, a | delimiter, and
 finally the four digit output value. Within an entry, the same wire/segment
@@ -156,6 +159,7 @@ Adding all of the output values in this larger example produces 61229.
 For each entry, determine all of the wire/segment connections and decode
 the four-digit output values. What do you get if you add up all of the
 output values?"""
+# spell-checker: enable
 
 
 from typing import Literal, Optional
@@ -164,7 +168,11 @@ from aocd import submit
 from aocd.models import Puzzle
 from rich import print
 
-TEST_INPUT = """be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb | fdgacbe cefdb cefbgd gcbe
+# spell-checker: disable
+# Weird formatting to appease the line-length gods
+TEST_INPUT = (
+    """be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb | """
+    """fdgacbe cefdb cefbgd gcbe
 edbfga begcd cbg gc gcadebf fbgde acbgfd abcde gfcbed gfec | fcgedb cgb dgebacf gc
 fgaebd cg bdaec gdafb agbcfd gdcbef bgcad gfac gcb cdgabef | cg cg fdcagb cbg
 fbegcd cbd adcefb dageb afcb bc aefdc ecdab fgdeca fcdbega | efabcd cedba gadfec cb
@@ -174,11 +182,13 @@ dbcfg fgd bdegcaf fgec aegbdf ecdfab fbedc dacgb gdcebf gf | cefg dcbef fcge gbc
 bdfegc cbegaf gecbf dfcage bdacg ed bedf ced adcbefg gebcd | ed bcgafe cdgba cbgef
 egadfb cdbfeg cegd fecab cgb gbdefca cg fgcdab egfdb bfceg | gbdfcae bgc cg cgb
 gcafb gcf dcaebfg ecagb gf abcdeg gaef cafbge fdbac fegbdc | fgae cfgab fg bagce"""
+)
+# spell-checker: enable
 PUZZLE = Puzzle(year=2021, day=8)
 INPUT = PUZZLE.input_data
 
 
-def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional[int]:
+def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optional[int]:
     """Decodes the digits
 
     Args:
@@ -193,7 +203,7 @@ def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional
         for line in input.splitlines():
             patterns, output = [x.split() for x in line.split(" | ")]
             num_uniques += len(list(filter(lambda x: len(x) in [2, 3, 4, 7], output)))
-            if not runner:
+            if not _runner:
                 print(f"Now at {num_uniques} uniques")
 
         return num_uniques
@@ -231,7 +241,7 @@ def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional
                 case _:
                     retstr += "?"
         retval += int(retstr)
-        if not runner:
+        if not _runner:
             print(f"Retval: {retstr} -> {retval}")
     return retval
 

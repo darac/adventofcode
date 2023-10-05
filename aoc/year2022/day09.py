@@ -53,13 +53,12 @@ class RopeFollower:
                 self.location = (self.location[0] - 1, self.location[1])
 
         assert (
-            abs(leader[0] - self.location[0]) <= 2
-            and abs(leader[1] - self.location[1]) <= 2
+            abs(leader[0] - self.location[0]) <= 2 and abs(leader[1] - self.location[1]) <= 2
         ), f"H{leader}, {self.id}{self.location}"
         self.visited.add(self.location)
 
 
-def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional[int]:
+def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optional[int]:
     head_location = (0, 0)
     knots = []
     for id in range(1 if part == "a" else 9):

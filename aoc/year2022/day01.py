@@ -88,12 +88,11 @@ those Elves carrying in total?
 """
 # spell-checker: enable
 
-import sys
 from collections import defaultdict
 from typing import Dict, Literal, Optional
 
 
-def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional[int]:
+def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optional[int]:
     elf: Dict[int, int] = defaultdict(int)
     elf_num: int = 1
     retval: int

@@ -162,8 +162,7 @@ def path_set(dictionary: dict, path: Union[Path, str], set_item: Any):
 def dir_size(directory: dict) -> int:
     size = 0
     for dirent in directory.values():
-        if type(dirent) is dict:
-            assert type(dirent) == dict
+        if isinstance(dirent, dict):
             size += dir_size(dirent)
         else:
             size += dirent
@@ -180,31 +179,27 @@ def visualise(
     for dirent, value in directory.items():
         dir_marker = ""
         pick_me = ""
-        if type(value) is dict:
+        if isinstance(value, dict):
             picked_directories.extend(
-                visualise(
-                    value, root=f"{root}{os.sep}{dirent}", runner=runner, part=part
-                )
+                visualise(value, root=f"{root}{os.sep}{dirent}", runner=runner, part=part)
             )
             dirent_size = dir_size(value)
             if (part == "a" and dirent_size <= 100_000) or (part == "b"):
-                assert type(value) == dict
+                assert isinstance(value, dict)
                 pick_me = " <----"
                 picked_directories.append(dirent_size)
             else:
                 pick_me = ""
             dir_marker = "TOTAL: "
         else:
-            assert type(value) is int
+            assert isinstance(value, int)
             dirent_size = int(value)
         if not runner:
-            print(
-                f"{str(root) + os.sep + dirent:80}\t{dir_marker:7}{dirent_size:-12,}{pick_me}"
-            )
+            print(f"{str(root) + os.sep + dirent:80}\t{dir_marker:7}{dirent_size:-12,}{pick_me}")
     return picked_directories
 
 
-def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional[int]:
+def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optional[int]:
     filesystem: Dict[str, Union[dict, int]] = dict()
     cwd = Path("/")
     for line in input.splitlines():
@@ -225,19 +220,13 @@ def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional
             case _:
                 raise ValueError(f"Unknown command: {line}")
 
-    big_folders = visualise(filesystem, runner=runner, part=part)
+    big_folders = visualise(filesystem, runner=_runner, part=part)
     if part == "a":
         return sum(big_folders)
     else:
         disk_size = 70_000_000
         free_space = disk_size - dir_size(filesystem)
         needed_space = 30_000_000 - free_space
-        if not runner:
+        if not _runner:
             print(f"{free_space:,} free. Need {needed_space:,} more.")
-        return min(
-            [
-                i
-                for i in sorted(big_folders + [dir_size(filesystem)])
-                if i >= needed_space
-            ]
-        )
+        return min([i for i in sorted(big_folders + [dir_size(filesystem)]) if i >= needed_space])

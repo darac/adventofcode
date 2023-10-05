@@ -100,9 +100,7 @@ def run_step(data: np.ndarray, step: int, part: str, runner: bool = False) -> li
     return phase_flashes
 
 
-def solve(
-    input: str, part: Literal["a", "b", "training"], runner: bool = False
-) -> Optional[int]:
+def solve(input: str, part: Literal["a", "b", "training"], _runner: bool = False) -> Optional[int]:
     """Calculates the solution
 
     Args:
@@ -113,23 +111,23 @@ def solve(
         int: The Puzzle Solution
     """
     data = np.array([list(row) for row in input.splitlines()], dtype="int")
-    if not runner:
+    if not _runner:
         print(data)
     num_flashes = 0
     if part == "training":
         for step in range(1, 3):
-            num_flashes += run_step(data, step, part, runner)[0]
+            num_flashes += run_step(data, step, part, _runner)[0]
         return num_flashes
     if part == "a":
         for step in range(100):
-            num_flashes += run_step(data, step, part, runner)[0]
+            num_flashes += run_step(data, step, part, _runner)[0]
         return num_flashes
     if part == "b":
         step = 1
         while True:
-            stepdata = run_step(data, step, part, runner)
+            stepdata = run_step(data, step, part, _runner)
             for phase, flashers in enumerate(stepdata):
-                if flashers == data.size and not runner:
+                if flashers == data.size and not _runner:
                     print(data)
                     print(
                         f"{data.size} points. {flashers} flashers on phase {phase} of step {step}"

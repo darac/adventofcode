@@ -6,9 +6,7 @@ import pygame
 class TwoDAnimationViewer:
     """Repeatedly calls a function and visualises the grid of numbers."""
 
-    def __init__(
-        self, update_func: Callable, puzzle_input: str, display_size: Tuple[int, int]
-    ):
+    def __init__(self, update_func: Callable, puzzle_input: str, display_size: Tuple[int, int]):
         """
         Visualises an array of values.
 
@@ -62,9 +60,7 @@ class TwoDAnimationViewer:
                     pygame.quit()
                     return self.answer
                 surface = pygame.surfarray.make_surface(Z)
-                scaled_surface = pygame.transform.scale(
-                    surface, self.display.get_size()
-                )
+                scaled_surface = pygame.transform.scale(surface, self.display.get_size())
                 self.display.blit(scaled_surface, (0, 0))
                 self.title = str(self.answer)
 

@@ -12,9 +12,7 @@ def pytest_terminal_summary(terminalreporter, exitstatus, config):
     # get all reports
     reports = terminalreporter.getreports("")
     # combine captured stdout of reports for tests named `<smth>::test_summary`
-    content = os.linesep.join(
-        report.capstdout for report in reports if report.capstdout
-    )
+    content = os.linesep.join(report.capstdout for report in reports if report.capstdout)
     # add custom section that mimics pytest's one
     if content:
         terminalreporter.ensure_newline()
@@ -56,6 +54,4 @@ def pytest_generate_tests(metafunc):
     days = metafunc.config.getoption("day")
 
     if "example_data" in metafunc.fixturenames:
-        metafunc.parametrize(
-            "example_data", list(itertools.product(years, days)), indirect=True
-        )
+        metafunc.parametrize("example_data", list(itertools.product(years, days)), indirect=True)

@@ -457,17 +457,14 @@ class CPU:
             self.busy = False
 
 
-def solve(
-    input: str, part: Literal["a", "b"], runner: bool = False
-) -> int | str | None:
-
+def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> int | str | None:
     clock = Clock(input)
     signal_strengths = {}
     for stop_point in [20, 60, 100, 140, 180, 220]:
-        clock.run(stop_at_tick=stop_point, visual=not runner)
+        clock.run(stop_at_tick=stop_point, visual=not _runner)
         signal_strengths[stop_point] = clock.CPU.register["X"] * stop_point
         LOG.info(signal_strengths)
-    clock.run(visual=not runner)
+    clock.run(visual=not _runner)
 
     if part == "a":
         return sum(signal_strengths.values())

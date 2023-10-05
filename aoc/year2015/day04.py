@@ -31,7 +31,7 @@ import hashlib
 from typing import Literal
 
 
-def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> int | None:
+def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
     seed = input.encode("utf-8")
     count = 1
     while (
@@ -39,7 +39,7 @@ def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> int | No
         .hexdigest()
         .startswith("0" * (5 if part == "a" else 6))
     ):
-        if not runner:
+        if not _runner:
             print(count)
         count += 1
     return count

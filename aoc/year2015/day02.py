@@ -52,11 +52,16 @@ How many total feet of ribbon should they order?
 from typing import Literal, Optional
 
 
-def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional[int]:
+def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optional[int]:
     paper_feet = 0
     ribbon_feet = 0
     for present in input.splitlines():
-        l, w, h = sorted(map(int, present.split("x")))
-        paper_feet += (2 * l * w) + (2 * w * h) + (2 * h * l) + min(l * w, w * h, h * l)
-        ribbon_feet += (l + l + w + w) + (l * w * h)
+        length, width, height = sorted(map(int, present.split("x")))
+        paper_feet += (
+            (2 * length * width)
+            + (2 * width * height)
+            + (2 * height * length)
+            + min(length * width, width * height, height * length)
+        )
+        ribbon_feet += (length + length + width + width) + (length * width * height)
     return paper_feet if part == "a" else ribbon_feet

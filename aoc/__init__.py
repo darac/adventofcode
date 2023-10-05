@@ -32,8 +32,8 @@ def solve(year: int, day: int, data: str) -> Tuple:
         return None, None
 
     try:
-        a = solver.solve(input=data, part="a", runner=True)
-        b = solver.solve(input=data, part="b", runner=True)
+        a = solver.solve(input=data, part="a", _runner=True)
+        b = solver.solve(input=data, part="b", _runner=True)
     except AttributeError:
         return None, None
 

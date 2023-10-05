@@ -50,7 +50,7 @@ from typing import Literal
 from rich import print
 
 
-def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> int | None:
+def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
     position = {"santa": {"x": 0, "y": 0}, "robot": {"x": 0, "y": 0}}
     locations_visited: dict[str, Counter] = {
         "santa": Counter({str(position["santa"]): 1}),
@@ -72,7 +72,7 @@ def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> int | No
         locations_visited[actor].update({str(position[actor]): 1})
         if part == "b":
             actor = "santa" if actor == "robot" else "robot"
-    if not runner:
+    if not _runner:
         print(input)
         print(locations_visited)
     return len(locations_visited["robot"] + locations_visited["santa"])

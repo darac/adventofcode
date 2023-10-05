@@ -109,7 +109,7 @@ def priority(char: str) -> int:
     return ord(char) - ord("a") + 1 if char.islower() else ord(char) - ord("A") + 27
 
 
-def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional[int]:
+def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optional[int]:
     score = 0
     rucksack_a = set()
     rucksack_b = set()
@@ -128,9 +128,7 @@ def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional
                 rucksack_b.update(list(line))
             else:
                 rucksack_c.update(list(line))
-                common = list(
-                    rucksack_a.intersection(rucksack_b).intersection(rucksack_c)
-                )
+                common = list(rucksack_a.intersection(rucksack_b).intersection(rucksack_c))
         if common:
             score += priority(common[0])
             rucksack_a = set()

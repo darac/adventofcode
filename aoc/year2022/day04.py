@@ -74,7 +74,7 @@ def visualise(low: int, high: int, upper: int, char: str = "+") -> str:
     return output
 
 
-def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional[int]:
+def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optional[int]:
     count = 0
     parser = compile("{:d}-{:d},{:d}-{:d}")
     for line in input.splitlines():
@@ -82,24 +82,20 @@ def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional
         o_low = o_high = 0
         assert a_low <= a_high, "Whoops, Pairs are not sorted"
         assert b_low <= b_high, "Whoops, Pairs are not sorted"
-        if not runner:
+        if not _runner:
             print(visualise(a_low, a_high, max(a_high, b_high), "A"))
             print(visualise(b_low, b_high, max(a_high, b_high), "B"))
         if part == "a":
-            if (a_low >= b_low and a_high <= b_high) or (
-                b_low >= a_low and b_high <= a_high
-            ):
+            if (a_low >= b_low and a_high <= b_high) or (b_low >= a_low and b_high <= a_high):
                 o_low = max(a_low, b_low)
                 o_high = min(a_high, b_high)
                 count += 1
         else:
-            if (a_high >= b_low and a_low <= b_high) or (
-                b_high >= a_low and b_low <= a_high
-            ):
+            if (a_high >= b_low and a_low <= b_high) or (b_high >= a_low and b_low <= a_high):
                 o_low = max(a_low, b_low)
                 o_high = min(a_high, b_high)
                 count += 1
-        if not runner:
+        if not _runner:
             print(
                 visualise(o_low, o_high, max(a_high, b_high), "O"),
                 "<--" if o_low != o_high else "",

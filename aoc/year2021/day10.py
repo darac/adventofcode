@@ -134,7 +134,7 @@ from aocd.models import Puzzle
 from rich import print
 
 
-def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional[int]:
+def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optional[int]:
     """Calculates the solution
 
     Args:
@@ -207,7 +207,7 @@ def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional
                         else:
                             printout += f"[green]{char}[/]"
                     case _:
-                        if not runner:
+                        if not _runner:
                             print(f"Unknown chunk {char}")
                         printout += f"[on red]{char}[/]"
         if not line_corrupted and len(chunk_deck) > 0:
@@ -229,7 +229,7 @@ def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional
                         printout += ">"
                         this_autocomplete_score += 4
                     case _:
-                        if not runner:
+                        if not _runner:
                             print(f"Unknown Chunk {chunk}")
             error = (
                 "[italic bright_black]» Autocorrected with a score of "
@@ -239,7 +239,7 @@ def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional
             autocomplete_scores.append(this_autocomplete_score)
         if error:
             printout = f"{printout}  {error}"
-        if not runner:
+        if not _runner:
             print(printout)
     return (
         checker_score

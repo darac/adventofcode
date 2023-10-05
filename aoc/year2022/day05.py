@@ -147,13 +147,13 @@ from typing import Dict, Literal, Optional
 from parse import Result, compile
 
 
-def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional[str]:
+def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optional[str]:
     mode = "crates"
     unnumbered_stacks: Dict[int, deque[str]] = {}
     stacks: Dict[str, deque[str]] = {}
     parser = compile("move {:d} from {} to {}")
     for line in input.splitlines():
-        if not runner:
+        if not _runner:
             print(line)
         if line == "" and len(stacks) and mode == "crates":
             mode = "instructions"
@@ -180,7 +180,7 @@ def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional
             if part == "a":
                 # Grab boxes and put them directly on the target
                 for _ in range(r[0]):
-                    if not runner:
+                    if not _runner:
                         print(stacks)
                     stacks[str(r[2])].append(stacks[str(r[1])].pop())
             else:

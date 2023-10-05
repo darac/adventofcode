@@ -33,7 +33,7 @@ from collections import Counter
 from typing import Literal
 
 
-def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> int | None:
+def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
     num_nice_strings = 0
     for line in input.splitlines():
         counts = Counter(line)
@@ -41,19 +41,12 @@ def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> int | No
             part == "a"
             and counts["a"] + counts["e"] + counts["i"] + counts["o"] + counts["u"] >= 3
             and re.search(r"(.)\1", line)
-            and (
-                "ab" not in line
-                and "cd" not in line
-                and "pq" not in line
-                and "xy" not in line
-            )
-        ) or (
-            part == "b" and re.search(r"(..).*\1", line) and re.search(r"(.).\1", line)
-        ):
-            if not runner:
+            and ("ab" not in line and "cd" not in line and "pq" not in line and "xy" not in line)
+        ) or (part == "b" and re.search(r"(..).*\1", line) and re.search(r"(.).\1", line)):
+            if not _runner:
                 print(f"{part}: {line:16}: nice")
             num_nice_strings += 1
         else:
-            if not runner:
+            if not _runner:
                 print(f"{part}: {line:16}: naughty")
     return num_nice_strings

@@ -76,20 +76,19 @@ zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw: first marker after character 26
 How many characters need to be processed before the first start-of-message
 marker is detected?
 """
-import sys
 from collections import deque
 from typing import Literal, Optional
 
 from rich import print
 
 
-def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional[int]:
+def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optional[int]:
     buffer_size = 4 if part == "a" else 14
     msg_buffer: deque[str] = deque(maxlen=buffer_size)
     pointer = None
     for count, item in enumerate(input):
         msg_buffer.append(item)
-        if not runner:
+        if not _runner:
             print(f"{msg_buffer} -> {count}\r")
         if len(set(msg_buffer)) == buffer_size:
             pointer = count + 1

@@ -69,9 +69,7 @@ from rich.logging import RichHandler
 
 from aoc.visualisations.PyGame import TwoDAnimationViewer
 
-logging.basicConfig(
-    level="DEBUG", format="%(message)s", datefmt="[%X]", handlers=[RichHandler()]
-)
+logging.basicConfig(level="DEBUG", format="%(message)s", datefmt="[%X]", handlers=[RichHandler()])
 LOG = logging.getLogger()
 
 
@@ -86,9 +84,7 @@ def solve_steps_a(input: str) -> Iterable:
         elif p["command"] == "turn off":
             lights[p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1] = False
         elif p["command"] == "toggle":
-            lights[
-                p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1
-            ] = np.logical_not(
+            lights[p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1] = np.logical_not(
                 lights[p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1]
             )
         LOG.debug(f"{line} -> {lights.sum()}")
@@ -110,29 +106,18 @@ def solve_steps_b(input: str) -> Iterable:
         if p:
             if p["command"] == "turn on":
                 lights[p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1] += 1
-                assert (
-                    lights.sum() > num_lights
-                ), f"{lineno}: {lights.sum()} !> {num_lights}"
+                assert lights.sum() > num_lights, f"{lineno}: {lights.sum()} !> {num_lights}"
             elif p["command"] == "turn off":
-                if (
-                    lights[p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1].sum()
-                    == 0
-                ):
+                if lights[p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1].sum() == 0:
                     LOG.debug("Skipping already off section")
                     continue
                 lights[p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1] -= 1
-                LOG.info(
-                    f"There are {len(lights[lights < 0])} negative cells. Resetting them..."
-                )
+                LOG.info(f"There are {len(lights[lights < 0])} negative cells. Resetting them...")
                 lights[lights < 0] = 0
-                assert (
-                    lights.sum() < num_lights
-                ), f"{lineno}: {lights.sum()} !< {num_lights}"
+                assert lights.sum() < num_lights, f"{lineno}: {lights.sum()} !< {num_lights}"
             elif p["command"] == "toggle":
                 lights[p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1] += 2
-                assert (
-                    lights.sum() > num_lights
-                ), f"{lineno}: {lights.sum()} !> {num_lights}"
+                assert lights.sum() > num_lights, f"{lineno}: {lights.sum()} !> {num_lights}"
             else:
                 raise ValueError("Unknown command")
         else:
@@ -141,8 +126,8 @@ def solve_steps_b(input: str) -> Iterable:
         yield lights.sum(), lights.astype("uint8")
 
 
-def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> int | None:
-    if runner:
+def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
+    if _runner:
         LOG.setLevel("WARN")
     if part == "a":
         try:

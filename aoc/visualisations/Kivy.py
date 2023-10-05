@@ -15,11 +15,12 @@ answer: str = ""
 
 
 class AOCTextInput(TextInput):
-    pattern = re.compile("[^0-9A-Z]")
+    def __init__(self, **kwargs):
+        self.pattern = re.compile("[^0-9A-Z]")
+        super().__init__(**kwargs)
 
     def insert_text(self, substring, from_undo=False):
-        pattern = self.pattern
-        s = re.sub(pattern, "", substring)
+        s = re.sub(self.pattern, "", substring)
         return super().insert_text(s, from_undo)
 
 
@@ -43,9 +44,7 @@ class ManualOCR(App):
         self.image_widget.texture = self.image_data.texture
         root_grid.add_widget(self.image_widget)
 
-        input_grid.add_widget(
-            Label(text="Enter Value", size_hint=(0.3, 1), font_size=20)
-        )
+        input_grid.add_widget(Label(text="Enter Value", size_hint=(0.3, 1), font_size=20))
 
         self.text_widget = AOCTextInput(
             multiline=False,

@@ -4,7 +4,7 @@
 
 [tool.black]
     line-length    = 99
-    target-version = ["py310"]
+    target-version = ["py311"]
 
 [tool.coverage.html]
     directory = "htmlcov"
@@ -32,24 +32,24 @@
     relative_files = true
     source         = ["aoc"]
 
-[tool.flakeheaven]
-    docstring-convention    = "google"
-    extended_default_ignore = []
-    format                  = "grouped"
-    max_line_length         = 99
-    show_source             = true
+    # [tool.flakeheaven]
+    #     docstring-convention    = "google"
+    #     exclude                 = [".venv"]
+    #     extended_default_ignore = []
+    #     format                  = "grouped"
+    #     max_line_length         = 99
+    #     show_source             = true
 
-    [tool.flakeheaven.exceptions."tests/"]
-        flake8-bandit = ["-S101"]
 
-[tool.flakeheaven.plugins]
-    "flake8-*"         = ["+*"]
-    flake8-annotations = ["+*", "-ANN1??", "-ANN401"]
-    flake8-docstrings  = ["+*", "-D212"]
-    mccabe             = ["+*"]
-    pycodestyle        = ["+*"]
-    pyflakes           = ["+*"]
-    pylint             = ["+F????", "+I????", "-C????", "-E????", "-R????", "-W????"]
+    #     [tool.flakeheaven.plugins]
+    #         "flake8-*"         = ["+*"]
+    #         flake8-annotations = ["+*", "-ANN1??", "-ANN401"]
+    #         flake8-bandit      = ["-S101"]
+    #         flake8-docstrings  = ["+*", "-D10?", "-D212"]
+    #         mccabe             = ["+*"]
+    #         pycodestyle        = ["+*"]
+    #         pyflakes           = ["+*"]
+    #         pylint             = ["+F????", "+I????", "-C????", "-E????", "-R????", "-W????"]
 
 [tool.isort]
     profile = "black"
@@ -69,7 +69,7 @@
     description = "darac's solutions for http://adventofcode.com"
     name = "aoc"
     readme = "README.md"
-    version = "2022.10.1"
+    version = "2022.10.2"
 
     [tool.poetry.dependencies]
         advent-of-code-data = ">=0.8.0"
@@ -84,27 +84,17 @@
         rich                = ">=10"
 
     [tool.poetry.group.dev.dependencies]
-        black                 = "^22.10.0"
-        bpython               = "^0.23"
-        coverage              = { extras = ["toml"], version = "^6.5.0" }
-        flake8                = ">=4.0.1,<5.0.0"
-        flake8-annotations    = "^2.9.1"
-        flake8-bandit         = "^3.0.0"
-        flake8-blind-except   = "^0.2.1"
-        flake8-broken-line    = "^0.6.0"
-        flake8-bugbear        = "^23.2.13"
-        flake8-builtins       = "^2.1.0"
-        flake8-docstrings     = "^1.7.0"
-        flake8-logging-format = "^0.9.0"
-        flakeheaven           = "^3.2.1"
-        isort                 = ">=5.0.0"
-        mypy                  = "^0.991"
-        pre-commit            = "^2.20.0"
-        pytest                = "^7.2.0"
-        pytest-cov            = "^4.0.0"
-        pytest-gh-log-group   = "^0.2.0"
-        toml-sort             = "^0.20.1"
-        types-pyyaml          = "^6.0.12.2"
+        black               = "^22.10.0"
+        bpython             = "^0.23"
+        coverage            = { extras = ["toml"], version = "^7.3.2" }
+        mypy                = "^0.991"
+        pre-commit          = "^3.4.0"
+        pytest              = "^7.2.0"
+        pytest-cov          = "^4.0.0"
+        pytest-gh-log-group = "^0.2.0"
+        ruff                = "^0.0.292"
+        toml-sort           = "^0.20.1"
+        types-pyyaml        = "^6.0.12.2"
 
 [tool.poetry.plugins."adventofcode.user"]
     darac_aoc = "aoc:solve"
@@ -112,3 +102,7 @@
 [tool.pytest.ini_options]
     addopts          = "--cov --cov-report=term --cov-report=xml:coverage.xml --junitxml=junit.xml"
     junit_suite_name = "aoc"
+
+[tool.ruff]
+    line-length    = 99
+    target-version = "py311"

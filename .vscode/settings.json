@@ -39,5 +39,9 @@
   },
   "evenBetterToml.formatter.indentEntries": true,
   "evenBetterToml.formatter.indentTables": true,
-  "evenBetterToml.formatter.indentString": "    "
+  "evenBetterToml.formatter.indentString": "    ",
+  "flake8.path": [
+    ".venv/bin/flake8heavened"
+  ],
+  "cSpell.language": "en-GB"
 }

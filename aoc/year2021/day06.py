@@ -95,7 +95,7 @@ PUZZLE = Puzzle(year=2021, day=6)
 INPUT = PUZZLE.input_data
 
 
-def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional[int]:
+def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optional[int]:
     """Calculates the number of Lanternfish
 
     Args:
@@ -108,7 +108,7 @@ def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional
     school = Counter({-1: 0, 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0})
     for fish in [int(n) for n in input.split(",")]:
         school[fish] += 1
-    if not runner:
+    if not _runner:
         print(f"Initial state: {school}")
     days = 80 if part == "a" else 256
     for day in track(range(days)):
@@ -129,7 +129,7 @@ def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional
 
         # Finally, zero out the holding cell
         school[-1] = 0
-        if not runner:
+        if not _runner:
             print(f"After {day:2} days: {school.total()}")
 
     return school.total()
