@@ -39,11 +39,11 @@ jobs:
       - name: Install dependencies with poetry
         run: poetry install
       - uses: chartboost/ruff-action@v1
-      - run: poetry run black --check .
+      - uses: psf/black@stable
       - run: poetry run mypy
-      - run:
-          poetry run pytest --cov --cov-report=xml:coverage.xml
-          --junitxml=junit.xml
+      - uses: dariocurr/pytest-summary@main
+        with:
+          options: "--cov"
         env:
           AOC_SESSION: ${{ secrets.AOC_SESSION }}
       - name: SonarCloud Scan
@@ -51,8 +51,3 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      - name: Publish Test Report
-        uses: mikepenz/action-junit-report@v4
-        if: success() || failure() # run this step even if previous step failed
-        with:
-          report_paths: "**/junit.xml"

@@ -1,4 +1,4 @@
-FROM python:3.10-slim AS python
+FROM python:3.12-slim AS python
 
 # Setup env
 ENV LANG C.UTF-8
@@ -9,7 +9,7 @@ ENV PYTHONUNBUFFERED true
 WORKDIR /app
 
 
-FROM python as poetry
+FROM python AS poetry
 ENV POETRY_HOME=/opt/poetry
 ENV POETRY_VIRTUALENVS_IN_PROJECT=true
 ENV PATH="$POETRY_HOME/bin:$PATH"
