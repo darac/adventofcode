@@ -42,8 +42,11 @@ jobs:
       - uses: psf/black@stable
       - run: poetry run mypy
       - uses: dariocurr/pytest-summary@main
-        # with:
-        #   options: "--cov"
+        with:
+          options: "--cov"
+      - run:
+          poetry run pytest --cov --cov-report=xml:coverage.xml
+          --junitxml=junit.xml
         env:
           AOC_SESSION: ${{ secrets.AOC_SESSION }}
       - name: SonarCloud Scan
@@ -51,3 +54,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Publish Test Report
+        uses: pmeier/pytest-results-action@v0.3.0
+        if: always()
+        with:
+          path: "junit.xml"
