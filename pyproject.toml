@@ -86,7 +86,7 @@
     [tool.poetry.group.dev.dependencies]
         black                 = "^22.10.0"
         bpython               = "^0.23"
-        coverage              = { extras = ["toml"], version = "^6.5.0" }
+        coverage              = { extras = ["toml"], version = "^7.3.2" }
         flake8                = ">=4.0.1,<5.0.0"
         flake8-annotations    = "^2.9.1"
         flake8-bandit         = "^3.0.0"
