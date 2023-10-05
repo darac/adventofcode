@@ -28,14 +28,6 @@
   ],
   "editor.formatOnSave": true,
   "python.analysis.typeCheckingMode": "basic",
-  "python.formatting.blackArgs": [
-    "--target-version",
-    "py310"
-  ],
-  "python.formatting.provider": "black",
-  "python.linting.enabled": true,
-  "python.linting.flake8Enabled": true,
-  "python.linting.pylintEnabled": false,
   "python.testing.pytestArgs": [
     "aoc"
   ],
@@ -45,5 +37,7 @@
     "connectionId": "darac",
     "projectKey": "darac_adventofcode"
   },
-  "ansible.python.interpreterPath": "/home/ipa/darac/git/darac/pyusbtree/.venv/bin/python"
+  "evenBetterToml.formatter.indentEntries": true,
+  "evenBetterToml.formatter.indentTables": true,
+  "evenBetterToml.formatter.indentString": "    "
 }

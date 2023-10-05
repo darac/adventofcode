@@ -3,6 +3,8 @@
         "editorconfig.editorconfig",
         "matangover.mypy",
         "ms-python.python",
-        "ms-python.isort"
+        "ms-python.isort",
+        "streetsidesoftware.code-spell-checker",
+        "sonarsource.sonarlint-vscode"
     ]
 }
