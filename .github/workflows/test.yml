@@ -42,8 +42,8 @@ jobs:
       - uses: psf/black@stable
       - run: poetry run mypy
       - uses: dariocurr/pytest-summary@main
-        with:
-          options: "--cov"
+        # with:
+        #   options: "--cov"
         env:
           AOC_SESSION: ${{ secrets.AOC_SESSION }}
       - name: SonarCloud Scan
