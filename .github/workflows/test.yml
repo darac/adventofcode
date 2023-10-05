@@ -41,9 +41,6 @@ jobs:
       - uses: chartboost/ruff-action@v1
       - uses: psf/black@stable
       - run: poetry run mypy
-      - uses: dariocurr/pytest-summary@main
-        with:
-          options: "--cov"
       - run:
           poetry run pytest --cov --cov-report=xml:coverage.xml
           --junitxml=junit.xml
