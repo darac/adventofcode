@@ -2,10 +2,10 @@
 
 Storage for my AdventOfCode solutions
 
-![GitHub branch checks state](https://img.shields.io/github/checks-status/darac/adventofcode/main)
+![Tests](https://github.com/darac/adventofcode/workflows/Test/badge.svg)
 [![CodeQL](https://github.com/darac/adventofcode/workflows/CodeQL/badge.svg)](https://github.com/darac/adventofcode/security/code-scanning)
-![](https://img.shields.io/badge/day%20📅-0-blue)
-![](https://img.shields.io/badge/stars%20⭐-18-yellow)
+![Stars Collected](https://img.shields.io/badge/stars%20⭐-18-yellow)
+![Days Completed](https://img.shields.io/badge/days%20completed-17-red)
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=darac_adventofcode&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=darac_adventofcode)[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=darac_adventofcode&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=darac_adventofcode)[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=darac_adventofcode&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=darac_adventofcode)
 

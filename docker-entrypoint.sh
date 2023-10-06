@@ -13,27 +13,28 @@ day=${version/*./}
 
 while :; do
     case $1 in
-        -y|--year)
-            if [ "$2" ]; then
-                year="$2"
-                shift
-            else
-                die 'ERROR: "--year" requires a non-empty option argument.'
-            fi
+    -y | --year)
+        if [ "$2" ]; then
+            year="$2"
+            shift
+        else
+            die 'ERROR: "--year" requires a non-empty option argument.'
+        fi
         ;;
-        -d|--day)
-            if [ "$2" ]; then
-                day="$2"
-                shift
-            else
-                die 'ERROR: "--day" requires a non-empty option argument.'
-            fi
+    -d | --day)
+        if [ "$2" ]; then
+            day="$2"
+            shift
+        else
+            die 'ERROR: "--day" requires a non-empty option argument.'
+        fi
         ;;
-        -?*)
-            printf 'WARN: Unknown option (ignored): %s\n' "$1" >&2
+    -?*)
+        printf 'WARN: Unknown option (ignored): %s\n' "$1" >&2
         ;;
-        *)
-            break
+    *)
+        break
+        ;;
     esac
 
     shift

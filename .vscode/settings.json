@@ -1,47 +1,44 @@
 {
-  "cSpell.words": [
-    "addoption",
-    "adventofcode",
-    "aocd",
-    "astype",
-    "blit",
-    "boxlayout",
-    "capstdout",
-    "dtype",
-    "eggnoggedly",
-    "exitstatus",
-    "fixturenames",
-    "getreports",
-    "gridlayout",
-    "halign",
-    "kivy",
-    "Lanternfish",
-    "linewidth",
-    "metafunc",
-    "ndarray",
-    "nonzero",
-    "NOSONAR",
-    "printoptions",
-    "pygame",
-    "surfarray",
-    "terminalreporter"
-  ],
-  "editor.formatOnSave": true,
-  "python.analysis.typeCheckingMode": "basic",
-  "python.testing.pytestArgs": [
-    "aoc"
-  ],
-  "python.testing.pytestEnabled": true,
-  "python.testing.unittestEnabled": false,
-  "sonarlint.connectedMode.project": {
-    "connectionId": "darac",
-    "projectKey": "darac_adventofcode"
-  },
-  "evenBetterToml.formatter.indentEntries": true,
-  "evenBetterToml.formatter.indentTables": true,
-  "evenBetterToml.formatter.indentString": "    ",
-  "flake8.path": [
-    ".venv/bin/flake8heavened"
-  ],
-  "cSpell.language": "en-GB"
+    "cSpell.words": [
+        "addoption",
+        "adventofcode",
+        "aocd",
+        "astype",
+        "blit",
+        "boxlayout",
+        "capstdout",
+        "dtype",
+        "eggnoggedly",
+        "exitstatus",
+        "fixturenames",
+        "getreports",
+        "gridlayout",
+        "halign",
+        "kivy",
+        "Lanternfish",
+        "linewidth",
+        "metafunc",
+        "ndarray",
+        "nonzero",
+        "NOSONAR",
+        "printoptions",
+        "pygame",
+        "surfarray",
+        "terminalreporter"
+    ],
+    "editor.formatOnSave": true,
+    "python.analysis.typeCheckingMode": "basic",
+    "python.testing.pytestArgs": [
+        "aoc"
+    ],
+    "python.testing.pytestEnabled": true,
+    "python.testing.unittestEnabled": false,
+    "sonarlint.connectedMode.project": {
+        "connectionId": "darac",
+        "projectKey": "darac_adventofcode"
+    },
+    "evenBetterToml.formatter.indentEntries": true,
+    "evenBetterToml.formatter.indentTables": true,
+    "evenBetterToml.formatter.indentString": "    ",
+    "cSpell.language": "en-GB",
 }
