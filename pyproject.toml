@@ -62,7 +62,7 @@
         rich                = ">=10"
 
     [tool.poetry.group.dev.dependencies]
-        black               = "^22.10.0"
+        black               = "^23.9.1"
         bpython             = "^0.24"
         coverage            = { extras = ["toml"], version = "^7.3.2" }
         mypy                = "^1.5.1"
@@ -71,7 +71,7 @@
         pytest-cov          = "^4.0.0"
         pytest-gh-log-group = "^0.2.0"
         ruff                = "^0.0.292"
-        toml-sort           = "^0.20.1"
+        toml-sort           = "^0.23.1"
         types-pyyaml        = "^6.0.12.2"
 
 [tool.poetry.plugins."adventofcode.user"]
