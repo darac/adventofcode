@@ -62,7 +62,7 @@
         rich                = ">=10"
 
     [tool.poetry.group.dev.dependencies]
-        black               = "^22.10.0"
+        black               = "^23.9.1"
         bpython             = "^0.24"
         coverage            = { extras = ["toml"], version = "^7.3.2" }
         mypy                = "^1.5.1"
