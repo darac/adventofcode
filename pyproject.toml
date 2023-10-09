@@ -71,7 +71,7 @@
         pytest-cov          = "^4.0.0"
         pytest-gh-log-group = "^0.2.0"
         ruff                = "^0.0.292"
-        toml-sort           = "^0.20.1"
+        toml-sort           = "^0.23.1"
         types-pyyaml        = "^6.0.12.2"
 
 [tool.poetry.plugins."adventofcode.user"]
