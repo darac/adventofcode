@@ -49,13 +49,13 @@ How many total feet of ribbon should they order?
 """
 # spell-checker: enable
 
-from typing import Literal, Optional
+from typing import Literal
 
 
-def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optional[int]:
+def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
     paper_feet = 0
     ribbon_feet = 0
-    for present in input.splitlines():
+    for present in puzzle.splitlines():
         length, width, height = sorted(map(int, present.split("x")))
         paper_feet += (
             (2 * length * width)

@@ -60,7 +60,8 @@ For example:
 # spell-checker: enable
 
 import logging
-from typing import Iterable, Literal
+from collections.abc import Generator
+from typing import Any, Literal
 
 import numpy as np
 import parse
@@ -73,28 +74,39 @@ logging.basicConfig(level="DEBUG", format="%(message)s", datefmt="[%X]", handler
 LOG = logging.getLogger()
 
 
-def solve_steps_a(input: str) -> Iterable:
+def solve_steps_a(puzzle: str) -> Generator[tuple[Any, np.ndarray], Any, None]:
     lights = np.zeros(shape=(1000, 1000), dtype=bool)
-    for line in input.splitlines():
+    for line in puzzle.splitlines():
         # Process instructions
         p = parse.parse("{command} {top:d},{left:d} through {bottom:d},{right:d}", line)
-        assert type(p) is parse.Result and p
+        assert type(p) is parse.Result
+        assert p
         if p["command"] == "turn on":
             lights[p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1] = True
         elif p["command"] == "turn off":
             lights[p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1] = False
         elif p["command"] == "toggle":
             lights[p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1] = np.logical_not(
-                lights[p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1]
+                lights[p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1],
             )
-        LOG.debug(f"{line} -> {lights.sum()}")
+        LOG.debug("%s -> %s", line, lights.sum())
         yield lights.sum(), lights.astype("uint8")
 
 
-def solve_steps_b(input: str) -> Iterable:
+class UnknownCommand(Exception):
+    def __init__(self: "UnknownCommand", command: str) -> None:
+        super().__init__(f"Unknown Command: {command}")
+
+
+class UnmatchedInstruction(Exception):
+    def __init__(self: "UnmatchedInstruction", instruction: str) -> None:
+        super().__init__(f"Unmatched instruction: {instruction}")
+
+
+def solve_steps_b(puzzle: str) -> Generator[tuple[Any, np.ndarray], Any, None]:
     lights = np.zeros(shape=(1000, 1000), dtype="int")
     assert lights.sum() == 0
-    for lineno, line in enumerate(input.splitlines()):
+    for lineno, line in enumerate(puzzle.splitlines()):
         # Process instructions
         p = parse.parse("{command} {top:d},{left:d} through {bottom:d},{right:d}", line)
         assert type(p) is parse.Result
@@ -112,42 +124,46 @@ def solve_steps_b(input: str) -> Iterable:
                     LOG.debug("Skipping already off section")
                     continue
                 lights[p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1] -= 1
-                LOG.info(f"There are {len(lights[lights < 0])} negative cells. Resetting them...")
+                LOG.info("There are %d negative cells. Resetting them...", len(lights[lights < 0]))
                 lights[lights < 0] = 0
                 assert lights.sum() < num_lights, f"{lineno}: {lights.sum()} !< {num_lights}"
             elif p["command"] == "toggle":
                 lights[p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1] += 2
                 assert lights.sum() > num_lights, f"{lineno}: {lights.sum()} !> {num_lights}"
             else:
-                raise ValueError("Unknown command")
+                raise UnknownCommand(p["command"])
         else:
-            raise ValueError("Unmatched instruction")
-        LOG.debug(f"{line} -> {lights.sum()}")
+            raise UnmatchedInstruction(line)
+        LOG.debug("%s -> %s", line, lights.sum())
         yield lights.sum(), lights.astype("uint8")
 
 
-def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
+def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
     if _runner:
         LOG.setLevel("WARN")
     if part == "a":
         try:
             vis = TwoDAnimationViewer(
-                update_func=solve_steps_a, puzzle_input=input, display_size=(1000, 1000)
+                update_func=solve_steps_a,
+                puzzle_input=puzzle,
+                display_size=(1000, 1000),
             )
             return vis.start()
         except pygame.error:
             retval = None
-            for value, _ in solve_steps_a(input):
+            for value, _ in solve_steps_a(puzzle):
                 retval = value
             return retval
     else:
         try:
             vis = TwoDAnimationViewer(
-                update_func=solve_steps_b, puzzle_input=input, display_size=(1000, 1000)
+                update_func=solve_steps_b,
+                puzzle_input=puzzle,
+                display_size=(1000, 1000),
             )
             return vis.start()
         except pygame.error:
             retval = None
-            for value, _ in solve_steps_b(input):
+            for value, _ in solve_steps_b(puzzle):
                 retval = value
             return retval

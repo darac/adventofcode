@@ -1,4 +1,5 @@
 #!env python
+# spell-checker: disable
 """
 --- Day 4: Camp Cleanup ---
 Space needs to be cleared before the last supplies can be unloaded from the
@@ -61,7 +62,8 @@ this example, there are 2 such pairs.
 
 In how many assignment pairs does one range fully contain the other?
 """
-from typing import Literal, Optional
+# spell-checker: disable
+from typing import Literal
 
 from parse import compile
 from rich import print
@@ -74,10 +76,10 @@ def visualise(low: int, high: int, upper: int, char: str = "+") -> str:
     return output
 
 
-def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optional[int]:
+def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
     count = 0
     parser = compile("{:d}-{:d},{:d}-{:d}")
-    for line in input.splitlines():
+    for line in puzzle.splitlines():
         a_low, a_high, b_low, b_high = parser.parse(line)  # type: ignore
         o_low = o_high = 0
         assert a_low <= a_high, "Whoops, Pairs are not sorted"

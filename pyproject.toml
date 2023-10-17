@@ -35,6 +35,7 @@
 [tool.mypy]
     files                  = ["aoc/"]
     ignore_missing_imports = true
+    plugins                = "numpy.typing.mypy_plugin"
     warn_return_any        = true
     warn_unused_configs    = true
 
@@ -47,7 +48,7 @@
     description = "darac's solutions for http://adventofcode.com"
     name = "aoc"
     readme = "README.md"
-    version = "2022.10.3"
+    version = "2022.10.4"
 
     [tool.poetry.dependencies]
         advent-of-code-data = ">=0.8.0"
@@ -82,5 +83,50 @@
     junit_suite_name = "aoc"
 
 [tool.ruff]
-    line-length    = 99
+    ignore = [
+        "N818", # Don't want to have to call exceptions *Error
+        "S101", # Of course we want to use assert
+    ]
+    line-length = 99
+    select = [
+        "A",
+        "ANN",
+        "ARG",
+        "ASYNC",
+        "B",
+        "C4",
+        "COM",
+        "E",
+        "EM",
+        "EXE",
+        "F",
+        "FA",
+        "FIX",
+        "G",
+        "I",
+        "ICN",
+        "INP",
+        "ISC",
+        "N",
+        "NPY",
+        "PD",
+        "PERF",
+        "PIE",
+        "PT",
+        "PTH",
+        "Q",
+        "RET",
+        "RSE",
+        "RUF",
+        "S",
+        "SIM",
+        "SLF",
+        "TCH",
+        "TD",
+        "TID",
+        "TRY",
+        "UP",
+        "W",
+        "YTT",
+    ]
     target-version = "py311"

@@ -78,7 +78,7 @@ Determine the horizontal position that the crabs can align to using the
 least fuel possible so they can make you an escape route! How much fuel
 must they spend to align to that position?"""
 
-from typing import Literal, Optional
+from typing import Literal
 
 from aocd import submit
 from aocd.models import Puzzle
@@ -116,7 +116,7 @@ def fuel_required(crabs: list, target: int, part: str, _runner: bool = False) ->
     return fuel_used
 
 
-def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional[int]:
+def solve(puzzle: str, part: Literal["a", "b"], runner: bool = False) -> int | None:
     """Main Procedure
     * Parses the input into a list of ints
     * Calculates the fuel required to get to any position
@@ -130,7 +130,7 @@ def solve(input: str, part: Literal["a", "b"], runner: bool = False) -> Optional
     Returns:
         int: The minimum fuel usage
     """
-    crabs = [int(n) for n in input.split(",")]
+    crabs = [int(n) for n in puzzle.split(",")]
     targets = {}
     for test_pos in track(range(min(crabs), max(crabs) + 1)):
         targets[test_pos] = fuel_required(crabs, test_pos, part, runner)

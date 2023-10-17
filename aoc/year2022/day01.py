@@ -89,14 +89,14 @@ those Elves carrying in total?
 # spell-checker: enable
 
 from collections import defaultdict
-from typing import Dict, Literal, Optional
+from typing import Literal
 
 
-def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optional[int]:
-    elf: Dict[int, int] = defaultdict(int)
+def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
+    elf: dict[int, int] = defaultdict(int)
     elf_num: int = 1
     retval: int
-    for line in input.splitlines():
+    for line in puzzle.splitlines():
         if line == "":
             elf_num += 1
             continue

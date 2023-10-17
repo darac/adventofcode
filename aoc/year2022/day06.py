@@ -1,4 +1,5 @@
 #!env python
+# spell-checker: disable
 """
 --- Day 6: Tuning Trouble ---
 The preparations are finally complete; you and the Elves leave camp on foot
@@ -76,17 +77,18 @@ zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw: first marker after character 26
 How many characters need to be processed before the first start-of-message
 marker is detected?
 """
+# spell-checker: disable
 from collections import deque
-from typing import Literal, Optional
+from typing import Literal
 
 from rich import print
 
 
-def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optional[int]:
+def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
     buffer_size = 4 if part == "a" else 14
     msg_buffer: deque[str] = deque(maxlen=buffer_size)
     pointer = None
-    for count, item in enumerate(input):
+    for count, item in enumerate(puzzle):
         msg_buffer.append(item)
         if not _runner:
             print(f"{msg_buffer} -> {count}\r")

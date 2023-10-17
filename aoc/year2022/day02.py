@@ -1,4 +1,5 @@
 #!env python
+# spell-checker: disable
 """
 --- Day 2: Rock Paper Scissors ---
 
@@ -83,11 +84,12 @@ Following the Elf's instructions for the second column, what would your
 total score be if everything goes exactly according to your strategy guide?
 
 """
+# spell-checker: disable
 
-from typing import Literal, Optional
+from typing import Literal
 
 
-def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optional[int]:
+def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
     guide_a = {
         #      | Rock | Papr | Scis
         #      |-------------------
@@ -109,7 +111,7 @@ def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optiona
         "C": {"X": "Y", "Y": "Z", "Z": "X"},
     }
     score = 0
-    for line in input.splitlines():
+    for line in puzzle.splitlines():
         elf, me = line.split()
         if part == "a":
             score += guide_a[elf][me]

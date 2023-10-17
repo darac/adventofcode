@@ -93,7 +93,7 @@ score be?
 
 import logging
 import sys
-from typing import Literal, Optional
+from typing import Literal
 
 from aocd import submit
 from aocd.models import Puzzle
@@ -133,7 +133,7 @@ SAMPLE_INPUT = """7,4,9,5,11,17,23,2,0,14,21,24,10,16,13,6,15,25,12,22,18,20,8,1
 class Bingo(Exception):
     """Thrown when a board bingos. Stores the winning board"""
 
-    def __init__(self, winner):
+    def __init__(self: "Bingo", winner: "BingoBoard") -> None:
         super().__init__()
         self.board = winner
 
@@ -141,7 +141,7 @@ class Bingo(Exception):
 class BingoSquare:
     """Implements a square of the bingo board"""
 
-    def __init__(self, value: Optional[int]):
+    def __init__(self: "BingoSquare", value: int | None) -> None:
         """Init Method
 
         Args:
@@ -150,7 +150,7 @@ class BingoSquare:
         self.value = value
         self.hit = False
 
-    def set(self, value: int):
+    def set_value(self: "BingoSquare", value: int) -> None:
         """Sets the value of the square. If a value is already set,
         logs a warning.
 
@@ -162,7 +162,7 @@ class BingoSquare:
         else:
             LOG.warning("Can't set a bingo square twice")
 
-    def get(self) -> int:
+    def get_value(self: "BingoSquare") -> int:
         """Returns the number in the square
 
         Returns:
@@ -171,7 +171,7 @@ class BingoSquare:
         assert self.value is not None
         return self.value
 
-    def test(self, value: Optional[int] = None) -> bool:
+    def test(self: "BingoSquare", value: int | None = None) -> bool:
         """Test the value against a call. Latches TRUE
 
         Args:
@@ -184,43 +184,38 @@ class BingoSquare:
             self.hit |= self.value == value
         return self.hit
 
-    def clear(self):
+    def clear(self: "BingoSquare") -> None:
         """Clears the square's HIT value"""
         self.hit = False
 
-    def __str__(self):
+    def __str__(self: "BingoSquare") -> str:
         """Stringify"""
-        if self.hit:
-            fmt = "red"
-        else:
-            fmt = "default"
+        fmt = "red" if self.hit else "default"
         return f"[{fmt}]{self.value:2}[/]"
 
 
 class BingoBoard:
     """Implements the Bingo Board"""
 
-    def __init__(self, board_id: int):
+    def __init__(self: "BingoBoard", board_id: int) -> None:
         """Init Method"""
         self.board: list[list[BingoSquare]] = []
         self.board_id = board_id
         self._has_won = False
-        self.last_call: Optional[int] = None
+        self.last_call: int | None = None
 
-    def load_row(self, row: list[str]):
+    def load_row(self: "BingoBoard", row: list[str]) -> None:
         """Loads a row into the Board
 
         Args:
             row (list): A list of ints
         """
-        board_row: list[BingoSquare] = []
-        for item in row:
-            board_row.append(BingoSquare(int(item)))
+        board_row: list[BingoSquare] = [BingoSquare(int(item)) for item in row]
         self.board.append(board_row)
         if len(self.board) > 5:
             LOG.warning("The board looks big :(")
 
-    def check_bingo(self):
+    def check_bingo(self: "BingoBoard") -> None:
         """Checks the board for Bingo
         First, we check each row, then we check each column
 
@@ -241,7 +236,7 @@ class BingoBoard:
             self._has_won = True
             raise Bingo(self)
 
-    def has_won(self) -> bool:
+    def has_won(self: "BingoBoard") -> bool:
         """Check if this board has ever won
 
         Returns:
@@ -249,7 +244,7 @@ class BingoBoard:
         """
         return bool(self._has_won)
 
-    def test(self, value: Optional[int] = None):
+    def test(self: "BingoBoard", value: int | None = None) -> None:
         """Check all cells in this board against the call.
         Calls "check_bingo()" at the end
 
@@ -262,7 +257,7 @@ class BingoBoard:
                 cell.test(value)
         self.check_bingo()
 
-    def as_table(self) -> Table:
+    def as_table(self: "BingoBoard") -> Table:
         """Returns the table as a Rich Table (for printing)
 
         Returns:
@@ -278,7 +273,7 @@ class BingoBoard:
             table.add_row(*[str(x) for x in row])
         return table
 
-    def score(self) -> int:
+    def score(self: "BingoBoard") -> int:
         """Calculates the score.
         Defined as sum of unlit cells * the last call
 
@@ -290,11 +285,11 @@ class BingoBoard:
         for row in self.board:
             for cell in row:
                 if not cell.test():
-                    value += cell.get()
+                    value += cell.get_value()
         return int(value * self.last_call)
 
 
-def parse_input(input: str) -> dict:
+def parse_input(string: str) -> dict:
     """Parse the Input
 
     Args:
@@ -303,12 +298,12 @@ def parse_input(input: str) -> dict:
     Returns:
         dict: Draws and Boards
     """
-    draws = [int(n) for n in input.splitlines()[0].split(",")]
+    draws = [int(n) for n in string.splitlines()[0].split(",")]
     print(f"Got {len(draws)} draws")
     boards: list[BingoBoard] = []
 
-    this_board: Optional[BingoBoard] = None
-    for line in input.splitlines()[1:]:
+    this_board: BingoBoard | None = None
+    for line in string.splitlines()[1:]:
         logging.debug("Reading Row >>%s<<", line)
         if line == "":
             if this_board is not None:
@@ -342,10 +337,10 @@ def generate_table(boards: list) -> Table:
     return grid
 
 
-def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optional[int]:
+def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
     LOG.setLevel(logging.ERROR if _runner else logging.INFO)
 
-    data = parse_input(input)
+    data = parse_input(puzzle)
     remaining_boards = len(data["boards"])
     last_board = None
     for draw in data["draws"]:
@@ -375,10 +370,7 @@ if __name__ == "__main__":
     LAST_BOARD = None
     with Live(Table()) as live:
         DEBUG = len(sys.argv) > 1 and sys.argv[1] == "test"
-        if DEBUG:
-            data = parse_input(SAMPLE_INPUT)
-        else:
-            data = parse_input(INPUT)
+        data = parse_input(SAMPLE_INPUT) if DEBUG else parse_input(INPUT)
         REMAINING_BOARDS = len(data["boards"])
         for draw in data["draws"]:
             logging.info("Calling %2d", draw)

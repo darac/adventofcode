@@ -45,6 +45,9 @@ Consider sums of a three-measurement sliding window.
 How many sums are larger than the previous sum?
 """
 
+from collections.abc import Generator
+from typing import Any
+
 from aocd.models import Puzzle
 from rich import print
 from rich.progress import track
@@ -53,8 +56,8 @@ A_UPPERCASE = ord("A")
 ALPHABET_SIZE = 26
 
 
-def _decompose(number):
-    """Generate digits from `number` in base alphabet, least significants
+def _decompose(number: int) -> Generator[int, Any, None]:
+    """Generate digits from `number` in base alphabet, least significant
     bits first.
 
     Since A is 1 rather than 0 in base alphabet, we are dealing with
@@ -66,13 +69,13 @@ def _decompose(number):
         yield remainder
 
 
-def base_10_to_alphabet(number):
+def base_10_to_alphabet(number: int) -> str:
     """Convert a decimal number to its base alphabet representation"""
 
     return "".join(chr(A_UPPERCASE + part) for part in _decompose(number))[::-1]
 
 
-def base_alphabet_to_10(letters):
+def base_alphabet_to_10(letters: str) -> int:
     """Convert an alphabet number to its decimal representation"""
 
     return sum(
@@ -87,10 +90,10 @@ class ThreeMeasurementWindow:
     When asked, will return the sum of the measurements held.
     """
 
-    def __init__(self) -> None:
+    def __init__(self: "ThreeMeasurementWindow") -> None:
         self.measurements = []  # type: list[int]
 
-    def measure(self, val: int):
+    def measure(self: "ThreeMeasurementWindow", val: int) -> None:
         """
         Takes a value and, if less than three values have been stored,
         stores it. Else discards it.
@@ -98,7 +101,7 @@ class ThreeMeasurementWindow:
         if len(self.measurements) < 3:
             self.measurements.append(val)
 
-    def sum(self) -> int:
+    def sum_values(self: "ThreeMeasurementWindow") -> int:
         """
         Returns the sum of values held, but only if three are held.
         """
@@ -116,9 +119,9 @@ for depth in track([int(n) for n in Puzzle(year=2021, day=1).input_data.splitlin
 
 PREV = None
 COUNT = 0
-for winnum, window in enumerate(windows):
-    NAME = base_10_to_alphabet(winnum)
-    value = window.sum()
+for window_number, window in enumerate(windows):
+    NAME = base_10_to_alphabet(window_number)
+    value = window.sum_values()
     if PREV is not None and value is not None:
         if value > PREV:
             print(f"{NAME}: {value} ([bold]increased[/bold])")

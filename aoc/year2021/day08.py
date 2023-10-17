@@ -162,7 +162,7 @@ output values?"""
 # spell-checker: enable
 
 
-from typing import Literal, Optional
+from typing import Literal
 
 from aocd import submit
 from aocd.models import Puzzle
@@ -188,7 +188,7 @@ PUZZLE = Puzzle(year=2021, day=8)
 INPUT = PUZZLE.input_data
 
 
-def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optional[int]:
+def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
     """Decodes the digits
 
     Args:
@@ -200,8 +200,8 @@ def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optiona
     """
     if part == "a":
         num_uniques = 0
-        for line in input.splitlines():
-            patterns, output = [x.split() for x in line.split(" | ")]
+        for line in puzzle.splitlines():
+            patterns, output = (x.split() for x in line.split(" | "))
             num_uniques += len(list(filter(lambda x: len(x) in [2, 3, 4, 7], output)))
             if not _runner:
                 print(f"Now at {num_uniques} uniques")
@@ -210,39 +210,39 @@ def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optiona
 
     # Part B
     retval = 0
-    for line in input.splitlines():
-        retstr = ""
-        patterns, output = [x.split() for x in line.split("|")]
+    for line in puzzle.splitlines():
+        return_string = ""
+        patterns, output = (x.split() for x in line.split("|"))
         lengths = {len(s): set(s) for s in patterns}
 
         for digit in map(set, output):  # type: ignore
             # Mask with known digits
             match (len(digit), len(digit & lengths[4]), len(digit & lengths[2])):
                 case (2, _, _):
-                    retstr += "1"
+                    return_string += "1"
                 case (3, _, _):
-                    retstr += "7"
+                    return_string += "7"
                 case (4, _, _):
-                    retstr += "4"
+                    return_string += "4"
                 case (7, _, _):
-                    retstr += "8"
+                    return_string += "8"
                 case (5, 2, _):
-                    retstr += "2"
+                    return_string += "2"
                 case (5, 3, 1):
-                    retstr += "5"
+                    return_string += "5"
                 case (5, 3, 2):
-                    retstr += "3"
+                    return_string += "3"
                 case (6, 4, _):
-                    retstr += "9"
+                    return_string += "9"
                 case (6, 3, 1):
-                    retstr += "6"
+                    return_string += "6"
                 case (6, 3, 2):
-                    retstr += "0"
+                    return_string += "0"
                 case _:
-                    retstr += "?"
-        retval += int(retstr)
+                    return_string += "?"
+        retval += int(return_string)
         if not _runner:
-            print(f"Retval: {retstr} -> {retval}")
+            print(f"Retval: {return_string} -> {retval}")
     return retval
 
 

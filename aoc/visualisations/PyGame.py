@@ -1,4 +1,4 @@
-from typing import Callable, Tuple
+from collections.abc import Callable  # noqa: N999
 
 import pygame
 
@@ -6,7 +6,12 @@ import pygame
 class TwoDAnimationViewer:
     """Repeatedly calls a function and visualises the grid of numbers."""
 
-    def __init__(self, update_func: Callable, puzzle_input: str, display_size: Tuple[int, int]):
+    def __init__(
+        self: "TwoDAnimationViewer",
+        update_func: Callable,
+        puzzle_input: str,
+        display_size: tuple[int, int],
+    ) -> None:
         """
         Visualises an array of values.
 
@@ -29,7 +34,7 @@ class TwoDAnimationViewer:
         self.display = pygame.display.set_mode(display_size)
 
     @property
-    def title(self) -> str:
+    def title(self: "TwoDAnimationViewer") -> str:
         """Returns the title of the window
 
         Returns:
@@ -38,7 +43,7 @@ class TwoDAnimationViewer:
         return pygame.display.get_caption()[0]
 
     @title.setter
-    def title(self, title: str):
+    def title(self: "TwoDAnimationViewer", title: str) -> None:
         """Sets the title of the pygame window.
 
         Args:
@@ -46,7 +51,7 @@ class TwoDAnimationViewer:
         """
         pygame.display.set_caption(title)
 
-    def start(self) -> int | None:
+    def start(self: "TwoDAnimationViewer") -> int | None:
         running = True
         while running:
             if self.display is not None:
@@ -55,11 +60,11 @@ class TwoDAnimationViewer:
                         running = False
 
                 try:
-                    self.answer, Z = next(self.iterator)
+                    self.answer, z = next(self.iterator)
                 except StopIteration:
                     pygame.quit()
                     return self.answer
-                surface = pygame.surfarray.make_surface(Z)
+                surface = pygame.surfarray.make_surface(z)
                 scaled_surface = pygame.transform.scale(surface, self.display.get_size())
                 self.display.blit(scaled_surface, (0, 0))
                 self.title = str(self.answer)

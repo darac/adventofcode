@@ -372,8 +372,9 @@ on your CRT?
 
 import logging
 import os
+from collections.abc import Generator
 from dataclasses import dataclass, field
-from typing import Literal
+from typing import Any, Literal
 
 import numpy as np
 import parse
@@ -385,18 +386,22 @@ logging.basicConfig(level="DEBUG", format="%(message)s", datefmt="[%X]")
 LOG = logging.getLogger()
 
 
+class IllegalInstruction(Exception):
+    def __init__(self: "IllegalInstruction", instruction: str | int) -> None:
+        super().__init__(f"Illegal Instruction: {instruction}")
+
+
 class Clock:
-    def __init__(self, input: str) -> None:
+    def __init__(self: "Clock", instruction: str) -> None:
         self.CPU = CPU()
         self.CRT = CRT()
         self.ticks = 1
-        self.command_reader = self.read_instruction(input)
+        self.command_reader = self.read_instruction(instruction)
 
-    def read_instruction(self, input: str):
-        for line in input.splitlines():
-            yield line
+    def read_instruction(self: "Clock", instruction: str) -> Generator[str, Any, None]:
+        yield from instruction.splitlines()
 
-    def run(self, stop_at_tick: int = -1, visual: bool = False):
+    def run(self: "Clock", stop_at_tick: int = -1, visual: bool = False) -> None:
         while self.ticks != stop_at_tick:
             if not self.CPU.busy:
                 try:
@@ -412,19 +417,19 @@ class Clock:
 
 
 class CRT:
-    def __init__(self) -> None:
+    def __init__(self: "CRT") -> None:
         self.crt_pixels = np.full(240, False, dtype=bool)
 
-    def draw(self, cpu_cycle, register_x):
+    def draw(self: "CRT", cpu_cycle: int, register_x: int) -> None:
         sprite = [register_x - 1, register_x - 0, register_x + 1]
         target = cpu_cycle
         if target % 40 in sprite:
             self.crt_pixels[target] = True
 
-    def display(self):
+    def display(self: "CRT") -> None:
         Numpy.boolean_array(self.read())
 
-    def read(self) -> np.ndarray:
+    def read(self: "CRT") -> np.ndarray:
         return np.copy(self.crt_pixels).reshape((6, 40))
 
 
@@ -433,11 +438,11 @@ class CPU:
     busy: bool = False
     register: dict[str, int] = field(default_factory=dict)
 
-    def __init__(self) -> None:
+    def __init__(self: "CPU") -> None:
         self.cmd: dict[str, int | str] | None = None
         self.register = {"X": 1}
 
-    def instruction(self, cmd: str):
+    def instruction(self: "CPU", cmd: str) -> None:
         assert not self.busy
         if cmd == "noop":
             self.busy = False
@@ -447,18 +452,18 @@ class CPU:
                 self.cmd = {"cmd": "addx", "value": p[0]}
                 self.busy = True
 
-    def process(self):
+    def process(self: "CPU") -> None:
         if self.cmd is not None:
             if self.cmd["cmd"] == "addx":
                 self.register["X"] += int(self.cmd["value"])
             else:
-                raise ValueError("Illegal Instruction")
+                raise IllegalInstruction(self.cmd["cmd"])
             self.cmd = None
             self.busy = False
 
 
-def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> int | str | None:
-    clock = Clock(input)
+def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | str | None:
+    clock = Clock(puzzle)
     signal_strengths = {}
     for stop_point in [20, 60, 100, 140, 180, 220]:
         clock.run(stop_at_tick=stop_point, visual=not _runner)
@@ -475,5 +480,4 @@ def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> int | s
         vis.image = Image.fromarray(clock.CRT.read())
         vis.run()
         return Kivy.answer
-    else:
-        return "TEST"
+    return "TEST"

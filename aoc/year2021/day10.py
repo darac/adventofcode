@@ -126,7 +126,7 @@ because there are the same number of scores smaller and larger than it.
 Find the completion string for each incomplete line, score the completion
 strings, and sort the scores. What is the middle score?"""
 
-from typing import Literal, Optional
+from typing import Literal
 
 from aocd import submit
 from aocd.exceptions import AocdError
@@ -134,7 +134,7 @@ from aocd.models import Puzzle
 from rich import print
 
 
-def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optional[int]:
+def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
     """Calculates the solution
 
     Args:
@@ -146,7 +146,7 @@ def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optiona
     """
     checker_score = 0
     autocomplete_scores = []
-    for line in input.splitlines():
+    for line in puzzle.splitlines():
         # print(line)
         chunk_deck = []
         printout = ""

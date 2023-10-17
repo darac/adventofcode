@@ -3,7 +3,7 @@
 --- Day 11: Dumbo Octopus ---
 """
 
-from typing import Literal, Optional
+from typing import Literal
 
 import numpy as np
 from aocd import submit
@@ -31,19 +31,17 @@ def get_neighbours(r: int, c: int, rows: int, cols: int) -> list[tuple[int, int]
         list[tuple[int, int]]: A list of coordinate pairs
     """
     return list(
-        set(
-            [
-                (max(0, r - 1), max(0, c - 1)),  # Above Left
-                (max(0, r - 1), c),  # Above Center
-                (max(0, r - 1), min(cols - 1, c + 1)),  # Above Right
-                (r, max(0, c - 1)),  # Left
-                # Center Center is not a neighbour, it's US :)
-                (r, min(cols - 1, c + 1)),  # Right
-                (min(rows - 1, r + 1), max(0, c - 1)),  # Below Left
-                (min(rows - 1, r + 1), c),  # Below Center
-                (min(rows - 1, r + 1), min(cols - 1, c + 1)),  # Below Left
-            ]
-        )
+        {
+            (max(0, r - 1), max(0, c - 1)),  # Above Left
+            (max(0, r - 1), c),  # Above Center
+            (max(0, r - 1), min(cols - 1, c + 1)),  # Above Right
+            (r, max(0, c - 1)),  # Left
+            # Center Center is not a neighbour, it's US :)
+            (r, min(cols - 1, c + 1)),  # Right
+            (min(rows - 1, r + 1), max(0, c - 1)),  # Below Left
+            (min(rows - 1, r + 1), c),  # Below Center
+            (min(rows - 1, r + 1), min(cols - 1, c + 1)),  # Below Left
+        },
     )
 
 
@@ -80,7 +78,7 @@ def run_step(data: np.ndarray, step: int, part: str, runner: bool = False) -> li
         # If any octopi have an energy > 9, they FLASH
         flashers = data > 9
         phase_flashes.append(np.count_nonzero(flashers))
-        # Flashed octipi cause their neighbours to increase by one
+        # Flashed octopi cause their neighbours to increase by one
         with np.nditer(data, flags=["multi_index"], op_flags=[["readwrite"]]) as it:
             for _ in it:
                 coord = it.multi_index
@@ -100,7 +98,7 @@ def run_step(data: np.ndarray, step: int, part: str, runner: bool = False) -> li
     return phase_flashes
 
 
-def solve(input: str, part: Literal["a", "b", "training"], _runner: bool = False) -> Optional[int]:
+def solve(puzzle: str, part: Literal["a", "b", "training"], _runner: bool = False) -> int | None:
     """Calculates the solution
 
     Args:
@@ -110,7 +108,7 @@ def solve(input: str, part: Literal["a", "b", "training"], _runner: bool = False
     Returns:
         int: The Puzzle Solution
     """
-    data = np.array([list(row) for row in input.splitlines()], dtype="int")
+    data = np.array([list(row) for row in puzzle.splitlines()], dtype="int")
     if not _runner:
         print(data)
     num_flashes = 0
@@ -125,12 +123,12 @@ def solve(input: str, part: Literal["a", "b", "training"], _runner: bool = False
     if part == "b":
         step = 1
         while True:
-            stepdata = run_step(data, step, part, _runner)
-            for phase, flashers in enumerate(stepdata):
+            step_data = run_step(data, step, part, _runner)
+            for phase, flashers in enumerate(step_data):
                 if flashers == data.size and not _runner:
                     print(data)
                     print(
-                        f"{data.size} points. {flashers} flashers on phase {phase} of step {step}"
+                        f"{data.size} points. {flashers} flashers on phase {phase} of step {step}",
                     )
                     return step
             step += 1

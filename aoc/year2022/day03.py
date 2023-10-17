@@ -1,4 +1,5 @@
 #!env python
+# spell-checker: disable
 """
 --- Day 3: Rucksack Reorganization ---
 One Elf has the important job of loading all of the rucksacks with supplies
@@ -101,20 +102,21 @@ for the second group. The sum of these is 70.
 Find the item type that corresponds to the badges of each three-Elf group.
 What is the sum of the priorities of those item types?
 """
+# spell-checker: disable
 
-from typing import Literal, Optional
+from typing import Literal
 
 
 def priority(char: str) -> int:
     return ord(char) - ord("a") + 1 if char.islower() else ord(char) - ord("A") + 27
 
 
-def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optional[int]:
+def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
     score = 0
     rucksack_a = set()
     rucksack_b = set()
     rucksack_c = set()
-    for line in input.splitlines():
+    for line in puzzle.splitlines():
         common = None
         if part == "a":
             rucksack_size = int(len(line) / 2)

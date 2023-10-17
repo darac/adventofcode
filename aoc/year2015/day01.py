@@ -45,28 +45,28 @@ For example:
 What is the position of the character that causes Santa to first enter the basement?
 """
 
-from typing import Literal, Optional
+from typing import Literal
 
 from aocd.models import Puzzle
 from rich import print
 
 
-def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optional[int]:
-    return main(input=input, part=part)
+def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
+    return main(puzzle=puzzle, part=part)
 
 
-def main(input: str, part: str) -> int:
+def main(puzzle: str, part: str) -> int:
     """Main Method"""
-    FLOOR = 0
-    for pos, char in enumerate(input):
+    _floor = 0
+    for pos, char in enumerate(puzzle):
         match char:
             case "(":
-                FLOOR += 1
+                _floor += 1
             case ")":
-                FLOOR -= 1
-        if FLOOR < 0 and part == "b":
+                _floor -= 1
+        if _floor < 0 and part == "b":
             return pos + 1
-    return FLOOR
+    return _floor
 
 
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-import re
+import re  # noqa: N999
 from io import BytesIO
 
 from kivy.app import App
@@ -15,20 +15,20 @@ answer: str = ""
 
 
 class AOCTextInput(TextInput):
-    def __init__(self, **kwargs):
+    def __init__(self: "AOCTextInput", **kwargs: bool | int | str) -> None:
         self.pattern = re.compile("[^0-9A-Z]")
         super().__init__(**kwargs)
 
-    def insert_text(self, substring, from_undo=False):
+    def insert_text(self: "AOCTextInput", substring: str, from_undo: bool = False) -> None:
         s = re.sub(self.pattern, "", substring)
-        return super().insert_text(s, from_undo)
+        super().insert_text(s, from_undo)
 
 
 class ManualOCR(App):
     image_data = None
     image_widget = None
 
-    def build(self):
+    def build(self: "ManualOCR") -> BoxLayout:
         root_grid = BoxLayout(orientation="vertical")
         input_grid = BoxLayout(orientation="horizontal")
 
@@ -70,14 +70,14 @@ class ManualOCR(App):
         return root_grid
 
     @property
-    def text(self) -> str:
+    def text(self: "ManualOCR") -> str:
         return str(self.text_widget.text)
 
     @text.setter
-    def text(self, value: str):
+    def text(self: "ManualOCR", value: str) -> None:
         self.text_widget.text = value
 
-    def submit(self, instance):
+    def submit(self: "ManualOCR", _instance: AOCTextInput) -> None:
         print(f'Submitting "{self.text}"')
         global answer
         answer = self.text
@@ -85,7 +85,7 @@ class ManualOCR(App):
         assert app is not None
         app.stop()
 
-    def timeout(self, instance):
+    def timeout(self: "ManualOCR", _instance: AOCTextInput) -> None:
         print('Timeout. Auto-Submitting "TEST"')
         global answer
         answer = "TEST"
@@ -94,17 +94,16 @@ class ManualOCR(App):
         app.stop()
 
     @property
-    def image(self) -> PILImage.Image:
+    def image(self: "ManualOCR") -> PILImage.Image:
         data = BytesIO()
         if self.image_data is not None:
             self.image_data.save(data, fmt="png")
             data.seek(0)
             return PILImage.open(data).convert("RGB")
-        else:
-            return PILImage.new(mode="RGB", size=(0, 0))
+        return PILImage.new(mode="RGB", size=(0, 0))
 
     @image.setter
-    def image(self, value: PILImage.Image):
+    def image(self: "ManualOCR", value: PILImage.Image) -> None:
         data = BytesIO()
         value.save(data, format="png")
         data.seek(0)

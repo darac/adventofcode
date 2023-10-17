@@ -1,4 +1,5 @@
 #!env python3
+# spell-checker: disable
 """--- Day 9: Smoke Basin ---
 These caves seem to be lava tubes. Parts are even still volcanically
 active; small hydrothermal vents release smoke into the caves that slowly
@@ -81,9 +82,11 @@ Find the three largest basins and multiply their sizes together. In the
 above example, this is 9 * 14 * 9 = 1134.
 
 What do you get if you multiply together the sizes of the three largest
-basins?"""
-
-from typing import Literal, Optional
+basins?
+"""
+# spell-checker: enable
+import contextlib
+from typing import Literal
 
 import numpy as np
 import pandas as pd
@@ -130,32 +133,28 @@ def flood(data: np.ndarray, point: tuple[int, int], visited: list) -> int:
     return 1 + sum([flood(data, n, visited) for n in neighbours if n not in visited])
 
 
-def get_neighbour(data_frame: pd.DataFrame, row_name, column_name):
+def get_neighbour(
+    data_frame: pd.DataFrame,
+    row_name: int,
+    column_name: int,
+) -> list[tuple[int, int]]:
     neighbours = []
-    try:
+    with contextlib.suppress(KeyError):
         # Above
-        neighbours.append(data_frame.at[row_name - 1, column_name])
-    except KeyError as _:
-        pass
-    try:
+        neighbours.append(data_frame.loc[row_name - 1, column_name])
+    with contextlib.suppress(KeyError):
         # Left
-        neighbours.append(data_frame.at[row_name, column_name - 1])
-    except KeyError as _:
-        pass
-    try:
+        neighbours.append(data_frame.loc[row_name, column_name - 1])
+    with contextlib.suppress(KeyError):
         # Right
-        neighbours.append(data_frame.at[row_name, column_name + 1])
-    except KeyError as _:
-        pass
-    try:
+        neighbours.append(data_frame.loc[row_name, column_name + 1])
+    with contextlib.suppress(KeyError):
         # Below
-        neighbours.append(data_frame.at[row_name + 1, column_name])
-    except KeyError as _:
-        pass
+        neighbours.append(data_frame.loc[row_name + 1, column_name])
     return neighbours
 
 
-def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optional[int]:
+def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
     """Calculates the solution
 
     Args:
@@ -165,7 +164,7 @@ def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optiona
     Returns:
         int: The Puzzle Solution
     """
-    data_frame = pd.DataFrame([[int(char) for char in line] for line in input.splitlines()])
+    data_frame = pd.DataFrame([[int(char) for char in line] for line in puzzle.splitlines()])
     if not _runner:
         print(data_frame)
     risk_level = 0
@@ -182,7 +181,7 @@ def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optiona
         return risk_level
 
     # Part B
-    data = np.array([list(map(int, list(row))) for row in input.splitlines()])
+    data = np.array([list(map(int, list(row))) for row in puzzle.splitlines()])
     if not _runner:
         print(data)
     basins = sorted([flood(data, low_point, []) for low_point in low_points])

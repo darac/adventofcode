@@ -3,8 +3,15 @@ import datetime
 import itertools
 import os
 
+import pytest
+from _pytest.config import Notset
+from _pytest.terminal import TerminalReporter
 
-def pytest_terminal_summary(terminalreporter, exitstatus, config):
+
+def pytest_terminal_summary(
+    terminalreporter: TerminalReporter,
+    exitstatus: int,
+) -> None:
     # on failures, don't add "Captured stdout call" as pytest does that already
     # otherwise, the section "Captured stdout call" will be added twice
     if exitstatus > 0:
@@ -25,7 +32,7 @@ def pytest_terminal_summary(terminalreporter, exitstatus, config):
         terminalreporter.line(content)
 
 
-def pytest_addoption(parser):
+def pytest_addoption(parser: pytest.Parser) -> None:
     """Add '--year' and '--day' options to pytest."""
     parser.addoption(
         "--year",
@@ -47,11 +54,13 @@ def pytest_addoption(parser):
     )
 
 
-def pytest_generate_tests(metafunc):
+def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
     """For AOC tests, allow the year(s) and day(s) to be specified
     at the command line."""
     years = metafunc.config.getoption("year")
     days = metafunc.config.getoption("day")
+    assert not isinstance(years, Notset)
+    assert not isinstance(days, Notset)
 
     if "example_data" in metafunc.fixturenames:
         metafunc.parametrize("example_data", list(itertools.product(years, days)), indirect=True)

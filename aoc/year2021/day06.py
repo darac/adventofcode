@@ -83,7 +83,7 @@ After 256 days in the example above, there would be a total of 26984457539
 lanternfish!"""
 
 from collections import Counter
-from typing import Literal, Optional
+from typing import Literal
 
 from aocd import submit
 from aocd.models import Puzzle
@@ -95,7 +95,7 @@ PUZZLE = Puzzle(year=2021, day=6)
 INPUT = PUZZLE.input_data
 
 
-def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optional[int]:
+def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
     """Calculates the number of Lanternfish
 
     Args:
@@ -106,13 +106,13 @@ def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optiona
         int: The solution
     """
     school = Counter({-1: 0, 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0})
-    for fish in [int(n) for n in input.split(",")]:
+    for fish in [int(n) for n in puzzle.split(",")]:
         school[fish] += 1
     if not _runner:
         print(f"Initial state: {school}")
     days = 80 if part == "a" else 256
     for day in track(range(days)):
-        for i in range(0, 9):
+        for i in range(9):
             # Each bucket of population counts down one
             school[i - 1] = school[i]
         if day < 3:

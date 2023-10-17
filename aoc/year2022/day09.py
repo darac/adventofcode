@@ -1,15 +1,15 @@
 #!env python
 
-from typing import Literal, Optional, Tuple
+from typing import Literal
 
 
 class RopeFollower:
-    def __init__(self, id: int) -> None:
-        self.visited: set[Tuple[int, int]] = set()
-        self.location: Tuple[int, int] = (0, 0)
-        self.id: str = "T" if id == 0 else str(id)
+    def __init__(self: "RopeFollower", fid: int) -> None:
+        self.visited: set[tuple[int, int]] = set()
+        self.location: tuple[int, int] = (0, 0)
+        self.id: str = "T" if fid == 0 else str(fid)
 
-    def move_head(self, leader: Tuple[int, int] = (0, 0)):
+    def move_head(self: "RopeFollower", leader: tuple[int, int] = (0, 0)) -> None:
         # Moves:
         # 1 2 3 4 5
         # 6 . . . 7
@@ -52,18 +52,16 @@ class RopeFollower:
                 # West
                 self.location = (self.location[0] - 1, self.location[1])
 
-        assert (
-            abs(leader[0] - self.location[0]) <= 2 and abs(leader[1] - self.location[1]) <= 2
-        ), f"H{leader}, {self.id}{self.location}"
+        assert abs(leader[0] - self.location[0]) <= 2, f"H{leader}, {self.id}{self.location}"
+        assert abs(leader[1] - self.location[1]) <= 2, f"H{leader}, {self.id}{self.location}"
+
         self.visited.add(self.location)
 
 
-def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optional[int]:
+def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
     head_location = (0, 0)
-    knots = []
-    for id in range(1 if part == "a" else 9):
-        knots.append(RopeFollower(id))
-    for line in input.splitlines():
+    knots = [RopeFollower(fid) for fid in range(1 if part == "a" else 9)]
+    for line in puzzle.splitlines():
         direction, steps = line.split()
 
         for _ in range(int(steps)):
@@ -78,7 +76,7 @@ def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optiona
             else:
                 raise NotImplementedError
 
-            prev_knot: Tuple[int, int] = head_location
+            prev_knot: tuple[int, int] = head_location
             for knot in knots:
                 knot.move_head(prev_knot)
                 prev_knot = knot.location

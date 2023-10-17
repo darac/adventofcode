@@ -4,7 +4,7 @@
 """
 import os
 import re
-from typing import Literal, Optional
+from typing import Literal
 
 import numpy as np
 from aocd import submit
@@ -12,7 +12,7 @@ from aocd.models import Puzzle
 from rich import print
 
 
-def print_sheet(sheet: np.ndarray):
+def print_sheet(sheet: np.ndarray) -> None:
     """Prints out the sheet using blocks and spaces
     NOTE: We use np.transpose, otherwise you have to cock your head :)
 
@@ -23,7 +23,7 @@ def print_sheet(sheet: np.ndarray):
         print("".join(["█" if x else " " for x in row]))
 
 
-def create_sheet(input: str) -> np.ndarray:
+def create_sheet(puzzle: str) -> np.ndarray:
     """Generates an empty sheet of the size required by the puzzle
 
     Args:
@@ -33,7 +33,7 @@ def create_sheet(input: str) -> np.ndarray:
         np.ndarray: An empty array, big enough to hold all the points
     """
     rows = cols = 0
-    for lineno, line in enumerate(input.splitlines()):
+    for lineno, line in enumerate(puzzle.splitlines()):
         if line == "":
             break
         try:
@@ -48,7 +48,7 @@ def create_sheet(input: str) -> np.ndarray:
     return np.zeros((rows + 1, cols + 1), dtype="bool")
 
 
-def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optional[int]:
+def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
     """Calculates the solution
 
     Args:
@@ -59,12 +59,12 @@ def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optiona
         int: The Puzzle Solution
     """
     # Start by reading the input to find the size of the sheet
-    sheet = create_sheet(input)
+    sheet = create_sheet(puzzle)
 
     # Read the input data
     read_mode = 0
     folds = []
-    for line in input.splitlines():
+    for line in puzzle.splitlines():
         if line == "":
             read_mode += 1
         elif read_mode == 0:
@@ -124,7 +124,7 @@ def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optiona
 if __name__ == "__main__":
     np.set_printoptions(
         linewidth=os.get_terminal_size()[0],
-        formatter=dict(bool=lambda b: "#" if b else "."),
+        formatter={"bool": lambda b: "#" if b else "."},
         threshold=int(os.get_terminal_size()[0] / 4),
     )
 

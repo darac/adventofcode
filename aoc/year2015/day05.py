@@ -26,16 +26,18 @@ For example:
  - haegwjzuvuyypxyu is naughty because it contains the string xy.
  - dvszwmarrgswjxmb is naughty because it contains only one vowel.
 
-How many strings are nice?"""
+How many strings are nice?
+"""
+# spell-checker: disable
 
 import re
 from collections import Counter
 from typing import Literal
 
 
-def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
+def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
     num_nice_strings = 0
-    for line in input.splitlines():
+    for line in puzzle.splitlines():
         counts = Counter(line)
         if (
             part == "a"

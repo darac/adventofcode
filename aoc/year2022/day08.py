@@ -1,4 +1,5 @@
 #!env python
+# spell-checker: disable
 """
 --- Day 8: Treetop Tree House ---
 The expedition comes across a peculiar patch of tall trees all planted
@@ -104,8 +105,9 @@ the tree house.
 Consider each tree on your map. What is the highest scenic score possible
 for any tree?
 """
+# spell-checker: enable
 
-from typing import Literal, Optional
+from typing import Literal
 
 import numpy as np
 import pandas as pd
@@ -163,8 +165,8 @@ def scenic_score(df: pd.DataFrame, row_id: int, col_id: int) -> int:
     return int(np.prod(list(directions.values())))
 
 
-def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optional[int]:
-    data_frame = pd.DataFrame([[int(char) for char in line] for line in input.splitlines()])
+def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
+    data_frame = pd.DataFrame([[int(char) for char in line] for line in puzzle.splitlines()])
     if not _runner:
         print(data_frame)
 
@@ -173,21 +175,24 @@ def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optiona
         print(out_frame)
 
     for column_name, column in data_frame.items():
-        for row_name, cell in enumerate(column):
+        for row_name, _cell in enumerate(column):
             column_name = int(column_name)  # type: ignore
             if part == "a":
                 out_frame[column_name][row_name] = visible(
-                    data_frame, row_id=row_name, col_id=column_name
+                    data_frame,
+                    row_id=row_name,
+                    col_id=column_name,
                 )
             else:
                 out_frame[column_name][row_name] = scenic_score(
-                    data_frame, row_id=row_name, col_id=column_name
+                    data_frame,
+                    row_id=row_name,
+                    col_id=column_name,
                 )
 
     if not _runner:
         print(out_frame)
 
     if part == "a":
-        return int(out_frame.values.sum().sum())
-    else:
-        return int(out_frame.max().max())
+        return int(out_frame.to_numpy().sum().sum())
+    return int(out_frame.max().max())

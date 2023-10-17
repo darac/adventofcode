@@ -1,4 +1,5 @@
 #!env python
+# spell-checker: disable
 """
 --- Day 5: Supply Stacks ---
 The expedition can depart as soon as the final supplies have been unloaded
@@ -141,18 +142,19 @@ the Elves know where they should stand to be ready to unload the final
 supplies. After the rearrangement procedure completes, what crate ends up
 on top of each stack?
 """
+# spell-checker: enable
 from collections import deque
-from typing import Dict, Literal, Optional
+from typing import Literal
 
 from parse import Result, compile
 
 
-def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optional[str]:
+def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> str | None:
     mode = "crates"
-    unnumbered_stacks: Dict[int, deque[str]] = {}
-    stacks: Dict[str, deque[str]] = {}
+    unnumbered_stacks: dict[int, deque[str]] = {}
+    stacks: dict[str, deque[str]] = {}
     parser = compile("move {:d} from {} to {}")
-    for line in input.splitlines():
+    for line in puzzle.splitlines():
         if not _runner:
             print(line)
         if line == "" and len(stacks) and mode == "crates":

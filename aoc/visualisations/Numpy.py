@@ -1,7 +1,7 @@
-import numpy
+import numpy as np  # noqa: N999
 
 
-def boolean_array(arr: numpy.ndarray):
+def boolean_array(arr: np.ndarray) -> None:
     assert len(arr.shape) == 2
     print(f" {arr.shape} ".center(arr.shape[1], "-"))
     for row in range(arr.shape[0]):

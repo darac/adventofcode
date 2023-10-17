@@ -1,4 +1,5 @@
 #!env python
+# spell-checker: disable
 """
 --- Day 7: No Space Left On Device ---
 You can hear birds chirping and raindrops hitting leaves as the expedition
@@ -138,24 +139,30 @@ these, choose the smallest: d, increasing unused space by 24933642.
 Find the smallest directory that, if deleted, would free up enough space on
 the filesystem to run the update. What is the total size of that directory?
 """
+# spell-checker: enable
 
 import os
 from pathlib import Path
-from typing import Any, Dict, Literal, Optional, Union
+from typing import Literal
 
 
-def path_get(dictionary: dict, path: Union[Path, str]) -> Any:
-    paths = str(path).split(os.sep)
+class UnknownCommand(Exception):
+    def __init__(self: "UnknownCommand", command: str) -> None:
+        super().__init__(f"Unknown command: {command}")
+
+
+def path_get(dictionary: dict, path: Path | str) -> dict:
+    paths = Path(path).parts
     for item in paths:
         if item != "" and item in dictionary:
             dictionary = dictionary[item]
     return dictionary
 
 
-def path_set(dictionary: dict, path: Union[Path, str], set_item: Any):
-    paths = str(path).split(os.sep)
+def path_set(dictionary: dict, path: Path | str, set_item: dict | int) -> None:
+    paths = Path(path).parts
     key = paths[-1]
-    dictionary = path_get(dictionary, os.sep.join(paths[:-1]))
+    dictionary = path_get(dictionary, os.sep.join(paths[:-1]))  # noqa: PTH118
     dictionary[key] = set_item
 
 
@@ -170,10 +177,10 @@ def dir_size(directory: dict) -> int:
 
 
 def visualise(
-    directory: dict[str, Union[int, dict]],
+    directory: dict[str, int | dict],
     part: Literal["a", "b"],
     runner: bool = False,
-    root: Union[Path, str] = "",
+    root: Path | str = "",
 ) -> list[int]:
     picked_directories = []
     for dirent, value in directory.items():
@@ -181,7 +188,7 @@ def visualise(
         pick_me = ""
         if isinstance(value, dict):
             picked_directories.extend(
-                visualise(value, root=f"{root}{os.sep}{dirent}", runner=runner, part=part)
+                visualise(value, root=f"{root}{os.sep}{dirent}", runner=runner, part=part),
             )
             dirent_size = dir_size(value)
             if (part == "a" and dirent_size <= 100_000) or (part == "b"):
@@ -199,10 +206,10 @@ def visualise(
     return picked_directories
 
 
-def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optional[int]:
-    filesystem: Dict[str, Union[dict, int]] = dict()
+def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
+    filesystem: dict[str, dict | int] = {}
     cwd = Path("/")
-    for line in input.splitlines():
+    for line in puzzle.splitlines():
         match line.split():
             case ["$", "cd", "/"]:
                 cwd = Path("/")
@@ -213,20 +220,19 @@ def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> Optiona
             case ["$", "ls"]:
                 pass  # NOSONAR
             case ["dir", dirname]:
-                path_set(filesystem, cwd / dirname, dict())
+                path_set(filesystem, cwd / dirname, {})
             case [size, filename]:
                 assert int(size, 10) > 0
                 path_set(filesystem, cwd / filename, int(size, 10))
             case _:
-                raise ValueError(f"Unknown command: {line}")
+                raise UnknownCommand(line)
 
     big_folders = visualise(filesystem, runner=_runner, part=part)
     if part == "a":
         return sum(big_folders)
-    else:
-        disk_size = 70_000_000
-        free_space = disk_size - dir_size(filesystem)
-        needed_space = 30_000_000 - free_space
-        if not _runner:
-            print(f"{free_space:,} free. Need {needed_space:,} more.")
-        return min([i for i in sorted(big_folders + [dir_size(filesystem)]) if i >= needed_space])
+    disk_size = 70_000_000
+    free_space = disk_size - dir_size(filesystem)
+    needed_space = 30_000_000 - free_space
+    if not _runner:
+        print(f"{free_space:,} free. Need {needed_space:,} more.")
+    return min([i for i in sorted([*big_folders, dir_size(filesystem)]) if i >= needed_space])

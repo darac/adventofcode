@@ -50,14 +50,19 @@ from typing import Literal
 from rich import print
 
 
-def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
+class UnknownDirection(Exception):
+    def __init__(self: "UnknownDirection", direction: str) -> None:
+        super().__init__(f"Unknown Direction: {direction}")
+
+
+def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
     position = {"santa": {"x": 0, "y": 0}, "robot": {"x": 0, "y": 0}}
     locations_visited: dict[str, Counter] = {
         "santa": Counter({str(position["santa"]): 1}),
         "robot": Counter({str(position["robot"]): 1}),
     }
     actor = "santa"
-    for direction in input:
+    for direction in puzzle:
         match direction:
             case "^":
                 position[actor]["y"] += 1
@@ -68,11 +73,11 @@ def solve(input: str, part: Literal["a", "b"], _runner: bool = False) -> int | N
             case "<":
                 position[actor]["x"] -= 1
             case "_":
-                raise ValueError("Unknown direction")
+                raise UnknownDirection(direction)
         locations_visited[actor].update({str(position[actor]): 1})
         if part == "b":
             actor = "santa" if actor == "robot" else "robot"
     if not _runner:
-        print(input)
+        print(puzzle)
         print(locations_visited)
     return len(locations_visited["robot"] + locations_visited["santa"])
