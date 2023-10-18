@@ -1,4 +1,3 @@
-#!env python3
 # spell-checker: disable
 """
 --- Day 3: Perfectly Spherical Houses in a Vacuum ---

@@ -1,5 +1,3 @@
-#!env python3
-
 # spell-checker: disable
 """
 --- Day 6: Probably a Fire Hazard ---

@@ -1,4 +1,3 @@
-#!env python
 # spell-checker: disable
 """
 --- Day 1: Calorie Counting ---

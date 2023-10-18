@@ -1,4 +1,3 @@
-#!env python3
 """
 Now, you need to figure out how to pilot this thing.
 

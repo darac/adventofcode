@@ -1,4 +1,3 @@
-#!env python3
 """
 --- Day 1: Not Quite Lisp ---
 Santa was hoping for a white Christmas, but his weather machine's "snow"

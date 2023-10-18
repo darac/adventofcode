@@ -1,5 +1,3 @@
-#!env python
-
 # spell-checker: disable
 """
 --- Day 4: The Ideal Stocking Stuffer ---

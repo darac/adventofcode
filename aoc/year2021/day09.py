@@ -1,4 +1,3 @@
-#!env python3
 # spell-checker: disable
 """--- Day 9: Smoke Basin ---
 These caves seem to be lava tubes. Parts are even still volcanically

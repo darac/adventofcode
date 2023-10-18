@@ -1,4 +1,3 @@
-#!env python3
 """
 The submarine has been making some odd creaking noises, so you ask it to produce
 a diagnostic report just in case.

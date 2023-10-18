@@ -1,4 +1,3 @@
-#!env python3
 """
 --- Day 1: Sonar Sweep ---
 

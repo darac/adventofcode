@@ -1,4 +1,3 @@
-#!env python3
 """
 Considering every single measurement isn't as useful as you expected:
 there's just too much noise in the data.

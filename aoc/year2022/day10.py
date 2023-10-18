@@ -1,4 +1,3 @@
-#!env python
 # spell-checker: disable
 """--- Day 10: Cathode-Ray Tube ---
 You avoid the ropes, plunge into the river, and swim to shore.

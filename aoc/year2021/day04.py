@@ -1,4 +1,3 @@
-#!env python3
 """
 --- Day 4: Giant Squid ---
 You're already almost 1.5km (almost a mile) below the surface of the ocean,

@@ -1,4 +1,3 @@
-#!env python3
 # spell-checker: disable
 """--- Day 8: Seven Segment Search ---
 You barely reach the safety of the cave when the whale smashes into the

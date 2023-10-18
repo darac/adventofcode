@@ -1,4 +1,3 @@
-#!env python3
 """
 --- Day 6: Lanternfish ---
 The sea floor is getting steeper. Maybe the sleigh keys got carried

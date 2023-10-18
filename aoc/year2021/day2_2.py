@@ -1,4 +1,3 @@
-#!env python3
 """
 Based on your calculations, the planned course doesn't seem to make any sense.
 You find the submarine manual and discover that the process is actually

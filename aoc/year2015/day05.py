@@ -1,5 +1,3 @@
-#!env python
-
 # spell-checker: disable
 """
 --- Day 5: Doesn't He Have Intern-Elves For This? ---

@@ -1,4 +1,3 @@
-#!env python3
 # spell-checker: disable
 """
 --- Day 2: I Was Told There Would Be No Math ---

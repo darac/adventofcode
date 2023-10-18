@@ -1,4 +1,3 @@
-#!env python3
 """
 --- Day 11: Dumbo Octopus ---
 """

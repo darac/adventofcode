@@ -1,5 +1,3 @@
-#!env python
-
 from typing import Literal
 
 
