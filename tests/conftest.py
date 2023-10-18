@@ -1,4 +1,3 @@
-#!env python3
 import datetime
 import itertools
 import os

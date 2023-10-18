@@ -1,5 +1,3 @@
-#!env python
-
 import importlib
 import os
 from collections.abc import Generator
