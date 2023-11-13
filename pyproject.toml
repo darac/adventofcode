@@ -56,7 +56,7 @@
         kivy                = { version = "^2.2.1", extras = ["base"] }
         more-itertools      = "^10.1.0"
         numpy               = "^1.26.1"
-        pandas              = "^2.1.2"
+        pandas              = "^2.1.3"
         parse               = "^1.19.1"
         pygame              = "^2.5.2"
         python              = ">=3.9,<3.13"
