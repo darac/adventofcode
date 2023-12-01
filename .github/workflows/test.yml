@@ -51,10 +51,9 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
                   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-                  PROJECT_VERSION: ${{ steps.proj-version.outputs.PROJECT_VERSION }}
               with:
                   args: >
-                      -Dsonar.projectVersion=$PROJECT_VERSION
+                      -Dsonar.projectVersion=${{ steps.proj-version.outputs.PROJECT_VERSION }}
             - name: Publish Test Report
               uses: pmeier/pytest-results-action@v0.4.0
               if: always()
