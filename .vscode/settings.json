@@ -7,6 +7,7 @@
         "blit",
         "boxlayout",
         "capstdout",
+        "CONSOLELOG",
         "dtype",
         "eggnoggedly",
         "exitstatus",
@@ -29,7 +30,9 @@
     ],
     "editor.formatOnSave": true,
     "python.analysis.typeCheckingMode": "basic",
-    "python.testing.pytestArgs": ["aoc"],
+    "python.testing.pytestArgs": [
+        "aoc"
+    ],
     "python.testing.pytestEnabled": true,
     "python.testing.unittestEnabled": false,
     "sonarlint.connectedMode.project": {
@@ -39,5 +42,6 @@
     "evenBetterToml.formatter.indentEntries": true,
     "evenBetterToml.formatter.indentTables": true,
     "evenBetterToml.formatter.indentString": "    ",
-    "cSpell.language": "en-GB"
+    "cSpell.language": "en-GB",
+    "mypy.runUsingActiveInterpreter": true
 }

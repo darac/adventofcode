@@ -41,6 +41,7 @@ class ManualOCR(App):
             self.image_data = CoreImage(BytesIO(data.read()), ext="png")
         if self.image_widget is None:
             self.image_widget = uiImage(size_hint=(1, 10), allow_stretch=True)
+        assert self.image_widget is not None
         self.image_widget.texture = self.image_data.texture
         root_grid.add_widget(self.image_widget)
 

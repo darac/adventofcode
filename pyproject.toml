@@ -84,8 +84,10 @@
 
 [tool.ruff]
     ignore = [
-        "N818", # Don't want to have to call exceptions *Error
-        "S101", # Of course we want to use assert
+        "COM812", # Allow ruff formatter
+        "ISC001", # Allow ruff formatter
+        "N818",   # Don't want to have to call exceptions *Error
+        "S101",   # Of course we want to use assert
     ]
     line-length = 99
     select = [
