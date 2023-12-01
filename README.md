@@ -5,7 +5,7 @@ Storage for my AdventOfCode solutions
 ![Tests](https://github.com/darac/adventofcode/workflows/Test/badge.svg)
 [![CodeQL](https://github.com/darac/adventofcode/workflows/CodeQL/badge.svg)](https://github.com/darac/adventofcode/security/code-scanning)
 ![Stars Collected](https://img.shields.io/badge/stars%20⭐-18-yellow)
-![Days Completed](https://img.shields.io/badge/days%20completed-17-red)
+![Days Completed](https://img.shields.io/badge/days%20completed-9-red)
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=darac_adventofcode&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=darac_adventofcode)[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=darac_adventofcode&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=darac_adventofcode)[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=darac_adventofcode&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=darac_adventofcode)
 
@@ -20,19 +20,11 @@ poetry run pre-commit install --install-hooks
 ```
 
 <!--- advent_readme_stars table --->
-## 2022 Results
+## 2023 Results
 
 | Day | Part 1 | Part 2 |
 | :---: | :---: | :---: |
-| [Day 1](https://adventofcode.com/2022/day/1) | ⭐ | ⭐ |
-| [Day 2](https://adventofcode.com/2022/day/2) | ⭐ | ⭐ |
-| [Day 3](https://adventofcode.com/2022/day/3) | ⭐ | ⭐ |
-| [Day 4](https://adventofcode.com/2022/day/4) | ⭐ | ⭐ |
-| [Day 5](https://adventofcode.com/2022/day/5) | ⭐ | ⭐ |
-| [Day 6](https://adventofcode.com/2022/day/6) | ⭐ | ⭐ |
-| [Day 7](https://adventofcode.com/2022/day/7) | ⭐ | ⭐ |
-| [Day 8](https://adventofcode.com/2022/day/8) | ⭐ | ⭐ |
-| [Day 9](https://adventofcode.com/2022/day/9) | ⭐ | ⭐ |
+| [Day 1](https://adventofcode.com/2023/day/1) | ⭐ | ⭐ |
 <!--- advent_readme_stars table --->
 
 ## Credits
