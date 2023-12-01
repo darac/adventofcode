@@ -1,8 +1,12 @@
+import contextlib
 import datetime
+import importlib
 import itertools
 import os
+from pathlib import Path
 
 import pytest
+import yaml
 from _pytest.config import Notset
 from _pytest.terminal import TerminalReporter
 
@@ -60,6 +64,29 @@ def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
     days = metafunc.config.getoption("day")
     assert not isinstance(years, Notset)
     assert not isinstance(days, Notset)
+
+    # This is a list of tuples.
+    # Each Tuple consist of:
+    # * A solver function
+    # * Puzzle input
+    # * A part specification
+    # * The expected output
+    _test_data: list[tuple] = []
+    for year, day in itertools.product(years, days):
+        solver_name = f"aoc.year{year:4d}.day{day:02d}"
+        with contextlib.suppress(ModuleNotFoundError):
+            solver = importlib.import_module(solver_name)
+            with Path(f"tests/year{year:4d}/day{day:02d}.yml").open() as fh:
+                for doc in yaml.safe_load_all(fh):
+                    _test_data.extend(
+                        (solver.solve, doc["input"], part, doc[part])
+                        for part in ["a", "b"]
+                        if part in doc and doc[part] is not None
+                    )
+
+    if "solver" in metafunc.fixturenames:
+        # New-style test_solve
+        metafunc.parametrize("solver,puzzle,part,expected", _test_data)
 
     if "example_data" in metafunc.fixturenames:
         metafunc.parametrize("example_data", list(itertools.product(years, days)), indirect=True)
