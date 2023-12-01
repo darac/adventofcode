@@ -35,12 +35,13 @@ jobs:
               uses: actions/setup-python@v4
               with:
                   cache: poetry
-                  python-version: "3.10"
+                  python-version: "3.11"
             - name: Install dependencies with poetry
               run: poetry install
+            - name: Get project version
+              id: proj-version
+              run: echo "PROJECT_VERSION=$(poetry version --short)" >> "$GITHUB_OUTPUT"
             - uses: chartboost/ruff-action@v1
-            - uses: psf/black@stable
-            - run: poetry run mypy
             - run: poetry run pytest --cov --cov-report=xml:coverage.xml
                   --junit-xml=junit.xml
               env:
@@ -50,6 +51,10 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
                   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+                  PROJECT_VERSION: ${{ steps.proj-version.outputs.PROJECT_VERSION }}
+              with:
+                  args: >
+                      -Dsonar.projectVersion=$PROJECT_VERSION
             - name: Publish Test Report
               uses: pmeier/pytest-results-action@v0.4.0
               if: always()
