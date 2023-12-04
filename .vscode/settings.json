@@ -18,6 +18,7 @@
         "kivy",
         "Lanternfish",
         "linewidth",
+        "maxsplit",
         "metafunc",
         "ndarray",
         "nonzero",
