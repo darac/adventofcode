@@ -311,6 +311,7 @@ def parse_input(string: str) -> dict:
             this_board = BingoBoard(board_id=len(boards))
         else:
             assert this_board is not None
+            assert line is not None
             this_board.load_row(line.split())
     if this_board is not None:
         print(this_board.as_table())
