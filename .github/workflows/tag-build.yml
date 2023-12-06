@@ -42,7 +42,7 @@ jobs:
                 customHeaders: >-
                   {
                     "Content-Type": "application/json",
-                    "Authorization": "Bearer ${{ MASTODON_ACCESS_TOKEN }}"
+                    "Authorization": "Bearer ${{ secrets.MASTODON_ACCESS_TOKEN }}"
                   }
                 data: >-
                   {

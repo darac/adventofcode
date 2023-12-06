@@ -48,7 +48,7 @@
     description = "darac's solutions for http://adventofcode.com"
     name = "aoc"
     readme = "README.md"
-    version = "2023.4.1"
+    version = "2023.4.2"
 
     [tool.poetry.dependencies]
         advent-of-code-data = "^2.0.1"
