@@ -22,8 +22,7 @@ jobs:
 
             - id: tag_name
               name: Get tag name from poetry
-              run: echo "tag=$(poetry version --short)" >>
-                  $GITHUB_OUTPUT
+              run: echo "tag=$(poetry version --short)" >> $GITHUB_OUTPUT
 
             - name: Create a GitHub release
               env:
@@ -32,9 +31,9 @@ jobs:
 
             - name: Retrieve Generated Changelog
               id: changelog
-              run: >
-                  echo "body=$(gh release view "${{ steps.tag_name.outputs.tag }}"
-                   --json body -q .body)" >> $GITHUB_OUTPUT
+              env:
+                  GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+              run: echo "body=$(gh release view "${{ steps.tag_name.outputs.tag }}" --json body -q .body)" >> $GITHUB_OUTPUT
 
             - name: Notify the Fediverse
               uses: fjogeleit/http-request-action@v1
@@ -48,10 +47,7 @@ jobs:
                       }
                   data: >-
                       {
-                        "status":"Released AdventOfCode
-                          [${{ steps.tag_name.outputs.tag }}](https://github.com/darac/adventofcode/releases/tag/${{ steps.tag_name.outputs.tag }})\n
-                          ${{ steps.changelog.outputs.body }}\n
-                          #adventofcode #adventofcode2023",
+                        "status": "Released AdventOfCode [${{ steps.tag_name.outputs.tag }}](https://github.com/darac/adventofcode/releases/tag/${{ steps.tag_name.outputs.tag }})\n${{ steps.changelog.outputs.body }}\n#adventofcode #adventofcode2023",
                         "content_type": "markdown",
                         "language": "en"
                       }
