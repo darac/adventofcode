@@ -24,7 +24,7 @@ jobs:
                   AOC_SESSION: ${{ secrets.AOC_SESSION }}
               name: Smoke test docker image
               run: |
-                  docker run --rm -e AOC_SESSION adventofcode:test
+                  docker run --rm -e AOC_SESSION adventofcode:test -y $(date +%Y)
     test:
         runs-on: ubuntu-latest
         steps:
