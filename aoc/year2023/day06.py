@@ -90,6 +90,32 @@ values together, you get 288 (4 * 8 * 9).
 
 Determine the number of ways you could beat the record in each race. What
 do you get if you multiply these numbers together?
+
+--- Part Two ---
+
+As the race is about to start, you realize the piece of paper with race
+times and record distances you got earlier actually just has very bad
+kerning. There's really only one race - ignore the spaces between the numbers
+on each line.
+
+So, the example from before:
+
+  Time:      7  15   30
+  Distance:  9  40  200
+
+...now instead means this:
+
+  Time:      71530
+  Distance:  940200
+
+Now, you have to figure out how many ways there are to win this single
+race. In this example, the race lasts for 71530 milliseconds and the record
+distance you need to beat is 940200 millimeters. You could hold the button
+anywhere from 14 to 71516 milliseconds and beat the record, a total of
+71503 ways!
+
+How many ways can you beat the record in this one much longer race?
+
 """
 # spell-checker: enable
 
@@ -173,14 +199,22 @@ def get_winning_bounds(game_time: int, distance_to_beat: int) -> tuple[int, int]
 
 
 def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
-    races = zip(
-        *[[int(value) for value in line.split()[1:]] for line in puzzle.splitlines()], strict=True
-    )
+    if part == "a":
+        races = list(
+            zip(
+                *[[int(value) for value in line.split()[1:]] for line in puzzle.splitlines()],
+                strict=True,
+            )
+        )
+    else:
+        (times, distances) = (line.split(":")[1] for line in puzzle.splitlines())
+        LOG.info("Time: %s, Distance: %s", times, distances)
+        races = [(int("".join(times.split())), int("".join(distances.split())))]
 
     retval = []
     for race_time, race_distance in races:
         result = get_winning_bounds(race_time, race_distance)
-        if result is not None and part == "a":
+        if result is not None:
             retval.append(abs(result[1] - result[0]) + 1)
 
     return math.prod(retval)
