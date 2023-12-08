@@ -1,14 +1,12 @@
 ---
-name: Bump version
+name: Create a Release
 on:
-    workflow_run:
+    pull_request:
         types:
-            - completed
-        workflows:
-            - Test
+            - closed
 jobs:
-    build:
-        if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    release:
+        if: ${{ github.event.pull_request.merged == true }}
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
