@@ -26,6 +26,7 @@ poetry run pre-commit install --install-hooks
 | [Day 2](https://adventofcode.com/2023/day/2) | ⭐ | ⭐ |
 | [Day 4](https://adventofcode.com/2023/day/4) | ⭐ | ⭐ |
 | [Day 5](https://adventofcode.com/2023/day/5) | ⭐ |   |
+| [Day 6](https://adventofcode.com/2023/day/6) | ⭐ | ⭐ |
 <!--- advent_readme_stars table --->
 
 ## Credits

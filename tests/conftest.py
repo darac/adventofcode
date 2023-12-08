@@ -4,11 +4,15 @@ import importlib
 import itertools
 import os
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 import pytest
 import yaml
 from _pytest.config import Notset
 from _pytest.terminal import TerminalReporter
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 
 def pytest_terminal_summary(
@@ -36,7 +40,7 @@ def pytest_terminal_summary(
 
 
 def pytest_addoption(parser: pytest.Parser) -> None:
-    """Add '--year' and '--day' options to pytest."""
+    """Add `--year` and `--day` options to pytest."""
     parser.addoption(
         "--year",
         type=int,
@@ -55,6 +59,15 @@ def pytest_addoption(parser: pytest.Parser) -> None:
         default=range(1, 25 + 1),
         help="Run AOC tests from this day",
     )
+    parser.addoption(
+        "--part",
+        type=str,
+        nargs="*",
+        action="store",
+        choices=["a", "b"],
+        default=["a", "b"],
+        help="Run this part",
+    )
 
 
 def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
@@ -62,8 +75,10 @@ def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
     at the command line."""
     years = metafunc.config.getoption("year")
     days = metafunc.config.getoption("day")
+    parts = metafunc.config.getoption("part")
     assert not isinstance(years, Notset)
     assert not isinstance(days, Notset)
+    assert not isinstance(parts, Notset)
 
     # This is a list of tuples.
     # Each Tuple consist of:
@@ -71,7 +86,7 @@ def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
     # * Puzzle input
     # * A part specification
     # * The expected output
-    _test_data: list[tuple] = []
+    _test_data: list[tuple[Callable, str, str, int | str]] = []
     for year, day in itertools.product(years, days):
         solver_name = f"aoc.year{year:4d}.day{day:02d}"
         with contextlib.suppress(ModuleNotFoundError):
@@ -80,7 +95,7 @@ def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
                 for doc in yaml.safe_load_all(fh):
                     _test_data.extend(
                         (solver.solve, doc["input"], part, doc[part])
-                        for part in ["a", "b"]
+                        for part in parts
                         if part in doc and doc[part] is not None
                     )
 
