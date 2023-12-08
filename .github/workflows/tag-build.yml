@@ -12,26 +12,48 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
+
             - name: Install poetry
               run: pipx install poetry
+
             - name: Setup Python
               uses: actions/setup-python@v4
               with:
                   cache: poetry
                   python-version: "3.11"
+
             - id: tag_name
               name: Get tag name from poetry
               run: echo "tag=$(poetry version --short')" >>
                   $GITHUB_OUTPUT
-            - id: tag_version
-              name: Bump version and push tag
-              uses: mathieudutour/github-tag-action@v6.1
-              with:
-                  custom_tag: ${{ steps.tag_name.outputs.tag }}
-                  github_token: ${{ secrets.GITHUB_TOKEN }}
+
             - name: Create a GitHub release
-              uses: ncipollo/release-action@v1
+              env:
+                  GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+              run: gh release create "${{ steps.tag_name.outputs.tag }}" --generate-notes
+
+            - name: Retrieve Generated Changelog
+              id: changelog
+              run: >
+                  echo "body=$(gh release view "${{ steps.tag_name.outputs.tag }}"
+                   --json body -q .body)" >> $GITHUB_OUTPUT
+
+            - name: Notify the Fediverse
+              uses: fjogeleit/http-request-action@v1
               with:
-                  body: ${{ steps.tag_version.outputs.changelog }}
-                  name: Release ${{ steps.tag_version.outputs.new_tag }}
-                  tag: ${{ steps.tag_version.outputs.new_tag }}
+                  url: https://furry.engineer/api/v1/statuses
+                  method: POST
+                  customHeaders: >-
+                      {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer ${{ secrets.MASTODON_ACCESS_TOKEN }}"
+                      }
+                  data: >-
+                      {
+                        "status":"Released AdventOfCode
+                          [${{ steps.tag_name.outputs.tag }}](https://github.com/darac/adventofcode/releases/tag/${{ steps.tag_name.outputs.tag }})\n
+                          ${{ steps.changelog.outputs.body }}\n
+                          #adventofcode #adventofcode2023",
+                        "content_type": "markdown",
+                        "language": "en"
+                      }
