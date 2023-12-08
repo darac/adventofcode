@@ -102,4 +102,4 @@ RUN --mount=type=cache,target=/root/.cache \
     poetry install --only main
 
 # Run the executable
-CMD [ "poetry", "run", "aoc" ]
+ENTRYPOINT poetry run aoc
