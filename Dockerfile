@@ -69,8 +69,6 @@ COPY poetry.lock pyproject.toml ./
 # install runtime deps to $VIRTUAL_ENV
 RUN --mount=type=cache,target=/root/.cache \
     poetry install --no-root --only main
-COPY aoc/ aoc/
-COPY LICENSE LICENSE
 
 ################################
 # PRODUCTION
@@ -95,6 +93,13 @@ COPY --from=builder-base $VIRTUAL_ENV $VIRTUAL_ENV
 WORKDIR /app
 
 COPY poetry.lock pyproject.toml ./
+COPY aoc/ aoc/
+COPY LICENSE LICENSE
+COPY README.md README.md
+
+# install the app itself
+RUN --mount=type=cache,target=/root/.cache \
+    poetry install --only main
 
 # Run the executable
 CMD [ "poetry", "run", "aoc" ]
