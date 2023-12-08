@@ -4,6 +4,7 @@
 # ... except for dependencies and source
 !aoc
 !docker-entrypoint.sh
+!LICENSE
 !poetry.lock
 !pyproject.toml
 !README.md
