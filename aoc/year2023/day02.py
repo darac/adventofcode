@@ -36,7 +36,8 @@ For example, the record of a few games might look like this:
 
 In game 1, three sets of cubes are revealed from the bag (and then put back
 again). The first set is 3 blue cubes and 4 red cubes; the second set is 1
-red cube, 2 green cubes, and 6 blue cubes; the third set is only 2 green cubes.
+red cube, 2 green cubes, and 6 blue cubes; the third set is only 2 green
+cubes.
 
 The Elf would first like to know which games would have been possible if the
 bag contained only 12 red cubes, 13 green cubes, and 14 blue cubes?
@@ -96,13 +97,15 @@ from parse import Result, parse, search
 
 
 def parse_throw(throw: str) -> tuple:
-    """Parses a particular throw and returns number of red, green and blue cubes
+    """Parses a particular throw and returns number of red, green and blue
+    cubes
 
     Args:
         throw (str): One of the semicolon-delimited throws
 
     Returns:
-        tuple: The number of red, green and blue cubes (respectively) in the throw
+        tuple: The number of red, green and blue cubes (respectively) in the
+        throw
     """
     red, green, blue = 0, 0, 0
 
@@ -123,7 +126,9 @@ def parse_throw(throw: str) -> tuple:
     return (red, green, blue)
 
 
-def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
+def solve(
+    puzzle: str, part: Literal["a", "b"], _runner: bool = False
+) -> int | None:
     sum_valid_games = 0
     sum_game_powers = 0
     for line in puzzle.splitlines():

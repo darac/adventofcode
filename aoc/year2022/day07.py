@@ -158,10 +158,15 @@ def path_get(dictionary: dict, path: Path | str) -> dict:
     return dictionary
 
 
-def path_set(dictionary: dict, path: Path | str, set_item: dict | int) -> None:
+def path_set(
+    dictionary: dict, path: Path | str, set_item: dict | int
+) -> None:
     paths = Path(path).parts
     key = paths[-1]
-    dictionary = path_get(dictionary, os.sep.join(paths[:-1]))  # noqa: PTH118
+    dictionary = path_get(
+        dictionary,
+        os.sep.join(paths[:-1]),  # noqa: PTH118
+    )
     dictionary[key] = set_item
 
 
@@ -187,7 +192,12 @@ def visualise(
         pick_me = ""
         if isinstance(value, dict):
             picked_directories.extend(
-                visualise(value, root=f"{root}{os.sep}{dirent}", runner=runner, part=part),
+                visualise(
+                    value,
+                    root=f"{root}{os.sep}{dirent}",
+                    runner=runner,
+                    part=part,
+                ),
             )
             dirent_size = dir_size(value)
             if (part == "a" and dirent_size <= 100_000) or (part == "b"):
@@ -201,11 +211,16 @@ def visualise(
             assert isinstance(value, int)
             dirent_size = int(value)
         if not runner:
-            print(f"{str(root) + os.sep + dirent:80}\t{dir_marker:7}{dirent_size:-12,}{pick_me}")
+            print(
+                f"{str(root) + os.sep + dirent:80}\t{dir_marker:7}"
+                f"{dirent_size:-12,}{pick_me}"
+            )
     return picked_directories
 
 
-def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
+def solve(
+    puzzle: str, part: Literal["a", "b"], _runner: bool = False
+) -> int | None:
     filesystem: dict[str, dict | int] = {}
     cwd = Path("/")
     for line in puzzle.splitlines():
@@ -234,4 +249,10 @@ def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | 
     needed_space = 30_000_000 - free_space
     if not _runner:
         print(f"{free_space:,} free. Need {needed_space:,} more.")
-    return min([i for i in sorted([*big_folders, dir_size(filesystem)]) if i >= needed_space])
+    return min(
+        [
+            i
+            for i in sorted([*big_folders, dir_size(filesystem)])
+            if i >= needed_space
+        ]
+    )

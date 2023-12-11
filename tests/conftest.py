@@ -19,14 +19,18 @@ def pytest_terminal_summary(
     terminalreporter: TerminalReporter,
     exitstatus: int,
 ) -> None:
-    # on failures, don't add "Captured stdout call" as pytest does that already
-    # otherwise, the section "Captured stdout call" will be added twice
+    # on failures, don't add "Captured stdout call" as pytest does that
+    # already otherwise, the section "Captured stdout call" will be added
+    # twice
     if exitstatus > 0:
         return
     # get all reports
     reports = terminalreporter.getreports("")
-    # combine captured stdout of reports for tests named `<smth>::test_summary`
-    content = os.linesep.join(report.capstdout for report in reports if report.capstdout)
+    # combine captured stdout of reports for tests named
+    # `<smth>::test_summary`
+    content = os.linesep.join(
+        report.capstdout for report in reports if report.capstdout
+    )
     # add custom section that mimics pytest's one
     if content:
         terminalreporter.ensure_newline()
@@ -104,4 +108,8 @@ def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
         metafunc.parametrize("solver,puzzle,part,expected", _test_data)
 
     if "example_data" in metafunc.fixturenames:
-        metafunc.parametrize("example_data", list(itertools.product(years, days)), indirect=True)
+        metafunc.parametrize(
+            "example_data",
+            list(itertools.product(years, days)),
+            indirect=True,
+        )

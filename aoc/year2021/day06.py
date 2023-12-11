@@ -35,8 +35,8 @@ A lanternfish that creates a new fish resets its timer to 6, not 7
 starts with an internal timer of 8 and does not start counting down
 until the next day.
 
-Realizing what you're trying to do, the submarine automatically produces
-a list of the ages of several hundred nearby lanternfish (your puzzle input).
+Realizing what you're trying to do, the submarine automatically produces a
+list of the ages of several hundred nearby lanternfish (your puzzle input).
 For example, suppose you were given the following list:
 
 3,4,3,1,2
@@ -94,7 +94,9 @@ PUZZLE = Puzzle(year=2021, day=6)
 INPUT = PUZZLE.input_data
 
 
-def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
+def solve(
+    puzzle: str, part: Literal["a", "b"], _runner: bool = False
+) -> int | None:
     """Calculates the number of Lanternfish
 
     Args:
@@ -104,7 +106,9 @@ def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | 
     Returns:
         int: The solution
     """
-    school = Counter({-1: 0, 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0})
+    school = Counter(
+        {-1: 0, 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0}
+    )
     for fish in [int(n) for n in puzzle.split(",")]:
         school[fish] += 1
     if not _runner:

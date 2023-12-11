@@ -119,7 +119,8 @@ looks like this:
   98    50
   99    51
 
-With this map, you can look up the soil number required for each initial seed number:
+With this map, you can look up the soil number required for each initial
+seed number:
 
   - Seed number 79 corresponds to soil number 81.
   - Seed number 14 corresponds to soil number 14.
@@ -198,7 +199,11 @@ except ImportError:
             yield batch
 
 
-logging.basicConfig(level="DEBUG", format="%(message)s", datefmt="[%X]")  # NOSONAR
+logging.basicConfig(  # NOSONAR
+    level="DEBUG",
+    format="%(message)s",
+    datefmt="[%X]",
+)
 LOG = logging.getLogger()
 
 
@@ -207,22 +212,42 @@ class Almanac:
         self.name = name
         self.ranges: list[dict[str, int]] = []
 
-    def add_range(self: "Almanac", dest_start: int, source_start: int, range_length: int) -> None:
-        self.ranges.append({"dest": dest_start, "source": source_start, "length": range_length})
+    def add_range(
+        self: "Almanac",
+        dest_start: int,
+        source_start: int,
+        range_length: int,
+    ) -> None:
+        self.ranges.append(
+            {
+                "dest": dest_start,
+                "source": source_start,
+                "length": range_length,
+            }
+        )
 
     def lookup(self: "Almanac", key: int) -> int:
         retval = key
         for _r in self.ranges:
-            if retval not in range(_r["source"], _r["source"] + _r["length"]):
+            if retval not in range(
+                _r["source"], _r["source"] + _r["length"]
+            ):
                 continue
-            LOG.debug("%s: %d -> %d", self.name, retval, retval - _r["source"] + _r["dest"])
+            LOG.debug(
+                "%s: %d -> %d",
+                self.name,
+                retval,
+                retval - _r["source"] + _r["dest"],
+            )
             retval = retval - _r["source"] + _r["dest"]
             break
 
         return retval
 
 
-def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
+def solve(
+    puzzle: str, part: Literal["a", "b"], _runner: bool = False
+) -> int | None:
     seeds: list[tuple[int, int]] = []
     almanacs = {
         "seed-to-soil": Almanac("seed-to-soil"),
@@ -240,12 +265,17 @@ def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | 
         if mode == "seeds":
             if line.startswith("seeds:"):
                 if part == "a":
-                    seeds = [(seed, seed + 1) for seed in map(int, line.split()[1:])]
+                    seeds = [
+                        (seed, seed + 1)
+                        for seed in map(int, line.split()[1:])
+                    ]
                 else:
                     seeds.extend(
                         [
                             (start, start + length)
-                            for start, length in batched(map(int, line.split()[1:]), 2)
+                            for start, length in batched(
+                                map(int, line.split()[1:]), 2
+                            )
                         ]
                     )
                 mode = "soil"
@@ -254,7 +284,11 @@ def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | 
         else:
             with contextlib.suppress(ValueError):
                 _dest, _source, _len = map(int, line.split())
-                almanacs[mode].add_range(dest_start=_dest, source_start=_source, range_length=_len)
+                almanacs[mode].add_range(
+                    dest_start=_dest,
+                    source_start=_source,
+                    range_length=_len,
+                )
 
     # Map the seeds
     locations = [

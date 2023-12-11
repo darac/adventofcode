@@ -3,7 +3,7 @@
     requires      = ["poetry-core"]
 
 [tool.black]
-    line-length    = 99
+    line-length    = 76
     target-version = ["py311"]
 
 [tool.coverage.html]
@@ -48,7 +48,7 @@
     description = "darac's solutions for http://adventofcode.com"
     name = "aoc"
     readme = "README.md"
-    version = "2023.7.0"
+    version = "2023.7.1"
 
     [tool.poetry.dependencies]
         advent-of-code-data = "^2.0.1"
@@ -89,7 +89,8 @@
         "N818",   # Don't want to have to call exceptions *Error
         "S101",   # Of course we want to use assert
     ]
-    line-length = 99
+    # The AOC website wraps at 76 chars, so should we.
+    line-length = 76
     select = [
         "A",
         "ANN",

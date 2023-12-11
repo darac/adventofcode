@@ -91,7 +91,9 @@ from collections import defaultdict
 from typing import Literal
 
 
-def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
+def solve(
+    puzzle: str, part: Literal["a", "b"], _runner: bool = False
+) -> int | None:
     elf: dict[int, int] = defaultdict(int)
     elf_num: int = 1
     retval: int

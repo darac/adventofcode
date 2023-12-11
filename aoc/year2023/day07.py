@@ -144,7 +144,11 @@ from collections import namedtuple
 from collections.abc import Iterable
 from typing import Literal, TypeVar
 
-logging.basicConfig(level="DEBUG", format="%(message)s", datefmt="[%X]")  # NOSONAR
+logging.basicConfig(  # NOSONAR
+    level="DEBUG",
+    format="%(message)s",
+    datefmt="[%X]",
+)
 LOG = logging.getLogger()
 
 PART = ""
@@ -177,8 +181,9 @@ def most_common(lst: list[str]) -> str:
 
 class Card(namedtuple("Card", "numeric_rank rank")):
     """Represents a card.
-    Each card has a rank (A single letter representing its place in the suit),
-    and a numeric rank (An integer representing it's value for sorting).
+    Each card has a rank (A single letter representing its place in the
+    suit), and a numeric rank (An integer representing it's value for
+    sorting).
     """
 
     def __str__(self: "Card") -> str:
@@ -194,7 +199,13 @@ def parse_card(card: str) -> Card:
     Args:
         card (str): The card
     """
-    _face_values = {"T": 10, "J": 11 if PART == "a" else 1, "Q": 12, "K": 13, "A": 14}
+    _face_values = {
+        "T": 10,
+        "J": 11 if PART == "a" else 1,
+        "Q": 12,
+        "K": 13,
+        "A": 14,
+    }
 
     numeric_rank = int(_face_values.get(card, card))
     if not 1 <= numeric_rank <= 14:
@@ -210,7 +221,8 @@ def evaluate_hand(cards: list[Card]) -> str:
     """Works out what sort of poker hand this is.
 
     Args:
-        cards (list[Card]): A list of Card types (so the rank is already parsed)
+        cards (list[Card]): A list of Card types (so the rank is already
+        parsed)
 
     Returns:
         str: "Five of a kind", "Four of a kind" etc
@@ -221,7 +233,8 @@ def evaluate_hand(cards: list[Card]) -> str:
         # Substitute the Jack with the most common card
         wildcard = parse_card(most_common([card.rank for card in cards]))
         ranks = [
-            wildcard.numeric_rank if card.rank == "J" else card.numeric_rank for card in cards
+            wildcard.numeric_rank if card.rank == "J" else card.numeric_rank
+            for card in cards
         ]
 
     return {
@@ -248,12 +261,17 @@ def hand_score(hand: dict[str, list[Card] | int]) -> list[int]:
     retval = [type_score]
     retval.extend(card.numeric_rank for card in hand.get("cards"))
     LOG.debug(
-        "Score for %s (%s) is %s", hand.get("hand"), evaluate_hand(hand.get("cards")), retval
+        "Score for %s (%s) is %s",
+        hand.get("hand"),
+        evaluate_hand(hand.get("cards")),
+        retval,
     )
     return retval
 
 
-def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
+def solve(
+    puzzle: str, part: Literal["a", "b"], _runner: bool = False
+) -> int | None:
     global PART
     PART = part
 
@@ -261,12 +279,22 @@ def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | 
     winnings = 0
     for line in puzzle.splitlines():
         cards, bid = line.split()
-        LOG.debug('%s -> {"cards", %s, "bid": %d}', line, parse_cards(cards), int(bid))
-        hands.append({"hand": cards, "cards": parse_cards(cards), "bid": int(bid)})
+        LOG.debug(
+            '%s -> {"cards", %s, "bid": %d}',
+            line,
+            parse_cards(cards),
+            int(bid),
+        )
+        hands.append(
+            {"hand": cards, "cards": parse_cards(cards), "bid": int(bid)}
+        )
 
     for rank, hand in enumerate(sorted(hands, key=hand_score), start=1):
         LOG.debug(
-            "%(hand)s -> #%(rank)d. Winnings: %(bid)d * %(rank)d = %(winnings)d",
+            (
+                "%(hand)s -> #%(rank)d. "
+                "Winnings: %(bid)d * %(rank)d = %(winnings)d"
+            ),
             {
                 "hand": hand["hand"],
                 "rank": rank,

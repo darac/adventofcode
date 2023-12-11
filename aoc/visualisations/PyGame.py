@@ -15,18 +15,21 @@ class TwoDAnimationViewer:
         """
         Visualises an array of values.
 
-        Creates a display of size `display_size`, then calls `update_func` repeatedly,
-        expecting it to return the current solution and a frame of animation.
-        Upon receiving a StopIteration, the animation will stop and the last solution
-        will be returned.
+        Creates a display of size `display_size`, then calls `update_func`
+        repeatedly, expecting it to return the current solution and a frame
+        of animation.
+        Upon receiving a StopIteration, the animation will stop and the last
+        solution will be returned.
 
         Args:
-            update_func (Callable): A function, probably part of the puzzle solution.
-                Each time the function is called, it should return:
+         - update_func (Callable): A function, probably part of the puzzle
+            solution.
+            Each time the function is called, it should return:
                 * The current solution
                 * One frame of the animation as a numpy array.
-            puzzle_input (str): The puzzle input, passed to `update_func`.
-            display_size (Tuple[int, int]): The size of the display window, in pixels.
+         - puzzle_input (str): The puzzle input, passed to `update_func`.
+         - display_size (Tuple[int, int]): The size of the display window,
+            in pixels.
         """
         self.iterator = update_func(puzzle_input)
         self.answer = None
@@ -65,7 +68,9 @@ class TwoDAnimationViewer:
                     pygame.quit()
                     return self.answer
                 surface = pygame.surfarray.make_surface(z)
-                scaled_surface = pygame.transform.scale(surface, self.display.get_size())
+                scaled_surface = pygame.transform.scale(
+                    surface, self.display.get_size()
+                )
                 self.display.blit(scaled_surface, (0, 0))
                 self.title = str(self.answer)
 

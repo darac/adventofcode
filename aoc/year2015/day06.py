@@ -68,24 +68,41 @@ from rich.logging import RichHandler
 
 from aoc.visualisations.PyGame import TwoDAnimationViewer
 
-logging.basicConfig(level="DEBUG", format="%(message)s", datefmt="[%X]", handlers=[RichHandler()])
+logging.basicConfig(
+    level="DEBUG",
+    format="%(message)s",
+    datefmt="[%X]",
+    handlers=[RichHandler()],
+)
 LOG = logging.getLogger()
 
 
-def solve_steps_a(puzzle: str) -> Generator[tuple[Any, np.ndarray], Any, None]:
+def solve_steps_a(
+    puzzle: str,
+) -> Generator[tuple[Any, np.ndarray], Any, None]:
     lights = np.zeros(shape=(1000, 1000), dtype=bool)
     for line in puzzle.splitlines():
         # Process instructions
-        p = parse.parse("{command} {top:d},{left:d} through {bottom:d},{right:d}", line)
+        p = parse.parse(
+            "{command} {top:d},{left:d} through {bottom:d},{right:d}", line
+        )
         assert type(p) is parse.Result
         assert p
         if p["command"] == "turn on":
-            lights[p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1] = True
+            lights[
+                p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1
+            ] = True
         elif p["command"] == "turn off":
-            lights[p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1] = False
+            lights[
+                p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1
+            ] = False
         elif p["command"] == "toggle":
-            lights[p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1] = np.logical_not(
-                lights[p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1],
+            lights[
+                p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1
+            ] = np.logical_not(
+                lights[
+                    p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1
+                ],
             )
         LOG.debug("%s -> %s", line, lights.sum())
         yield lights.sum(), lights.astype("uint8")
@@ -101,12 +118,16 @@ class UnmatchedInstruction(Exception):
         super().__init__(f"Unmatched instruction: {instruction}")
 
 
-def solve_steps_b(puzzle: str) -> Generator[tuple[Any, np.ndarray], Any, None]:
+def solve_steps_b(
+    puzzle: str,
+) -> Generator[tuple[Any, np.ndarray], Any, None]:
     lights = np.zeros(shape=(1000, 1000), dtype="int")
     assert lights.sum() == 0
     for lineno, line in enumerate(puzzle.splitlines()):
         # Process instructions
-        p = parse.parse("{command} {top:d},{left:d} through {bottom:d},{right:d}", line)
+        p = parse.parse(
+            "{command} {top:d},{left:d} through {bottom:d},{right:d}", line
+        )
         assert type(p) is parse.Result
         assert 0 <= p["top"] < 1000
         assert 0 <= p["bottom"] < 1000
@@ -115,19 +136,40 @@ def solve_steps_b(puzzle: str) -> Generator[tuple[Any, np.ndarray], Any, None]:
         num_lights = lights.sum()
         if p:
             if p["command"] == "turn on":
-                lights[p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1] += 1
-                assert lights.sum() > num_lights, f"{lineno}: {lights.sum()} !> {num_lights}"
+                lights[
+                    p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1
+                ] += 1
+                assert (
+                    lights.sum() > num_lights
+                ), f"{lineno}: {lights.sum()} !> {num_lights}"
             elif p["command"] == "turn off":
-                if lights[p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1].sum() == 0:
+                if (
+                    lights[
+                        p["top"] : p["bottom"] + 1,
+                        p["left"] : p["right"] + 1,
+                    ].sum()
+                    == 0
+                ):
                     LOG.debug("Skipping already off section")
                     continue
-                lights[p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1] -= 1
-                LOG.info("There are %d negative cells. Resetting them...", len(lights[lights < 0]))
+                lights[
+                    p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1
+                ] -= 1
+                LOG.info(
+                    "There are %d negative cells. Resetting them...",
+                    len(lights[lights < 0]),
+                )
                 lights[lights < 0] = 0
-                assert lights.sum() < num_lights, f"{lineno}: {lights.sum()} !< {num_lights}"
+                assert (
+                    lights.sum() < num_lights
+                ), f"{lineno}: {lights.sum()} !< {num_lights}"
             elif p["command"] == "toggle":
-                lights[p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1] += 2
-                assert lights.sum() > num_lights, f"{lineno}: {lights.sum()} !> {num_lights}"
+                lights[
+                    p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1
+                ] += 2
+                assert (
+                    lights.sum() > num_lights
+                ), f"{lineno}: {lights.sum()} !> {num_lights}"
             else:
                 raise UnknownCommand(p["command"])
         else:
@@ -136,7 +178,9 @@ def solve_steps_b(puzzle: str) -> Generator[tuple[Any, np.ndarray], Any, None]:
         yield lights.sum(), lights.astype("uint8")
 
 
-def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
+def solve(
+    puzzle: str, part: Literal["a", "b"], _runner: bool = False
+) -> int | None:
     if _runner:
         LOG.setLevel("WARN")
     if part == "a":

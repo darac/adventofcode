@@ -103,12 +103,15 @@ from rich.table import Table
 
 traceback.install(show_locals=True)
 FORMAT = "%(message)s"
-logging.basicConfig(level="INFO", format=FORMAT, datefmt="[%X]", handlers=[RichHandler()])
+logging.basicConfig(
+    level="INFO", format=FORMAT, datefmt="[%X]", handlers=[RichHandler()]
+)
 LOG = logging.getLogger()
 
 PUZZLE = Puzzle(year=2021, day=4)
 INPUT = PUZZLE.input_data
-SAMPLE_INPUT = """7,4,9,5,11,17,23,2,0,14,21,24,10,16,13,6,15,25,12,22,18,20,8,19,3,26,1
+SAMPLE_INPUT = """
+7,4,9,5,11,17,23,2,0,14,21,24,10,16,13,6,15,25,12,22,18,20,8,19,3,26,1
 
 22 13 17 11  0
  8  2 23  4 24
@@ -144,7 +147,8 @@ class BingoSquare:
         """Init Method
 
         Args:
-            value (int, optional): The number in the square. Defaults to None.
+            value (int, optional): The number in the square. Defaults to
+            None.
         """
         self.value = value
         self.hit = False
@@ -209,7 +213,9 @@ class BingoBoard:
         Args:
             row (list): A list of ints
         """
-        board_row: list[BingoSquare] = [BingoSquare(int(item)) for item in row]
+        board_row: list[BingoSquare] = [
+            BingoSquare(int(item)) for item in row
+        ]
         self.board.append(board_row)
         if len(self.board) > 5:
             LOG.warning("The board looks big :(")
@@ -333,11 +339,15 @@ def generate_table(boards: list) -> Table:
     grid.add_column()
     grid.add_column()
     grid.add_column()
-    grid.add_row(boards[0].as_table(), boards[1].as_table(), boards[2].as_table())
+    grid.add_row(
+        boards[0].as_table(), boards[1].as_table(), boards[2].as_table()
+    )
     return grid
 
 
-def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
+def solve(
+    puzzle: str, part: Literal["a", "b"], _runner: bool = False
+) -> int | None:
     LOG.setLevel(logging.ERROR if _runner else logging.INFO)
 
     data = parse_input(puzzle)
@@ -352,7 +362,9 @@ def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | 
                 board.test(draw)
             except Bingo as board:
                 last_board = board.board
-                remaining_boards = sum([not x.has_won() for x in data["boards"]])
+                remaining_boards = sum(
+                    [not x.has_won() for x in data["boards"]]
+                )
                 LOG.info("Got a Bingo on board%d", board.board.board_id)
                 LOG.info("%d boards remain in play", remaining_boards)
                 if part == "a":
@@ -380,8 +392,12 @@ if __name__ == "__main__":
                         board.test(draw)
                     except Bingo as board:
                         LAST_BOARD = board.board
-                        REMAINING_BOARDS = sum([not x.has_won() for x in data["boards"]])
-                        logging.info("Got a Bingo on board %d", board.board.board_id)
+                        REMAINING_BOARDS = sum(
+                            [not x.has_won() for x in data["boards"]]
+                        )
+                        logging.info(
+                            "Got a Bingo on board %d", board.board.board_id
+                        )
                         logging.info(
                             "%d boards remain in play",
                             REMAINING_BOARDS,
@@ -391,7 +407,12 @@ if __name__ == "__main__":
                             print(board.board.as_table())
                             print(f"Score: {board.board.score()}")
                             if not DEBUG and not SUBMITTED_A:
-                                submit(board.board.score(), part="a", day=4, year=2021)
+                                submit(
+                                    board.board.score(),
+                                    part="a",
+                                    day=4,
+                                    year=2021,
+                                )
                                 SUBMITTED_A = True
                             FIRST_BOARD = True
             if REMAINING_BOARDS == 0:

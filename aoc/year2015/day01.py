@@ -41,7 +41,8 @@ For example:
   - ) causes him to enter the basement at character position 1.
   - ()()) causes him to enter the basement at character position 5.
 
-What is the position of the character that causes Santa to first enter the basement?
+What is the position of the character that causes Santa to first enter the
+basement?
 """
 
 from typing import Literal
@@ -50,7 +51,9 @@ from aocd.models import Puzzle
 from rich import print
 
 
-def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
+def solve(
+    puzzle: str, part: Literal["a", "b"], _runner: bool = False
+) -> int | None:
     return main(puzzle=puzzle, part=part)
 
 

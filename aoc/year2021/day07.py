@@ -89,7 +89,9 @@ PUZZLE = Puzzle(year=2021, day=7)
 INPUT = PUZZLE.input_data
 
 
-def fuel_required(crabs: list, target: int, part: str, _runner: bool = False) -> int:
+def fuel_required(
+    crabs: list, target: int, part: str, _runner: bool = False
+) -> int:
     """Calculates the fuel required to achieve an alignment.
     If part A, the fuel is the sum of the absolute distances travelled.
     If part B, the fuel is the sum of the sum of the distance travelled.
@@ -115,7 +117,9 @@ def fuel_required(crabs: list, target: int, part: str, _runner: bool = False) ->
     return fuel_used
 
 
-def solve(puzzle: str, part: Literal["a", "b"], runner: bool = False) -> int | None:
+def solve(
+    puzzle: str, part: Literal["a", "b"], runner: bool = False
+) -> int | None:
     """Main Procedure
     * Parses the input into a list of ints
     * Calculates the fuel required to get to any position
