@@ -33,7 +33,10 @@ jobs:
               id: changelog
               env:
                   GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-              run: echo "body=\"$(gh release view ${{ steps.tag_name.outputs.tag }} --json body -q .body)\"" >> $GITHUB_OUTPUT
+              run: EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64);
+                  echo "body<<$EOF" >> $GITHUB_OUTPUT;
+                  gh release view "${{ steps.tag_name.outputs.tag }}" --json body -q .body >> $GITHUB_OUTPUT;
+                  echo "$EOF" >> $GITHUB_OUTPUT;
 
             - name: Notify the Fediverse
               uses: fjogeleit/http-request-action@v1
