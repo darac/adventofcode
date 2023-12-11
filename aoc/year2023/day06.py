@@ -125,8 +125,10 @@ import math
 from typing import Literal
 
 logging.basicConfig(
-    level="DEBUG", format="%(message)s", datefmt="[%X]"
-)  # NOSONAR
+    level="DEBUG",
+    format="%(message)s",  # NOSONAR
+    datefmt="[%X]",
+)
 LOG = logging.getLogger()
 
 

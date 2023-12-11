@@ -145,8 +145,10 @@ from collections.abc import Iterable
 from typing import Literal, TypeVar
 
 logging.basicConfig(
-    level="DEBUG", format="%(message)s", datefmt="[%X]"
-)  # NOSONAR
+    level="DEBUG",
+    format="%(message)s",  # NOSONAR
+    datefmt="[%X]",
+)
 LOG = logging.getLogger()
 
 PART = ""

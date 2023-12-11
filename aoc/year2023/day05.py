@@ -200,8 +200,10 @@ except ImportError:
 
 
 logging.basicConfig(
-    level="DEBUG", format="%(message)s", datefmt="[%X]"
-)  # NOSONAR
+    level="DEBUG",
+    format="%(message)s",  # NOSONAR
+    datefmt="[%X]",
+)
 LOG = logging.getLogger()
 
 
