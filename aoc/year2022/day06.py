@@ -83,7 +83,9 @@ from typing import Literal
 from rich import print
 
 
-def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
+def solve(
+    puzzle: str, part: Literal["a", "b"], _runner: bool = False
+) -> int | None:
     buffer_size = 4 if part == "a" else 14
     msg_buffer: deque[str] = deque(maxlen=buffer_size)
     pointer = None

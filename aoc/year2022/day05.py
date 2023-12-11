@@ -73,7 +73,8 @@ Finally, one crate is moved from stack 1 to stack 2:
 
 The Elves just need to know which crate will end up on top of each stack;
 in this example, the top crates are C in stack 1, M in stack 2, and Z in
-stack 3, so you should combine these together and give the Elves the message CMZ.
+stack 3, so you should combine these together and give the Elves the
+message CMZ.
 
 After the rearrangement procedure completes, what crate ends up on top of
 each stack?
@@ -148,7 +149,9 @@ from typing import Literal
 from parse import Result, compile
 
 
-def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> str | None:
+def solve(
+    puzzle: str, part: Literal["a", "b"], _runner: bool = False
+) -> str | None:
     mode = "crates"
     unnumbered_stacks: dict[int, deque[str]] = {}
     stacks: dict[str, deque[str]] = {}

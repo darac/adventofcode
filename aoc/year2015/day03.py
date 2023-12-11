@@ -28,7 +28,8 @@ himself, Robo-Santa, to deliver presents with him.
 
 Santa and Robo-Santa start at the same location (delivering two presents to
 the same starting house), then take turns moving based on instructions from
-the elf, who is eggnoggedly reading from the same script as the previous year.
+the elf, who is eggnoggedly reading from the same script as the previous
+year.
 
 This year, how many houses receive at least one present?
 
@@ -54,7 +55,9 @@ class UnknownDirection(Exception):
         super().__init__(f"Unknown Direction: {direction}")
 
 
-def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
+def solve(
+    puzzle: str, part: Literal["a", "b"], _runner: bool = False
+) -> int | None:
     position = {"santa": {"x": 0, "y": 0}, "robot": {"x": 0, "y": 0}}
     locations_visited: dict[str, Counter] = {
         "santa": Counter({str(position["santa"]): 1}),

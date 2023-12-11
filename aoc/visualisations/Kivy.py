@@ -19,7 +19,9 @@ class AOCTextInput(TextInput):
         self.pattern = re.compile("[^0-9A-Z]")
         super().__init__(**kwargs)
 
-    def insert_text(self: "AOCTextInput", substring: str, from_undo: bool = False) -> None:
+    def insert_text(
+        self: "AOCTextInput", substring: str, from_undo: bool = False
+    ) -> None:
         s = re.sub(self.pattern, "", substring)
         super().insert_text(s, from_undo)
 
@@ -40,12 +42,16 @@ class ManualOCR(App):
         if self.image_data is None:
             self.image_data = CoreImage(BytesIO(data.read()), ext="png")
         if self.image_widget is None:
-            self.image_widget = uiImage(size_hint=(1, 10), allow_stretch=True)
+            self.image_widget = uiImage(
+                size_hint=(1, 10), allow_stretch=True
+            )
         assert self.image_widget is not None
         self.image_widget.texture = self.image_data.texture
         root_grid.add_widget(self.image_widget)
 
-        input_grid.add_widget(Label(text="Enter Value", size_hint=(0.3, 1), font_size=20))
+        input_grid.add_widget(
+            Label(text="Enter Value", size_hint=(0.3, 1), font_size=20)
+        )
 
         self.text_widget = AOCTextInput(
             multiline=False,
@@ -60,7 +66,9 @@ class ManualOCR(App):
         )
         input_grid.add_widget(self.text_widget)
 
-        self.button_widget = Button(text="Submit", size_hint=(0.3, 1), font_size=20)
+        self.button_widget = Button(
+            text="Submit", size_hint=(0.3, 1), font_size=20
+        )
         self.button_widget.bind(on_press=self.submit)
         input_grid.add_widget(self.button_widget)
 
@@ -110,7 +118,9 @@ class ManualOCR(App):
         data.seek(0)
         self.image_data = CoreImage(BytesIO(data.read()), ext="png")
         if self.image_widget is None:
-            self.image_widget = uiImage(size_hint=(1, 10), allow_stretch=True)
+            self.image_widget = uiImage(
+                size_hint=(1, 10), allow_stretch=True
+            )
         assert self.image_widget is not None
         self.image_widget.texture = self.image_data.texture
 

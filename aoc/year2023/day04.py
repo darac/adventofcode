@@ -126,11 +126,15 @@ from typing import Literal
 
 from parse import Result, parse
 
-logging.basicConfig(level="DEBUG", format="%(message)s", datefmt="[%X]")  # NOSONAR
+logging.basicConfig(
+    level="DEBUG", format="%(message)s", datefmt="[%X]"
+)  # NOSONAR
 LOG = logging.getLogger()
 
 
-def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
+def solve(
+    puzzle: str, part: Literal["a", "b"], _runner: bool = False
+) -> int | None:
     total_score = 0
     card_count: dict = defaultdict(int)
     for line in puzzle.splitlines():
@@ -144,7 +148,9 @@ def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | 
         winning_numbers = [int(x) for x in parts[0].split()]
         check_numbers = [int(x) for x in parts[1].split()]
 
-        card_score = sum(element in winning_numbers for element in check_numbers)
+        card_score = sum(
+            element in winning_numbers for element in check_numbers
+        )
         if card_score == 0:
             LOG.info("No matches for card %d, so score is 0", card_num)
         else:

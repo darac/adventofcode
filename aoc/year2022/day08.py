@@ -164,8 +164,12 @@ def scenic_score(df: pd.DataFrame, row_id: int, col_id: int) -> int:
     return int(np.prod(list(directions.values())))
 
 
-def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
-    data_frame = pd.DataFrame([[int(char) for char in line] for line in puzzle.splitlines()])
+def solve(
+    puzzle: str, part: Literal["a", "b"], _runner: bool = False
+) -> int | None:
+    data_frame = pd.DataFrame(
+        [[int(char) for char in line] for line in puzzle.splitlines()]
+    )
     if not _runner:
         print(data_frame)
 

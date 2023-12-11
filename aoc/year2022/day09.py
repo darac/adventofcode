@@ -7,14 +7,17 @@ class RopeFollower:
         self.location: tuple[int, int] = (0, 0)
         self.id: str = "T" if fid == 0 else str(fid)
 
-    def move_head(self: "RopeFollower", leader: tuple[int, int] = (0, 0)) -> None:
+    def move_head(
+        self: "RopeFollower", leader: tuple[int, int] = (0, 0)
+    ) -> None:
         # Moves:
         # 1 2 3 4 5
         # 6 . . . 7
         # 8 . T . 9
         # 0 . . . A
         # B C D E F
-        # So there are 16 possible places the head can be in relation to the tail
+        # So there are 16 possible places the head can be in relation to the
+        # tail
         # Directions we need to move the head:
         # ↖ ↖ ⬆ ↗ ↗
         # ↖ . . . ↗
@@ -50,13 +53,19 @@ class RopeFollower:
                 # West
                 self.location = (self.location[0] - 1, self.location[1])
 
-        assert abs(leader[0] - self.location[0]) <= 2, f"H{leader}, {self.id}{self.location}"
-        assert abs(leader[1] - self.location[1]) <= 2, f"H{leader}, {self.id}{self.location}"
+        assert (
+            abs(leader[0] - self.location[0]) <= 2
+        ), f"H{leader}, {self.id}{self.location}"
+        assert (
+            abs(leader[1] - self.location[1]) <= 2
+        ), f"H{leader}, {self.id}{self.location}"
 
         self.visited.add(self.location)
 
 
-def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
+def solve(
+    puzzle: str, part: Literal["a", "b"], _runner: bool = False
+) -> int | None:
     head_location = (0, 0)
     knots = [RopeFollower(fid) for fid in range(1 if part == "a" else 9)]
     for line in puzzle.splitlines():

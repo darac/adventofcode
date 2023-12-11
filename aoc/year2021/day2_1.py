@@ -47,25 +47,39 @@ print("[green]Captain:[/green] Helmsman! Prepare to receive orders!")
 POSITION = 0
 DEPTH = 0
 
-for command, count in [n.split() for n in Puzzle(year=2021, day=2).input_data.splitlines()]:
+for command, count in [
+    n.split() for n in Puzzle(year=2021, day=2).input_data.splitlines()
+]:
     print(f"[green]Captain:[/green] {command} {count}")
     match command:
         case "forward":
-            print(f"[green]Helmsman:[/green] Aye-aye, sir. Moving Forward {count}")
+            print(
+                "[green]Helmsman:[/green] Aye-aye, sir. Moving Forward "
+                f"{count}"
+            )
             POSITION += int(count)
         case "up":
-            print(f"[green]Helmsman:[/green] Aye-aye, sir. Coming Up {count}")
+            print(
+                f"[green]Helmsman:[/green] Aye-aye, sir. Coming Up {count}"
+            )
             DEPTH -= int(count)
             if DEPTH == 0:
                 print("[blue]Computer:[/blue] Surfaced")
             elif DEPTH < 0:
                 print("[blue]Computer:[/blue] FLYING!")
         case "down":
-            print(f"[green]Helmsman:[/green] Aye-aye, sir. Going Down {count}")
+            print(
+                f"[green]Helmsman:[/green] Aye-aye, sir. Going Down {count}"
+            )
             DEPTH += int(count)
         case _:
             print(f"[green]Captain:[/green] Belay that {command} order!")
 
 print("[green]Captain:[/green] Helmsman, Report Position!")
-print(f"[green]Helmsman:[/green] Sir! Forward {POSITION}, Depth {DEPTH}, Sir!")
-print(f"[green]Captain:[/green] Thank you, sailor. Yeoman, record that as {POSITION * DEPTH}!")
+print(
+    f"[green]Helmsman:[/green] Sir! Forward {POSITION}, Depth {DEPTH}, Sir!"
+)
+print(
+    "[green]Captain:[/green] Thank you, sailor. Yeoman, record that as "
+    f"{POSITION * DEPTH}!"
+)

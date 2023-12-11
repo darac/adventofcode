@@ -10,15 +10,17 @@ from aocd.models import Puzzle
 from rich import print
 
 
-def get_neighbours(r: int, c: int, rows: int, cols: int) -> list[tuple[int, int]]:
+def get_neighbours(
+    r: int, c: int, rows: int, cols: int
+) -> list[tuple[int, int]]:
     """Return a list of neighbouring locations
 
     For each of the cardinal points, we create a tuple of coordinates.
     Each coordinate is constrained to the size of the array (for example,
-    the point to the left of an item in column 0 is at "column - 1 or else 0")
-    We also use a "list(set(...))" construction to only return the unique set,
-    because, at the edge, many of these constraints will mean the neighbours map
-    to the same edge point.
+    the point to the left of an item in column 0 is at "column - 1 or else
+    0"). We also use a "list(set(...))" construction to only return the
+    unique set, because, at the edge, many of these constraints will mean
+    the neighbours map to the same edge point.
 
     Args:
         r (int): The row of the point to find neighbours for
@@ -44,7 +46,9 @@ def get_neighbours(r: int, c: int, rows: int, cols: int) -> list[tuple[int, int]
     )
 
 
-def run_step(data: np.ndarray, step: int, part: str, runner: bool = False) -> list[int]:
+def run_step(
+    data: np.ndarray, step: int, part: str, runner: bool = False
+) -> list[int]:
     """Runs a "step".
 
     - First, the energy level of each octopus increases by 1.
@@ -78,7 +82,9 @@ def run_step(data: np.ndarray, step: int, part: str, runner: bool = False) -> li
         flashers = data > 9
         phase_flashes.append(np.count_nonzero(flashers))
         # Flashed octopi cause their neighbours to increase by one
-        with np.nditer(data, flags=["multi_index"], op_flags=[["readwrite"]]) as it:
+        with np.nditer(
+            data, flags=["multi_index"], op_flags=[["readwrite"]]
+        ) as it:
             for _ in it:
                 coord = it.multi_index
                 if flashers[coord] and not flashed[coord]:
@@ -86,7 +92,6 @@ def run_step(data: np.ndarray, step: int, part: str, runner: bool = False) -> li
                     for neighbour in get_neighbours(*coord, *data.shape):
                         data[neighbour] += 1
         flashed |= flashers
-    # print(f"Step {step}: {phase_flashes} octopi flash (total: {sum(phase_flashes)})")
     # Finally, if the octopus flashed, set its energy to zero
     data[flashed] = 0
     if (step < 10 or step % 10 == 0) and not runner:
@@ -97,7 +102,9 @@ def run_step(data: np.ndarray, step: int, part: str, runner: bool = False) -> li
     return phase_flashes
 
 
-def solve(puzzle: str, part: Literal["a", "b", "training"], _runner: bool = False) -> int | None:
+def solve(
+    puzzle: str, part: Literal["a", "b", "training"], _runner: bool = False
+) -> int | None:
     """Calculates the solution
 
     Args:
@@ -127,7 +134,8 @@ def solve(puzzle: str, part: Literal["a", "b", "training"], _runner: bool = Fals
                 if flashers == data.size and not _runner:
                     print(data)
                     print(
-                        f"{data.size} points. {flashers} flashers on phase {phase} of step {step}",
+                        f"{data.size} points. {flashers} flashers on phase "
+                        f"{phase} of step {step}",
                     )
                     return step
             step += 1

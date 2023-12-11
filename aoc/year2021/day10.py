@@ -133,7 +133,9 @@ from aocd.models import Puzzle
 from rich import print
 
 
-def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
+def solve(
+    puzzle: str, part: Literal["a", "b"], _runner: bool = False
+) -> int | None:
     """Calculates the solution
 
     Args:
@@ -174,22 +176,26 @@ def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | 
                             match pair:
                                 case "<":
                                     error = (
-                                        '[italic bright_black]» Expected "[bold]>[/bold]",'
+                                        "[italic bright_black]» "
+                                        'Expected "[bold]>[/bold]",'
                                         f' found "[bold]{char}[/bold]"[/]'
                                     )
                                 case "[":
                                     error = (
-                                        '[italic bright_black]» Expected "[bold]][/bold]",'
+                                        "[italic bright_black]» "
+                                        'Expected "[bold]][/bold]",'
                                         f' found "[bold]{char}[/bold]"[/]'
                                     )
                                 case "{":
                                     error = (
-                                        '[italic bright_black]» Expected "[bold]}}[/bold]",'
+                                        "[italic bright_black]» "
+                                        'Expected "[bold]}}[/bold]",'
                                         f' found "[bold]{char}[/bold]"[/]'
                                     )
                                 case "(":
                                     error = (
-                                        '[italic bright_black]» Expected "[bold])[/bold]",'
+                                        "[italic bright_black]» "
+                                        'Expected "[bold])[/bold]",'
                                         f' found "[bold]{char}[/bold]"[/]'
                                     )
                             # Syntax Error

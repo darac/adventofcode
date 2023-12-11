@@ -386,7 +386,9 @@ LOG = logging.getLogger()
 
 
 class IllegalInstruction(Exception):
-    def __init__(self: "IllegalInstruction", instruction: str | int) -> None:
+    def __init__(
+        self: "IllegalInstruction", instruction: str | int
+    ) -> None:
         super().__init__(f"Illegal Instruction: {instruction}")
 
 
@@ -397,10 +399,14 @@ class Clock:
         self.ticks = 1
         self.command_reader = self.read_instruction(instruction)
 
-    def read_instruction(self: "Clock", instruction: str) -> Generator[str, Any, None]:
+    def read_instruction(
+        self: "Clock", instruction: str
+    ) -> Generator[str, Any, None]:
         yield from instruction.splitlines()
 
-    def run(self: "Clock", stop_at_tick: int = -1, visual: bool = False) -> None:
+    def run(
+        self: "Clock", stop_at_tick: int = -1, visual: bool = False
+    ) -> None:
         while self.ticks != stop_at_tick:
             if not self.CPU.busy:
                 try:
@@ -461,7 +467,9 @@ class CPU:
             self.busy = False
 
 
-def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | str | None:
+def solve(
+    puzzle: str, part: Literal["a", "b"], _runner: bool = False
+) -> int | str | None:
     clock = Clock(puzzle)
     signal_strengths = {}
     for stop_point in [20, 60, 100, 140, 180, 220]:

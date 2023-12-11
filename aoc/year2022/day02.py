@@ -88,7 +88,9 @@ total score be if everything goes exactly according to your strategy guide?
 from typing import Literal
 
 
-def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
+def solve(
+    puzzle: str, part: Literal["a", "b"], _runner: bool = False
+) -> int | None:
     guide_a = {
         #      | Rock | Papr | Scis
         #      |-------------------

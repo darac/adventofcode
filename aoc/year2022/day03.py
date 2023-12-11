@@ -107,10 +107,16 @@ from typing import Literal
 
 
 def priority(char: str) -> int:
-    return ord(char) - ord("a") + 1 if char.islower() else ord(char) - ord("A") + 27
+    return (
+        ord(char) - ord("a") + 1
+        if char.islower()
+        else ord(char) - ord("A") + 27
+    )
 
 
-def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
+def solve(
+    puzzle: str, part: Literal["a", "b"], _runner: bool = False
+) -> int | None:
     score = 0
     rucksack_a = set()
     rucksack_b = set()
@@ -129,7 +135,11 @@ def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | 
                 rucksack_b.update(list(line))
             else:
                 rucksack_c.update(list(line))
-                common = list(rucksack_a.intersection(rucksack_b).intersection(rucksack_c))
+                common = list(
+                    rucksack_a.intersection(rucksack_b).intersection(
+                        rucksack_c
+                    )
+                )
         if common:
             score += priority(common[0])
             rucksack_a = set()

@@ -48,7 +48,8 @@ Your toy boat has a starting speed of zero millimeters per millisecond. For
 each whole millisecond you spend at the beginning of the race holding down
 the button, the boat's speed increases by one millimeter per millisecond.
 
-So, because the first race lasts 7 milliseconds, you only have a few options:
+So, because the first race lasts 7 milliseconds, you only have a few
+options:
 
   - Don't hold the button at all (that is, hold it for 0 milliseconds) at
     the start of the race. The boat won't move; it will have traveled 0
@@ -95,8 +96,8 @@ do you get if you multiply these numbers together?
 
 As the race is about to start, you realize the piece of paper with race
 times and record distances you got earlier actually just has very bad
-kerning. There's really only one race - ignore the spaces between the numbers
-on each line.
+kerning. There's really only one race - ignore the spaces between the
+numbers on each line.
 
 So, the example from before:
 
@@ -123,11 +124,15 @@ import logging
 import math
 from typing import Literal
 
-logging.basicConfig(level="DEBUG", format="%(message)s", datefmt="[%X]")  # NOSONAR
+logging.basicConfig(
+    level="DEBUG", format="%(message)s", datefmt="[%X]"
+)  # NOSONAR
 LOG = logging.getLogger()
 
 
-def get_winning_bounds(game_time: int, distance_to_beat: int) -> tuple[int, int] | None:
+def get_winning_bounds(
+    game_time: int, distance_to_beat: int
+) -> tuple[int, int] | None:
     # Thoughts:
     #   speed = press_time
     #   distance = speed * (total_time - press_time)
@@ -154,9 +159,10 @@ def get_winning_bounds(game_time: int, distance_to_beat: int) -> tuple[int, int]
 
     upper = (-b - math.sqrt(pow(b, 2) - 4 * a * c)) / (2 * a)
     lower = (-b + math.sqrt(pow(b, 2) - 4 * a * c)) / (2 * a)
-    assert (
-        lower <= upper
-    ), f"{lower} ({math.ceil(lower)}) not less than {upper} ({math.floor(upper)})"
+    assert lower <= upper, (
+        f"{lower} ({math.ceil(lower)}) not less than {upper} "
+        f"({math.floor(upper)})"
+    )
 
     LOG.debug("Maths gave us (%.3f, %.3f)", lower, upper)
     lower = math.ceil(lower)
@@ -174,7 +180,9 @@ def get_winning_bounds(game_time: int, distance_to_beat: int) -> tuple[int, int]
 
     # Equalling the record won't work, so we may need to push the envelope.
     if lower * (game_time - lower) <= distance_to_beat:
-        LOG.debug("%d would give us %.3f", lower, lower * (game_time - lower))
+        LOG.debug(
+            "%d would give us %.3f", lower, lower * (game_time - lower)
+        )
         LOG.debug(
             "%d isn't good enough to beat %d, bumping to %d",
             lower,
@@ -198,18 +206,27 @@ def get_winning_bounds(game_time: int, distance_to_beat: int) -> tuple[int, int]
     return None
 
 
-def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
+def solve(
+    puzzle: str, part: Literal["a", "b"], _runner: bool = False
+) -> int | None:
     if part == "a":
         races = list(
             zip(
-                *[[int(value) for value in line.split()[1:]] for line in puzzle.splitlines()],
+                *[
+                    [int(value) for value in line.split()[1:]]
+                    for line in puzzle.splitlines()
+                ],
                 strict=True,
             )
         )
     else:
-        (times, distances) = (line.split(":")[1] for line in puzzle.splitlines())
+        (times, distances) = (
+            line.split(":")[1] for line in puzzle.splitlines()
+        )
         LOG.info("Time: %s, Distance: %s", times, distances)
-        races = [(int("".join(times.split())), int("".join(distances.split())))]
+        races = [
+            (int("".join(times.split())), int("".join(distances.split())))
+        ]
 
     retval = []
     for race_time, race_distance in races:

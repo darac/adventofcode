@@ -17,7 +17,8 @@ __version__ = importlib_metadata.version(__name__)
 
 def solve(year: int, day: int, data: str) -> tuple[int | None, ...]:
     """
-    Finds today's solver, and runs it twice; once for part a and once for part b.
+    Finds today's solver, and runs it twice; once for part a and once for
+    part b.
     The results are combined and returned to aocd-runner for submission.
     """
     solver_name = f"aoc.year{year:4d}.day{day:02d}"
