@@ -51,7 +51,9 @@ How many total feet of ribbon should they order?
 from typing import Literal
 
 
-def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
+def solve(
+    puzzle: str, part: Literal["a", "b"], _runner: bool = False
+) -> int | None:
     paper_feet = 0
     ribbon_feet = 0
     for present in puzzle.splitlines():
@@ -62,5 +64,7 @@ def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | 
             + (2 * height * length)
             + min(length * width, width * height, height * length)
         )
-        ribbon_feet += (length + length + width + width) + (length * width * height)
+        ribbon_feet += (length + length + width + width) + (
+            length * width * height
+        )
     return paper_feet if part == "a" else ribbon_feet

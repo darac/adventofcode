@@ -94,7 +94,9 @@ from aocd.models import Puzzle
 from rich import print
 
 
-def get_neighbours(row: int, column: int, rows: int, cols: int) -> list[tuple[int, int]]:
+def get_neighbours(
+    row: int, column: int, rows: int, cols: int
+) -> list[tuple[int, int]]:
     """Return a list of neighbouring locations
 
     Args:
@@ -129,7 +131,9 @@ def flood(data: np.ndarray, point: tuple[int, int], visited: list) -> int:
         return 0
     visited.append(point)
     neighbours = get_neighbours(*point, *data.shape)
-    return 1 + sum([flood(data, n, visited) for n in neighbours if n not in visited])
+    return 1 + sum(
+        [flood(data, n, visited) for n in neighbours if n not in visited]
+    )
 
 
 def get_neighbour(
@@ -153,7 +157,9 @@ def get_neighbour(
     return neighbours
 
 
-def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
+def solve(
+    puzzle: str, part: Literal["a", "b"], _runner: bool = False
+) -> int | None:
     """Calculates the solution
 
     Args:
@@ -163,7 +169,9 @@ def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | 
     Returns:
         int: The Puzzle Solution
     """
-    data_frame = pd.DataFrame([[int(char) for char in line] for line in puzzle.splitlines()])
+    data_frame = pd.DataFrame(
+        [[int(char) for char in line] for line in puzzle.splitlines()]
+    )
     if not _runner:
         print(data_frame)
     risk_level = 0
@@ -180,10 +188,14 @@ def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | 
         return risk_level
 
     # Part B
-    data = np.array([list(map(int, list(row))) for row in puzzle.splitlines()])
+    data = np.array(
+        [list(map(int, list(row))) for row in puzzle.splitlines()]
+    )
     if not _runner:
         print(data)
-    basins = sorted([flood(data, low_point, []) for low_point in low_points])
+    basins = sorted(
+        [flood(data, low_point, []) for low_point in low_points]
+    )
     if not _runner:
         print(f"Largest basins: {basins[-3:]} -> {np.prod(basins[-3:])}")
     return int(np.prod(basins[-3:]))

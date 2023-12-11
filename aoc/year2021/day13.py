@@ -47,7 +47,9 @@ def create_sheet(puzzle: str) -> np.ndarray:
     return np.zeros((rows + 1, cols + 1), dtype="bool")
 
 
-def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
+def solve(
+    puzzle: str, part: Literal["a", "b"], _runner: bool = False
+) -> int | None:
     """Calculates the solution
 
     Args:
@@ -72,17 +74,27 @@ def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | 
         elif read_mode == 1:
             m = re.match(r"fold along ([xy])=(\d+)", line)
             if m:
-                folds.append({"axis": 0 if m.group(1) == "x" else 1, "line": int(m.group(2))})
+                folds.append(
+                    {
+                        "axis": 0 if m.group(1) == "x" else 1,
+                        "line": int(m.group(2)),
+                    }
+                )
     print_sheet(sheet)
     print(folds)
 
     # Now start folding
     for fold in folds:
-        print(f"Fold along {'x' if fold['axis'] == 0 else 'y'}={fold['line']}")
+        print(
+            f"Fold along {'x' if fold['axis'] == 0 else 'y'}={fold['line']}"
+        )
         # pylint: disable=W0632
-        (orig, _, copy) = np.split(sheet, [fold["line"], fold["line"] + 1], axis=fold["axis"])
+        (orig, _, copy) = np.split(
+            sheet, [fold["line"], fold["line"] + 1], axis=fold["axis"]
+        )
         if orig.shape > copy.shape:
-            # The fold is asymmetrical, so we need to expand the second page before flipping
+            # The fold is asymmetrical, so we need to expand the second page
+            # before flipping
             print(f"Shape is {copy.shape}. Want {orig.shape}")
             # ((top,bottom), (left,right))
             padding = (
@@ -97,7 +109,8 @@ def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | 
                 constant_values=False,
             )
         elif orig.shape < copy.shape:
-            # The fold is asymmetrical, so we need to expand the second page before flipping
+            # The fold is asymmetrical, so we need to expand the second page
+            # before flipping
             print(f"Shape is {copy.shape}. Want {orig.shape}")
             # ((top,bottom), (left,right))
             padding = (

@@ -29,7 +29,9 @@ import hashlib
 from typing import Literal
 
 
-def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
+def solve(
+    puzzle: str, part: Literal["a", "b"], _runner: bool = False
+) -> int | None:
     seed = puzzle.encode("utf-8")
     count = 1
     while (

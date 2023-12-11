@@ -71,7 +71,11 @@ import logging
 import re
 from typing import Literal
 
-logging.basicConfig(level="DEBUG", format="%(message)s", datefmt="[%X]")  # NOSONAR
+logging.basicConfig(  # NOSONAR
+    level="DEBUG",
+    format="%(message)s",
+    datefmt="[%X]",
+)
 LOG = logging.getLogger()
 
 
@@ -97,7 +101,9 @@ def get_numbers(in_str: str) -> list[str]:
         list[str]: A list of all the numbers, as strings
     """
     # Almost right first time, but needed "(?=...)" to avoid overlaps
-    return re.findall(r"(?=(\d|one|two|three|four|five|six|seven|eight|nine))", in_str)
+    return re.findall(
+        r"(?=(\d|one|two|three|four|five|six|seven|eight|nine))", in_str
+    )
 
 
 def word_to_number(in_str: str) -> int:
@@ -134,16 +140,22 @@ def word_to_number(in_str: str) -> int:
     return _map.get(in_str, 0)
 
 
-def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
+def solve(
+    puzzle: str, part: Literal["a", "b"], _runner: bool = False
+) -> int | None:
     retval = 0
     for line in puzzle.splitlines():
         numbers = get_digits(line) if part == "a" else get_numbers(line)
         assert len(numbers) >= 1
-        value = (word_to_number(numbers[0]) * 10) + word_to_number(numbers[-1])
+        value = (word_to_number(numbers[0]) * 10) + word_to_number(
+            numbers[-1]
+        )
         assert value >= 10
         assert value <= 99
         if part == "b":
-            LOG.info("%s -> [%s, %s] -> %s", line, numbers[0], numbers[-1], value)
+            LOG.info(
+                "%s -> [%s, %s] -> %s", line, numbers[0], numbers[-1], value
+            )
         retval += value
 
     LOG.info("Returning %s", retval)
