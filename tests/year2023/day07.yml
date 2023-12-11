@@ -1,3 +1,4 @@
+# spell-checker: disable
 ---
 input: |
     32T3K 765
@@ -6,3 +7,4 @@ input: |
     KTJJT 220
     QQQJA 483
 a: 6440
+b: 5905

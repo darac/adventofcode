@@ -101,27 +101,86 @@ the result of multiplying each hand's bid with its rank (765 * 1 + 220 * 2
 6440.
 
 Find the rank of every hand in your set. What are the total winnings?
+
+--- Part Two ---
+
+To make things a little more interesting, the Elf introduces one additional
+rule. Now, J cards are jokers - wildcards that can act like whatever card
+would make the hand the strongest type possible.
+
+To balance this, J cards are now the weakest individual cards, weaker even
+than 2. The other cards stay in the same order: A, K, Q, T, 9, 8, 7, 6, 5,
+4, 3, 2, J.
+
+J cards can pretend to be whatever card is best for the purpose of
+determining hand type; for example, QJJQ2 is now considered four of a kind.
+However, for the purpose of breaking ties between two hands of the same
+type, J is always treated as J, not the card it's pretending to be: JKKK2
+is weaker than QQQQ2 because J is weaker than Q.
+
+Now, the above example goes very differently:
+
+32T3K 765
+T55J5 684
+KK677 28
+KTJJT 220
+QQQJA 483
+
+  - 32T3K is still the only one pair; it doesn't contain any jokers, so
+    its strength doesn't increase.
+  - KK677 is now the only two pair, making it the second-weakest hand.
+  - T55J5, KTJJT, and QQQJA are now all four of a kind! T55J5 gets rank 3,
+    QQQJA gets rank 4, and KTJJT gets rank 5.
+
+With the new joker rule, the total winnings in this example are 5905.
+
+Using the new joker rule, find the rank of every hand in your set. What are
+the new total winnings?
 """
 # spell-checker: enable
 
 import logging
 from collections import namedtuple
 from collections.abc import Iterable
-from typing import Literal
+from typing import Literal, TypeVar
 
 logging.basicConfig(level="DEBUG", format="%(message)s", datefmt="[%X]")  # NOSONAR
 LOG = logging.getLogger()
 
+PART = ""
+_T = TypeVar("_T")
+
 
 def all_equal(lst: Iterable) -> bool:
+    """Return whether all items in the iterable are identical
+
+    Args:
+        lst (Iterable): A list to be checked
+
+    Returns:
+        bool: True if all items in the list are identical
+    """
     return len(set(lst)) == 1
 
 
-def is_consecutive(lst: list) -> bool:
-    return len(set(lst)) == len(lst) and max(lst) - min(lst) == len(lst) - 1
+def most_common(lst: list[str]) -> str:
+    """Returns the most common item in a list which is NOT a "J"
+
+    Args:
+        lst (list[str]): A list of cards
+
+    Returns:
+        _type_: The most common card which is NOT a "J"
+    """
+    return max(set(filter(lambda x: x != "J", lst)), key=lst.count)
 
 
 class Card(namedtuple("Card", "numeric_rank rank")):
+    """Represents a card.
+    Each card has a rank (A single letter representing its place in the suit),
+    and a numeric rank (An integer representing it's value for sorting).
+    """
+
     def __str__(self: "Card") -> str:
         return str(self.rank)
 
@@ -135,10 +194,10 @@ def parse_card(card: str) -> Card:
     Args:
         card (str): The card
     """
-    _face_values = {"T": 10, "J": 11, "Q": 12, "K": 13, "A": 14}
+    _face_values = {"T": 10, "J": 11 if PART == "a" else 1, "Q": 12, "K": 13, "A": 14}
 
     numeric_rank = int(_face_values.get(card, card))
-    if not 2 <= numeric_rank <= 14:
+    if not 1 <= numeric_rank <= 14:
         raise ValueError("Invalid card " + card)
     return Card(numeric_rank=numeric_rank, rank=card)
 
@@ -148,7 +207,22 @@ def parse_cards(cards: str) -> list[Card]:
 
 
 def evaluate_hand(cards: list[Card]) -> str:
-    ranks = [card.numeric_rank for card in cards]
+    """Works out what sort of poker hand this is.
+
+    Args:
+        cards (list[Card]): A list of Card types (so the rank is already parsed)
+
+    Returns:
+        str: "Five of a kind", "Four of a kind" etc
+    """
+    if PART == "a":
+        ranks = [card.numeric_rank for card in cards]
+    else:
+        # Substitute the Jack with the most common card
+        wildcard = parse_card(most_common([card.rank for card in cards]))
+        ranks = [
+            wildcard.numeric_rank if card.rank == "J" else card.numeric_rank for card in cards
+        ]
 
     return {
         5 + 5 + 5 + 5 + 5: "Five of a kind",
@@ -180,6 +254,9 @@ def hand_score(hand: dict[str, list[Card] | int]) -> list[int]:
 
 
 def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
+    global PART
+    PART = part
+
     hands = []
     winnings = 0
     for line in puzzle.splitlines():
@@ -197,7 +274,6 @@ def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | 
                 "winnings": hand["bid"] * rank,
             },
         )
-        if part == "a":
-            winnings += hand["bid"] * rank
+        winnings += hand["bid"] * rank
 
     return winnings
