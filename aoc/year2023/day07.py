@@ -105,15 +105,99 @@ Find the rank of every hand in your set. What are the total winnings?
 # spell-checker: enable
 
 import logging
+from collections import namedtuple
+from collections.abc import Iterable
 from typing import Literal
 
-logging.basicConfig(
-    level="DEBUG", format="%(message)s", datefmt="[%X]"
-)  # NOSONAR
+logging.basicConfig(level="DEBUG", format="%(message)s", datefmt="[%X]")  # NOSONAR
 LOG = logging.getLogger()
 
 
-def solve(
-    puzzle: str, part: Literal["a", "b"], _runner: bool = False
-) -> int | None:
-    ...
+def all_equal(lst: Iterable) -> bool:
+    return len(set(lst)) == 1
+
+
+def is_consecutive(lst: list) -> bool:
+    return len(set(lst)) == len(lst) and max(lst) - min(lst) == len(lst) - 1
+
+
+class Card(namedtuple("Card", "numeric_rank rank")):
+    def __str__(self: "Card") -> str:
+        return str(self.rank)
+
+
+def parse_card(card: str) -> Card:
+    """Interpret the card as a namedtuple with a numeric rank.
+
+    >>> parse_card("A")
+    Card(numeric_rank=14)
+
+    Args:
+        card (str): The card
+    """
+    _face_values = {"T": 10, "J": 11, "Q": 12, "K": 13, "A": 14}
+
+    numeric_rank = int(_face_values.get(card, card))
+    if not 2 <= numeric_rank <= 14:
+        raise ValueError("Invalid card " + card)
+    return Card(numeric_rank=numeric_rank, rank=card)
+
+
+def parse_cards(cards: str) -> list[Card]:
+    return [parse_card(card) for card in cards]
+
+
+def evaluate_hand(cards: list[Card]) -> str:
+    ranks = [card.numeric_rank for card in cards]
+
+    return {
+        5 + 5 + 5 + 5 + 5: "Five of a kind",
+        4 + 4 + 4 + 4 + 1: "Four of a kind",
+        3 + 3 + 3 + 2 + 2: "Full house",
+        3 + 3 + 3 + 1 + 1: "Three of a kind",
+        2 + 2 + 2 + 2 + 1: "Two pair",
+        2 + 2 + 1 + 1 + 1: "One pair",
+        1 + 1 + 1 + 1 + 1: "High card",
+    }[sum(ranks.count(r) for r in ranks)]
+
+
+def hand_score(hand: dict[str, list[Card] | int]) -> list[int]:
+    type_score = [
+        "High card",
+        "One pair",
+        "Two pair",
+        "Three of a kind",
+        "Full house",
+        "Four of a kind",
+        "Five of a kind",
+    ].index(evaluate_hand(hand.get("cards")))
+    retval = [type_score]
+    retval.extend(card.numeric_rank for card in hand.get("cards"))
+    LOG.debug(
+        "Score for %s (%s) is %s", hand.get("hand"), evaluate_hand(hand.get("cards")), retval
+    )
+    return retval
+
+
+def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
+    hands = []
+    winnings = 0
+    for line in puzzle.splitlines():
+        cards, bid = line.split()
+        LOG.debug('%s -> {"cards", %s, "bid": %d}', line, parse_cards(cards), int(bid))
+        hands.append({"hand": cards, "cards": parse_cards(cards), "bid": int(bid)})
+
+    for rank, hand in enumerate(sorted(hands, key=hand_score), start=1):
+        LOG.debug(
+            "%(hand)s -> #%(rank)d. Winnings: %(bid)d * %(rank)d = %(winnings)d",
+            {
+                "hand": hand["hand"],
+                "rank": rank,
+                "bid": hand["bid"],
+                "winnings": hand["bid"] * rank,
+            },
+        )
+        if part == "a":
+            winnings += hand["bid"] * rank
+
+    return winnings
