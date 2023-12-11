@@ -124,9 +124,9 @@ import logging
 import math
 from typing import Literal
 
-logging.basicConfig(
+logging.basicConfig(  # NOSONAR
     level="DEBUG",
-    format="%(message)s",  # NOSONAR
+    format="%(message)s",
     datefmt="[%X]",
 )
 LOG = logging.getLogger()

@@ -199,9 +199,9 @@ except ImportError:
             yield batch
 
 
-logging.basicConfig(
+logging.basicConfig(  # NOSONAR
     level="DEBUG",
-    format="%(message)s",  # NOSONAR
+    format="%(message)s",
     datefmt="[%X]",
 )
 LOG = logging.getLogger()

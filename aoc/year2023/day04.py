@@ -126,9 +126,9 @@ from typing import Literal
 
 from parse import Result, parse
 
-logging.basicConfig(
+logging.basicConfig(  # NOSONAR
     level="DEBUG",
-    format="%(message)s",  # NOSONAR
+    format="%(message)s",
     datefmt="[%X]",
 )
 LOG = logging.getLogger()

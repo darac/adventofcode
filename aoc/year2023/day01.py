@@ -71,10 +71,10 @@ import logging
 import re
 from typing import Literal
 
-logging.basicConfig(
+logging.basicConfig(  # NOSONAR
     level="DEBUG",
     format="%(message)s",
-    datefmt="[%X]",  # NOSONAR
+    datefmt="[%X]",
 )
 LOG = logging.getLogger()
 

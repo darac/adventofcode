@@ -144,9 +144,9 @@ from collections import namedtuple
 from collections.abc import Iterable
 from typing import Literal, TypeVar
 
-logging.basicConfig(
+logging.basicConfig(  # NOSONAR
     level="DEBUG",
-    format="%(message)s",  # NOSONAR
+    format="%(message)s",
     datefmt="[%X]",
 )
 LOG = logging.getLogger()
