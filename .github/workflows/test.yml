@@ -17,14 +17,26 @@ jobs:
         steps:
             - uses: actions/checkout@v4
 
+            - name: Install poetry
+              run: pipx install poetry
+
+            - name: Setup Python
+              uses: actions/setup-python@v4
+              with:
+                  cache: poetry
+                  python-version: "3.11"
+
+            - name: Get project version
+              id: proj-version
+              run: echo "PROJECT_VERSION=$(poetry version --short)" >> "$GITHUB_OUTPUT"
+
             - name: Build docker image
-              run: docker build . -t adventofcode:test
+              run: docker build . -t adventofcode:${{ steps.proj-version.outputs.PROJECT_VERSION }}
 
             - env:
                   AOC_SESSION: ${{ secrets.AOC_SESSION }}
               name: Smoke test docker image
-              run: |
-                  docker run --rm -e AOC_SESSION adventofcode:test -y $(date +%Y)
+              run: docker run --rm -e AOC_SESSION adventofcode:${{ steps.proj-version.outputs.PROJECT_VERSION }} -y $(date +%Y) -d $(date +%d)
     test:
         runs-on: ubuntu-latest
         steps:
