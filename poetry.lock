@@ -988,6 +988,8 @@ files = [
     {file = "kivy_deps.glew-0.3.1-cp310-cp310-win_amd64.whl", hash = "sha256:aef2d2a93f129d8425c75234e7f6cc0a34b59a4aee67f6d2cd7a5fdfa9915b53"},
     {file = "kivy_deps.glew-0.3.1-cp311-cp311-win32.whl", hash = "sha256:ee2f80ef7ac70f4b61c50da8101b024308a8c59a57f7f25a6e09762b6c48f942"},
     {file = "kivy_deps.glew-0.3.1-cp311-cp311-win_amd64.whl", hash = "sha256:22e155ec59ce717387f5d8804811206d200a023ba3d0bc9bbf1393ee28d0053e"},
+    {file = "kivy_deps.glew-0.3.1-cp312-cp312-win32.whl", hash = "sha256:b64ee4e445a04bc7c848c0261a6045fc2f0944cc05d7f953e3860b49f2703424"},
+    {file = "kivy_deps.glew-0.3.1-cp312-cp312-win_amd64.whl", hash = "sha256:3acbbd30da05fc10c185b5d4bb75fbbc882a6ef2192963050c1c94d60a6e795a"},
     {file = "kivy_deps.glew-0.3.1-cp37-cp37m-win32.whl", hash = "sha256:5bf6a63fe9cc4fe7bbf280ec267ec8c47914020a1175fb22152525ff1837b436"},
     {file = "kivy_deps.glew-0.3.1-cp37-cp37m-win_amd64.whl", hash = "sha256:d64a8625799fab7a7efeb3661ef8779a7f9c6d80da53eed87a956320f55530fa"},
     {file = "kivy_deps.glew-0.3.1-cp38-cp38-win32.whl", hash = "sha256:00f4ae0a4682d951266458ddb639451edb24baa54a35215dce889209daf19a06"},
@@ -2355,4 +2357,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.13"
-content-hash = "c132824ee96306fb3ad2c59e33343925459722a8557a8199b2d7af07dba8740c"
+content-hash = "320945df514e22f23cb81b17fa7babcaac8a2ca9b432ff6cedcd49a2b09517a7"
