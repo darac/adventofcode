@@ -38,19 +38,22 @@ jobs:
                   gh release view "${{ steps.tag_name.outputs.tag }}" --json body -q .body >> $GITHUB_OUTPUT;
                   echo "$EOF" >> $GITHUB_OUTPUT;
 
+            - name: Install `jo`
+              run: sudo apt install jo
+
+            - name: Format JSON
+              id: formatjson
+              run: read -r -d '' CHANGELOG <<'EOF'
+                  ${{ steps.changelog.outputs.body }}
+                  EOF
+                  CHANGELOG=$(echo $CHANGELOG | awk '{printf "%s\\n", $0}')
+                  echo "headers=$(jo Content-Type=application/json Authorizaton=Bearer\ ${{ secrets.MASTODON_ACCESS_TOKEN }})" >> $GITHUB_OUTPUT
+                  echo "data=$(jo status=\\"Released AdventOfCode [${{ steps.tag_name.outputs.tag }}](https://github.com/darac/adventofcode/releases/tag/${{ steps.tag_name.outputs.tag }})\n$CHANGELOG\n#adventofcode #adventofcode2023" content_type=markdown languange=en)" >> $GITHUB_OUTPUT
+
             - name: Notify the Fediverse
               uses: fjogeleit/http-request-action@v1
               with:
                   url: https://furry.engineer/api/v1/statuses
                   method: POST
-                  customHeaders: >-
-                      {
-                        "Content-Type": "application/json",
-                        "Authorization": "Bearer ${{ secrets.MASTODON_ACCESS_TOKEN }}"
-                      }
-                  data: >-
-                      {
-                        "status": "Released AdventOfCode [${{ steps.tag_name.outputs.tag }}](https://github.com/darac/adventofcode/releases/tag/${{ steps.tag_name.outputs.tag }})\n${{ steps.changelog.outputs.body }}\n#adventofcode #adventofcode2023",
-                        "content_type": "markdown",
-                        "language": "en"
-                      }
+                  customHeaders: ${{ steps.formatjson.outputs.headers }}
+                  data: ${{ steps.formatjson.outputs.data }}
