@@ -55,18 +55,24 @@ y: 456
 
 In little Bobby's kit's instructions booklet (provided as your puzzle
 input), what signal is ultimately provided to wire a?
+
+--- Part Two ---
+
+Now, take the signal you got on wire a, override wire b to that signal,
+and reset the other wires (including wire a). What new signal is
+ultimately provided to wire a?
 """
 
 import logging
+import re
 from typing import Literal
 
-from rich.logging import RichHandler
+LOG = logging.getLogger(__name__)
 
-logging.basicConfig(level="DEBUG", format="%(message)s", datefmt="[%X]", handlers=[RichHandler()])
-LOG = logging.getLogger()
 
 REGISTERS: dict[str, int] = {}
 MASK = 2**16 - 1
+_DEBUGMSG = "  %s becomes %d"
 
 
 def is_number(x: str) -> bool:
@@ -99,67 +105,97 @@ class UnknownCommands(Exception):
         super().__init__(f"Unknown Commands: {args}")
 
 
-def solve(puzzle: str, part: Literal["a", "b"], _runner: bool = False) -> int | None:
-    if _runner:
-        LOG.setLevel("WARN")
-    for line in puzzle.splitlines():
+def parse_commands(puzzle: str) -> None:
+    lines = puzzle.splitlines()
+
+    while lines:
+        line = lines.pop()
         args = line.split()
-        match args:
-            case [_, "->", _]:
-                LOG.info("Assign %s(%s) to %s", args[0], get(args[0]), args[2])
-                put(args[2], get(args[0]))
-                LOG.info("  %s becomes %d", args[2], get(args[2]))
-            case ["NOT", _, "->", _]:
-                LOG.info("Invert %s(%s) into %s", args[1], get(args[1]), args[3])
-                put(args[3], (~get(args[1])) & MASK)
-                LOG.info("  %s becomes %d", args[3], get(args[3]))
-            case [_, "AND", _, "->", _]:
-                LOG.info(
-                    "%s(%s) AND %s(%s) into %s",
-                    args[0],
-                    get(args[0]),
-                    args[2],
-                    get(args[2]),
-                    args[4],
-                )
-                put(args[4], (get(args[0]) & get(args[2])) & MASK)
-                LOG.info("  %s becomes %d", args[4], get(args[4]))
-            case [_, "OR", _, "->", _]:
-                LOG.info(
-                    "%s(%s) OR %s(%s) into %s",
-                    args[0],
-                    get(args[0]),
-                    args[2],
-                    get(args[2]),
-                    args[4],
-                )
-                put(args[4], (get(args[0]) | get(args[2])) & MASK)
-                LOG.info("  %s becomes %d", args[4], get(args[4]))
-            case [_, "LSHIFT", _, "->", _]:
-                LOG.info(
-                    "%s(%s) LSHIFT %s(%s) into %s",
-                    args[0],
-                    get(args[0]),
-                    args[2],
-                    get(args[2]),
-                    args[4],
-                )
-                put(args[4], (get(args[0]) << get(args[2])) & MASK)
-                LOG.info("  %s becomes %d", args[4], get(args[4]))
-            case [_, "RSHIFT", _, "->", _]:
-                LOG.info(
-                    "%s(%s) RSHIFT %s(%s) into %s",
-                    args[0],
-                    get(args[0]),
-                    args[2],
-                    get(args[2]),
-                    args[4],
-                )
-                put(args[4], (get(args[0]) >> get(args[2])) & MASK)
-                LOG.info("  %s becomes %d", args[4], get(args[4]))
-            case _:
-                raise UnknownCommands(args)
-    try:
+        try:
+            match args:
+                case [_, "->", _]:
+                    LOG.debug(
+                        "Assign %s(%s) to %s",
+                        args[0],
+                        get(args[0]),
+                        args[2],
+                    )
+                    put(args[2], get(args[0]))
+                    LOG.debug(_DEBUGMSG, args[2], get(args[2]))
+                case ["NOT", _, "->", _]:
+                    LOG.debug(
+                        "Invert %s(%s) into %s",
+                        args[1],
+                        get(args[1]),
+                        args[3],
+                    )
+                    put(args[3], (~get(args[1])) & MASK)
+                    LOG.debug(_DEBUGMSG, args[3], get(args[3]))
+                case [_, "AND", _, "->", _]:
+                    LOG.debug(
+                        "%s(%s) AND %s(%s) into %s",
+                        args[0],
+                        get(args[0]),
+                        args[2],
+                        get(args[2]),
+                        args[4],
+                    )
+                    put(args[4], (get(args[0]) & get(args[2])) & MASK)
+                    LOG.debug(_DEBUGMSG, args[4], get(args[4]))
+                case [_, "OR", _, "->", _]:
+                    LOG.debug(
+                        "%s(%s) OR %s(%s) into %s",
+                        args[0],
+                        get(args[0]),
+                        args[2],
+                        get(args[2]),
+                        args[4],
+                    )
+                    put(args[4], (get(args[0]) | get(args[2])) & MASK)
+                    LOG.debug(_DEBUGMSG, args[4], get(args[4]))
+                case [_, "LSHIFT", _, "->", _]:
+                    LOG.debug(
+                        "%s(%s) LSHIFT %s(%s) into %s",
+                        args[0],
+                        get(args[0]),
+                        args[2],
+                        get(args[2]),
+                        args[4],
+                    )
+                    put(args[4], (get(args[0]) << get(args[2])) & MASK)
+                    LOG.debug(_DEBUGMSG, args[4], get(args[4]))
+                case [_, "RSHIFT", _, "->", _]:
+                    LOG.info(
+                        "%s(%s) RSHIFT %s(%s) into %s",
+                        args[0],
+                        get(args[0]),
+                        args[2],
+                        get(args[2]),
+                        args[4],
+                    )
+                    put(args[4], (get(args[0]) >> get(args[2])) & MASK)
+                    LOG.info(_DEBUGMSG, args[4], get(args[4]))
+                case _:
+                    raise UnknownCommands(args)
+        except SequencingError:
+            lines = [line, *lines]
+
+
+def solve(
+    puzzle: str, part: Literal["a", "b"], _runner: bool = False
+) -> int | None:
+    global REGISTERS
+    parse_commands(puzzle)
+
+    if part == "a":
         return REGISTERS["a"]
-    except KeyError:
-        return 0
+
+    new_puzzle = re.sub(
+        r"\n(\d+) -> b\n", "\n{} -> b\n".format(REGISTERS["a"]), puzzle
+    )
+    assert new_puzzle != puzzle
+
+    REGISTERS = {}
+
+    parse_commands(new_puzzle)
+    return REGISTERS["a"]
