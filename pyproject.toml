@@ -48,7 +48,7 @@
     description = "darac's solutions for http://adventofcode.com"
     name = "aoc"
     readme = "README.md"
-    version = "2023.8.1"
+    version = "2023.8.2"
 
     [tool.poetry.dependencies]
         advent-of-code-data = "^2.0.1"
@@ -83,7 +83,7 @@
     junit_suite_name = "aoc"
 
 [tool.ruff]
-    ignore = [
+    lint.ignore = [
         "COM812", # Allow ruff formatter
         "ISC001", # Allow ruff formatter
         "N818",   # Don't want to have to call exceptions *Error
@@ -91,7 +91,7 @@
     ]
     # The AOC website wraps at 76 chars, so should we.
     line-length = 76
-    select = [
+    lint.select = [
         "A",
         "ANN",
         "ARG",

@@ -160,7 +160,6 @@ the four-digit output values. What do you get if you add up all of the
 output values?"""
 # spell-checker: enable
 
-
 from typing import Literal
 
 from rich import print

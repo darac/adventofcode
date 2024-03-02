@@ -142,6 +142,7 @@ the Elves know where they should stand to be ready to unload the final
 supplies. After the rearrangement procedure completes, what crate ends up
 on top of each stack?
 """
+
 # spell-checker: enable
 from collections import deque
 from typing import Literal
@@ -170,7 +171,7 @@ def solve(
                     continue
                 if "[" in line:
                     # This is a crate specification
-                    if unnumbered_stacks.get(stack_number, None) is None:
+                    if unnumbered_stacks.get(stack_number) is None:
                         unnumbered_stacks[stack_number] = deque()
                     unnumbered_stacks[stack_number].appendleft(crate[1])
                 else:

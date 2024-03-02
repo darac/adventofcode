@@ -1,6 +1,7 @@
 """
 --- Day 13: Transparent Origami ---
 """
+
 import os
 import re
 from typing import Literal

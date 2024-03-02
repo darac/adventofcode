@@ -76,6 +76,7 @@ zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw: first marker after character 26
 How many characters need to be processed before the first start-of-message
 marker is detected?
 """
+
 # spell-checker: disable
 from collections import deque
 from typing import Literal
