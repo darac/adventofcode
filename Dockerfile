@@ -5,7 +5,7 @@
 # PYTHON-BASE
 # Sets up all our shared environment variables
 ################################
-FROM python:3.11-slim AS python-base
+FROM python:3.12-slim AS python-base
 
 # Setup env
 ENV PYTHONUNBUFFERED=1 \
@@ -15,7 +15,7 @@ ENV PYTHONUNBUFFERED=1 \
     \
     # Poetry
     # https://python-poetry.org/docs/configuration/#using-environment-variables
-    POETRY_VERSION=1.7.1 \
+    POETRY_VERSION=1.8.1 \
     # make poetry install to this location
     POETRY_HOME="/opt/poetry" \
     # do not ask any interactive question

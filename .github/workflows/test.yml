@@ -24,7 +24,7 @@ jobs:
               uses: actions/setup-python@v5
               with:
                   cache: poetry
-                  python-version: "3.11"
+                  python-version: "3.12"
 
             - name: Get project version
               id: proj-version
@@ -36,7 +36,7 @@ jobs:
             - env:
                   AOC_SESSION: ${{ secrets.AOC_SESSION }}
               name: Smoke test docker image
-              run: docker run --rm -e AOC_SESSION adventofcode:${{ steps.proj-version.outputs.PROJECT_VERSION }} -y $(date +%Y) -d $(date +%d)
+              run: docker run --rm -e AOC_SESSION adventofcode:${{ steps.proj-version.outputs.PROJECT_VERSION }} --today
     test:
         runs-on: ubuntu-latest
         steps:
@@ -51,7 +51,7 @@ jobs:
               uses: actions/setup-python@v5
               with:
                   cache: poetry
-                  python-version: "3.11"
+                  python-version: "3.12"
 
             - name: Install dependencies with poetry
               run: poetry install

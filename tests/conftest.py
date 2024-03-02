@@ -2,6 +2,7 @@ import contextlib
 import datetime
 import importlib
 import itertools
+import logging
 import os
 from pathlib import Path
 from typing import TYPE_CHECKING
@@ -72,6 +73,11 @@ def pytest_addoption(parser: pytest.Parser) -> None:
         default=["a", "b"],
         help="Run this part",
     )
+    parser.addoption(
+        "--today",
+        action="store_true",
+        help="Run the latest available day (overrides --year and --day)",
+    )
 
 
 def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
@@ -80,9 +86,30 @@ def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
     years = metafunc.config.getoption("year")
     days = metafunc.config.getoption("day")
     parts = metafunc.config.getoption("part")
+    today = metafunc.config.getoption("today")
     assert not isinstance(years, Notset)
     assert not isinstance(days, Notset)
     assert not isinstance(parts, Notset)
+
+    if today:
+        # Look for the latest year and day that have test data
+        years = [
+            [
+                int(f.name.removeprefix("year"))
+                for f in sorted(Path("tests").iterdir())
+                if f.is_dir() and f.name.startswith("year")
+            ][-1]
+        ]
+        days = [
+            [
+                int(f.stem.removeprefix("day"))
+                for f in sorted(
+                    (Path("tests") / f"year{years[0]}").iterdir()
+                )
+                if not f.is_dir() and f.stem.startswith("day")
+            ][-1]
+        ]
+        logging.info("Today's test is Year %s, Day %s", years[0], days[0])
 
     # This is a list of tuples.
     # Each Tuple consist of:

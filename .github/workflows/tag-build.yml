@@ -18,7 +18,7 @@ jobs:
               uses: actions/setup-python@v5
               with:
                   cache: poetry
-                  python-version: "3.11"
+                  python-version: "3.12"
 
             - id: tag_name
               name: Get tag name from poetry
