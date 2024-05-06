@@ -77,7 +77,7 @@ jobs:
                       -Dsonar.projectVersion=${{ steps.proj-version.outputs.PROJECT_VERSION }}
 
             - name: Publish Test Report
-              uses: pmeier/pytest-results-action@v0.5.0
+              uses: pmeier/pytest-results-action@v0.6.0
               if: always()
               with:
                   path: "junit.xml"
