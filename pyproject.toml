@@ -71,7 +71,7 @@
         pytest              = "^8.0.2"
         pytest-cov          = "^4.1.0"
         pytest-gh-log-group = "^0.2.0"
-        ruff                = "^0.3.0"
+        ruff                = "^0.4.3"
         toml-sort           = "^0.23.1"
         types-pyyaml        = "^6.0.12.12"
 
