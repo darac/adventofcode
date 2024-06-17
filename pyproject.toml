@@ -54,7 +54,7 @@
         advent-of-code-data = "^2.0.1"
         importlib-metadata  = { version = "^7.1.0", python = "<3.8" }
         kivy                = { version = "^2.3.0", extras = ["base"] }
-        more-itertools      = "^10.2.0"
+        more-itertools      = "^10.3.0"
         numpy               = "^1.26.4"
         pandas              = "^2.2.2"
         parse               = "^1.20.1"
