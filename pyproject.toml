@@ -48,14 +48,14 @@
     description = "darac's solutions for http://adventofcode.com"
     name = "aoc"
     readme = "README.md"
-    version = "2023.8.5"
+    version = "2023.8.6"
 
     [tool.poetry.dependencies]
         advent-of-code-data = "^2.0.1"
-        importlib-metadata  = { version = "^7.2.1", python = "<3.8" }
+        importlib-metadata  = { version = "^8.0.0", python = "<3.8" }
         kivy                = { version = "^2.3.0", extras = ["base"] }
         more-itertools      = "^10.3.0"
-        numpy               = "^1.26.4"
+        numpy               = "^2.0.0"
         pandas              = "^2.2.2"
         parse               = "^1.20.2"
         pygame              = "^2.6.0"
@@ -71,7 +71,7 @@
         pytest              = "^8.2.2"
         pytest-cov          = "^5.0.0"
         pytest-gh-log-group = "^0.2.0"
-        ruff                = "^0.4.4"
+        ruff                = "^0.5.1"
         toml-sort           = "^0.23.1"
         types-pyyaml        = "^6.0.12.20240311"
 
