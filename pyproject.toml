@@ -55,7 +55,7 @@
         importlib-metadata  = { version = "^8.0.0", python = "<3.8" }
         kivy                = { version = "^2.3.0", extras = ["base"] }
         more-itertools      = "^10.3.0"
-        numpy               = "^2.0.0"
+        numpy               = "^2.0.1"
         pandas              = "^2.2.2"
         parse               = "^1.20.2"
         pygame              = "^2.6.0"
