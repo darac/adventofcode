@@ -64,7 +64,7 @@
 
     [tool.poetry.group.dev.dependencies]
         bpython             = "^0.24"
-        coverage            = { version = "^7.5.4", extras = ["toml"] }
+        coverage            = { version = "^7.6.1", extras = ["toml"] }
         mypy                = "^1.10.1"
         poetry              = "^1.8.3"
         pre-commit          = "^3.7.1"
