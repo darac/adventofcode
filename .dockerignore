@@ -1,11 +1,14 @@
 # Ignore everything
+
 **
 
 # ... except for dependencies and source
+
 !aoc
 !docker-entrypoint.sh
 !LICENSE
 !poetry.lock
+!pdm.lock
 !pyproject.toml
 !README.md
 !tests
