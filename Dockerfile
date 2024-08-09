@@ -36,4 +36,4 @@ COPY aoc/ /app/aoc
 COPY tests/ /app/tests
 
 # Run the executable
-ENTRYPOINT ["pdm", "run", "aoc"]
+ENTRYPOINT ["aoc"]
