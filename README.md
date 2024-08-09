@@ -11,10 +11,10 @@ Storage for my AdventOfCode solutions
 
 ```sh
 # Install dependencies
-poetry install
+pdm install
 
 # Setup pre-commit and pre-push hooks
-poetry run pre-commit install --install-hooks
+pdm run pre-commit install --install-hooks
 ```
 
 <!--- advent_readme_stars table --->

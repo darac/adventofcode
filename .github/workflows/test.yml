@@ -52,7 +52,7 @@ jobs:
 
             - name: Get project version
               id: proj-version
-              run: echo "PROJECT_VERSION=$(pdm version)" >> "$GITHUB_OUTPUT"
+              run: pdm self add pdm-version ; echo "PROJECT_VERSION=$(pdm version)" >> "$GITHUB_OUTPUT"
 
             - uses: chartboost/ruff-action@v1
 
