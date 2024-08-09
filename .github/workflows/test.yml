@@ -25,7 +25,7 @@ jobs:
 
             - name: Get project version
               id: proj-version
-              run: echo "PROJECT_VERSION=$(pdm version)" >> "$GITHUB_OUTPUT"
+              run: pdm self add pdm-version ; echo "PROJECT_VERSION=$(pdm version)" >> "$GITHUB_OUTPUT"
 
             - name: Build docker image
               run: docker build . -t adventofcode:${{ steps.proj-version.outputs.PROJECT_VERSION }}
@@ -47,8 +47,8 @@ jobs:
                   cache: true
                   python-version: "3.12"
 
-            - name: Install dependencies with poetry
-              run: pdm install
+            - name: Install dependencies with PDM
+              run: pdm sync
 
             - name: Get project version
               id: proj-version
@@ -76,7 +76,7 @@ jobs:
               with:
                   path: "junit.xml"
 
-            # Block the merge if the Poetry version wasn't bumped
+            # Block the merge if the PDM version wasn't bumped
             - name: Check for existing tag
               uses: mukunku/tag-exists-action@v1.6.0
               id: checkTag

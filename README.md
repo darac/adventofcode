@@ -11,7 +11,7 @@ Storage for my AdventOfCode solutions
 
 ```sh
 # Install dependencies
-pdm install
+pdm sync -d
 
 # Setup pre-commit and pre-push hooks
 pdm run pre-commit install --install-hooks
