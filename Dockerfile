@@ -20,6 +20,7 @@ COPY pyproject.toml pdm.lock README.md /app/
 COPY aoc/ /app/aoc
 
 # Install Dependencies and project into the local packages directory
+WORKDIR /app
 RUN pdm install --check --prod --no-editable
 
 ################################
