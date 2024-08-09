@@ -17,18 +17,15 @@ jobs:
         steps:
             - uses: actions/checkout@v4
 
-            - name: Install poetry
-              run: pipx install poetry
-
-            - name: Setup Python
-              uses: actions/setup-python@v5
+            - name: Setup PDM
+              uses: pdm-project/setup-pdm@v4
               with:
-                  cache: poetry
+                  cache: true
                   python-version: "3.12"
 
             - name: Get project version
               id: proj-version
-              run: echo "PROJECT_VERSION=$(poetry version --short)" >> "$GITHUB_OUTPUT"
+              run: pdm self add pdm-version ; echo "PROJECT_VERSION=$(pdm version)" >> "$GITHUB_OUTPUT"
 
             - name: Build docker image
               run: docker build . -t adventofcode:${{ steps.proj-version.outputs.PROJECT_VERSION }}
@@ -44,25 +41,22 @@ jobs:
               with:
                   fetch-depth: 0
 
-            - name: Install poetry
-              run: pipx install poetry
-
-            - name: Setup Python
-              uses: actions/setup-python@v5
+            - name: Setup PDM
+              uses: pdm-project/setup-pdm@v4
               with:
-                  cache: poetry
+                  cache: true
                   python-version: "3.12"
 
-            - name: Install dependencies with poetry
-              run: poetry install
+            - name: Install dependencies with PDM
+              run: pdm sync
 
             - name: Get project version
               id: proj-version
-              run: echo "PROJECT_VERSION=$(poetry version --short)" >> "$GITHUB_OUTPUT"
+              run: pdm self add pdm-version ; echo "PROJECT_VERSION=$(pdm version)" >> "$GITHUB_OUTPUT"
 
             - uses: chartboost/ruff-action@v1
 
-            - run: poetry run pytest --cov --cov-report=xml:coverage.xml
+            - run: pdm run pytest --cov --cov-report=xml:coverage.xml
                   --junit-xml=junit.xml
               env:
                   AOC_SESSION: ${{ secrets.AOC_SESSION }}
@@ -82,7 +76,7 @@ jobs:
               with:
                   path: "junit.xml"
 
-            # Block the merge if the Poetry version wasn't bumped
+            # Block the merge if the PDM version wasn't bumped
             - name: Check for existing tag
               uses: mukunku/tag-exists-action@v1.6.0
               id: checkTag
@@ -94,10 +88,10 @@ jobs:
               uses: actions/github-script@v7
               with:
                   script: |
-                      core.setFailed("There is already a tag for ${{ steps.proj-version.outputs.PROJECT_VERSION }}. Run 'poetry version minor' to bump the day.");
+                      core.setFailed("There is already a tag for ${{ steps.proj-version.outputs.PROJECT_VERSION }}. Run 'pdm bump minor' to bump the day.");
                       github.rest.issues.createComment({
                           issue_number: context.issue.number,
                           owner: context.repo.owner,
                           repo: context.repo.repo,
-                          body: "There is already a tag for ${{ steps.proj-version.outputs.PROJECT_VERSION }}. Run `poetry version minor' to bump the day."
+                          body: "There is already a tag for ${{ steps.proj-version.outputs.PROJECT_VERSION }}. Run `pdm bump minor' to bump the day."
                       })
