@@ -10,6 +10,7 @@
     ]
     dependencies = [
         "advent-of-code-data>=2.0.1",
+        "certifi>=2024.8.30",
         "importlib-metadata>=8.2.0; python_version < \"3.8\"",
         "kivy[base]>=2.3.0",
         "numpy>=2.0.1",
@@ -18,7 +19,7 @@
         "pillow>=10.4.0",
         "pygame>=2.6.0",
         "rich>=13.7.1",
-    ]
+]
     description = "darac's solutions for http://adventofcode.com"
     name = "aoc"
     readme = "README.md"

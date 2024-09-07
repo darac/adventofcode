@@ -90,6 +90,7 @@ apt-get install -qyy \
     -o APT::Install-Suggests=false \
     python3.12 \
     libpython3.12 \
+    ca-certificates \
     libpcre3 \
     libxml2
 

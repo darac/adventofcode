@@ -46,6 +46,7 @@ version = "2023.8.6"
 source = { editable = "." }
 dependencies = [
     { name = "advent-of-code-data" },
+    { name = "certifi" },
     { name = "kivy", extra = ["base"] },
     { name = "numpy" },
     { name = "pandas" },
@@ -75,6 +76,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "advent-of-code-data", specifier = ">=2.0.1" },
+    { name = "certifi", specifier = ">=2024.8.30" },
     { name = "importlib-metadata", marker = "python_full_version < '3.8'", specifier = ">=8.2.0" },
     { name = "kivy", extras = ["base"], specifier = ">=2.3.0" },
     { name = "numpy", specifier = ">=2.0.1" },
