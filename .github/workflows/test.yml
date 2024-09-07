@@ -63,12 +63,13 @@ jobs:
         with:
           path: "junit.xml"
 
-  docker-image:
-    runs-on: ubuntu-latest
+  release:
     needs: test
+    if:
+      github.event_name == 'push' && github.ref == 'refs/heads/main' &&
+      !contains(github.event.head_commit.message, 'chore(release):')
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
       - name: Setup UV
         uses: astral-sh/setup-uv@v2
         with:
@@ -78,39 +79,11 @@ jobs:
       - name: Setup Python
         run: uv python install
 
-      - name: Obtain Project Version
-        uses: SebRollen/toml-action@v1.2.0
-        id: proj-version
-        with:
-          file: pyproject.toml
-          field: project.version
-
-      - name: Build docker image
-        run:
-          docker build . -t adventofcode:${{ steps.proj-version.outputs.value }}
-
-      - env:
-          AOC_SESSION: ${{ secrets.AOC_SESSION }}
-        name: Smoke test docker image
-        run:
-          docker run --rm -e AOC_SESSION adventofcode:${{
-          steps.proj-version.outputs.value }} -e -y 2015 -d 1
-
-  release:
-    needs: test
-    if:
-      github.event_name == 'push' && github.ref == 'refs/heads/main' &&
-      !contains(github.event.head_commit.message, 'chore(release):')
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
       - name: Checkout code
         uses: actions/checkout@v2
+
       - name: Semantic Release
         run: |
-          uv tool install python-semantic-release
           git config user.name github-actions
           git config user.email github-actions@github.com
-          semantic-release publish
+          uv tool run semantic-release publish
