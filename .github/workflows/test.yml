@@ -20,7 +20,7 @@ jobs:
           fetch-depth: 0
 
       - name: Setup UV
-        uses: pdm-project/setup-uv@v4
+        uses: astral-sh/setup-uv@v2
         with:
           version: 0.4.7
           enable-cache: true
@@ -35,6 +35,10 @@ jobs:
           --junit-xml=junit.xml
         env:
           AOC_SESSION: ${{ secrets.AOC_SESSION }}
+
+      - name: Obtain Project Version
+        id: proj-version
+        run: uv run semantic-release version
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
