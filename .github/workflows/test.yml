@@ -35,15 +35,14 @@ jobs:
         uses: chartboost/ruff-action@v1
 
       - name: Run Tests
-        run:
-          uv run --frozen pytest --cov --cov-report=xml:coverage.xml
-          --junit-xml=junit.xml
+        run: pytest --cov --cov-report=xml:coverage.xml --junit-xml=junit.xml
         env:
           AOC_SESSION: ${{ secrets.AOC_SESSION }}
 
       - name: Obtain Project Version
         id: proj-version
-        run: uv run semantic-release version
+        run:
+          echo "PROJECT_VERSION=$(semantic-release version)" >> "$GITHUB_OUTPUT"
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
@@ -73,11 +72,10 @@ jobs:
           cache: true
           python-version: "3.12"
 
-      - name: Get project version
+      - name: Obtain Project Version
         id: proj-version
         run:
-          pdm self add pdm-version ; echo "PROJECT_VERSION=$(pdm version)" >>
-          "$GITHUB_OUTPUT"
+          echo "PROJECT_VERSION=$(semantic-release version)" >> "$GITHUB_OUTPUT"
 
       - name: Build docker image
         run:
