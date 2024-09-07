@@ -87,8 +87,7 @@ jobs:
 
       - name: Build docker image
         run:
-          docker build . -t adventofcode:${{
-          steps.proj-version.outputs.PROJECT_VERSION }}
+          docker build . -t adventofcode:${{ steps.proj-version.outputs.value }}
 
       - env:
           AOC_SESSION: ${{ secrets.AOC_SESSION }}
