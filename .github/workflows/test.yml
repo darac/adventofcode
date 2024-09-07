@@ -26,23 +26,26 @@ jobs:
           enable-cache: true
 
       - name: Setup Python
-        run: uv python install 3.12
+        run: uv python install
 
       - name: Sync Dependencies
-        run: uv sync
+        run: uv sync --all-extras --dev
 
       - name: Check code with Ruff
         uses: chartboost/ruff-action@v1
 
       - name: Run Tests
-        run: pytest --cov --cov-report=xml:coverage.xml --junit-xml=junit.xml
+        run:
+          uv run pytest --cov --cov-report=xml:coverage.xml
+          --junit-xml=junit.xml
         env:
           AOC_SESSION: ${{ secrets.AOC_SESSION }}
 
       - name: Obtain Project Version
         id: proj-version
         run:
-          echo "PROJECT_VERSION=$(semantic-release version)" >> "$GITHUB_OUTPUT"
+          echo "PROJECT_VERSION=$(uv run semantic-release version)" >>
+          "$GITHUB_OUTPUT"
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
@@ -75,7 +78,8 @@ jobs:
       - name: Obtain Project Version
         id: proj-version
         run:
-          echo "PROJECT_VERSION=$(semantic-release version)" >> "$GITHUB_OUTPUT"
+          echo "PROJECT_VERSION=$(uv run semantic-release version)" >>
+          "$GITHUB_OUTPUT"
 
       - name: Build docker image
         run:
