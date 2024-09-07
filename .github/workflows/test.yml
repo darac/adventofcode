@@ -28,9 +28,14 @@ jobs:
       - name: Setup Python
         run: uv python install 3.12
 
-      - uses: chartboost/ruff-action@v1
+      - name: Sync Dependencies
+        run: uv sync
 
-      - run:
+      - name: Check code with Ruff
+        uses: chartboost/ruff-action@v1
+
+      - name: Run Tests
+        run:
           uv run --frozen pytest --cov --cov-report=xml:coverage.xml
           --junit-xml=junit.xml
         env:
