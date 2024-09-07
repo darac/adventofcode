@@ -33,21 +33,24 @@ repos:
           - id: gitleaks
     - repo: https://github.com/astral-sh/ruff-pre-commit
       # Ruff version.
-      rev: v0.6.2
+      rev: v0.6.4
       hooks:
           - id: ruff
           - id: ruff-format
             args:
                 - --check
-    - repo: https://github.com/pdm-project/pdm
-      rev: 2.18.1 # a PDM release exposing the hook
+    - repo: https://github.com/astral-sh/uv-pre-commit
+      # uv version.
+      rev: 0.4.7
       hooks:
-          - id: pdm-lock-check
-          - id: pdm-export
-            # command arguments, e.g.:
-            args: ["-o", "requirements.txt", "--without-hashes"]
-            files: ^pdm.lock$
+          - id: uv-lock
+          # Run the pip compile
+          - id: pip-compile
+            args:
+                - pyproject.toml
+                - -o
+                - requirements.txt
     - repo: https://github.com/opensource-nepal/commitlint
-      rev: v1.2.0
+      rev: v1.3.0
       hooks:
           - id: commitlint
