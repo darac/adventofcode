@@ -46,7 +46,7 @@ pygments==2.18.0
     #   rich
 python-dateutil==2.9.0.post0
     # via pandas
-pytz==2024.1
+pytz==2024.2
     # via pandas
 requests==2.32.3
     # via
