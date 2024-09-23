@@ -20,7 +20,7 @@ jobs:
           fetch-depth: 0
 
       - name: Setup UV
-        uses: astral-sh/setup-uv@v2
+        uses: astral-sh/setup-uv@v3
         with:
           version: 0.4.7
           enable-cache: true
@@ -71,7 +71,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup UV
-        uses: astral-sh/setup-uv@v2
+        uses: astral-sh/setup-uv@v3
         with:
           version: 0.4.7
           enable-cache: true
