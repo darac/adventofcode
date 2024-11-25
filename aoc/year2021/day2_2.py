@@ -38,7 +38,7 @@ depth?
 """
 
 from aocd.models import Puzzle
-from rich import print
+from rich import print  # noqa: A004
 
 print("[green]Captain:[/green] Helmsman! Prepare to receive orders!")
 
@@ -50,27 +50,26 @@ for command, count in [
     n.split() for n in Puzzle(year=2021, day=2).input_data.splitlines()
 ]:
     print(f"[green]Captain:[/green] {command} {count}")
-    count = int(count)
     match command:
         case "forward":
             print(
                 "[green]Helmsman:[/green] Aye-aye, sir. Moving Forward "
                 f"{count}"
             )
-            POSITION += count
-            DEPTH += AIM * count
+            POSITION += int(count)
+            DEPTH += AIM * int(count)
         case "up":
             print(
                 "[green]Helmsman:[/green] Aye-aye, sir. Raising Aim "
                 f"{count}"
             )
-            AIM -= count
+            AIM -= int(count)
         case "down":
             print(
                 "[green]Helmsman:[/green] Aye-aye, sir. Lowering Aim "
                 f"{count}"
             )
-            AIM += count
+            AIM += int(count)
         case _:
             print(f"[green]Captain:[/green] Belay that {command} order!")
     if DEPTH == 0:

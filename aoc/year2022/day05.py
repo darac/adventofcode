@@ -147,7 +147,7 @@ on top of each stack?
 from collections import deque
 from typing import Literal
 
-from parse import Result, compile
+from parse import Result, compile  # noqa: A004
 
 
 def solve(

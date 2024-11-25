@@ -68,7 +68,7 @@ How many measurements are larger than the previous measurement?
 """
 
 import aocd
-from rich import print
+from rich import print  # noqa: A004
 
 PREV = None
 COUNT = 0

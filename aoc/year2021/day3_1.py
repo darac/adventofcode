@@ -53,7 +53,7 @@ not binary.)
 """
 
 from aocd.models import Puzzle
-from rich import print
+from rich import print  # noqa: A004
 from rich.progress import track
 
 COUNTS = {}

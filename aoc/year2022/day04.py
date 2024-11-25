@@ -65,8 +65,8 @@ In how many assignment pairs does one range fully contain the other?
 # spell-checker: disable
 from typing import Literal
 
-from parse import compile
-from rich import print
+from parse import compile  # noqa: A004
+from rich import print  # noqa: A004
 
 
 def visualise(low: int, high: int, upper: int, char: str = "+") -> str:
@@ -82,7 +82,7 @@ def solve(
     count = 0
     parser = compile("{:d}-{:d},{:d}-{:d}")
     for line in puzzle.splitlines():
-        a_low, a_high, b_low, b_high = parser.parse(line)  # type: ignore
+        a_low, a_high, b_low, b_high = parser.parse(line)  # type: ignore  # noqa: PGH003
         o_low = o_high = 0
         assert a_low <= a_high, "Whoops, Pairs are not sorted"
         assert b_low <= b_high, "Whoops, Pairs are not sorted"

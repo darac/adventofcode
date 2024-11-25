@@ -140,9 +140,8 @@ the new total winnings?
 # spell-checker: enable
 
 import logging
-from collections import namedtuple
 from collections.abc import Iterable
-from typing import Literal, TypeVar
+from typing import Literal, NamedTuple
 
 logging.basicConfig(  # NOSONAR
     level="DEBUG",
@@ -152,7 +151,6 @@ logging.basicConfig(  # NOSONAR
 LOG = logging.getLogger()
 
 PART = ""
-_T = TypeVar("_T")
 
 
 def all_equal(lst: Iterable) -> bool:
@@ -179,12 +177,15 @@ def most_common(lst: list[str]) -> str:
     return max(set(filter(lambda x: x != "J", lst)), key=lst.count)
 
 
-class Card(namedtuple("Card", "numeric_rank rank")):
+class Card(NamedTuple):
     """Represents a card.
     Each card has a rank (A single letter representing its place in the
     suit), and a numeric rank (An integer representing it's value for
     sorting).
     """
+
+    numeric_rank: int
+    rank: str
 
     def __str__(self: "Card") -> str:
         return str(self.rank)
@@ -272,7 +273,7 @@ def hand_score(hand: dict[str, list[Card] | int]) -> list[int]:
 def solve(
     puzzle: str, part: Literal["a", "b"], _runner: bool = False
 ) -> int | None:
-    global PART
+    global PART  # noqa: PLW0603
     PART = part
 
     hands = []

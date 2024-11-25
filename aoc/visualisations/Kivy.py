@@ -20,7 +20,9 @@ class AOCTextInput(TextInput):
         super().__init__(**kwargs)
 
     def insert_text(
-        self: "AOCTextInput", substring: str, from_undo: bool = False
+        self: "AOCTextInput",
+        substring: str,
+        from_undo: bool = False,
     ) -> None:
         s = re.sub(self.pattern, "", substring)
         super().insert_text(s, from_undo)
@@ -88,7 +90,7 @@ class ManualOCR(App):
 
     def submit(self: "ManualOCR", _instance: AOCTextInput) -> None:
         print(f'Submitting "{self.text}"')
-        global answer
+        global answer  # noqa: PLW0603
         answer = self.text
         app = App.get_running_app()
         assert app is not None
@@ -96,7 +98,7 @@ class ManualOCR(App):
 
     def timeout(self: "ManualOCR", _instance: AOCTextInput) -> None:
         print('Timeout. Auto-Submitting "TEST"')
-        global answer
+        global answer  # noqa: PLW0603
         answer = "TEST"
         app = App.get_running_app()
         assert app is not None

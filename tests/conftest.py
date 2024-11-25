@@ -51,8 +51,13 @@ def pytest_addoption(parser: pytest.Parser) -> None:
         type=int,
         nargs="*",
         action="store",
-        choices=range(2015, datetime.date.today().year + 1),
-        default=range(2015, datetime.date.today().year + 1),
+        choices=range(
+            2015,
+            datetime.datetime.now(tz=datetime.UTC).date().year + 1,
+        ),
+        default=range(
+            2015, datetime.datetime.now(tz=datetime.UTC).date().year + 1
+        ),
         help="Run AOC tests from this year",
     )
     parser.addoption(

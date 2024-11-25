@@ -86,7 +86,7 @@ from typing import Literal
 
 from aocd import submit
 from aocd.models import Puzzle
-from rich import print
+from rich import print  # noqa: A004
 from rich.progress import track
 
 TEST_INPUT = "3,4,3,1,2"

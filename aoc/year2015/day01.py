@@ -48,7 +48,7 @@ basement?
 from typing import Literal
 
 from aocd.models import Puzzle
-from rich import print
+from rich import print  # noqa: A004
 
 
 def solve(

@@ -73,7 +73,7 @@ answer in decimal, not binary.)
 """
 
 from aocd.models import Puzzle
-from rich import print
+from rich import print  # noqa: A004
 
 
 def common_bit(crit: str, position: int, data: list[str]) -> str:

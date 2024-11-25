@@ -92,7 +92,7 @@ import numpy as np
 import pandas as pd
 from aocd import submit
 from aocd.models import Puzzle
-from rich import print
+from rich import print  # noqa: A004
 
 
 def get_neighbours(
@@ -178,12 +178,12 @@ def solve(
     risk_level = 0
     low_points = []
     for column_name, column in data_frame.items():
-        column_name = int(column_name)  # type: ignore
+        column_name = int(column_name)  # type: ignore  # noqa: PGH003, PLW2901
         for row_name, cell in enumerate(column):
             neighbours = get_neighbour(data_frame, row_name, column_name)
             local_min = cell < min(neighbours)
             if local_min:
-                low_points.append((int(row_name), int(column_name)))
+                low_points.append((int(row_name), column_name))
                 risk_level += cell + 1
     if part == "a":
         return risk_level

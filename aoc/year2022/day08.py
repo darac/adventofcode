@@ -110,7 +110,7 @@ from typing import Literal
 
 import numpy as np
 import pandas as pd
-from rich import print
+from rich import print  # noqa: A004
 
 
 def visible(df: pd.DataFrame, row_id: int, col_id: int) -> bool:
@@ -179,7 +179,7 @@ def solve(
 
     for column_name, column in data_frame.items():
         for row_name, _cell in enumerate(column):
-            column_name = int(column_name)  # type: ignore
+            column_name = int(column_name)  # type: ignore  # noqa: PGH003, PLW2901
             if part == "a":
                 out_frame[column_name][row_name] = visible(
                     data_frame,

@@ -125,12 +125,20 @@ because there are the same number of scores smaller and larger than it.
 Find the completion string for each incomplete line, score the completion
 strings, and sort the scores. What is the middle score?"""
 
+import logging
 from typing import Literal
 
 from aocd import submit
 from aocd.exceptions import AocdError
 from aocd.models import Puzzle
-from rich import print
+from rich import print  # noqa: A004
+from rich.logging import RichHandler
+
+FORMAT = "%(message)s"
+logging.basicConfig(
+    level="INFO", format=FORMAT, datefmt="[%X]", handlers=[RichHandler()]
+)
+LOG = logging.getLogger()
 
 
 def solve(
@@ -148,7 +156,7 @@ def solve(
     checker_score = 0
     autocomplete_scores = []
     for line in puzzle.splitlines():
-        # print(line)
+        LOG.debug(line)
         chunk_deck = []
         printout = ""
         error = ""
@@ -159,13 +167,13 @@ def solve(
             else:
                 match char:
                     case "<" | "{" | "[" | "(":
-                        # print(f"Starting a {char} chunk")
+                        LOG.debug("Starting a %s chunk", char)
                         chunk_deck.append(char)
                         printout += f"[green]{char}[/]"
                     case ">" | "}" | "]" | ")":
-                        # print(f"Ending a {char} chunk")
+                        LOG.debug("Ending a %s chunk", char)
                         pair = chunk_deck.pop()
-                        # print(f"  Matched with a {pair} chunk")
+                        LOG.debug("  Matched with a %s chunk", pair)
                         if (
                             (char == ">" and pair != "<")
                             or (char == "]" and pair != "[")
@@ -216,7 +224,7 @@ def solve(
                             print(f"Unknown chunk {char}")
                         printout += f"[on red]{char}[/]"
         if not line_corrupted and len(chunk_deck) > 0:
-            # print(f'Autocomplete needed: {"".join(chunk_deck)}')
+            LOG.debug("Autoccomplete needed: {%s}", "".join(chunk_deck))
             this_autocomplete_score = 0
             for chunk in reversed(chunk_deck):
                 this_autocomplete_score *= 5

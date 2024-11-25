@@ -45,11 +45,7 @@ repos:
       hooks:
           - id: uv-lock
           # Run the pip compile
-          - id: pip-compile
-            args:
-                - pyproject.toml
-                - -o
-                - requirements.txt
+          - id: uv-export
     - repo: https://github.com/opensource-nepal/commitlint
       rev: v1.3.0
       hooks:

@@ -162,7 +162,7 @@ output values?"""
 
 from typing import Literal
 
-from rich import print
+from rich import print  # noqa: A004
 
 
 def solve(
@@ -196,7 +196,7 @@ def solve(
         patterns, output = (x.split() for x in line.split("|"))
         lengths = {len(s): set(s) for s in patterns}
 
-        for digit in map(set, output):  # type: ignore
+        for digit in map(set, output):  # type: ignore  # noqa: PGH003
             # Mask with known digits
             match (
                 len(digit),

@@ -49,7 +49,7 @@ from collections.abc import Generator
 from typing import Any
 
 from aocd.models import Puzzle
-from rich import print
+from rich import print  # noqa: A004
 from rich.progress import track
 
 A_UPPERCASE = ord("A")

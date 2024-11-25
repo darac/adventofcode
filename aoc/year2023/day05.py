@@ -185,7 +185,7 @@ from collections.abc import Generator, Iterable
 from typing import Literal
 
 try:
-    from itertools import batched  # type: ignore
+    from itertools import batched  # type: ignore  # noqa: PGH003
 except ImportError:
     from itertools import islice
 

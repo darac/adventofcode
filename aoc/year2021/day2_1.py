@@ -40,7 +40,7 @@ final horizontal position by your final depth?
 """
 
 from aocd.models import Puzzle
-from rich import print
+from rich import print  # noqa: A004
 
 print("[green]Captain:[/green] Helmsman! Prepare to receive orders!")
 

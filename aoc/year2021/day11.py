@@ -7,7 +7,7 @@ from typing import Literal
 import numpy as np
 from aocd import submit
 from aocd.models import Puzzle
-from rich import print
+from rich import print  # noqa: A004
 
 
 def get_neighbours(

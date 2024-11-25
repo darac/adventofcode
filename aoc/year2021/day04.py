@@ -96,7 +96,7 @@ from typing import Literal
 
 from aocd import submit
 from aocd.models import Puzzle
-from rich import print, traceback
+from rich import print, traceback  # noqa: A004
 from rich.live import Live
 from rich.logging import RichHandler
 from rich.table import Table

@@ -136,8 +136,8 @@ def get_winning_bounds(
     game_time: int, distance_to_beat: int
 ) -> tuple[int, int] | None:
     # Thoughts:
-    #   speed = press_time
-    #   distance = speed * (total_time - press_time)
+    #   speed = press_time  # noqa: ERA001
+    #   distance = speed * (total_time - press_time)  # noqa: ERA001
     # ∴ distance = press_time * (total_time - press_time)
     #   So we have y = x * (c - y) and y = t. Find x, then round (inwards).
     #   https://www.bbc.co.uk/bitesize/guides/zqf3k2p/revision/4 :D

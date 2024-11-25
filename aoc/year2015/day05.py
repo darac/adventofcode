@@ -62,7 +62,6 @@ def solve(
             if not _runner:
                 print(f"{part}: {line:16}: nice")
             num_nice_strings += 1
-        else:
-            if not _runner:
-                print(f"{part}: {line:16}: naughty")
+        elif not _runner:
+            print(f"{part}: {line:16}: naughty")
     return num_nice_strings

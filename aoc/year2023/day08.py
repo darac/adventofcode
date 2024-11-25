@@ -145,7 +145,7 @@ def solve(
 ) -> int | None:
     nodes = {}
 
-    global PART
+    global PART  # noqa: PLW0603
     PART = part
 
     lines = puzzle.splitlines()

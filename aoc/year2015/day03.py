@@ -47,7 +47,7 @@ For example:
 from collections import Counter
 from typing import Literal
 
-from rich import print
+from rich import print  # noqa: A004
 
 
 class UnknownDirection(Exception):

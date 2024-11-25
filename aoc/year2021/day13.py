@@ -9,7 +9,7 @@ from typing import Literal
 import numpy as np
 from aocd import submit
 from aocd.models import Puzzle
-from rich import print
+from rich import print  # noqa: A004
 
 
 def print_sheet(sheet: np.ndarray) -> None:
@@ -97,7 +97,7 @@ def solve(
             # The fold is asymmetrical, so we need to expand the second page
             # before flipping
             print(f"Shape is {copy.shape}. Want {orig.shape}")
-            # ((top,bottom), (left,right))
+            # ((top,bottom), (left,right))  # noqa: ERA001
             padding = (
                 (0, orig.shape[0] - copy.shape[0]),
                 (0, orig.shape[1] - copy.shape[1]),
@@ -113,7 +113,7 @@ def solve(
             # The fold is asymmetrical, so we need to expand the second page
             # before flipping
             print(f"Shape is {copy.shape}. Want {orig.shape}")
-            # ((top,bottom), (left,right))
+            # ((top,bottom), (left,right))  # noqa: ERA001
             padding = (
                 (0, copy.shape[0] - orig.shape[0]),
                 (0, copy.shape[1] - orig.shape[1]),
