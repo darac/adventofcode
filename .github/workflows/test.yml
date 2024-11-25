@@ -84,6 +84,8 @@ jobs:
         run: uv python install
 
       - name: Semantic Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
