@@ -1,91 +1,90 @@
 ---
 name: Test
 on:
-    pull_request:
-        types:
-            - opened
-            - synchronize
-            - reopened
-    push:
-        branches:
-            - main
-        tags:
-            - "*"
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+  push:
+    branches:
+      - main
+    tags:
+      - "*"
 jobs:
-    test:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v4
-              with:
-                  fetch-depth: 0
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-            - name: Setup UV
-              uses: astral-sh/setup-uv@v4
-              with:
-                  version: latest
-                  enable-cache: true
+      - name: Setup UV
+        uses: astral-sh/setup-uv@v4
+        with:
+          version: latest
+          enable-cache: true
 
-            - name: Setup Python
-              run: uv python install 3.12
+      - name: Setup Python
+        run: uv python install 3.12
 
-            - name: Sync Dependencies
-              run: uv sync --all-extras --dev
+      - name: Sync Dependencies
+        run: uv sync --all-extras --dev
 
-            - name: Check code with Ruff
-              uses: chartboost/ruff-action@v1
+      - name: Check code with Ruff
+        uses: chartboost/ruff-action@v1
 
-            - name: Run Tests
-              run:
-                  uv run pytest --cov --cov-report=xml:coverage.xml
-                  --junit-xml=junit.xml
-              env:
-                  AOC_SESSION: ${{ secrets.AOC_SESSION }}
+      - name: Run Tests
+        run:
+          uv run pytest --cov --cov-report=xml:coverage.xml
+          --junit-xml=junit.xml
+        env:
+          AOC_SESSION: ${{ secrets.AOC_SESSION }}
 
-            - name: Obtain Project Version
-              uses: SebRollen/toml-action@v1.2.0
-              id: proj-version
-              with:
-                  file: pyproject.toml
-                  field: project.version
+      - name: Obtain Project Version
+        uses: SebRollen/toml-action@v1.2.0
+        id: proj-version
+        with:
+          file: pyproject.toml
+          field: project.version
 
-            - name: SonarCloud Scan
-              uses: SonarSource/sonarcloud-github-action@master
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
-                  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-              with:
-                  args: >
-                      -Dsonar.projectVersion=${{
-                      steps.proj-version.outputs.value }}
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.projectVersion=${{ steps.proj-version.outputs.value }}
 
-            - name: Publish Test Report
-              uses: pmeier/pytest-results-action@v0.7.1
-              if: always()
-              with:
-                  path: "junit.xml"
+      - name: Publish Test Report
+        uses: pmeier/pytest-results-action@v0.7.1
+        if: always()
+        with:
+          path: "junit.xml"
 
-    release:
-        needs: test
-        if:
-            github.event_name == 'push' && github.ref == 'refs/heads/main' &&
-            !contains(github.event.head_commit.message, 'chore(release):')
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v4
-              with:
-                  fetch-depth: 0
+  release:
+    needs: test
+    if:
+      github.event_name == 'push' && github.ref == 'refs/heads/main' &&
+      !contains(github.event.head_commit.message, 'chore(release):')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-            - name: Setup UV
-              uses: astral-sh/setup-uv@v4
-              with:
-                  version: latest
-                  enable-cache: true
+      - name: Setup UV
+        uses: astral-sh/setup-uv@v4
+        with:
+          version: latest
+          enable-cache: true
 
-            - name: Setup Python
-              run: uv python install
+      - name: Setup Python
+        run: uv python install
 
-            - name: Semantic Release
-              run: |
-                  git config user.name github-actions
-                  git config user.email github-actions@github.com
-                  uv tool run semantic-release publish
+      - name: Semantic Release
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          uv tool run --from=python-semantic-release semantic-release publish
