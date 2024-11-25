@@ -1,6 +1,7 @@
 [build-system]
-    build-backend = "pdm.backend"
-    requires      = ["pdm-backend"]
+    build-backend = "hatchling.build"
+    requires      = ["hatchling"]
+
 
 [project]
     authors = [{ name = "Paul Saunders", email = "darac+github@darac.org.uk" }]
@@ -24,7 +25,7 @@
     name = "aoc"
     readme = "README.md"
     requires-python = "<3.13,>=3.9"
-    version = "2023.8.6"
+    version = "2023.8.7"
 
     [project.entry-points."adventofcode.user"]
         darac_aoc = "aoc:solve"
