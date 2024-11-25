@@ -22,7 +22,7 @@ jobs:
             - name: Setup UV
               uses: astral-sh/setup-uv@v4
               with:
-                  version: 0.4.7
+                  version: latest
                   enable-cache: true
 
             - name: Setup Python
@@ -71,17 +71,18 @@ jobs:
             !contains(github.event.head_commit.message, 'chore(release):')
         runs-on: ubuntu-latest
         steps:
+            - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
             - name: Setup UV
               uses: astral-sh/setup-uv@v4
               with:
-                  version: 0.4.7
+                  version: latest
                   enable-cache: true
 
             - name: Setup Python
               run: uv python install
-
-            - name: Checkout code
-              uses: actions/checkout@v2
 
             - name: Semantic Release
               run: |
