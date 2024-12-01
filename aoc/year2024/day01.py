@@ -166,7 +166,7 @@ def solve(
             )
 
             result += diff
-    elif part == "b":
+    else:
         for left_location in left:
             similar = right.count(left_location)
             LOG.debug(

@@ -18,7 +18,7 @@
         "parse>=1.20.2",
         "pygame>=2.6.0",
         "rich>=13.7.1",
-]
+    ]
     description = "darac's solutions for http://adventofcode.com"
     name = "aoc"
     readme = "README.md"
@@ -168,6 +168,5 @@
         "pytest>=8.3.2",
         "python-semantic-release>=9.8.7",
         "ruff>=0.5.7",
-        "toml-sort>=0.23.1",
         "types-pyyaml>=6.0.12.20240808",
-]
+    ]

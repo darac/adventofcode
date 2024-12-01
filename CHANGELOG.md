@@ -1,6 +1,5 @@
 # CHANGELOG
 
-
 ## v2024.0.0 (2024-12-01)
 
 ### Features
@@ -9,7 +8,6 @@
   ([`4e809de`](https://github.com/darac/adventofcode/commit/4e809de688755c0a14629b9829527885e36672ef))
 
 BREAKING CHANGE: A new year begins!
-
 
 ## v2023.4.3 (2024-11-25)
 
@@ -45,37 +43,33 @@ BREAKING CHANGE: A new year begins!
 - **github-actions**: Add release-drafter ([#96](https://github.com/darac/adventofcode/pull/96),
   [`c36a7ac`](https://github.com/darac/adventofcode/commit/c36a7ac3606b80fd8273b9ee69dbe2aacbbc39e6))
 
-* chore(github-actions): add release-drafter
+- chore(github-actions): add release-drafter
 
-* chore: Switch to using UV
+- chore: Switch to using UV
 
-* chore(github-actions): Fix test workflow
+- chore(github-actions): Fix test workflow
 
-* chore(github-actions): Do a UV sync
+- chore(github-actions): Do a UV sync
 
-* chore(github-actions): Deduplicate proj-version step
+- chore(github-actions): Deduplicate proj-version step
 
-* chore(github-actions,dependencies): Add Dev Dependencies
+- chore(github-actions,dependencies): Add Dev Dependencies
 
-* chore(github-actions): Read the project version from the TOML
+- chore(github-actions): Read the project version from the TOML
 
-* chore(github-actions): Build using the right variable
+- chore(github-actions): Build using the right variable
 
-* chore(github-actions): Add CA certificates
+- chore(github-actions): Add CA certificates
 
 ### Code Style
 
 - Enable more ruff fixes
   ([`1f4fd62`](https://github.com/darac/adventofcode/commit/1f4fd628993bf29aef5e7b77de8f28c906abeda1))
 
-
 ## v2023.4.2 (2023-12-06)
-
 
 ## v2023.1.0 (2023-12-01)
 
-
 ## v2022.10.5 (2023-10-18)
-
 
 ## v2022.10.3 (2023-10-05)
