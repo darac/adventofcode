@@ -50,3 +50,13 @@ repos:
       rev: v1.3.0
       hooks:
           - id: commitlint
+    - repo: https://github.com/pypa/pip-audit
+      rev: v2.7.3
+      hooks:
+        - id: pip-audit
+          args: ["."]
+
+ci:
+  # Leave pip-audit to only run locally and not in CI
+  # pre-commit.ci does not allow network calls
+  skip: [pip-audit]

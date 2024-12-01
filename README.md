@@ -11,10 +11,10 @@ Storage for my AdventOfCode solutions
 
 ```sh
 # Install dependencies
-pdm sync -d
+uv sync --dev
 
 # Setup pre-commit and pre-push hooks
-pdm run pre-commit install --install-hooks
+uv run pre-commit install --install-hooks
 ```
 
 <!--- advent_readme_stars table --->

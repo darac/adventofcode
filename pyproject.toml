@@ -11,13 +11,11 @@
     ]
     dependencies = [
         "advent-of-code-data>=2.0.1",
-        "certifi>=2024.8.30",
         "importlib-metadata>=8.2.0; python_version < \"3.8\"",
         "kivy[base]>=2.3.0",
         "numpy>=2.1.3",
         "pandas>=2.2.2",
         "parse>=1.20.2",
-        "pillow>=10.4.0",
         "pygame>=2.6.0",
         "rich>=13.7.1",
 ]
@@ -66,10 +64,6 @@
     plugins                = "numpy.typing.mypy_plugin"
     warn_return_any        = true
     warn_unused_configs    = true
-
-[tool.pip-tools]
-    # Set generate-hashes for pip-compile
-    generate-hashes = true
 
 [tool.pytest.ini_options]
     addopts          = "--cov --cov-report=term --cov-report=xml:coverage.xml --junitxml=junit.xml"
@@ -176,5 +170,4 @@
         "ruff>=0.5.7",
         "toml-sort>=0.23.1",
         "types-pyyaml>=6.0.12.20240808",
-        "uv>=0.5.4",
-    ]
+]
