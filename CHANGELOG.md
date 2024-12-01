@@ -1,6 +1,16 @@
 # CHANGELOG
 
 
+## v2024.0.0 (2024-12-01)
+
+### Features
+
+- 2024 day 1 complete
+  ([`4e809de`](https://github.com/darac/adventofcode/commit/4e809de688755c0a14629b9829527885e36672ef))
+
+BREAKING CHANGE: A new year begins!
+
+
 ## v2023.4.3 (2024-11-25)
 
 ### Bug Fixes
