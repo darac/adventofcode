@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1.9
+# syntax=docker/dockerfile:1.12
 # Keep this syntax directive! It's used to enable Docker BuildKit
 
 FROM ubuntu:noble AS build
