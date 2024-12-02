@@ -31,9 +31,6 @@
     ],
     "editor.formatOnSave": true,
     "python.analysis.typeCheckingMode": "standard",
-    "python.testing.pytestArgs": [
-        "aoc"
-    ],
     "python.testing.pytestEnabled": true,
     "python.testing.unittestEnabled": false,
     "sonarlint.connectedMode.project": {
@@ -45,5 +42,6 @@
     "evenBetterToml.formatter.indentString": "    ",
     "cSpell.language": "en-GB",
     "mypy.runUsingActiveInterpreter": true,
-    "ruff.configuration": "pyproject.toml"
+    "ruff.configuration": "pyproject.toml",
+    "python.testing.pytestPath": "uv run pytest"
 }

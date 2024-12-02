@@ -123,21 +123,31 @@ def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
     # * A part specification
     # * The expected output
     _test_data: list[tuple[Callable, str, str, int | str]] = []
+    _id_list: list[str] = []
     for year, day in itertools.product(years, days):
         solver_name = f"aoc.year{year:4d}.day{day:02d}"
         with contextlib.suppress(ModuleNotFoundError):
             solver = importlib.import_module(solver_name)
             with Path(f"tests/year{year:4d}/day{day:02d}.yml").open() as fh:
-                for doc in yaml.safe_load_all(fh):
+                for doc_num, doc in enumerate(
+                    yaml.safe_load_all(fh), start=1
+                ):
                     _test_data.extend(
                         (solver.solve, doc["input"], part, doc[part])
+                        for part in parts
+                        if part in doc and doc[part] is not None
+                    )
+                    _id_list.extend(
+                        f"year{year:4d}/day{day:02d}/test{doc_num:02d}/part{part}"
                         for part in parts
                         if part in doc and doc[part] is not None
                     )
 
     if "solver" in metafunc.fixturenames:
         # New-style test_solve
-        metafunc.parametrize("solver,puzzle,part,expected", _test_data)
+        metafunc.parametrize(
+            "solver,puzzle,part,expected", _test_data, ids=_id_list
+        )
 
     if "example_data" in metafunc.fixturenames:
         metafunc.parametrize(
