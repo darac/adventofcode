@@ -45,7 +45,12 @@ repos:
       hooks:
           - id: uv-lock
           # Run the pip compile
-          - id: uv-export
+          #   - id: pip-compile
+          #     args:
+          #         - pyproject.toml
+          #         - -o
+          #         - requirements.txt
+          #         - --all-extras
     - repo: https://github.com/opensource-nepal/commitlint
       rev: v1.3.0
       hooks:
@@ -53,10 +58,12 @@ repos:
     - repo: https://github.com/pypa/pip-audit
       rev: v2.7.3
       hooks:
-        - id: pip-audit
-          args: ["."]
+          - id: pip-audit
+            args:
+                - .
 
 ci:
-  # Leave pip-audit to only run locally and not in CI
-  # pre-commit.ci does not allow network calls
-  skip: [pip-audit]
+    # Leave pip-audit to only run locally and not in CI
+    # pre-commit.ci does not allow network calls
+    skip:
+        - pip-audit
