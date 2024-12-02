@@ -15,6 +15,7 @@ apt-get install -qyy \
     ca-certificates \
     python3-setuptools \
     python3.12-dev
+apt-get clean
 EOT
 
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv

@@ -318,7 +318,7 @@ def parse_input(string: str) -> dict:
         else:
             assert this_board is not None
             assert line is not None
-            this_board.load_row(line.split())
+            this_board.load_row(line.split())  # NOSONAR
     if this_board is not None:
         print(this_board.as_table())
         boards.append(this_board)
