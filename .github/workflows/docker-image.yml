@@ -1,8 +1,12 @@
+---
+name: Create Docker Image
 on:
   workflow_dispatch:
-  release:
+  workflow_run:
     types:
-      - published
+        - completed
+    workflows:
+        - Test
 
 jobs:
   docker-image:
