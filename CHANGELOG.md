@@ -1,6 +1,41 @@
 # CHANGELOG
 
 
+## v2024.3.0 (2024-12-04)
+
+### Chores
+
+- **deps**: Update docker/build-push-action digest to 8796455
+  ([#140](https://github.com/darac/adventofcode/pull/140),
+  [`e2a495d`](https://github.com/darac/adventofcode/commit/e2a495d5d4f1779061ee32f54fcf71005caa91e7))
+
+Co-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>
+
+- **deps**: Update python-semantic-release/publish-action action to v9.15.1
+  ([`0670714`](https://github.com/darac/adventofcode/commit/0670714c55c86fd102e674c8b7505e6e0efa154d))
+
+- **deps**: Update python-semantic-release/python-semantic-release action to v9.15.1
+  ([#139](https://github.com/darac/adventofcode/pull/139),
+  [`2bf5c6f`](https://github.com/darac/adventofcode/commit/2bf5c6f3fb395aab6ebf01b380e744159564e2ed))
+
+Co-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>
+
+### Continuous Integration
+
+- Build docker image upon release
+  ([`3746026`](https://github.com/darac/adventofcode/commit/3746026db8cc8bd1d5579421548589d7cfa91a66))
+
+### Documentation
+
+- Hyperlink the Tests badge to the tests
+  ([`d8d7d86`](https://github.com/darac/adventofcode/commit/d8d7d86cbebbf05ef3cfc0feb6f4e18451c07a99))
+
+### Features
+
+- 2024 Day 4 complete
+  ([`0743119`](https://github.com/darac/adventofcode/commit/074311943845f9aa066aca6aa8f0b1737f7da39d))
+
+
 ## v2024.2.0 (2024-12-03)
 
 ### Build System
