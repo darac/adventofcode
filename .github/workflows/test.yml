@@ -71,6 +71,8 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main' &&
       !contains(github.event.head_commit.message, 'chore(release):')
     runs-on: ubuntu-latest
+    outputs:
+      released: ${{ steps.release.outputs.released }}
     steps:
       # Note: we need to checkout the repository at the workflow sha in case during the workflow
       # the branch was updated. To keep PSR working with the configured release branches,
@@ -114,6 +116,7 @@ jobs:
     needs: release
     concurrency: release
     runs-on: ubuntu-latest
+    if: ${{ needs.release.outputs.released }} == "true"
     env:
       REGISTRY: ghcr.io
       IMAGE_NAME: ${{ github.repository }}
