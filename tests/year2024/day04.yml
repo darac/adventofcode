@@ -1,0 +1,19 @@
+---
+# Dead simple to check grid alignment
+input: |
+    XMAS
+a: 1
+---
+input: |
+    MMMSXXMASM
+    MSAMXMSMSA
+    AMXSXMAAMM
+    MSAMASMSMX
+    XMASAMXAMM
+    XXAMMXXAMA
+    SMSMSASXSS
+    SAXAMASAAA
+    MAMMMXMMMM
+    MXMXAXMASX
+a: 18
+b: 9
