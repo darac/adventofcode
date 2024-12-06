@@ -95,16 +95,14 @@ import itertools
 import logging
 from typing import Literal
 
+from aoc.parsers.grid import Grid, Point, grid_of_chars
+
 logging.basicConfig(  # NOSONAR
     level="DEBUG",
     format="%(message)s",
     datefmt="[%X]",
 )
 LOG = logging.getLogger()
-
-# Types
-Point = tuple[int, int]
-Grid = dict[Point, str]
 
 directions = {
     "North    ": (0, -1),
@@ -151,26 +149,6 @@ class Visualisation:
 
 
 FoundGrid: Visualisation | None = None
-
-
-def parse_grid(puzzle: str) -> tuple[Grid, int, int]:
-    """Turn a puzzle string into a 2d-grid, using split()
-
-    Args:
-        puzzle (str): a puzzle string
-
-    Returns:
-        tuple[Grid, int, int]: The grid, the X size and the Y size
-    """
-    result = {}
-    lines = puzzle.splitlines()
-    y_size = len(lines)
-    x_size = len(lines[0])
-    for y_pos, line in enumerate(lines):
-        for x_pos, char in enumerate(line):
-            result[(y_pos, x_pos)] = char
-
-    return result, x_size, y_size
 
 
 def move(position: Point, direction: Point) -> Point:
@@ -233,7 +211,7 @@ def find_x_mas_from_position(grid: Grid, position: Point) -> bool:
 def solve(
     puzzle: str, part: Literal["a", "b"], _runner: bool = False
 ) -> int | None:
-    grid, x_size, y_size = parse_grid(puzzle=puzzle)
+    grid, x_size, y_size = grid_of_chars(puzzle=puzzle)
     global FoundGrid  # noqa: PLW0603
     FoundGrid = Visualisation(x_size, y_size)
     result = 0
