@@ -1,6 +1,19 @@
 # CHANGELOG
 
 
+## v2024.4.1 (2024-12-06)
+
+### Bug Fixes
+
+- 2024 Day 6, second part
+  ([`570b48b`](https://github.com/darac/adventofcode/commit/570b48b78571eb867091c9203b6b05903c2fbaf6))
+
+### Chores
+
+- Update uv.lock
+  ([`f441292`](https://github.com/darac/adventofcode/commit/f4412922f6ef1290fe441d946ed771740a51080f))
+
+
 ## v2024.4.0 (2024-12-06)
 
 ### Continuous Integration
