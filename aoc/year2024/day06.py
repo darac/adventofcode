@@ -239,6 +239,7 @@ obstruction?
 
 import itertools
 import logging
+from copy import deepcopy
 from typing import Literal
 
 import aoc.parsers.grid
@@ -272,6 +273,7 @@ def solve(
             guard = {"pos": _, "dir": grid.get(_, ".")}
             break
     assert guard is not None
+    guard_reset = deepcopy(guard)
 
     directions = {
         "^": (-1, 0),
@@ -315,10 +317,82 @@ def solve(
         except KeyError:
             break
 
+    guard_path = [
+        _
+        for _ in itertools.product(range(x_size), range(y_size))
+        if grid.get(_) == "X"
+    ]
+
     if part == "a":
-        return sum(
-            1
-            for _ in itertools.product(range(x_size), range(y_size))
-            if grid.get(_) == "X"
-        )
-    return None
+        return len(guard_path)
+
+    loop_successes = 0
+
+    for obstruction in guard_path:
+        new_grid = {}
+        for _ in itertools.product(range(x_size), range(y_size)):
+            if grid[_] == "#":
+                new_grid[_] = grid[_]
+            else:
+                new_grid[_] = "."
+        new_grid[obstruction] = "O"
+        guard = deepcopy(guard_reset)
+
+        LOG.debug(grid2str(new_grid, x_size, y_size))
+
+        # Walk the grid.
+        # Only allow sizeof(grid) steps. If the guard escapes
+        # before that, it's not a loop.
+        guard_escaped = False
+        for loop_steps in range(x_size * y_size):
+            direction = directions[guard["dir"]]
+            try:
+                look = new_grid.get(
+                    (
+                        guard["pos"][0] + direction[0],
+                        guard["pos"][1] + direction[1],
+                    )
+                )
+                LOG.debug(guard)
+                LOG.debug("In %s, I see %s", direction, look)
+                if look is None:
+                    LOG.debug("Loop failed after %d steps", loop_steps)
+                    guard_escaped = True
+                    LOG.debug(grid2str(new_grid, x_size, y_size))
+                    break
+                if look in ["#", "O"]:
+                    # Rotate
+                    guard["dir"] = rotate[
+                        (rotate.find(guard["dir"]) + 1) % len(rotate)
+                    ]
+                else:
+                    new_grid[guard["pos"]] = guard["dir"]
+                    # Move
+                    guard["pos"] = (
+                        guard["pos"][0] + direction[0],
+                        guard["pos"][1] + direction[1],
+                    )
+                    if new_grid.get(guard["pos"]) == guard["dir"]:
+                        LOG.info("New square matches where I'm looking")
+                        guard_escaped = False
+                        break
+                if (
+                    guard["pos"][0] < 0
+                    or guard["pos"][0] > y_size
+                    or guard["pos"][1] < 0
+                    or guard["pos"][1] > x_size
+                ):
+                    LOG.debug("Loop failed after %d steps", loop_steps)
+                    guard_escaped = True
+                    LOG.debug(grid2str(new_grid, x_size, y_size))
+                    break
+            except KeyError:
+                # The guard escaped, so this isn't a loop
+                LOG.debug("Loop failed after %d steps", loop_steps)
+                guard_escaped = True
+                break
+        if not guard_escaped:
+            LOG.info("Loop possible with obstruction at %s", obstruction)
+            loop_successes += 1
+
+    return loop_successes
