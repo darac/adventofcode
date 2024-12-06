@@ -1,6 +1,28 @@
 # CHANGELOG
 
 
+## v2024.4.0 (2024-12-06)
+
+### Continuous Integration
+
+- Move Docker Image into main workflow
+  ([`7bf97ed`](https://github.com/darac/adventofcode/commit/7bf97ed09b2437651df88fd98332b77469817cf8))
+
+- Only run Docker if release was actually produced
+  ([`11c9536`](https://github.com/darac/adventofcode/commit/11c9536a1be8dce6800c95e2aa9aa6a766edaaf5))
+
+- Trigger Docker Image after completion of Test
+  ([`fb79388`](https://github.com/darac/adventofcode/commit/fb7938814bb364e18e47a12dcdf64c9d0bcfa716))
+
+- Update pre-commit config
+  ([`434d4cf`](https://github.com/darac/adventofcode/commit/434d4cfca4330235644e3761b3c5716d3c5866eb))
+
+### Features
+
+- 2024 Day 6, first part
+  ([`acb7e0f`](https://github.com/darac/adventofcode/commit/acb7e0f592b6f018f80ceed4f2f04bb5a3a6822a))
+
+
 ## v2024.3.0 (2024-12-04)
 
 ### Chores
