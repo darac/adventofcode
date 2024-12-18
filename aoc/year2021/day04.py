@@ -320,7 +320,6 @@ def parse_input(string: str) -> dict:
             assert line is not None
             this_board.load_row(line.split())  # NOSONAR
     if this_board is not None:
-        print(this_board.as_table())
         boards.append(this_board)
 
     return {"draws": draws, "boards": boards}
@@ -408,7 +407,7 @@ if __name__ == "__main__":
                             print(f"Score: {board.board.score()}")
                             if not DEBUG and not SUBMITTED_A:
                                 submit(
-                                    board.board.score(),
+                                    str(board.board.score()),
                                     part="a",
                                     day=4,
                                     year=2021,

@@ -356,7 +356,7 @@ def solve(
                 LOG.debug(guard)
                 LOG.debug("In %s, I see %s", direction, look)
                 if look is None:
-                    LOG.debug("Loop failed after %d steps", loop_steps)
+                    LOG.debug("Saw nothing after %d steps", loop_steps)
                     guard_escaped = True
                     LOG.debug(grid2str(new_grid, x_size, y_size))
                     break
@@ -382,7 +382,7 @@ def solve(
                     or guard["pos"][1] < 0
                     or guard["pos"][1] > x_size
                 ):
-                    LOG.debug("Loop failed after %d steps", loop_steps)
+                    LOG.debug("Escaped Maze after %d steps", loop_steps)
                     guard_escaped = True
                     LOG.debug(grid2str(new_grid, x_size, y_size))
                     break
