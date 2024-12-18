@@ -1,7 +1,6 @@
 {
     "recommendations": [
         "editorconfig.editorconfig",
-        "matangover.mypy",
         "ms-python.python",
         "streetsidesoftware.code-spell-checker",
         "sonarsource.sonarlint-vscode",

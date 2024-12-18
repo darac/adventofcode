@@ -30,7 +30,6 @@
         "terminalreporter"
     ],
     "editor.formatOnSave": true,
-    "python.analysis.typeCheckingMode": "standard",
     "python.testing.pytestEnabled": true,
     "python.testing.unittestEnabled": false,
     "sonarlint.connectedMode.project": {
@@ -41,7 +40,11 @@
     "evenBetterToml.formatter.indentTables": true,
     "evenBetterToml.formatter.indentString": "    ",
     "cSpell.language": "en-GB",
-    "mypy.runUsingActiveInterpreter": true,
     "ruff.configuration": "pyproject.toml",
-    "python.testing.pytestPath": "uv run pytest"
+    "python.testing.pytestPath": "uv run pytest",
+    "python.defaultInterpreterPath": "/home/vscode/.venv/bin/python",
+    "python.testing.pytestArgs": [
+        "-p no:randomly"
+    ],
+    "ruff.lineLength": 76
 }
