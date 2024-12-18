@@ -17,7 +17,8 @@
                 "sonarsource.sonarlint-vscode",
                 "streetsidesoftware.code-spell-checker",
                 "tamasfe.even-better-toml",
-                "eamodio.gitlens"
+                "eamodio.gitlens",
+                "github.vscode-github-actions"
             ]
         }
     },

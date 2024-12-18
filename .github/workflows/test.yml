@@ -48,13 +48,14 @@ jobs:
           field: project.version
 
       - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
+        uses: SonarSource/sonarqube-scan-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
             -Dsonar.projectVersion=${{ steps.proj-version.outputs.value }}
+            -Dsonar.coverage.jacoco.xmlReportPaths=coverage.xml
 
       - name: Publish Test Report
         uses: pmeier/pytest-results-action@v0.7.1
