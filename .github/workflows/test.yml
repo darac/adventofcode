@@ -24,6 +24,7 @@ jobs:
         with:
           version: latest
           enable-cache: true
+          cache-dependency-glob: "uv.lock"
 
       - name: Setup Python
         run: uv python install 3.12
@@ -47,6 +48,13 @@ jobs:
           file: pyproject.toml
           field: project.version
 
+      - name: Cache SonarQube packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
       - name: SonarCloud Scan
         uses: SonarSource/sonarqube-scan-action@master
         env:
@@ -55,7 +63,6 @@ jobs:
         with:
           args: >
             -Dsonar.projectVersion=${{ steps.proj-version.outputs.value }}
-            -Dsonar.coverage.jacoco.xmlReportPaths=coverage.xml
 
       - name: Publish Test Report
         uses: pmeier/pytest-results-action@v0.7.1

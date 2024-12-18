@@ -1,9 +1,24 @@
-# Created by https://www.toptal.com/developers/gitignore/api/python,visualstudiocode,direnv
-# Edit at https://www.toptal.com/developers/gitignore?templates=python,visualstudiocode,direnv
+# Created by https://www.toptal.com/developers/gitignore/api/sonarqube,python,visualstudiocode,direnv,vim,git
+# Edit at https://www.toptal.com/developers/gitignore?templates=sonarqube,python,visualstudiocode,direnv,vim,git
 
 ### direnv ###
 .direnv
 .envrc
+
+### Git ###
+# Created by git for backups. To disable backups in Git:
+# $ git config --global mergetool.keepBackup false
+*.orig
+
+# Created by git when using merge tools for conflicts
+*.BACKUP.*
+*.BASE.*
+*.LOCAL.*
+*.REMOTE.*
+*_BACKUP_*.txt
+*_BASE_*.txt
+*_LOCAL_*.txt
+*_REMOTE_*.txt
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
@@ -57,7 +72,6 @@ coverage.xml
 *.py,cover
 .hypothesis/
 .pytest_cache/
-junit.xml
 cover/
 
 # Translations
@@ -178,6 +192,40 @@ poetry.toml
 # LSP config files
 pyrightconfig.json
 
+### SonarQube ###
+# SonarQube ignore files.
+#
+# https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner
+# Sonar Scanner working directories
+.sonar/
+.sonarqube/
+.scannerwork/
+
+# http://www.sonarlint.org/commandline/
+# SonarLint working directories, configuration files (including credentials)
+.sonarlint/
+
+### Vim ###
+# Swap
+[._]*.s[a-v][a-z]
+!*.svg  # comment out if you don't need vector files
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+
+# Session
+Session.vim
+Sessionx.vim
+
+# Temporary
+.netrwhist
+*~
+# Auto-generated tag files
+tags
+# Persistent undo
+[._]*.un~
+
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json
@@ -197,4 +245,5 @@ pyrightconfig.json
 .history
 .ionide
 
-# End of https://www.toptal.com/developers/gitignore/api/python,visualstudiocode,direnv
+# End of https://www.toptal.com/developers/gitignore/api/sonarqube,python,visualstudiocode,direnv,vim,git
+junit.xml
