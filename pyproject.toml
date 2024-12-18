@@ -21,7 +21,7 @@
     name = "aoc"
     readme = "README.md"
     requires-python = "<3.13,>=3.10"
-    version = "2024.4.1"
+    version = "2024.4.2"
 
     [project.entry-points."adventofcode.user"]
         darac_aoc = "aoc:solve"

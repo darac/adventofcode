@@ -1,6 +1,44 @@
 # CHANGELOG
 
 
+## v2024.4.2 (2024-12-18)
+
+### Bug Fixes
+
+- Reduce Sonar smells
+  ([`8f076b7`](https://github.com/darac/adventofcode/commit/8f076b79b4b0c1654bd023884f694fb29d233aa6))
+
+### Build System
+
+- Add coverage.xml to Sonar
+  ([`20c87b0`](https://github.com/darac/adventofcode/commit/20c87b09b56afe143c6a62615450dec3da723ee0))
+
+- Add devcontainers spec
+  ([`4d149da`](https://github.com/darac/adventofcode/commit/4d149daab20f8527f1b8f550342b268d26b3a010))
+
+### Chores
+
+- **deps**: Update actions/attest-build-provenance action to v2
+  ([`67ef1d8`](https://github.com/darac/adventofcode/commit/67ef1d899840bd5613f69f53381070f5fc5c42a8))
+
+- **deps**: Update docker/build-push-action digest to 11be14d
+  ([`6df5acd`](https://github.com/darac/adventofcode/commit/6df5acdb6a34e246400195e5452fe46a65a487ec))
+
+- **deps**: Update docker/metadata-action digest to 906ecf0
+  ([`45ee226`](https://github.com/darac/adventofcode/commit/45ee2269b2aaff3b0492f3586e5f13acb51ec229))
+
+- **deps**: Update python-semantic-release/publish-action action to v9.15.2
+  ([`1767516`](https://github.com/darac/adventofcode/commit/1767516e44bbabac03042a7592b8eec97a1855a2))
+
+- **deps**: Update python-semantic-release/python-semantic-release action to v9.15.2
+  ([`b7a1e49`](https://github.com/darac/adventofcode/commit/b7a1e499194d3df44e47a844537322e5f5443f85))
+
+### Continuous Integration
+
+- Cache Sonar files
+  ([`7d257f3`](https://github.com/darac/adventofcode/commit/7d257f3814ea152989ea03409e5e2a3f75d76c47))
+
+
 ## v2024.4.1 (2024-12-06)
 
 ### Bug Fixes
