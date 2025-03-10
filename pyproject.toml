@@ -20,11 +20,22 @@
     description = "darac's solutions for http://adventofcode.com"
     name = "aoc"
     readme = "README.md"
-    requires-python = "<3.13,>=3.10"
-    version = "2024.4.2"
+    # It's common to not specify an upper band,
+    # But some of the dependencies are slow to update,
+    # So, we limit here until they update.
+    requires-python = "<3.14,>=3.11"
+    version         = "2024.4.2"
 
     [project.entry-points."adventofcode.user"]
         darac_aoc = "aoc:solve"
+
+    [project.optional-dependencies]
+        test = [
+            "pytest-cov>=6.0.0",
+            "pytest-gh-log-group>=0.2.0",
+            "pytest-randomly>=3.16.0",
+            "pytest-xdist>=3.6.1",
+        ]
 
 [tool.black]
     line-length    = 76
@@ -70,7 +81,7 @@
     venv           = "/home/vscode/.venv"
 
 [tool.pytest.ini_options]
-    # addopts          = "--cov --cov-report=term --cov-report=xml:coverage.xml --junitxml=junit.xml -n 4"
+    addopts          = "--cov --cov-report=xml:coverage.xml --junitxml=junit.xml"
     junit_suite_name = "aoc"
 
 [tool.ruff]
@@ -108,57 +119,57 @@
         prerelease       = false
         prerelease_token = "rc"
 
-[tool.semantic_release.changelog]
+    [tool.semantic_release.changelog]
 
-    [tool.semantic_release.changelog.default_templates]
-        changelog_file          = "CHANGELOG.md"
-        exclude_commit_patterns = []
-        template_dir            = "templates"
+        [tool.semantic_release.changelog.default_templates]
+            changelog_file          = "CHANGELOG.md"
+            exclude_commit_patterns = []
+            template_dir            = "templates"
 
-    [tool.semantic_release.changelog.environment]
-        autoescape            = true
-        block_end_string      = "%}"
-        block_start_string    = "{%"
-        comment_end_string    = "#}"
-        comment_start_string  = "{#"
-        extensions            = []
-        keep_trailing_newline = false
-        lstrip_blocks         = false
-        newline_sequence      = "\n"
-        trim_blocks           = false
-        variable_end_string   = "}}"
-        variable_start_string = "{{"
+        [tool.semantic_release.changelog.environment]
+            autoescape            = true
+            block_end_string      = "%}"
+            block_start_string    = "{%"
+            comment_end_string    = "#}"
+            comment_start_string  = "{#"
+            extensions            = []
+            keep_trailing_newline = false
+            lstrip_blocks         = false
+            newline_sequence      = "\n"
+            trim_blocks           = false
+            variable_end_string   = "}}"
+            variable_start_string = "{{"
 
-[tool.semantic_release.commit_author]
-    default = "semantic-release <semantic-release>"
-    env     = "GIT_COMMIT_AUTHOR"
+    [tool.semantic_release.commit_author]
+        default = "semantic-release <semantic-release>"
+        env     = "GIT_COMMIT_AUTHOR"
 
-[tool.semantic_release.commit_parser_options]
-    allowed_tags = [
-        "build",
-        "chore",
-        "ci",
-        "docs",
-        "feat",
-        "fix",
-        "perf",
-        "refactor",
-        "style",
-        "test",
-    ]
-    default_bump_level = 0
-    minor_tags = ["feat"]
-    patch_tags = ["fix", "perf"]
+    [tool.semantic_release.commit_parser_options]
+        allowed_tags = [
+            "build",
+            "chore",
+            "ci",
+            "docs",
+            "feat",
+            "fix",
+            "perf",
+            "refactor",
+            "style",
+            "test",
+        ]
+        default_bump_level = 0
+        minor_tags = ["feat"]
+        patch_tags = ["fix", "perf"]
 
-[tool.semantic_release.publish]
-    dist_glob_patterns    = ["dist/*"]
-    upload_to_vcs_release = true
+    [tool.semantic_release.publish]
+        dist_glob_patterns    = ["dist/*"]
+        upload_to_vcs_release = true
 
-[tool.semantic_release.remote]
-    ignore_token_for_push = false
-    insecure              = false
-    name                  = "origin"
-    type                  = "github"
+    [tool.semantic_release.remote]
+        ignore_token_for_push = false
+        insecure              = false
+        name                  = "origin"
+        type                  = "github"
 
 [tool.sonar]
     coverage.exclusions         = "aoc/visualisations/**,**/__init__.py"
@@ -172,10 +183,40 @@
     sources                     = "aoc/"
     tests                       = "tests/"
 
+[tool.tox]
+    env_list = ["3.11", "3.12", "3.13", "ruff", "type"]
+    requires = ["tox>=4.19"]
+
+    [tool.tox.env_run_base]
+        commands    = [["uv", "run", "pytest", "-q"]]
+        description = "Run test under {base_python}"
+        extras      = ["test"]
+        runner      = "uv-venv-lock-runner"
+
+    [tool.tox.env.ruff]
+        commands    = [["uv", "run", "ruff", "check", "aoc"]]
+        description = "Run ruff checking"
+        extras      = ["test"]
+        runner      = "uv-venv-lock-runner"
+
+    [tool.tox.env.type]
+        commands    = [["uv", "run", "mypy", "tests"], ["uv", "run", "mypy", "aoc"]]
+        deps        = ["mypy==1.11.2", "types-cachetools>=5.5.0.20240820", "types-chardet>=5.0.4.6"]
+        description = "Run type check on code base"
+        extras      = ["test"]
+        runner      = "uv-venv-lock-runner"
+
+    [tool.tox.gh.python]
+        "3.10" = ["3.10"]
+        "3.11" = ["3.11"]
+        "3.12" = ["3.12", "ruff", "type"]
+        "3.13" = ["3.13", "ruff", "type"]
+
 
 [tool.uv]
     dev-dependencies = [
         "deptry>=0.19.0",
+        "mypy>=1.15.0",
         "pre-commit>=3.8.0",
         "pytest-cov>=5.0.0",
         "pytest-gh-log-group>=0.2.0",
