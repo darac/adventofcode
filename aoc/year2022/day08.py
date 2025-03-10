@@ -113,7 +113,7 @@ import pandas as pd
 from rich import print  # noqa: A004
 
 
-def visible(df: pd.DataFrame, row_id: int, col_id: int) -> bool:
+def visible(df: pd.DataFrame, row_id: int, col_id: int) -> int:
     tree = df[col_id][row_id]
 
     column = df[col_id]
@@ -126,14 +126,18 @@ def visible(df: pd.DataFrame, row_id: int, col_id: int) -> bool:
     row_parts = (row[: max(col_id, 0)], row[min(col_id + 1, len(row)) :])
 
     return (
-        len(col_parts[0]) == 0
-        or len(col_parts[1]) == 0
-        or len(row_parts[0]) == 0
-        or len(row_parts[1]) == 0
-        or tree > max(col_parts[0])
-        or tree > max(col_parts[1])
-        or tree > max(row_parts[0])
-        or tree > max(row_parts[1])
+        1
+        if (
+            len(col_parts[0]) == 0
+            or len(col_parts[1]) == 0
+            or len(row_parts[0]) == 0
+            or len(row_parts[1]) == 0
+            or tree > max(col_parts[0])
+            or tree > max(col_parts[1])
+            or tree > max(row_parts[0])
+            or tree > max(row_parts[1])
+        )
+        else 0
     )
 
 
@@ -181,13 +185,13 @@ def solve(
         for row_name, _cell in enumerate(column):
             column_name = int(column_name)  # type: ignore  # noqa: PGH003, PLW2901
             if part == "a":
-                out_frame[column_name][row_name] = visible(
+                out_frame.loc[row_name, column_name] = visible(
                     data_frame,
                     row_id=row_name,
                     col_id=column_name,
                 )
             else:
-                out_frame[column_name][row_name] = scenic_score(
+                out_frame.loc[row_name, column_name] = scenic_score(
                     data_frame,
                     row_id=row_name,
                     col_id=column_name,
