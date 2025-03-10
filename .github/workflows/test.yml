@@ -13,7 +13,7 @@ on:
       - "*"
 
 concurrency:
-    group: test-${{ github.ref }}
+    group: ${{ github.workflow }}-${{ github.ref }}
     cancel-in-progress: true
 
 jobs:
@@ -41,7 +41,8 @@ jobs:
         with:
           version: latest
           enable-cache: true
-          cache-dependency-glob: "uv.lock"
+          cache-dependency-glob: "pyproject.toml"
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Add .local/bin to Windows PATH
         if: runner.os == 'Windows'
@@ -58,12 +59,12 @@ jobs:
       - name: Setup  Tests
         run: tox run -vv --notest --skip-missing-interpreters false
         env:
-          AOC_SESSION: ${{ secrets.AOC_SESSION }}
-          TOX_GH_MAJOR_MINOR: ${{ matrix.env }}
+            TOX_GH_MAJOR_MINOR: ${{ matrix.env }}
 
       - name: Run test suite
         run: tox run --skip-pkg-install
         env:
+          AOC_SESSION: ${{ secrets.AOC_SESSION }}
           TOX_GH_MAJOR_MINOR: ${{ matrix.env }}
 
       - name: Obtain Project Version
