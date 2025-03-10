@@ -88,7 +88,7 @@ if __name__ == "__main__":
     PUZZLE = Puzzle(year=YEAR, day=DAY)
     RESULT = main(PUZZLE.input_data, "a")
     print(f"Result (Part A): {RESULT:4d}", end="")
-    PUZZLE.answer_a = RESULT
+    PUZZLE.answer_a = str(RESULT)
     print(OK)
 
     ## PART B ##
@@ -101,5 +101,5 @@ if __name__ == "__main__":
 
     RESULT = main(PUZZLE.input_data, "b")
     print(f"Result (Part B): {RESULT:4d}", end="")
-    PUZZLE.answer_b = RESULT
+    PUZZLE.answer_b = str(RESULT)
     print(OK)

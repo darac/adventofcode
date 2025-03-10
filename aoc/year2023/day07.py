@@ -249,7 +249,7 @@ def evaluate_hand(cards: list[Card]) -> str:
     }[sum(ranks.count(r) for r in ranks)]
 
 
-def hand_score(hand: dict[str, list[Card] | int]) -> list[int]:
+def hand_score(hand: dict[str, list[Card]]) -> list[int]:
     type_score = [
         "High card",
         "One pair",
@@ -258,13 +258,13 @@ def hand_score(hand: dict[str, list[Card] | int]) -> list[int]:
         "Full house",
         "Four of a kind",
         "Five of a kind",
-    ].index(evaluate_hand(hand.get("cards")))
+    ].index(evaluate_hand(hand.get("cards", [])))
     retval = [type_score]
-    retval.extend(card.numeric_rank for card in hand.get("cards"))
+    retval.extend(card.numeric_rank for card in hand.get("cards", []))
     LOG.debug(
         "Score for %s (%s) is %s",
         hand.get("hand"),
-        evaluate_hand(hand.get("cards")),
+        evaluate_hand(hand.get("cards", [])),
         retval,
     )
     return retval
@@ -276,7 +276,7 @@ def solve(
     global PART  # noqa: PLW0603
     PART = part
 
-    hands = []
+    hands: list[dict] = []
     winnings = 0
     for line in puzzle.splitlines():
         cards, bid = line.split()

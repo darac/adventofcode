@@ -359,16 +359,16 @@ def solve(
                 continue
             try:
                 board.test(draw)
-            except Bingo as board:
-                last_board = board.board
+            except Bingo as ex_board:
+                last_board = ex_board.board
                 remaining_boards = sum(
                     [not x.has_won() for x in data["boards"]]
                 )
-                LOG.info("Got a Bingo on board%d", board.board.board_id)
+                LOG.info("Got a Bingo on board%d", ex_board.board.board_id)
                 LOG.info("%d boards remain in play", remaining_boards)
                 if part == "a":
-                    LOG.debug(board.board.as_table())
-                    return int(board.board.score())
+                    LOG.debug(ex_board.board.as_table())
+                    return int(ex_board.board.score())
     assert last_board is not None
     LOG.debug(last_board.as_table())
     return int(last_board.score())
@@ -389,13 +389,14 @@ if __name__ == "__main__":
                 if not board.has_won():
                     try:
                         board.test(draw)
-                    except Bingo as board:
-                        LAST_BOARD = board.board
+                    except Bingo as ex_board:
+                        LAST_BOARD = ex_board.board
                         REMAINING_BOARDS = sum(
                             [not x.has_won() for x in data["boards"]]
                         )
                         logging.info(
-                            "Got a Bingo on board %d", board.board.board_id
+                            "Got a Bingo on board %d",
+                            ex_board.board.board_id,
                         )
                         logging.info(
                             "%d boards remain in play",
@@ -403,11 +404,11 @@ if __name__ == "__main__":
                         )
                         if not FIRST_BOARD:
                             # We've not reported the first board yet.
-                            print(board.board.as_table())
-                            print(f"Score: {board.board.score()}")
+                            print(ex_board.board.as_table())
+                            print(f"Score: {ex_board.board.score()}")
                             if not DEBUG and not SUBMITTED_A:
                                 submit(
-                                    str(board.board.score()),
+                                    str(ex_board.board.score()),
                                     part="a",
                                     day=4,
                                     year=2021,

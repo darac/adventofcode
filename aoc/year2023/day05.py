@@ -189,7 +189,7 @@ try:
 except ImportError:
     from itertools import islice
 
-    def batched(iterable: Iterable, n: int) -> Generator:
+    def batched(iterable: Iterable, n: int) -> Generator:  # type: ignore  # noqa: PGH003
         # batched('ABCDEFG', 3) --> ABC DEF G
         if n < 1:
             msg = "n must be at least one"
