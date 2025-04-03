@@ -140,7 +140,8 @@ the filesystem to run the update. What is the total size of that directory?
 """
 # spell-checker: enable
 
-from pathlib import Path, PosixPath
+import os
+from pathlib import Path
 from typing import Literal
 
 
@@ -150,7 +151,7 @@ class UnknownCommand(Exception):
 
 
 def path_get(dictionary: dict, path: Path | str) -> dict:
-    paths = PosixPath(path).parts
+    paths = Path(path).parts
     for item in paths:
         if item != "" and item in dictionary:
             dictionary = dictionary[item]
@@ -160,11 +161,11 @@ def path_get(dictionary: dict, path: Path | str) -> dict:
 def path_set(
     dictionary: dict, path: Path | str, set_item: dict | int
 ) -> None:
-    paths = PosixPath(path).parts
+    paths = Path(path).parts
     key = paths[-1]
     dictionary = path_get(
         dictionary,
-        "/".join(paths[:-1]),
+        os.sep.join(paths[:-1]),  # noqa: PTH118
     )
     dictionary[key] = set_item
 
@@ -193,7 +194,7 @@ def visualise(
             picked_directories.extend(
                 visualise(
                     value,
-                    root=f"{root}/{dirent}",
+                    root=f"{root}{os.sep}{dirent}",
                     runner=runner,
                     part=part,
                 ),
@@ -211,7 +212,7 @@ def visualise(
             dirent_size = int(value)
         if not runner:
             print(
-                f"{str(root) + '/' + dirent:80}\t{dir_marker:7}"
+                f"{str(root) + os.sep + dirent:80}\t{dir_marker:7}"
                 f"{dirent_size:-12,}{pick_me}"
             )
     return picked_directories
@@ -221,11 +222,11 @@ def solve(
     puzzle: str, part: Literal["a", "b"], _runner: bool = False
 ) -> int | None:
     filesystem: dict[str, dict | int] = {}
-    cwd = PosixPath("/")
+    cwd = Path("/")
     for line in puzzle.splitlines():
         match line.split():
             case ["$", "cd", "/"]:
-                cwd = PosixPath("/")
+                cwd = Path("/")
             case ["$", "cd", ".."]:
                 cwd = cwd.parent
             case ["$", "cd", arg]:
