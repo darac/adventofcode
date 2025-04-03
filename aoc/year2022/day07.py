@@ -140,7 +140,6 @@ the filesystem to run the update. What is the total size of that directory?
 """
 # spell-checker: enable
 
-import os
 from pathlib import Path
 from typing import Literal
 
@@ -165,7 +164,7 @@ def path_set(
     key = paths[-1]
     dictionary = path_get(
         dictionary,
-        os.sep.join(paths[:-1]),  # noqa: PTH118
+        "/".join(paths[:-1]),
     )
     dictionary[key] = set_item
 
@@ -194,7 +193,7 @@ def visualise(
             picked_directories.extend(
                 visualise(
                     value,
-                    root=f"{root}{os.sep}{dirent}",
+                    root=f"{root}/{dirent}",
                     runner=runner,
                     part=part,
                 ),
@@ -212,7 +211,7 @@ def visualise(
             dirent_size = int(value)
         if not runner:
             print(
-                f"{str(root) + os.sep + dirent:80}\t{dir_marker:7}"
+                f"{str(root) + '/' + dirent:80}\t{dir_marker:7}"
                 f"{dirent_size:-12,}{pick_me}"
             )
     return picked_directories
