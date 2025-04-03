@@ -140,7 +140,7 @@ the filesystem to run the update. What is the total size of that directory?
 """
 # spell-checker: enable
 
-from pathlib import Path
+from pathlib import Path, PosixPath
 from typing import Literal
 
 
@@ -150,7 +150,7 @@ class UnknownCommand(Exception):
 
 
 def path_get(dictionary: dict, path: Path | str) -> dict:
-    paths = Path(path).parts
+    paths = PosixPath(path).parts
     for item in paths:
         if item != "" and item in dictionary:
             dictionary = dictionary[item]
@@ -160,7 +160,7 @@ def path_get(dictionary: dict, path: Path | str) -> dict:
 def path_set(
     dictionary: dict, path: Path | str, set_item: dict | int
 ) -> None:
-    paths = Path(path).parts
+    paths = PosixPath(path).parts
     key = paths[-1]
     dictionary = path_get(
         dictionary,
@@ -221,11 +221,11 @@ def solve(
     puzzle: str, part: Literal["a", "b"], _runner: bool = False
 ) -> int | None:
     filesystem: dict[str, dict | int] = {}
-    cwd = Path("/")
+    cwd = PosixPath("/")
     for line in puzzle.splitlines():
         match line.split():
             case ["$", "cd", "/"]:
-                cwd = Path("/")
+                cwd = PosixPath("/")
             case ["$", "cd", ".."]:
                 cwd = cwd.parent
             case ["$", "cd", arg]:
