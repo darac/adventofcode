@@ -191,20 +191,20 @@
         commands    = [["uv", "run", "pytest", "-q"]]
         description = "Run test under {base_python}"
         extras      = ["test"]
-        runner      = "uv-venv-lock-runner"
+        # runner      = "uv-venv-lock-runner"
 
     [tool.tox.env.ruff]
         commands    = [["uv", "run", "ruff", "check", "aoc"]]
         description = "Run ruff checking"
         extras      = ["test"]
-        runner      = "uv-venv-lock-runner"
+        # runner      = "uv-venv-lock-runner"
 
     [tool.tox.env.type]
         commands    = [["uv", "run", "mypy", "tests"], ["uv", "run", "mypy", "aoc"]]
         deps        = ["mypy==1.11.2", "types-cachetools>=5.5.0.20240820", "types-chardet>=5.0.4.6"]
         description = "Run type check on code base"
         extras      = ["test"]
-        runner      = "uv-venv-lock-runner"
+        # runner      = "uv-venv-lock-runner"
 
     [tool.tox.gh.python]
         "3.10" = ["3.10"]
