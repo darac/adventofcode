@@ -50,8 +50,7 @@ jobs:
         run: echo "$USERPROFILE/.local/bin" >> $GITHUB_PATH
 
       - name: Install tox
-        run:
-          uv tool install --python-preference only-managed --python 3.13 tox
+        run: uv tool install --python-preference only-managed --python 3.13 tox
           --with tox-uv # --with tox-gh
 
       - name: Setup Python
@@ -70,11 +69,24 @@ jobs:
           AOC_SESSION: ${{ secrets.AOC_SESSION }}
           TOX_GH_MAJOR_MINOR: ${{ matrix.env }}
 
+      - name: Rename JUnit report
+        run: mv junit.xml "junit-${{ matrix.os }}-${{ matrix.env }}.xml"
+
+      - name: Upload JUnit results
+        uses: actions/upload-artifact@v4
+        with:
+          name: junit-${{ matrix.os }}-${{ matrix.env }}
+          path: junit*.xml
+
   sonar:
     needs: test
     concurrency: release
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - name: Obtain Project Version
         uses: SebRollen/toml-action@v1.2.0
         id: proj-version
@@ -88,6 +100,13 @@ jobs:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
+
+      - name: Download JUnit reports
+        uses: actions/download-artifact@v4
+        with:
+          path: .
+          pattern: junit-*.xml
+          merge-multiple: true
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarqube-scan-action@master

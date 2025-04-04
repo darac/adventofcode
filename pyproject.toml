@@ -177,8 +177,9 @@
     organization                = "darac"
     projectKey                  = "darac_adventofcode"
     python.coverage.reportPaths = "*coverage*.xml"
+    python.ruff.reportPaths     = "ruff.json"
     python.version              = "3.12"
-    python.xunit.reportPath     = "junit.xml"
+    python.xunit.reportPath     = "junit*.xml"
     python.xunit.skipDetails    = true
     sources                     = "aoc/"
     tests                       = "tests/"
@@ -194,10 +195,22 @@
         runner      = "uv-venv-lock-runner"
 
     [tool.tox.env.ruff]
-        commands    = [["uv", "run", "ruff", "check", "aoc"]]
+        commands = [
+            [
+                "uv",
+                "run",
+                "ruff",
+                "check",
+                "aoc",
+                "--output-format",
+                "json",
+                "--output-file",
+                "ruff.json",
+            ],
+        ]
         description = "Run ruff checking"
-        extras      = ["test"]
-        runner      = "uv-venv-lock-runner"
+        extras = ["test"]
+        runner = "uv-venv-lock-runner"
 
     [tool.tox.env.type]
         commands    = [["uv", "run", "mypy", "tests"], ["uv", "run", "mypy", "aoc"]]
