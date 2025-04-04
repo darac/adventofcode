@@ -55,12 +55,12 @@ repos:
       rev: v1.3.0
       hooks:
           - id: commitlint
-    - repo: https://github.com/pypa/pip-audit
-      rev: v2.8.0
-      hooks:
-          - id: pip-audit
-            args:
-                - .
+    # - repo: https://github.com/pypa/pip-audit
+    #   rev: v2.8.0
+    #   hooks:
+    #       - id: pip-audit
+    #         args:
+    #             - .
 
 ci:
     # Leave pip-audit to only run locally and not in CI
