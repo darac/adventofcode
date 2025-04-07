@@ -104,9 +104,11 @@ jobs:
       - name: Download JUnit reports
         uses: actions/download-artifact@v4
         with:
-          path: .
+          path: "${{ github.GITHUB_WORKSPACE }}"
           pattern: junit-*.xml
           merge-multiple: true
+        env:
+          PARALLEL_DOWNLOADS: 1
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarqube-scan-action@master
