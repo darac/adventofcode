@@ -69,19 +69,21 @@ jobs:
           AOC_SESSION: ${{ secrets.AOC_SESSION }}
           TOX_GH_MAJOR_MINOR: ${{ matrix.env }}
 
-      - name: Rename JUnit report
-        run: mv junit.xml "junit-${{ matrix.os }}-${{ matrix.env }}.xml"
-
-      - name: Rename Ruff report
-        run: mv ruff.json "ruff-${{ matrix.os }}-${{ matrix.env }}.json"
+      - name: Rename reports
+        run: >-
+          mv junit.xml "junit-${{ matrix.os }}-${{ matrix.env }}.xml" ; mv
+          ruff.json "ruff-${{ matrix.os }}-${{ matrix.env }}.json" ; mv
+          coverage.xml "coverage-${{ matrix.os }}-${{ matrix.env }}.xml"
 
       - name: Upload JUnit results
         uses: actions/upload-artifact@v4
         with:
           name: junit-${{ matrix.os }}-${{ matrix.env }}
           path: |
+            coverage*.xml
             junit-*.xml
             ruff-*.json
+          retention-days: 1
 
   sonar:
     needs: test
@@ -113,9 +115,6 @@ jobs:
           merge-multiple: true
         env:
           PARALLEL_DOWNLOADS: 1
-
-      - name: Show artifacts
-        run: find . -name junit-\*.xml -or -name ruff-\*.json
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarqube-scan-action@master

@@ -177,7 +177,7 @@
     organization                = "darac"
     projectKey                  = "darac_adventofcode"
     python.coverage.reportPaths = "*coverage*.xml"
-    python.ruff.reportPaths     = "ruff.json"
+    python.ruff.reportPaths     = "ruff*.json"
     python.version              = "3.12"
     python.xunit.reportPath     = "junit*.xml"
     python.xunit.skipDetails    = true
