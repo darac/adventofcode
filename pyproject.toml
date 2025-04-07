@@ -24,7 +24,7 @@
     # But some of the dependencies are slow to update,
     # So, we limit here until they update.
     requires-python = "<3.14,>=3.11"
-    version         = "2024.4.2"
+    version         = "2024.4.3"
 
     [project.entry-points."adventofcode.user"]
         darac_aoc = "aoc:solve"

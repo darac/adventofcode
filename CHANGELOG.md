@@ -1,6 +1,194 @@
 # CHANGELOG
 
 
+## v2024.4.3 (2025-04-07)
+
+### Bug Fixes
+
+- Attempt to get y2022d07 to work on Windows
+  ([`2d63080`](https://github.com/darac/adventofcode/commit/2d63080d2e630ce9e3a4fc21efeb427cd1cef4e1))
+
+- Attempt to get y2022d07 to work on Windows
+  ([`6708fab`](https://github.com/darac/adventofcode/commit/6708faba4c24874783099474a45ee86ca9a014ab))
+
+- Disable testing on Windows
+  ([`b1889d0`](https://github.com/darac/adventofcode/commit/b1889d0ed308dea94f3f86728c7157cf3b6778ab))
+
+- Tidy up mypy checks
+  ([`e4b1903`](https://github.com/darac/adventofcode/commit/e4b1903e92951fc8e41b028af326ae3b767a5b49))
+
+- Update pandas deprecations
+  ([`ce6fd4a`](https://github.com/darac/adventofcode/commit/ce6fd4aec93931d33ca5e4bcaf5a458097edb644))
+
+- **ci**: Attempt to fix GH builds
+  ([`cdd4293`](https://github.com/darac/adventofcode/commit/cdd4293cd2c998927ec026d6525d383aa4182a52))
+
+- **ci**: Copy Coverage reports, too
+  ([`d801f6e`](https://github.com/darac/adventofcode/commit/d801f6e4cf86522353befeb675e430957eb8e84c))
+
+- **ci**: Disable uv-venv-lock-runner until it's fixed
+  ([`fec87df`](https://github.com/darac/adventofcode/commit/fec87df0af8218170b3d6ede1f1e476a9cbb2b0b))
+
+- **ci**: Don't use tox-gh for now
+  ([`20cf77f`](https://github.com/darac/adventofcode/commit/20cf77fbce895535f9afd20899a1257e8ab22fec))
+
+- **ci**: Download all artifacts
+  ([`02e4720`](https://github.com/darac/adventofcode/commit/02e472070791e7f28e4c2f1245db6a1c315c24e9))
+
+- **ci**: Import JUnit and Ruff reports into sonar
+  ([`d5c7bc6`](https://github.com/darac/adventofcode/commit/d5c7bc61f03d3ec5e3b66ab189f95ab18d9d9e10))
+
+- **ci**: Show downloaded artifacts
+  ([`7171717`](https://github.com/darac/adventofcode/commit/7171717bfe164f0d29944691111297ecee20e566))
+
+- **ci**: Specify multiple paths correctly
+  ([`adcc6df`](https://github.com/darac/adventofcode/commit/adcc6df68523e7795a9c93403e835488e3347b3e))
+
+- **ci**: Try to work around download-artifact bugs
+  ([`e869436`](https://github.com/darac/adventofcode/commit/e8694361fdf614e5b52252d0c2c22ddeec0f79fc))
+
+### Build System
+
+- **deps**: Bump docker/login-action
+  ([`bbd55a9`](https://github.com/darac/adventofcode/commit/bbd55a929e5540cb322cf38a91eaa271fefedceb))
+
+Bumps [docker/login-action](https://github.com/docker/login-action) from
+  327cd5a69de6c009b9ce71bce8395f28e651bf99 to 74a5d142397b4f367a81961eba4e8cd7edddf772. - [Release
+  notes](https://github.com/docker/login-action/releases) -
+  [Commits](https://github.com/docker/login-action/compare/327cd5a69de6c009b9ce71bce8395f28e651bf99...74a5d142397b4f367a81961eba4e8cd7edddf772)
+
+--- updated-dependencies: - dependency-name: docker/login-action dependency-type: direct:production
+  ...
+
+Signed-off-by: dependabot[bot] <support@github.com>
+
+- **deps**: Bump python-semantic-release/publish-action
+  ([`36b4795`](https://github.com/darac/adventofcode/commit/36b4795a4b3d3d5e4764829613d3775c5bde7049))
+
+Bumps
+  [python-semantic-release/publish-action](https://github.com/python-semantic-release/publish-action)
+  from 9.16.1 to 9.17.0. - [Release
+  notes](https://github.com/python-semantic-release/publish-action/releases) -
+  [Changelog](https://github.com/python-semantic-release/publish-action/blob/main/releaserc.toml) -
+  [Commits](https://github.com/python-semantic-release/publish-action/compare/v9.16.1...v9.17.0)
+
+--- updated-dependencies: - dependency-name: python-semantic-release/publish-action dependency-type:
+  direct:production
+
+update-type: version-update:semver-minor ...
+
+Signed-off-by: dependabot[bot] <support@github.com>
+
+- **deps**: Bump python-semantic-release/python-semantic-release
+  ([`4347751`](https://github.com/darac/adventofcode/commit/4347751787530e2d371ab9ece060356709f0b096))
+
+Bumps
+  [python-semantic-release/python-semantic-release](https://github.com/python-semantic-release/python-semantic-release)
+  from 9.16.1 to 9.17.0. - [Release
+  notes](https://github.com/python-semantic-release/python-semantic-release/releases) -
+  [Changelog](https://github.com/python-semantic-release/python-semantic-release/blob/master/CHANGELOG.rst)
+  -
+  [Commits](https://github.com/python-semantic-release/python-semantic-release/compare/v9.16.1...v9.17.0)
+
+--- updated-dependencies: - dependency-name: python-semantic-release/python-semantic-release
+  dependency-type: direct:production
+
+update-type: version-update:semver-minor ...
+
+Signed-off-by: dependabot[bot] <support@github.com>
+
+### Chores
+
+- **deps**: Update astral-sh/setup-uv action to v5
+  ([`11c1c3d`](https://github.com/darac/adventofcode/commit/11c1c3dde4c082618af482c367137e20498fc8d6))
+
+- **deps**: Update docker/build-push-action digest to 0adf995
+  ([`690dedc`](https://github.com/darac/adventofcode/commit/690dedca0bbafbfd2d78b8121a9e54b6898f1101))
+
+- **deps**: Update docker/build-push-action digest to 31ca4e5
+  ([`54b7621`](https://github.com/darac/adventofcode/commit/54b7621785b65499955e578ae131caf9c3b97e28))
+
+- **deps**: Update docker/build-push-action digest to 471d1dc
+  ([`ca349f4`](https://github.com/darac/adventofcode/commit/ca349f45f1b3fab91894568f1abf11248356f926))
+
+- **deps**: Update docker/build-push-action digest to 7e09459
+  ([`aaafb96`](https://github.com/darac/adventofcode/commit/aaafb962402131dcf9669c2d5b97782f7834f0a9))
+
+- **deps**: Update docker/build-push-action digest to 84ad562
+  ([`fc9f8e3`](https://github.com/darac/adventofcode/commit/fc9f8e3c6249e6aca1d3802af65f4506cefd07df))
+
+- **deps**: Update docker/build-push-action digest to b16f42f
+  ([`19f5908`](https://github.com/darac/adventofcode/commit/19f590824a57521a7e247199d0228af6a5bfd044))
+
+- **deps**: Update docker/build-push-action digest to ca877d9
+  ([`5e46239`](https://github.com/darac/adventofcode/commit/5e46239cd2f83744abfc0365b3ee8d2c917b01aa))
+
+- **deps**: Update docker/dockerfile docker tag to v1.13
+  ([`5aaaed7`](https://github.com/darac/adventofcode/commit/5aaaed75115f084e19e59cf4eb8bda17b0e9b60c))
+
+- **deps**: Update docker/dockerfile docker tag to v1.14
+  ([`74d5bd6`](https://github.com/darac/adventofcode/commit/74d5bd65c68c4eae98dbab2880c73a0416274f71))
+
+- **deps**: Update docker/login-action digest to 327cd5a
+  ([`077c894`](https://github.com/darac/adventofcode/commit/077c89499efa508c94ada5dd47447b707744c621))
+
+- **deps**: Update docker/login-action digest to 74a5d14
+  ([`96db97b`](https://github.com/darac/adventofcode/commit/96db97bc53768a21273d7b156a62fe2b779bd4f4))
+
+- **deps**: Update docker/metadata-action digest to 8e1d546
+  ([`f0dfdd9`](https://github.com/darac/adventofcode/commit/f0dfdd9c38b750a9f5341e2047b3dac43b01977e))
+
+- **deps**: Update docker/metadata-action digest to 902fa8e
+  ([`43415f9`](https://github.com/darac/adventofcode/commit/43415f9076c3b84eb8749744585140b6990fab15))
+
+- **deps**: Update pre-commit hook astral-sh/ruff-pre-commit to v0.11.3
+  ([`0748697`](https://github.com/darac/adventofcode/commit/0748697f9c4b958bec7b9faf42e3df389db69ab3))
+
+- **deps**: Update pre-commit hook astral-sh/uv-pre-commit to v0.6.12
+  ([`dc1ad90`](https://github.com/darac/adventofcode/commit/dc1ad900bd961550c62a1c3792f7a60e2ce86f59))
+
+- **deps**: Update pre-commit hook gitleaks/gitleaks to v8.24.2
+  ([`47edcdb`](https://github.com/darac/adventofcode/commit/47edcdb32b09f545f90077f74c0ffa58014b546a))
+
+- **deps**: Update python-semantic-release/publish-action action to v9.16.1
+  ([`46017a6`](https://github.com/darac/adventofcode/commit/46017a6226945197fdb1ddd8757f1f1610d13ce4))
+
+- **deps**: Update python-semantic-release/publish-action action to v9.18.1
+  ([`fa36fa6`](https://github.com/darac/adventofcode/commit/fa36fa67aff6480562ca46275cba856dcf43c8a6))
+
+- **deps**: Update python-semantic-release/publish-action action to v9.20.0
+  ([`f5477e8`](https://github.com/darac/adventofcode/commit/f5477e861855583fd22743b1d8ac64831f487c5a))
+
+- **deps**: Update python-semantic-release/publish-action action to v9.21.0
+  ([`504f3d0`](https://github.com/darac/adventofcode/commit/504f3d086f5373602627fb7ba708c27c5fb0dfaa))
+
+- **deps**: Update python-semantic-release/python-semantic-release action to v9.16.1
+  ([`b9859bf`](https://github.com/darac/adventofcode/commit/b9859bf01a6061bd1d8bdc8f0ab16c4bc45958fd))
+
+- **deps**: Update python-semantic-release/python-semantic-release action to v9.18.0
+  ([`d15a3fe`](https://github.com/darac/adventofcode/commit/d15a3fe13fd52d99ced8ca79eb56ad492d10765f))
+
+- **deps**: Update python-semantic-release/python-semantic-release action to v9.18.1
+  ([`a6e837d`](https://github.com/darac/adventofcode/commit/a6e837deec9593ffc4ea265aa94188c0857d38de))
+
+- **deps**: Update python-semantic-release/python-semantic-release action to v9.20.0
+  ([`b1634d7`](https://github.com/darac/adventofcode/commit/b1634d7fa7ffb3eda54fe751f16be454bb8f4629))
+
+- **deps**: Update python-semantic-release/python-semantic-release action to v9.21.0
+  ([`4d5abc5`](https://github.com/darac/adventofcode/commit/4d5abc5adc57de4d6d665a91318cd56f6de1ff70))
+
+### Continuous Integration
+
+- Enable pre-commit renovate
+  ([`ea5e058`](https://github.com/darac/adventofcode/commit/ea5e058e6b011a0781dacf728cef7484ba590f45))
+
+- Only run Sonar Scanner once per build
+  ([`bff3bd0`](https://github.com/darac/adventofcode/commit/bff3bd0b57a12f4f9a9bf474f623a8b8562472c6))
+
+- Use tox as a test runner
+  ([`30d9195`](https://github.com/darac/adventofcode/commit/30d919549c806c6df79e0b6b453f9503fd796fd1))
+
+
 ## v2024.4.2 (2024-12-18)
 
 ### Bug Fixes
@@ -192,7 +380,7 @@ Co-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>
 
 BREAKING CHANGE: A new year begins!
 
-### BREAKING CHANGES
+### Breaking Changes
 
 - A new year begins!
 
