@@ -104,8 +104,7 @@ jobs:
       - name: Download JUnit reports
         uses: actions/download-artifact@v4
         with:
-          path: "${{ github.GITHUB_WORKSPACE }}"
-          pattern: junit-*.xml
+          path: .
           merge-multiple: true
         env:
           PARALLEL_DOWNLOADS: 1
