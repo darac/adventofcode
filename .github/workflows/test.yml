@@ -11,9 +11,26 @@ on:
       - main
     tags:
       - "*"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
-    runs-on: ubuntu-latest
+    name: test with ${{ matrix.env }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        env:
+          - "3.13"
+          - "3.12"
+          - "3.11"
+        os:
+          - ubuntu-latest
+          - macos-latest
+          # - windows-latest
     steps:
       - uses: actions/checkout@v4
         with:
@@ -24,22 +41,58 @@ jobs:
         with:
           version: latest
           enable-cache: true
-          cache-dependency-glob: "uv.lock"
+          cache-dependency-glob: "pyproject.toml"
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Add .local/bin to Windows PATH
+        if: runner.os == 'Windows'
+        shell: bash
+        run: echo "$USERPROFILE/.local/bin" >> $GITHUB_PATH
+
+      - name: Install tox
+        run: uv tool install --python-preference only-managed --python 3.13 tox
+          --with tox-uv # --with tox-gh
 
       - name: Setup Python
-        run: uv python install 3.12
+        if: matrix.env != '3.13'
+        run:
+          uv python install --python-preference only-managed ${{ matrix.env }}
 
-      - name: Sync Dependencies
-        run: uv sync --all-extras --dev
+      - name: Setup  Tests
+        run: tox run -vv --notest --skip-missing-interpreters false
+        env:
+          TOX_GH_MAJOR_MINOR: ${{ matrix.env }}
 
-      - name: Check code with Ruff
-        uses: chartboost/ruff-action@v1
-
-      - name: Run Tests
-        run: uv run pytest --cov --cov-report=xml:coverage.xml
-          --junit-xml=junit.xml
+      - name: Run test suite
+        run: tox run --skip-pkg-install
         env:
           AOC_SESSION: ${{ secrets.AOC_SESSION }}
+          TOX_GH_MAJOR_MINOR: ${{ matrix.env }}
+
+      - name: Rename reports
+        run: >-
+          mv junit.xml "junit-${{ matrix.os }}-${{ matrix.env }}.xml" ; mv
+          ruff.json "ruff-${{ matrix.os }}-${{ matrix.env }}.json" ; mv
+          coverage.xml "coverage-${{ matrix.os }}-${{ matrix.env }}.xml"
+
+      - name: Upload JUnit results
+        uses: actions/upload-artifact@v4
+        with:
+          name: junit-${{ matrix.os }}-${{ matrix.env }}
+          path: |
+            coverage*.xml
+            junit-*.xml
+            ruff-*.json
+          retention-days: 1
+
+  sonar:
+    needs: test
+    concurrency: release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Obtain Project Version
         uses: SebRollen/toml-action@v1.2.0
@@ -55,6 +108,14 @@ jobs:
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
+      - name: Download JUnit reports
+        uses: actions/download-artifact@v4
+        with:
+          path: .
+          merge-multiple: true
+        env:
+          PARALLEL_DOWNLOADS: 1
+
       - name: SonarCloud Scan
         uses: SonarSource/sonarqube-scan-action@master
         env:
@@ -68,7 +129,7 @@ jobs:
         uses: pmeier/pytest-results-action@v0.7.1
         if: always()
         with:
-          path: "junit.xml"
+          path: "junit-*.xml"
 
   release:
     needs: test
@@ -76,7 +137,8 @@ jobs:
     permissions:
       id-token: write
       contents: write
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main' &&
+    if:
+      github.event_name == 'push' && github.ref == 'refs/heads/main' &&
       !contains(github.event.head_commit.message, 'chore(release):')
     runs-on: ubuntu-latest
     outputs:
