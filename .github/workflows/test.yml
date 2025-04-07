@@ -79,7 +79,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: junit-${{ matrix.os }}-${{ matrix.env }}
-          path: junit-*.xml ruff-*.json
+          path: |
+            junit-*.xml
+            ruff-*.json
 
   sonar:
     needs: test
