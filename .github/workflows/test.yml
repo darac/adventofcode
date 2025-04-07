@@ -72,11 +72,14 @@ jobs:
       - name: Rename JUnit report
         run: mv junit.xml "junit-${{ matrix.os }}-${{ matrix.env }}.xml"
 
+      - name: Rename Ruff report
+        run: mv ruff.json "ruff-${{ matrix.os }}-${{ matrix.env }}.json"
+
       - name: Upload JUnit results
         uses: actions/upload-artifact@v4
         with:
           name: junit-${{ matrix.os }}-${{ matrix.env }}
-          path: junit*.xml
+          path: junit-*.xml ruff-*.json
 
   sonar:
     needs: test
@@ -109,6 +112,9 @@ jobs:
         env:
           PARALLEL_DOWNLOADS: 1
 
+      - name: Show artifacts
+        run: find . -name junit-\*.xml -or -name ruff-\*.json
+
       - name: SonarCloud Scan
         uses: SonarSource/sonarqube-scan-action@master
         env:
@@ -122,7 +128,7 @@ jobs:
         uses: pmeier/pytest-results-action@v0.7.1
         if: always()
         with:
-          path: "junit.xml"
+          path: "junit-*.xml"
 
   release:
     needs: test
