@@ -309,7 +309,7 @@ def parse_input(string: str) -> dict:
 
     this_board: BingoBoard | None = None
     for line in string.splitlines()[1:]:
-        logging.debug("Reading Row >>%s<<", line)
+        LOG.debug("Reading Row >>%s<<", line)
         if line == "":
             if this_board is not None:
                 print(this_board.as_table())
@@ -384,7 +384,7 @@ if __name__ == "__main__":
         data = parse_input(SAMPLE_INPUT) if DEBUG else parse_input(INPUT)
         REMAINING_BOARDS = len(data["boards"])
         for draw in data["draws"]:
-            logging.info("Calling %2d", draw)
+            LOG.info("Calling %2d", draw)
             for board in data["boards"]:
                 if not board.has_won():
                     try:
@@ -394,11 +394,11 @@ if __name__ == "__main__":
                         REMAINING_BOARDS = sum(
                             [not x.has_won() for x in data["boards"]]
                         )
-                        logging.info(
+                        LOG.info(
                             "Got a Bingo on board %d",
                             ex_board.board.board_id,
                         )
-                        logging.info(
+                        LOG.info(
                             "%d boards remain in play",
                             REMAINING_BOARDS,
                         )

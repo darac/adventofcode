@@ -16,6 +16,8 @@ from _pytest.terminal import TerminalReporter
 if TYPE_CHECKING:
     from collections.abc import Callable
 
+LOG = logging.getLogger()
+
 
 def pytest_terminal_summary(
     terminalreporter: TerminalReporter,
@@ -115,7 +117,7 @@ def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
                 if not f.is_dir() and f.stem.startswith("day")
             ][-1]
         ]
-        logging.info("Today's test is Year %s, Day %s", years[0], days[0])
+        LOG.info("Today's test is Year %s, Day %s", years[0], days[0])
 
     # This is a list of tuples.
     # Each Tuple consist of:
