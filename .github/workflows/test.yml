@@ -94,8 +94,25 @@ jobs:
                   path: "junit-*.xml"
                   reporter: java-junit
 
+    check_sonar_secret:
+        name: check if SONAR_TOKEN is set in github secrets
+        runs-on: ubuntu-latest
+        outputs:
+            is_SONAR_TOKEN_set:
+                ${{ steps.checksecret_job.outputs.is_SONAR_TOKEN_set }}
+        steps:
+            - name: Check whether Sonar Scan should be done
+              id: checksecret_job
+              env:
+                  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+              run: |
+                  echo "is_SONAR_TOKEN_set: ${{ env.SONAR_TOKEN != '' }}"
+                  echo "::set-output name=is_SONAR_TOKEN_set::${{ env.SONAR_TOKEN != '' }}"
+
     sonar:
-        needs: test
+        needs:
+            - test
+            - check_sonar_secret
         concurrency: release
         runs-on: ubuntu-latest
         steps:
