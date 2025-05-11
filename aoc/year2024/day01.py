@@ -151,7 +151,7 @@ def solve(
 
     result = 0
     if part == "a":
-        while len(left):
+        while left:
             left_location = min(left)
             left.remove(left_location)
             right_location = min(right)

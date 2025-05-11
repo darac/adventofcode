@@ -160,7 +160,7 @@ def solve(
     for line in puzzle.splitlines():
         if not _runner:
             print(line)
-        if line == "" and len(stacks) and mode == "crates":
+        if line == "" and stacks and mode == "crates":
             mode = "instructions"
             continue
         if mode == "crates":
