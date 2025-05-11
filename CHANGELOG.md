@@ -1,6 +1,42 @@
 # CHANGELOG
 
 
+## v2024.4.4 (2025-05-11)
+
+### Bug Fixes
+
+- Patch some newer Ruff recommendations
+  ([`a957ac6`](https://github.com/darac/adventofcode/commit/a957ac662a55388d0eef4c4e33eeb29091d59131))
+
+- **ci**: Always upload Test reports
+  ([`838d4a3`](https://github.com/darac/adventofcode/commit/838d4a3edf82bf99e2980daf1111ca7fed68a52d))
+
+- **ci**: Run Test Reporter after tests, not after sonar
+  ([`45afab0`](https://github.com/darac/adventofcode/commit/45afab00736d1c1f80d3841988b4a9ed6db0efef))
+
+### Build System
+
+- **deps**: Bump astral-sh/setup-uv from 5 to 6
+  ([`7f64856`](https://github.com/darac/adventofcode/commit/7f64856d8e19f0f94d6cc79800ec7db2aca65cc0))
+
+Bumps [astral-sh/setup-uv](https://github.com/astral-sh/setup-uv) from 5 to 6. - [Release
+  notes](https://github.com/astral-sh/setup-uv/releases) -
+  [Commits](https://github.com/astral-sh/setup-uv/compare/v5...v6)
+
+--- updated-dependencies: - dependency-name: astral-sh/setup-uv dependency-version: '6'
+
+dependency-type: direct:production
+
+update-type: version-update:semver-major ...
+
+Signed-off-by: dependabot[bot] <support@github.com>
+
+### Chores
+
+- **deps**: Update lock file
+  ([`f244513`](https://github.com/darac/adventofcode/commit/f24451327c282a6ec823f9e0d1e3eabca8b9e886))
+
+
 ## v2024.4.3 (2025-04-07)
 
 ### Bug Fixes
