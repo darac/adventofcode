@@ -70,7 +70,6 @@
 [tool.mypy]
     files                  = ["aoc/"]
     ignore_missing_imports = true
-    plugins                = "numpy.typing.mypy_plugin"
     warn_return_any        = true
     warn_unused_configs    = true
 
