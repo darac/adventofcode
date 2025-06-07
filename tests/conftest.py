@@ -129,13 +129,11 @@ def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
     _id_list: list[str] = []
     for year, day in itertools.product(years, days):
         solver_name = f"aoc.year{year:4d}.day{day:02d}"
-        print(f"Finding solver for: {solver_name}")
         with contextlib.suppress(
             ModuleNotFoundError, aocd.exceptions.AocdError
         ):
             solver = importlib.import_module(solver_name)
             with Path(f"tests/year{year:4d}/day{day:02d}.yml").open() as fh:
-                print(f"Found {fh.name}")
                 for doc_num, doc in enumerate(
                     yaml.safe_load_all(fh), start=1
                 ):
