@@ -1,6 +1,111 @@
 # CHANGELOG
 
 
+## v2024.4.5 (2025-06-07)
+
+### Bug Fixes
+
+- **ci**: Replace deprecated GitHub command
+  ([`e835c71`](https://github.com/darac/adventofcode/commit/e835c71614dd64ada2f7626ab7142fa38c5ef3df))
+
+### Build System
+
+- **deps**: Bump docker/build-push-action
+  ([`8a51de8`](https://github.com/darac/adventofcode/commit/8a51de893d4954f305af67d49406bb18d04fcfd1))
+
+Bumps [docker/build-push-action](https://github.com/docker/build-push-action) from
+  84ad562665bb303b549fec655d1b64f9945f3f91 to 14487ce63c7a62a4a324b0bfb37086795e31c6c1. - [Release
+  notes](https://github.com/docker/build-push-action/releases) -
+  [Commits](https://github.com/docker/build-push-action/compare/84ad562665bb303b549fec655d1b64f9945f3f91...14487ce63c7a62a4a324b0bfb37086795e31c6c1)
+
+--- updated-dependencies: - dependency-name: docker/build-push-action dependency-version:
+  14487ce63c7a62a4a324b0bfb37086795e31c6c1
+
+dependency-type: direct:production ...
+
+Signed-off-by: dependabot[bot] <support@github.com>
+
+- **deps**: Bump python-semantic-release/publish-action
+  ([`1ba6e51`](https://github.com/darac/adventofcode/commit/1ba6e5174e9840745d4dfd6c070eff5f252b81f9))
+
+Bumps
+  [python-semantic-release/publish-action](https://github.com/python-semantic-release/publish-action)
+  from 9.21.0 to 9.21.1. - [Release
+  notes](https://github.com/python-semantic-release/publish-action/releases) -
+  [Changelog](https://github.com/python-semantic-release/publish-action/blob/main/releaserc.toml) -
+  [Commits](https://github.com/python-semantic-release/publish-action/compare/v9.21.0...v9.21.1)
+
+--- updated-dependencies: - dependency-name: python-semantic-release/publish-action
+  dependency-version: 9.21.1
+
+dependency-type: direct:production
+
+update-type: version-update:semver-patch ...
+
+Signed-off-by: dependabot[bot] <support@github.com>
+
+- **deps**: Bump python-semantic-release/python-semantic-release
+  ([`84f3cfb`](https://github.com/darac/adventofcode/commit/84f3cfbac35ba195206ed039916e9a4a7d58f087))
+
+Bumps
+  [python-semantic-release/python-semantic-release](https://github.com/python-semantic-release/python-semantic-release)
+  from 9.21.0 to 9.21.1. - [Release
+  notes](https://github.com/python-semantic-release/python-semantic-release/releases) -
+  [Changelog](https://github.com/python-semantic-release/python-semantic-release/blob/master/CHANGELOG.rst)
+  -
+  [Commits](https://github.com/python-semantic-release/python-semantic-release/compare/v9.21.0...v9.21.1)
+
+--- updated-dependencies: - dependency-name: python-semantic-release/python-semantic-release
+  dependency-version: 9.21.1
+
+dependency-type: direct:production
+
+update-type: version-update:semver-patch ...
+
+Signed-off-by: dependabot[bot] <support@github.com>
+
+### Chores
+
+- **ci**: Adapt to new setup-uv defaults
+  ([`060f064`](https://github.com/darac/adventofcode/commit/060f064e0a1ea248ee4f110dc03e3c2fa626151b))
+
+- **ci**: Don't run Sonar stage if token not set
+  ([`47431fa`](https://github.com/darac/adventofcode/commit/47431fad4c27458e5443385f6fbec6dd22e79a30))
+
+- **deps**: Update docker/build-push-action digest to 0788c44
+  ([`1c37751`](https://github.com/darac/adventofcode/commit/1c37751dca2a0f32fee7d2331ca41aa1aa6b041f))
+
+- **deps**: Update docker/dockerfile docker tag to v1.15
+  ([`876b731`](https://github.com/darac/adventofcode/commit/876b731f723ea89ff707866596780e8237effaf3))
+
+- **deps**: Update docker/dockerfile docker tag to v1.16
+  ([`6720408`](https://github.com/darac/adventofcode/commit/6720408a34f477808e13e4f9825b5bbd3e5adcc5))
+
+- **deps**: Update docker/login-action digest to 6d4b68b
+  ([`bf02ff6`](https://github.com/darac/adventofcode/commit/bf02ff62c3457209fe3efbe71b6246f443fbc405))
+
+- **deps**: Update docker/metadata-action digest to 418e4b9
+  ([`c88cac3`](https://github.com/darac/adventofcode/commit/c88cac327a9255f762e0014c6a2e16aefc18e4e0))
+
+- **deps**: Update pre-commit hook astral-sh/ruff-pre-commit to v0.11.10
+  ([`c9f67dc`](https://github.com/darac/adventofcode/commit/c9f67dca575479d5299be9155f5315b86c000173))
+
+- **deps**: Update pre-commit hook astral-sh/ruff-pre-commit to v0.11.11
+  ([`ebc43c7`](https://github.com/darac/adventofcode/commit/ebc43c7f901fefb52a3f4abb922cf000320fa120))
+
+- **deps**: Update pre-commit hook astral-sh/uv-pre-commit to v0.7.5
+  ([`d4f5f01`](https://github.com/darac/adventofcode/commit/d4f5f01b09237df2ef7707e5b2007bb3ed86175a))
+
+- **deps**: Update pre-commit hook astral-sh/uv-pre-commit to v0.7.7
+  ([`31f798b`](https://github.com/darac/adventofcode/commit/31f798b99cb3f09626f1de2cc1089585a6cb86c5))
+
+- **deps**: Update pre-commit hook astral-sh/uv-pre-commit to v0.7.8
+  ([`366e563`](https://github.com/darac/adventofcode/commit/366e563bdb758644517c67ff267f6447415776e3))
+
+- **deps**: Update pre-commit hook gitleaks/gitleaks to v8.26.0
+  ([`b5cd46a`](https://github.com/darac/adventofcode/commit/b5cd46a27f7c09652b1388379cedfd2994681f97))
+
+
 ## v2024.4.4 (2025-05-11)
 
 ### Bug Fixes
