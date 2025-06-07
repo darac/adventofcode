@@ -1,6 +1,23 @@
 # CHANGELOG
 
 
+## v2024.4.6 (2025-06-07)
+
+### Bug Fixes
+
+- Quieten tests ([#215](https://github.com/darac/adventofcode/pull/215),
+  [`aa553d3`](https://github.com/darac/adventofcode/commit/aa553d3b82d23b473d584a85f3bc6c972b4fe2b5))
+
+* fix: Convert most print() statements into LOG calls * fix: Remove deprecated mypy plugin * fix:
+  Fix various mypy complaints * fix!: type-aliasing requires Python 3.12 * fix: Re-apply ruff
+  formatting * fix: Remove unnecessary basicConfig
+
+### Chores
+
+- Update precommit and uv.lock
+  ([`bbc26df`](https://github.com/darac/adventofcode/commit/bbc26df14e70b56ce4e4b172887e6064f5163976))
+
+
 ## v2024.4.5 (2025-06-07)
 
 ### Bug Fixes
