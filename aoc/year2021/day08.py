@@ -162,7 +162,7 @@ output values?"""
 
 from typing import Literal
 
-from rich import print  # noqa: A004
+from aoc.year2021 import LOG
 
 
 def solve(
@@ -184,8 +184,7 @@ def solve(
             num_uniques += len(
                 list(filter(lambda x: len(x) in [2, 3, 4, 7], output))
             )
-            if not _runner:
-                print(f"Now at {num_uniques} uniques")
+            LOG.debug("Now at %2d uniques", num_uniques)
 
         return num_uniques
 
@@ -226,6 +225,5 @@ def solve(
                 case _:
                     return_string += "?"
         retval += int(return_string)
-        if not _runner:
-            print(f"Retval: {return_string} -> {retval}")
+        LOG.debug("Retval: %4s -> %5d", return_string, retval)
     return retval

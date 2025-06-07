@@ -28,6 +28,8 @@ Now find one that starts with six zeroes.
 import hashlib
 from typing import Literal
 
+from aoc.year2015 import LOG
+
 
 def solve(
     puzzle: str, part: Literal["a", "b"], _runner: bool = False
@@ -39,7 +41,6 @@ def solve(
         .hexdigest()
         .startswith("0" * (5 if part == "a" else 6))
     ):
-        if not _runner:
-            print(count)
+        LOG.debug(count)
         count += 1
     return count

@@ -369,8 +369,8 @@ on your CRT?
 """
 # spell-checker: enable
 
-import logging
 import os
+import sys
 from collections.abc import Generator
 from dataclasses import dataclass, field
 from typing import Any, Literal
@@ -380,9 +380,7 @@ import parse
 from PIL import Image
 
 from aoc.visualisations import Numpy
-
-logging.basicConfig(level="DEBUG", format="%(message)s", datefmt="[%X]")
-LOG = logging.getLogger()
+from aoc.year2022 import LOG
 
 
 class IllegalInstruction(Exception):
@@ -480,7 +478,7 @@ def solve(
 
     if part == "a":
         return sum(signal_strengths.values())
-    if os.environ.get("DISPLAY", "") != "":
+    if os.environ.get("DISPLAY", "") != "" and "pytest" not in sys.modules:
         from aoc.visualisations import Kivy
 
         vis = Kivy.ManualOCR()

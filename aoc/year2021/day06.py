@@ -89,6 +89,8 @@ from aocd.models import Puzzle
 from rich import print  # noqa: A004
 from rich.progress import track
 
+from aoc.year2021 import LOG
+
 TEST_INPUT = "3,4,3,1,2"
 PUZZLE = Puzzle(year=2021, day=6)
 INPUT = PUZZLE.input_data
@@ -111,15 +113,14 @@ def solve(
     )
     for fish in [int(n) for n in puzzle.split(",")]:
         school[fish] += 1
-    if not _runner:
-        print(f"Initial state: {school}")
+    LOG.debug("Initial state: %s", school)
     days = 80 if part == "a" else 256
     for day in track(range(days)):
         for i in range(9):
             # Each bucket of population counts down one
             school[i - 1] = school[i]
         if day < 3:
-            print(school)
+            LOG.debug("%s", school)
 
         # school[-1] now holds the number of fish who spawn
         spawn = school[-1]
@@ -132,8 +133,7 @@ def solve(
 
         # Finally, zero out the holding cell
         school[-1] = 0
-        if not _runner:
-            print(f"After {day:2} days: {school.total()}")
+        LOG.debug("After %2d days: %s", day, school.total())
 
     return school.total()
 

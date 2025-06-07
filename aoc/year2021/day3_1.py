@@ -72,6 +72,6 @@ for i in sorted(COUNTS.keys()):
         GAMMA += "1"
         EPSILON += "0"
 
-print(f"Gamma: {GAMMA} = {int(GAMMA,2)}")
-print(f"Epsilon: {EPSILON} = {int(EPSILON,2)}")
-print(f"Power Consumption: {int(GAMMA,2) * int(EPSILON,2)}")
+print(f"Gamma: {GAMMA} = {int(GAMMA, 2)}")
+print(f"Epsilon: {EPSILON} = {int(EPSILON, 2)}")
+print(f"Power Consumption: {int(GAMMA, 2) * int(EPSILON, 2)}")

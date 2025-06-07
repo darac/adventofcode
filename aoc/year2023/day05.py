@@ -180,9 +180,10 @@ any of the initial seed numbers?
 # spell-checker: enable
 
 import contextlib
-import logging
 from collections.abc import Generator, Iterable
 from typing import Literal
+
+from aoc.year2023 import LOG
 
 try:
     from itertools import batched  # type: ignore  # noqa: PGH003
@@ -197,14 +198,6 @@ except ImportError:
         it = iter(iterable)
         while batch := tuple(islice(it, n)):
             yield batch
-
-
-logging.basicConfig(  # NOSONAR
-    level="DEBUG",
-    format="%(message)s",
-    datefmt="[%X]",
-)
-LOG = logging.getLogger()
 
 
 class Almanac:

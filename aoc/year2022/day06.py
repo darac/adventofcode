@@ -81,7 +81,7 @@ marker is detected?
 from collections import deque
 from typing import Literal
 
-from rich import print  # noqa: A004
+from aoc.year2022 import LOG
 
 
 def solve(
@@ -92,8 +92,7 @@ def solve(
     pointer = None
     for count, item in enumerate(puzzle):
         msg_buffer.append(item)
-        if not _runner:
-            print(f"{msg_buffer} -> {count}\r")
+        LOG.debug("%40s -> %d", msg_buffer, count)
         if len(set(msg_buffer)) == buffer_size:
             pointer = count + 1
             break

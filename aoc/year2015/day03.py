@@ -47,7 +47,7 @@ For example:
 from collections import Counter
 from typing import Literal
 
-from rich import print  # noqa: A004
+from aoc.year2015 import LOG
 
 
 class UnknownDirection(Exception):
@@ -79,7 +79,6 @@ def solve(
         locations_visited[actor].update({str(position[actor]): 1})
         if part == "b":
             actor = "santa" if actor == "robot" else "robot"
-    if not _runner:
-        print(puzzle)
-        print(locations_visited)
+    LOG.debug("%s", puzzle)
+    LOG.debug("%s", locations_visited)
     return len(locations_visited["robot"] + locations_visited["santa"])

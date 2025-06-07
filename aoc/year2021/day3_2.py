@@ -112,8 +112,9 @@ reports = Puzzle(year=2021, day=3).input_data.splitlines()
 generator_rating = filter_reports("most", reports)
 scrubber_rating = filter_reports("least", reports)
 
-print(f"O₂ Generator: {generator_rating} = {int(generator_rating,2)}")
-print(f"CO₂ Scrubber: {scrubber_rating} = {int(scrubber_rating,2)}")
+print(f"O₂ Generator: {generator_rating} = {int(generator_rating, 2)}")
+print(f"CO₂ Scrubber: {scrubber_rating} = {int(scrubber_rating, 2)}")
 print(
-    f"Power Consumption: {int(generator_rating,2) * int(scrubber_rating,2)}"
+    "Power Consumption: "
+    f"{int(generator_rating, 2) * int(scrubber_rating, 2)}"
 )

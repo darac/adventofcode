@@ -16,7 +16,9 @@
     // 	"description": "Log output to console"
     // }
     "Advent Of Code Template": {
-        "prefix": ["aoc"],
+        "prefix": [
+            "aoc"
+        ],
         "body": [
             "# spell-checker: disable",
             "\"\"\"",
@@ -43,6 +45,6 @@
         ],
         "description": "A template for Advent Of Code solutions.",
         "isFileTemplate": true,
-        "scope": ["python"]
+        "scope": "python"
     }
 }
