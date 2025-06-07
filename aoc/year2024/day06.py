@@ -238,18 +238,11 @@ obstruction?
 # spell-checker: enable
 
 import itertools
-import logging
 from copy import deepcopy
 from typing import Literal
 
 import aoc.parsers.grid
-
-logging.basicConfig(  # NOSONAR
-    level="DEBUG",
-    format="%(message)s",
-    datefmt="[%X]",
-)
-LOG = logging.getLogger()
+from aoc.year2024 import LOG
 
 
 def grid2str(grid: aoc.parsers.grid.Grid, x_size: int, y_size: int) -> str:

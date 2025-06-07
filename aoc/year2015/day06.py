@@ -57,24 +57,15 @@ For example:
 """
 # spell-checker: enable
 
-import logging
 from collections.abc import Generator
 from typing import Any, Literal
 
 import numpy as np
 import parse
 import pygame
-from rich.logging import RichHandler
 
 from aoc.visualisations.PyGame import TwoDAnimationViewer
-
-logging.basicConfig(
-    level="DEBUG",
-    format="%(message)s",
-    datefmt="[%X]",
-    handlers=[RichHandler()],
-)
-LOG = logging.getLogger()
+from aoc.year2015 import LOG
 
 
 def solve_steps_a(
@@ -139,9 +130,9 @@ def solve_steps_b(
                 lights[
                     p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1
                 ] += 1
-                assert (
-                    lights.sum() > num_lights
-                ), f"{lineno}: {lights.sum()} !> {num_lights}"
+                assert lights.sum() > num_lights, (
+                    f"{lineno}: {lights.sum()} !> {num_lights}"
+                )
             elif p["command"] == "turn off":
                 if (
                     lights[
@@ -160,16 +151,16 @@ def solve_steps_b(
                     len(lights[lights < 0]),
                 )
                 lights[lights < 0] = 0
-                assert (
-                    lights.sum() < num_lights
-                ), f"{lineno}: {lights.sum()} !< {num_lights}"
+                assert lights.sum() < num_lights, (
+                    f"{lineno}: {lights.sum()} !< {num_lights}"
+                )
             elif p["command"] == "toggle":
                 lights[
                     p["top"] : p["bottom"] + 1, p["left"] : p["right"] + 1
                 ] += 2
-                assert (
-                    lights.sum() > num_lights
-                ), f"{lineno}: {lights.sum()} !> {num_lights}"
+                assert lights.sum() > num_lights, (
+                    f"{lineno}: {lights.sum()} !> {num_lights}"
+                )
             else:
                 raise UnknownCommand(p["command"])
         else:

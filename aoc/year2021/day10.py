@@ -125,20 +125,13 @@ because there are the same number of scores smaller and larger than it.
 Find the completion string for each incomplete line, score the completion
 strings, and sort the scores. What is the middle score?"""
 
-import logging
 from typing import Literal
 
 from aocd import submit
 from aocd.exceptions import AocdError
 from aocd.models import Puzzle
-from rich import print  # noqa: A004
-from rich.logging import RichHandler
 
-FORMAT = "%(message)s"
-logging.basicConfig(
-    level="INFO", format=FORMAT, datefmt="[%X]", handlers=[RichHandler()]
-)
-LOG = logging.getLogger()
+from aoc.year2021 import LOG
 
 
 def solve(
@@ -252,8 +245,7 @@ def solve(
             autocomplete_scores.append(this_autocomplete_score)
         if error:
             printout = f"{printout}  {error}"
-        if not _runner:
-            print(printout)
+        LOG.debug("%s", printout)
     return (
         checker_score
         if part == "a"

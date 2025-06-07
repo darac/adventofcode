@@ -7,7 +7,8 @@ from typing import Literal
 import numpy as np
 from aocd import submit
 from aocd.models import Puzzle
-from rich import print  # noqa: A004
+
+from aoc.year2021 import LOG
 
 
 def get_neighbours(
@@ -95,10 +96,9 @@ def run_step(
     # Finally, if the octopus flashed, set its energy to zero
     data[flashed] = 0
     if (step < 10 or step % 10 == 0) and not runner:
-        print(f"After Step {step}:")
-        print(data)
+        LOG.debug("After Step {%d}:\n%s", step, data)
     if part in ["training", "a"]:
-        return [np.count_nonzero(flashed)]
+        return [int(np.count_nonzero(flashed))]
     return phase_flashes
 
 
@@ -115,8 +115,7 @@ def solve(
         int: The Puzzle Solution
     """
     data = np.array([list(row) for row in puzzle.splitlines()], dtype="int")
-    if not _runner:
-        print(data)
+    LOG.debug("%s", data)
     num_flashes = 0
     if part == "training":
         for step in range(1, 3):
@@ -132,11 +131,15 @@ def solve(
             step_data = run_step(data, step, part, _runner)
             for phase, flashers in enumerate(step_data):
                 if flashers == data.size and not _runner:
-                    print(data)
-                    print(
-                        f"{data.size} points. {flashers} flashers on phase "
-                        f"{phase} of step {step}",
+                    LOG.debug("%s", data)
+                    LOG.info(
+                        "%d points. %d flashers on phase %d of step %d",
+                        data.size,
+                        flashers,
+                        phase,
+                        step,
                     )
+
                     return step
             step += 1
     return None
