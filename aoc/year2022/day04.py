@@ -66,7 +66,8 @@ In how many assignment pairs does one range fully contain the other?
 from typing import Literal
 
 from parse import compile  # noqa: A004
-from rich import print  # noqa: A004
+
+from aoc.year2022 import LOG
 
 
 def visualise(low: int, high: int, upper: int, char: str = "+") -> str:
@@ -86,9 +87,8 @@ def solve(
         o_low = o_high = 0
         assert a_low <= a_high, "Whoops, Pairs are not sorted"
         assert b_low <= b_high, "Whoops, Pairs are not sorted"
-        if not _runner:
-            print(visualise(a_low, a_high, max(a_high, b_high), "A"))
-            print(visualise(b_low, b_high, max(a_high, b_high), "B"))
+        LOG.debug("%s", visualise(a_low, a_high, max(a_high, b_high), "A"))
+        LOG.debug("%s", visualise(b_low, b_high, max(a_high, b_high), "B"))
         if part == "a":
             if (a_low >= b_low and a_high <= b_high) or (
                 b_low >= a_low and b_high <= a_high
@@ -103,11 +103,9 @@ def solve(
                 o_low = max(a_low, b_low)
                 o_high = min(a_high, b_high)
                 count += 1
-        if not _runner:
-            print(
-                visualise(o_low, o_high, max(a_high, b_high), "O"),
-                "<--" if o_low != o_high else "",
-            )
-            print("\n")
+        LOG.debug(
+            visualise(o_low, o_high, max(a_high, b_high), "O"),
+            "<--" if o_low != o_high else "",
+        )
 
     return count

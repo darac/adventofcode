@@ -98,15 +98,12 @@ from aocd import submit
 from aocd.models import Puzzle
 from rich import print, traceback  # noqa: A004
 from rich.live import Live
-from rich.logging import RichHandler
 from rich.table import Table
+
+from aoc.year2021 import LOG
 
 traceback.install(show_locals=True)
 FORMAT = "%(message)s"
-logging.basicConfig(
-    level="INFO", format=FORMAT, datefmt="[%X]", handlers=[RichHandler()]
-)
-LOG = logging.getLogger()
 
 PUZZLE = Puzzle(year=2021, day=4)
 INPUT = PUZZLE.input_data
@@ -172,6 +169,7 @@ class BingoSquare:
             int: The number in the square
         """
         assert self.value is not None
+        assert isinstance(self.value, int)
         return self.value
 
     def test(self: "BingoSquare", value: int | None = None) -> bool:

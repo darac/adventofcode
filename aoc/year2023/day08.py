@@ -107,19 +107,14 @@ take before you're only on nodes that end with Z?
 """
 # spell-checker: enable
 
-import logging
 import math
 from itertools import cycle
 from typing import Literal
 
 from parse import Result, parse
 
-logging.basicConfig(  # NOSONAR
-    level="DEBUG",
-    format="%(message)s",
-    datefmt="[%X]",
-)
-LOG = logging.getLogger()
+from aoc.year2023 import LOG
+
 PART = ""
 
 

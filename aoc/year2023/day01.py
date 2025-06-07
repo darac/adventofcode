@@ -67,16 +67,10 @@ What is the sum of all of the calibration values?
 """
 # spell-checker: enable
 
-import logging
 import re
 from typing import Literal
 
-logging.basicConfig(  # NOSONAR
-    level="DEBUG",
-    format="%(message)s",
-    datefmt="[%X]",
-)
-LOG = logging.getLogger()
+from aoc.year2023 import LOG
 
 
 def get_digits(in_str: str) -> list[str]:

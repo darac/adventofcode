@@ -92,17 +92,10 @@ side and try again. How many times does an X-MAS appear?
 # spell-checker: enable
 
 import itertools
-import logging
 from typing import Literal
 
 from aoc.parsers.grid import Grid, Point, grid_of_chars
-
-logging.basicConfig(  # NOSONAR
-    level="DEBUG",
-    format="%(message)s",
-    datefmt="[%X]",
-)
-LOG = logging.getLogger()
+from aoc.year2024 import LOG
 
 directions = {
     "North    ": (0, -1),

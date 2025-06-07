@@ -84,6 +84,8 @@ from aocd.models import Puzzle
 from rich import print  # noqa: A004
 from rich.progress import track
 
+from aoc.year2021 import LOG
+
 TEST_INPUT = "16,1,2,0,4,2,7,1,2,14"
 PUZZLE = Puzzle(year=2021, day=7)
 INPUT = PUZZLE.input_data
@@ -112,8 +114,7 @@ def fuel_required(
             fuel_used += distance
         else:
             fuel_used += sum(range(distance + 1))
-    if not _runner:
-        print(f"Target: {target}, Fuel: {fuel_used}")
+    LOG.debug("Target: %2d, Fuel: %3d", target, fuel_used)
     return fuel_used
 
 

@@ -128,15 +128,9 @@ score?
 """
 # spell-checker: enable
 
-import logging
 from typing import Literal
 
-logging.basicConfig(  # NOSONAR
-    level="DEBUG",
-    format="%(message)s",
-    datefmt="[%X]",
-)
-LOG = logging.getLogger()
+from aoc.year2024 import LOG
 
 
 def solve(

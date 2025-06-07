@@ -32,6 +32,8 @@ import re
 from collections import Counter
 from typing import Literal
 
+from aoc.year2015 import LOG
+
 
 def solve(
     puzzle: str, part: Literal["a", "b"], _runner: bool = False
@@ -59,9 +61,8 @@ def solve(
             and re.search(r"(..).*\1", line)
             and re.search(r"(.).\1", line)
         ):
-            if not _runner:
-                print(f"{part}: {line:16}: nice")
+            LOG.debug("%s: %16s: nice", part, line)
             num_nice_strings += 1
-        elif not _runner:
-            print(f"{part}: {line:16}: naughty")
+        else:
+            LOG.debug("%s: %16s: naughty", part, line)
     return num_nice_strings

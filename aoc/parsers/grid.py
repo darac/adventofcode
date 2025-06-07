@@ -1,6 +1,6 @@
 # Types
-Point = tuple[int, int]
-Grid = dict[Point, str]
+type Point = tuple[int, int]
+type Grid = dict[Point, str]
 
 
 def grid_of_chars(puzzle: str) -> tuple[Grid, int, int]:

@@ -149,6 +149,8 @@ from typing import Literal
 
 from parse import Result, compile  # noqa: A004
 
+from aoc.year2022 import LOG
+
 
 def solve(
     puzzle: str, part: Literal["a", "b"], _runner: bool = False
@@ -158,8 +160,7 @@ def solve(
     stacks: dict[str, deque[str]] = {}
     parser = compile("move {:d} from {} to {}")
     for line in puzzle.splitlines():
-        if not _runner:
-            print(line)
+        LOG.debug("%s", line)
         if line == "" and stacks and mode == "crates":
             mode = "instructions"
             continue
@@ -185,8 +186,7 @@ def solve(
             if part == "a":
                 # Grab boxes and put them directly on the target
                 for _ in range(r[0]):
-                    if not _runner:
-                        print(stacks)
+                    LOG.debug("%s", stacks)
                     stacks[str(r[2])].append(stacks[str(r[1])].pop())
             else:
                 # Grab boxes into a holding group, then

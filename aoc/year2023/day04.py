@@ -120,18 +120,12 @@ total scratchcards do you end up with?
 """
 # spell-checker: enable
 
-import logging
 from collections import defaultdict
 from typing import Literal
 
 from parse import Result, parse
 
-logging.basicConfig(  # NOSONAR
-    level="DEBUG",
-    format="%(message)s",
-    datefmt="[%X]",
-)
-LOG = logging.getLogger()
+from aoc.year2023 import LOG
 
 
 def solve(

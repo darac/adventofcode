@@ -9,7 +9,8 @@ from typing import Literal
 import numpy as np
 from aocd import submit
 from aocd.models import Puzzle
-from rich import print  # noqa: A004
+
+from aoc.year2021 import LOG
 
 
 def print_sheet(sheet: np.ndarray) -> None:
@@ -19,8 +20,10 @@ def print_sheet(sheet: np.ndarray) -> None:
     Args:
         sheet (np.ndarray): The sheet, as it currently stands
     """
+    out_string = ""
     for row in np.transpose(sheet):
-        print("".join(["█" if x else " " for x in row]))
+        out_string += "".join(["█" if x else " " for x in row])
+    LOG.debug("%s", out_string)
 
 
 def create_sheet(puzzle: str) -> np.ndarray:
@@ -39,7 +42,7 @@ def create_sheet(puzzle: str) -> np.ndarray:
         try:
             r, c = map(int, line.split(","))
         except ValueError:
-            print(f"Bad line on Line {lineno} was: {line}")
+            LOG.error("Bad line on Line %d was: %s", lineno, line)
             raise
         rows = max(rows, r)
         cols = max(cols, c)
@@ -82,12 +85,14 @@ def solve(
                     }
                 )
     print_sheet(sheet)
-    print(folds)
+    LOG.debug("%s", folds)
 
     # Now start folding
     for fold in folds:
-        print(
-            f"Fold along {'x' if fold['axis'] == 0 else 'y'}={fold['line']}"
+        LOG.debug(
+            "Fold along %s=%s",
+            "x" if fold["axis"] == 0 else "y",
+            fold["line"],
         )
         # pylint: disable=W0632
         (orig, _, copy) = np.split(
@@ -96,13 +101,13 @@ def solve(
         if orig.shape > copy.shape:
             # The fold is asymmetrical, so we need to expand the second page
             # before flipping
-            print(f"Shape is {copy.shape}. Want {orig.shape}")
+            LOG.info("Shape is %s. Want %s", copy.shape, orig.shape)
             # ((top,bottom), (left,right))  # noqa: ERA001
             padding = (
                 (0, orig.shape[0] - copy.shape[0]),
                 (0, orig.shape[1] - copy.shape[1]),
             )
-            print(f" Therefore, pad with {padding}")
+            LOG.info(" Therefore, pad with %s", padding)
 
             copy = np.pad(
                 copy,
@@ -112,13 +117,13 @@ def solve(
         elif orig.shape < copy.shape:
             # The fold is asymmetrical, so we need to expand the second page
             # before flipping
-            print(f"Shape is {copy.shape}. Want {orig.shape}")
+            LOG.info("Shape is %s. Want %s", copy.shape, orig.shape)
             # ((top,bottom), (left,right))  # noqa: ERA001
             padding = (
                 (0, copy.shape[0] - orig.shape[0]),
                 (0, copy.shape[1] - orig.shape[1]),
             )
-            print(f" Therefore, pad with {padding}")
+            LOG.info(" Therefore, pad with %s", padding)
             orig = np.pad(
                 orig,
                 padding,
@@ -128,10 +133,10 @@ def solve(
         sheet = orig | np.flip(copy, axis=fold["axis"])
         if part == "a":
             print_sheet(sheet)
-            return np.count_nonzero(sheet)
+            return int(np.count_nonzero(sheet))
         print("=== Fold ===")
         print_sheet(sheet)
-    return np.count_nonzero(sheet)
+    return int(np.count_nonzero(sheet))
 
 
 if __name__ == "__main__":

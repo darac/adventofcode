@@ -48,6 +48,7 @@ class ManualOCR(App):
                 size_hint=(1, 10), allow_stretch=True
             )
         assert self.image_widget is not None
+        assert hasattr(self.image_data, "texture")
         self.image_widget.texture = self.image_data.texture
         root_grid.add_widget(self.image_widget)
 
