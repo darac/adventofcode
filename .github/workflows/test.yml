@@ -107,7 +107,7 @@ jobs:
                   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
               run: |
                   echo "is_SONAR_TOKEN_set: ${{ env.SONAR_TOKEN != '' }}"
-                  echo "::set-output name=is_SONAR_TOKEN_set::${{ env.SONAR_TOKEN != '' }}"
+                  echo "is_SONAR_TOKEN_set=${{ env.SONAR_TOKEN != '' }}" >> $GITHUB_OUTPUT
 
     sonar:
         needs:
