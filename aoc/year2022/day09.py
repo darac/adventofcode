@@ -53,12 +53,12 @@ class RopeFollower:
                 # West
                 self.location = (self.location[0] - 1, self.location[1])
 
-        assert (
-            abs(leader[0] - self.location[0]) <= 2
-        ), f"H{leader}, {self.id}{self.location}"
-        assert (
-            abs(leader[1] - self.location[1]) <= 2
-        ), f"H{leader}, {self.id}{self.location}"
+        assert abs(leader[0] - self.location[0]) <= 2, (
+            f"H{leader}, {self.id}{self.location}"
+        )
+        assert abs(leader[1] - self.location[1]) <= 2, (
+            f"H{leader}, {self.id}{self.location}"
+        )
 
         self.visited.add(self.location)
 
