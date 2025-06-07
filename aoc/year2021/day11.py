@@ -81,7 +81,7 @@ def run_step(
     while ((data > 9) & ~flashed).any():
         # If any octopi have an energy > 9, they FLASH
         flashers = data > 9
-        phase_flashes.append(np.count_nonzero(flashers))
+        phase_flashes.append(int(np.count_nonzero(flashers)))
         # Flashed octopi cause their neighbours to increase by one
         with np.nditer(
             data, flags=["multi_index"], op_flags=[["readwrite"]]

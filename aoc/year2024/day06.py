@@ -239,6 +239,7 @@ obstruction?
 
 import itertools
 from copy import deepcopy
+from dataclasses import dataclass
 from typing import Literal
 
 import aoc.parsers.grid
@@ -254,16 +255,22 @@ def grid2str(grid: aoc.parsers.grid.Grid, x_size: int, y_size: int) -> str:
     return result
 
 
+@dataclass
+class Guard:
+    pos: aoc.parsers.grid.Point
+    dir: str
+
+
 def solve(
     puzzle: str, part: Literal["a", "b"], _runner: bool = False
 ) -> int | None:
     grid, x_size, y_size = aoc.parsers.grid.grid_of_chars(puzzle)
 
     # Find the guard
-    guard = None
+    guard: Guard | None = None
     for _ in itertools.product(range(x_size), range(y_size)):
         if grid.get(_) in ["^", "<", ">", "v"]:
-            guard = {"pos": _, "dir": grid.get(_, ".")}
+            guard = Guard(_, grid.get(_, "."))
             break
     assert guard is not None
     guard_reset = deepcopy(guard)
@@ -277,12 +284,12 @@ def solve(
     rotate = "^>v<"
 
     while True:
-        direction = directions[guard["dir"]]
+        direction = directions[guard.dir]
         try:
             look = grid.get(
                 (
-                    guard["pos"][0] + direction[0],
-                    guard["pos"][1] + direction[1],
+                    guard.pos[0] + direction[0],
+                    guard.pos[1] + direction[1],
                 )
             )
             LOG.debug(guard)
@@ -290,23 +297,23 @@ def solve(
             if look == "#":
                 # Found an obstruction
                 # Mark this position as inspected
-                grid[guard["pos"]] = "X"
+                grid[guard.pos] = "X"
                 # Rotate the guard (in position)
-                guard["dir"] = rotate[
-                    (rotate.find(guard["dir"]) + 1) % len(rotate)
+                guard.dir = rotate[
+                    (rotate.find(guard.dir) + 1) % len(rotate)
                 ]
-                grid[guard["pos"]] = guard["dir"]
+                grid[guard.pos] = guard.dir
 
             else:
                 # Mark this position as inspected
-                grid[guard["pos"]] = "X"
+                grid[guard.pos] = "X"
                 # Move the Guard
-                guard["pos"] = (
-                    guard["pos"][0] + direction[0],
-                    guard["pos"][1] + direction[1],
+                guard.pos = (
+                    guard.pos[0] + direction[0],
+                    guard.pos[1] + direction[1],
                 )
-                assert grid[guard["pos"]] != "#"
-                grid[guard["pos"]] = guard["dir"]
+                assert grid[guard.pos] != "#"
+                grid[guard.pos] = guard.dir
         except KeyError:
             break
 
@@ -338,12 +345,12 @@ def solve(
         # before that, it's not a loop.
         guard_escaped = False
         for loop_steps in range(x_size * y_size):
-            direction = directions[guard["dir"]]
+            direction = directions[guard.dir]
             try:
                 look = new_grid.get(
                     (
-                        guard["pos"][0] + direction[0],
-                        guard["pos"][1] + direction[1],
+                        guard.pos[0] + direction[0],
+                        guard.pos[1] + direction[1],
                     )
                 )
                 LOG.debug(guard)
@@ -355,25 +362,25 @@ def solve(
                     break
                 if look in ["#", "O"]:
                     # Rotate
-                    guard["dir"] = rotate[
-                        (rotate.find(guard["dir"]) + 1) % len(rotate)
+                    guard.dir = rotate[
+                        (rotate.find(guard.dir) + 1) % len(rotate)
                     ]
                 else:
-                    new_grid[guard["pos"]] = guard["dir"]
+                    new_grid[guard.pos] = guard.dir
                     # Move
-                    guard["pos"] = (
-                        guard["pos"][0] + direction[0],
-                        guard["pos"][1] + direction[1],
+                    guard.pos = (
+                        guard.pos[0] + direction[0],
+                        guard.pos[1] + direction[1],
                     )
-                    if new_grid.get(guard["pos"]) == guard["dir"]:
+                    if new_grid.get(guard.pos) == guard.dir:
                         LOG.info("New square matches where I'm looking")
                         guard_escaped = False
                         break
                 if (
-                    guard["pos"][0] < 0
-                    or guard["pos"][0] > y_size
-                    or guard["pos"][1] < 0
-                    or guard["pos"][1] > x_size
+                    guard.pos[0] < 0
+                    or guard.pos[0] > y_size
+                    or guard.pos[1] < 0
+                    or guard.pos[1] > x_size
                 ):
                     LOG.debug("Escaped Maze after %d steps", loop_steps)
                     guard_escaped = True
