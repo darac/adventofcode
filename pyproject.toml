@@ -23,7 +23,7 @@
     # It's common to not specify an upper band,
     # But some of the dependencies are slow to update,
     # So, we limit here until they update.
-    requires-python = "<3.14,>=3.11"
+    requires-python = "<3.14,>=3.12"
     version         = "2024.4.5"
 
     [project.entry-points."adventofcode.user"]
@@ -39,7 +39,7 @@
 
 [tool.black]
     line-length    = 76
-    target-version = ["py311"]
+    target-version = ["py312"]
 
 [tool.coverage.html]
     directory = "htmlcov"
@@ -184,7 +184,7 @@
     tests                       = "tests/"
 
 [tool.tox]
-    env_list = ["3.11", "3.12", "3.13", "ruff", "type"]
+    env_list = ["3.12", "3.13", "ruff", "type"]
     requires = ["tox>=4.19"]
 
     [tool.tox.env_run_base]
@@ -223,6 +223,7 @@
         "3.11" = ["3.11"]
         "3.12" = ["3.12", "ruff", "type"]
         "3.13" = ["3.13", "ruff", "type"]
+        "3.14" = ["3.14", "ruff", "type"]
 
 
 [tool.uv]
