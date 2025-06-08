@@ -26,7 +26,6 @@ jobs:
                 env:
                     - "3.13"
                     - "3.12"
-                    - "3.11"
                 os:
                     - ubuntu-latest
                     - macos-latest
@@ -190,14 +189,14 @@ jobs:
             - name: Action | Semantic Version Release
               id: release
               # Adjust tag with desired version if applicable.
-              uses: python-semantic-release/python-semantic-release@v9.21.1
+              uses: python-semantic-release/python-semantic-release@v10.0.2
               with:
                   github_token: ${{ secrets.GITHUB_TOKEN }}
                   git_committer_name: "github-actions"
                   git_committer_email: "actions@users.noreply.github.com"
 
             - name: Publish | Upload to GitHub Release Assets
-              uses: python-semantic-release/publish-action@v9.21.1
+              uses: python-semantic-release/publish-action@v10.0.2
               if: steps.release.outputs.released == 'true'
               with:
                   github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -236,7 +235,7 @@ jobs:
 
             - name: Build and push Docker image
               id: push
-              uses: docker/build-push-action@0788c444d8b4d67580213712e34a148cae3a6c4e
+              uses: docker/build-push-action@v6
               with:
                   context: .
                   push: ${{ github.event_name != 'pull_request' }}

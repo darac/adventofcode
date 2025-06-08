@@ -23,6 +23,7 @@
         "ndarray",
         "nonzero",
         "NOSONAR",
+        "numpy",
         "octopi",
         "printoptions",
         "pygame",
