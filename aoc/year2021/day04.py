@@ -169,7 +169,6 @@ class BingoSquare:
             int: The number in the square
         """
         assert self.value is not None
-        assert isinstance(self.value, int)
         return self.value
 
     def test(self: "BingoSquare", value: int | None = None) -> bool:
