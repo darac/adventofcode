@@ -1,9 +1,22 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended"
-  ],
-  "pre-commit": {
-      "enabled": true
-  }
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "customManagers": [
+        {
+            "customType": "regex",
+            "datasourceTemplate": "deb",
+            "managerFilePatterns": [
+                "/^Dockerfile$/"
+            ],
+            "matchStrings": [
+                "#\\s*renovate:\\s*?(suite=(?<suite>.*?))?\\s*depName=(?<depName>.*?)?\\sARG .*?_VERSION=\"(?<currentValue>.*)\""
+            ],
+            "registryUrlTemplate": "https://archive.ubuntu.com/ubuntu?suite={{suite}}&components=universe,multiverse,main,restricted&binaryArch=amd64"
+        }
+    ],
+    "extends": [
+        "config:best-practices"
+    ],
+    "pre-commit": {
+        "enabled": true
+    }
 }

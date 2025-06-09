@@ -5,16 +5,25 @@ FROM ubuntu:noble AS build
 
 SHELL ["sh", "-exc"]
 
+# renovate: suite=noble depName=build-essential
+ARG BUILD_ESSENTIAL_VERSION="12.10ubuntu1"
+# renovate: suite=noble depName=ca-certificates
+ARG CA_CERTIFICATES_VERSION="20240203"
+# renovate: suite=noble depName=python3-setuptools
+ARG PYTHON3_SETUPTOOLS_VERSION="68.1.2-2ubuntu1.2"
+# renovate: suite=noble depName=python3.12-dev
+ARG PYTHON3_12_DEV_VERSION="3.12.3-1ubuntu0.5"
+
 ## Start Build Prep
 RUN <<EOT
 apt-get update -qy
 apt-get install -qyy \
     -o APT::Install-Recommends=false \
     -o APT::Install-Suggests=false \
-    build-essential \
-    ca-certificates \
-    python3-setuptools \
-    python3.12-dev
+    build-essential="${BUILD_ESSENTIAL_VERSION}" \
+    ca-certificates="${CA_CERTIFICATES_VERSION}" \
+    python3-setuptools="${PYTHON3_SETUPTOOLS_VERSION}" \
+    python3.12-dev="${PYTHON3_12_DEV_VERSION}"
 apt-get clean
 EOT
 
@@ -82,6 +91,17 @@ ENTRYPOINT ["aoc"]
 # See <https://hynek.me/articles/docker-signals/>.
 STOPSIGNAL SIGINT
 
+# renovate: suite=noble depName=python3.12
+ARG PYTHON3_12_VERSION="3.12.3-1ubuntu0.5"
+# renovate: suite=noble depName=libpython3.12t64
+ARG LIBPYTHON3_12_VERSION="3.12.3-1ubuntu0.5"
+# renovate: suite=noble depName=ca-certificates
+ARG CA_CERTIFICATES_VERSION="20240203"
+# renovate: suite=noble depName=libpcre3
+ARG LIBPCRE3_VERSION="2:8.39-15build1"
+# renovate: suite=noble depName=libxml2
+ARG LIBXML2_VERSION="2.9.14+dfsg-1.3ubuntu3.3"
+
 # Note how the runtime dependencies differ from build-time ones.
 # Notably, there is no uv either!
 RUN <<EOT
@@ -89,11 +109,11 @@ apt-get update -qy
 apt-get install -qyy \
     -o APT::Install-Recommends=false \
     -o APT::Install-Suggests=false \
-    python3.12 \
-    libpython3.12 \
-    ca-certificates \
-    libpcre3 \
-    libxml2
+    python3.12="${PYTHON3_12_VERSION}" \
+    libpython3.12="${LIBPYTHON3_12_VERSION}" \
+    ca-certificates="${CA_CERTIFICATES_VERSION}" \
+    libpcre3="${LIBPCRE3_VERSION}" \
+    libxml2="${LIBXML2_VERSION}"
 
 apt-get clean
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
