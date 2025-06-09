@@ -14,19 +14,19 @@ jobs:
         if: ${{ github.event.workflow_run.conclusion == 'success' }}
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v4
-            - uses: k2bd/advent-readme-stars@v1
+            - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+            - uses: k2bd/advent-readme-stars@27bfdb5e0e611d0f006356cfe37dbfb505b0ee49 # v1
               with:
                   leaderboardId: 197414
                   sessionCookie: ${{ secrets.AOC_SESSION }}
                   userId: 1594870
             - name: AoC-badges
-              uses: J0B10/aoc-badges-action@v3.0.0
+              uses: J0B10/aoc-badges-action@75cd611df531bd9aa0675cae13be418d73cbdf76 # v3.0.0
               with:
                   leaderboard: https://adventofcode.com/2024/leaderboard/private/view/197414.json
                   session: ${{ secrets.AOC_SESSION }}
                   userid: 1594870
-            - uses: stefanzweifel/git-auto-commit-action@v5
+            - uses: stefanzweifel/git-auto-commit-action@b863ae1933cb653a53c021fe36dbb774e1fb9403 # v5
               with:
                   commit_message: Update README stars
                   file_pattern: README.md

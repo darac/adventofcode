@@ -31,12 +31,12 @@ jobs:
                     - macos-latest
                     # - windows-latest
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
               with:
                   fetch-depth: 0
 
             - name: Setup UV
-              uses: astral-sh/setup-uv@v6
+              uses: astral-sh/setup-uv@f0ec1fc3b38f5e7cd731bb6ce540c5af426746bb # v6
               with:
                   activate-environment: true
 
@@ -76,7 +76,7 @@ jobs:
 
             - name: Upload JUnit results
               if: success() || failure()
-              uses: actions/upload-artifact@v4
+              uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
               with:
                   name: junit-${{ matrix.os }}-${{ matrix.env }}
                   path: |
@@ -86,7 +86,7 @@ jobs:
                   retention-days: 1
 
             - name: Publish Test Report
-              uses: dorny/test-reporter@v2
+              uses: dorny/test-reporter@890a17cecf52a379fc869ab770a71657660be727 # v2
               if: success() || failure()
               with:
                   name: Tox Tests (${{ matrix.env }})
@@ -115,26 +115,26 @@ jobs:
         concurrency: release
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
               with:
                   fetch-depth: 0
 
             - name: Obtain Project Version
-              uses: SebRollen/toml-action@v1.2.0
+              uses: SebRollen/toml-action@b1b3628f55fc3a28208d4203ada8b737e9687876 # v1.2.0
               id: proj-version
               with:
                   file: pyproject.toml
                   field: project.version
 
             - name: Cache SonarQube packages
-              uses: actions/cache@v4
+              uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4
               with:
                   path: ~/.sonar/cache
                   key: ${{ runner.os }}-sonar
                   restore-keys: ${{ runner.os }}-sonar
 
             - name: Download JUnit reports
-              uses: actions/download-artifact@v4
+              uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
               with:
                   path: .
                   merge-multiple: true
@@ -168,7 +168,7 @@ jobs:
             # the branch was updated. To keep PSR working with the configured release branches,
             # we force a checkout of the desired release branch but at the workflow sha HEAD.
             - name: Setup | Checkout Repository at workflow sha
-              uses: actions/checkout@v4
+              uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
               with:
                   fetch-depth: 0
                   ref: ${{ github.sha }}
@@ -178,7 +178,7 @@ jobs:
                   git checkout -B ${{ github.ref_name }} ${{ github.sha }}
 
             - name: Setup | Install UV
-              uses: astral-sh/setup-uv@v6
+              uses: astral-sh/setup-uv@f0ec1fc3b38f5e7cd731bb6ce540c5af426746bb # v6
               with:
                   version: latest
                   enable-cache: true
@@ -189,14 +189,14 @@ jobs:
             - name: Action | Semantic Version Release
               id: release
               # Adjust tag with desired version if applicable.
-              uses: python-semantic-release/python-semantic-release@v10.0.2
+              uses: python-semantic-release/python-semantic-release@1a324000f2251a9e722e77b128bf72712653813f # v10.0.2
               with:
                   github_token: ${{ secrets.GITHUB_TOKEN }}
                   git_committer_name: "github-actions"
                   git_committer_email: "actions@users.noreply.github.com"
 
             - name: Publish | Upload to GitHub Release Assets
-              uses: python-semantic-release/publish-action@v10.0.2
+              uses: python-semantic-release/publish-action@e5e3010f6a207cd5d6f5d3dccedbea355484ca02 # v10.0.2
               if: steps.release.outputs.released == 'true'
               with:
                   github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -218,7 +218,7 @@ jobs:
             id-token: write
 
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
 
             - name: Log in to the container registry
               uses: docker/login-action@6d4b68b490aef8836e8fb5e50ee7b3bdfa5894f0
@@ -235,7 +235,7 @@ jobs:
 
             - name: Build and push Docker image
               id: push
-              uses: docker/build-push-action@v6
+              uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # v6
               with:
                   context: .
                   push: ${{ github.event_name != 'pull_request' }}
@@ -243,7 +243,7 @@ jobs:
                   labels: ${{ steps.meta.outputs.labels }}
 
             - name: Generate artifact attestation
-              uses: actions/attest-build-provenance@v2
+              uses: actions/attest-build-provenance@db473fddc028af60658334401dc6fa3ffd8669fd # v2
               with:
                   subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
                   subject-digest: ${{ steps.push.outputs.digest }}
