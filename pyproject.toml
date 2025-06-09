@@ -43,6 +43,7 @@
             "pytest-cov>=6.1.1",
             "pytest-gh-log-group>=0.2.0",
             "pytest-randomly>=3.16.0",
+            "pytest-timeout>=2.4.0",
             "pytest-xdist>=3.7.0",
         ]
 
@@ -147,10 +148,11 @@
     requires = ["tox>=4.19"]
 
     [tool.tox.env_run_base]
-        commands    = [["uv", "run", "pytest", "-q"]]
-        description = "Run test under {base_python}"
-        extras      = ["test"]
-        runner      = "uv-venv-lock-runner"
+        commands          = [["uv", "run", "pytest", "-q"]]
+        dependency_groups = ["test"]
+        description       = "Run test under {base_python}"
+        extras            = ["test"]
+        runner            = "uv-venv-lock-runner"
 
     [tool.tox.env.ruff]
         commands = [
@@ -167,14 +169,12 @@
             ],
         ]
         description = "Run ruff checking"
-        extras = ["test"]
         runner = "uv-venv-lock-runner"
 
     [tool.tox.env.type]
         commands    = [["uv", "run", "mypy", "tests"], ["uv", "run", "mypy", "aoc"]]
         deps        = ["mypy==1.11.2", "types-cachetools>=5.5.0.20240820", "types-chardet>=5.0.4.6"]
         description = "Run type check on code base"
-        extras      = ["test"]
         runner      = "uv-venv-lock-runner"
 
     [tool.tox.gh.python]
