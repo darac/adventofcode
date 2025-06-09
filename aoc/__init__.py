@@ -7,12 +7,7 @@ years and days.
 import importlib
 import os
 
-try:
-    import importlib.metadata as importlib_metadata
-except ModuleNotFoundError:
-    import importlib_metadata  # type: ignore[no-redef] # cSpell: disable-line
-
-__version__ = importlib_metadata.version(__name__)
+__version__ = "2024.4.6"
 
 
 def solve(year: int, day: int, data: str) -> tuple[int | None, ...]:
