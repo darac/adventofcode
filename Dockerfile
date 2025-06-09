@@ -1,7 +1,7 @@
-# syntax=docker/dockerfile:1.16
+# syntax=docker/dockerfile:1.16@sha256:e2dd261f92e4b763d789984f6eab84be66ab4f5f08052316d8eb8f173593acf7
 # Keep this syntax directive! It's used to enable Docker BuildKit
 
-FROM ubuntu:noble AS build
+FROM ubuntu:noble@sha256:b59d21599a2b151e23eea5f6602f4af4d7d31c4e236d22bf0b62b86d2e386b8f AS build
 
 SHELL ["sh", "-exc"]
 
@@ -27,7 +27,7 @@ apt-get install -qyy \
 apt-get clean
 EOT
 
-COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
+COPY --from=ghcr.io/astral-sh/uv:latest@sha256:4faec156e35a5f345d57804d8858c6ba1cf6352ce5f4bffc11b7fdebdef46a38 /uv /usr/local/bin/uv
 
 # - Silence uv complaining about not being able to use hard links,
 # - tell uv to byte-compile packages for faster application startups,
@@ -75,7 +75,7 @@ RUN --mount=type=cache,target=/root/.cache \
 
 ##########################################################################
 
-FROM ubuntu:noble
+FROM ubuntu:noble@sha256:b59d21599a2b151e23eea5f6602f4af4d7d31c4e236d22bf0b62b86d2e386b8f
 SHELL ["sh", "-exc"]
 
 # Optional: add the application virtualenv to search path.
