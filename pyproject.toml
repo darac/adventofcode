@@ -89,7 +89,13 @@
     venv           = "/home/vscode/.venv"
 
 [tool.pytest.ini_options]
-    addopts          = "--cov --cov-report=xml:coverage.xml --junit-xml=junit.xml --tb=auto"
+    addopts = """\
+    --cov \
+    --cov-report=xml:coverage.xml \
+    --junit-xml=junit.xml \
+    --tb=auto \
+    --timeout=300 \
+    """
     junit_suite_name = "aoc"
 
 [tool.ruff]
@@ -193,5 +199,6 @@
         "pytest-cov>=6.1.1",
         "pytest-gh-log-group>=0.2.0",
         "pytest-randomly>=3.16.0",
+        "pytest-timeout>=2.4.0",
         "pytest-xdist>=3.7.0",
     ]
