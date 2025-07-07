@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1.17@sha256:38387523653efa0039f8e1c89bb74a30504e76ee9f565e25c9a09841f9427b05
 # Keep this syntax directive! It's used to enable Docker BuildKit
 
-FROM ubuntu:noble@sha256:b59d21599a2b151e23eea5f6602f4af4d7d31c4e236d22bf0b62b86d2e386b8f AS build
+FROM ubuntu:noble@sha256:440dcf6a5640b2ae5c77724e68787a906afb8ddee98bf86db94eea8528c2c076 AS build
 
 SHELL ["sh", "-exc"]
 
@@ -75,7 +75,7 @@ RUN --mount=type=cache,target=/root/.cache \
 
 ##########################################################################
 
-FROM ubuntu:noble@sha256:b59d21599a2b151e23eea5f6602f4af4d7d31c4e236d22bf0b62b86d2e386b8f
+FROM ubuntu:noble@sha256:440dcf6a5640b2ae5c77724e68787a906afb8ddee98bf86db94eea8528c2c076
 SHELL ["sh", "-exc"]
 
 # Optional: add the application virtualenv to search path.
