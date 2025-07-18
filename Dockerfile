@@ -27,7 +27,7 @@ apt-get install -qyy \
 apt-get clean
 EOT
 
-COPY --from=ghcr.io/astral-sh/uv:latest@sha256:a64333b61f96312df88eafce95121b017cbff72033ab2dbc6398edb4f24a75dd /uv /usr/local/bin/uv
+COPY --from=ghcr.io/astral-sh/uv:latest@sha256:5778d479c0fd7995fedd44614570f38a9d849256851f2786c451c220d7bd8ccd /uv /usr/local/bin/uv
 
 # - Silence uv complaining about not being able to use hard links,
 # - tell uv to byte-compile packages for faster application startups,
