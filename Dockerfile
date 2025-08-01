@@ -1,18 +1,18 @@
 # syntax=docker/dockerfile:1.17@sha256:38387523653efa0039f8e1c89bb74a30504e76ee9f565e25c9a09841f9427b05
 # Keep this syntax directive! It's used to enable Docker BuildKit
 
-FROM ubuntu:noble@sha256:a08e551cb33850e4740772b38217fc1796a66da2506d312abe51acda354ff061 AS build
+FROM debian:trixie-slim AS build
 
 SHELL ["sh", "-exc"]
 
-# renovate: suite=noble depName=build-essential
-ARG BUILD_ESSENTIAL_VERSION="12.10ubuntu1"
-# renovate: suite=noble depName=ca-certificates
-ARG CA_CERTIFICATES_VERSION="20240203"
-# renovate: suite=noble depName=python3-setuptools
-ARG PYTHON3_SETUPTOOLS_VERSION="68.1.2-2ubuntu1.2"
-# renovate: suite=noble depName=python3.12-dev
-ARG PYTHON3_12_DEV_VERSION="3.12.3-1ubuntu0.5"
+# renovate: suite=trixie depName=build-essential
+ARG BUILD_ESSENTIAL_VERSION="12.12"
+# renovate: suite=trixie depName=ca-certificates
+ARG CA_CERTIFICATES_VERSION="20250419"
+# renovate: suite=trixie depName=python3-setuptools
+ARG PYTHON3_SETUPTOOLS_VERSION="78.1.1-0.1"
+# renovate: suite=trixie depName=python3-dev
+ARG PYTHON3_DEV_VERSION="3.13.5-1"
 
 ## Start Build Prep
 RUN <<EOT
@@ -22,8 +22,8 @@ apt-get install -qyy \
     -o APT::Install-Suggests=false \
     build-essential="${BUILD_ESSENTIAL_VERSION}" \
     ca-certificates="${CA_CERTIFICATES_VERSION}" \
-    python3-setuptools="${PYTHON3_SETUPTOOLS_VERSION}" \
-    python3.12-dev="${PYTHON3_12_DEV_VERSION}"
+    python3-dev="${PYTHON3_DEV_VERSION}" \
+    python3-setuptools="${PYTHON3_SETUPTOOLS_VERSION}"
 apt-get clean
 EOT
 
@@ -37,7 +37,7 @@ COPY --from=ghcr.io/astral-sh/uv:latest@sha256:40775a79214294fb51d097c9117592f19
 ENV UV_LINK_MODE=copy \
     UV_COMPILE_BYTECODE=1 \
     UV_PYTHON_DOWNLOADS=never \
-    UV_PYTHON=python3.12 \
+    UV_PYTHON=python3.13 \
     UV_PROJECT_ENVIRONMENT=/app
 
 ### End Build Prep -- this is where your Dockerfile should start.
@@ -75,7 +75,7 @@ RUN --mount=type=cache,target=/root/.cache \
 
 ##########################################################################
 
-FROM ubuntu:noble@sha256:a08e551cb33850e4740772b38217fc1796a66da2506d312abe51acda354ff061
+FROM debian:trixie-slim
 SHELL ["sh", "-exc"]
 
 # Optional: add the application virtualenv to search path.
@@ -91,16 +91,16 @@ ENTRYPOINT ["aoc"]
 # See <https://hynek.me/articles/docker-signals/>.
 STOPSIGNAL SIGINT
 
-# renovate: suite=noble depName=python3.12
-ARG PYTHON3_12_VERSION="3.12.3-1ubuntu0.5"
-# renovate: suite=noble depName=libpython3.12t64
-ARG LIBPYTHON3_12_VERSION="3.12.3-1ubuntu0.5"
-# renovate: suite=noble depName=ca-certificates
-ARG CA_CERTIFICATES_VERSION="20240203"
-# renovate: suite=noble depName=libpcre3
-ARG LIBPCRE3_VERSION="2:8.39-15build1"
-# renovate: suite=noble depName=libxml2
-ARG LIBXML2_VERSION="2.9.14+dfsg-1.3ubuntu3.3"
+# renovate: suite=trixie depName=python3
+ARG PYTHON3_VERSION="3.13.5-1"
+# renovate: suite=trixie depName=libpython3.13
+ARG LIBPYTHON3_VERSION="3.13.5-2"
+# renovate: suite=trixie depName=ca-certificates
+ARG CA_CERTIFICATES_VERSION="20250419"
+# # renovate: suite=trixie depName=libpcre3
+# ARG LIBPCRE3_VERSION="2:8.39-15build1"
+# renovate: suite=trixie depName=libxml2
+ARG LIBXML2_VERSION="2.12.7+dfsg+really2.9.14-2.1"
 
 # Note how the runtime dependencies differ from build-time ones.
 # Notably, there is no uv either!
@@ -109,11 +109,11 @@ apt-get update -qy
 apt-get install -qyy \
     -o APT::Install-Recommends=false \
     -o APT::Install-Suggests=false \
-    python3.12="${PYTHON3_12_VERSION}" \
-    libpython3.12="${LIBPYTHON3_12_VERSION}" \
     ca-certificates="${CA_CERTIFICATES_VERSION}" \
-    libpcre3="${LIBPCRE3_VERSION}" \
+    libpython3.13="${LIBPYTHON3_VERSION}" \
     libxml2="${LIBXML2_VERSION}"
+    python3="${PYTHON3_VERSION}" \
+    # libpcre3="${LIBPCRE3_VERSION}" \
 
 apt-get clean
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
