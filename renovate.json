@@ -8,9 +8,10 @@
                 "/^Dockerfile$/"
             ],
             "matchStrings": [
-                "#\\s*renovate:\\s*?(suite=(?<suite>.*?))?\\s*depName=(?<depName>.*?)?\\sARG .*?_VERSION=\"(?<currentValue>.*)\""
+                "#\\s*renovate:\\s*?(suite=(?<suite>.*?))?\\s*depName=(?<depName>.*?)?\\s(ARG|ENV) .*?_VERSION=\"(?<currentValue>.*)\""
             ],
-            "registryUrlTemplate": "https://archive.ubuntu.com/ubuntu?suite={{suite}}&components=universe,multiverse,main,restricted&binaryArch=amd64"
+            "registryUrlTemplate": "https://deb.debian.org/debian?suite={{#if suite }}{{suite}}{{else}}stable{{/if}}&components=main,contrib,non-free&binaryArch=amd64",
+            "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}deb{{/if}}"
         }
     ],
     "extends": [
