@@ -41,7 +41,7 @@ repos:
                 - --check
     - repo: https://github.com/astral-sh/uv-pre-commit
       # uv version.
-      rev: 0.8.3
+      rev: 0.8.4
       hooks:
           - id: uv-lock
           # Run the pip compile
