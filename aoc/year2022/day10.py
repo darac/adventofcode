@@ -479,7 +479,7 @@ def solve(
     if part == "a":
         return sum(signal_strengths.values())
     if os.environ.get("DISPLAY", "") != "" and "pytest" not in sys.modules:
-        from aoc.visualisations import Kivy
+        from aoc.visualisations import Kivy  # noqa: PLC0415
 
         vis = Kivy.ManualOCR()
         vis.image = Image.fromarray(clock.CRT.read())
