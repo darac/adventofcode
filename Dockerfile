@@ -95,6 +95,8 @@ STOPSIGNAL SIGINT
 ARG PYTHON3_VERSION="3.13.5-1"
 # renovate: suite=trixie depName=libpython3.13
 ARG LIBPYTHON3_VERSION="3.13.5-2"
+# renovate: suite=trixie depName=python-is-python3
+ARG PYTHON_IS_PYTHON3_VERSION="3.13.3-1"
 # renovate: suite=trixie depName=ca-certificates
 ARG CA_CERTIFICATES_VERSION="20250419"
 # # renovate: suite=trixie depName=libpcre3
@@ -111,9 +113,9 @@ apt-get install -qyy \
     -o APT::Install-Suggests=false \
     ca-certificates="${CA_CERTIFICATES_VERSION}" \
     libpython3.13="${LIBPYTHON3_VERSION}" \
-    libxml2="${LIBXML2_VERSION}"
+    libxml2="${LIBXML2_VERSION}" \
     python3="${PYTHON3_VERSION}" \
-    # libpcre3="${LIBPCRE3_VERSION}" \
+    python-is-python3="${PYTHON_IS_PYTHON3_VERSION}"
 
 apt-get clean
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
