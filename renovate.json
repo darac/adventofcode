@@ -17,6 +17,30 @@
     "extends": [
         "config:best-practices"
     ],
+    "lockFileMaintenance": {
+        "automerge": true,
+        "enabled": true
+    },
+    "packageRules": [
+        {
+            "automerge": true,
+            "matchDepTypes": [
+                "devDependencies"
+            ],
+            "matchPackageNames": [
+                "lint",
+                "prettier"
+            ]
+        },
+        {
+            "automerge": true,
+            "matchCurrentVersion": "!/^0/",
+            "matchUpdateTypes": [
+                "minor",
+                "patch"
+            ]
+        }
+    ],
     "pre-commit": {
         "enabled": true
     }
