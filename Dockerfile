@@ -102,7 +102,7 @@ ARG CA_CERTIFICATES_VERSION="20250419"
 # # renovate: suite=trixie depName=libpcre3
 # ARG LIBPCRE3_VERSION="2:8.39-15build1"
 # renovate: suite=trixie depName=libxml2
-ARG LIBXML2_VERSION="2.12.7+dfsg+really2.9.14-2.1"
+ARG LIBXML2_VERSION="2.12.7+dfsg+really2.9.14-2.1+deb13u1"
 
 # Note how the runtime dependencies differ from build-time ones.
 # Notably, there is no uv either!
