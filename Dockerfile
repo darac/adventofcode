@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1.19@sha256:b6afd42430b15f2d2a4c5a02b919e98a525b785b1aaff16747d2f623364e39b6
 # Keep this syntax directive! It's used to enable Docker BuildKit
 
-FROM debian:trixie-slim@sha256:1caf1c703c8f7e15dcf2e7769b35000c764e6f50e4d7401c355fb0248f3ddfdb AS build
+FROM debian:trixie-slim@sha256:66b37a5078a77098bfc80175fb5eb881a3196809242fd295b25502854e12cbec AS build
 
 SHELL ["sh", "-exc"]
 
@@ -75,7 +75,7 @@ RUN --mount=type=cache,target=/root/.cache \
 
 ##########################################################################
 
-FROM debian:trixie-slim@sha256:1caf1c703c8f7e15dcf2e7769b35000c764e6f50e4d7401c355fb0248f3ddfdb
+FROM debian:trixie-slim@sha256:66b37a5078a77098bfc80175fb5eb881a3196809242fd295b25502854e12cbec
 SHELL ["sh", "-exc"]
 
 # Optional: add the application virtualenv to search path.
