@@ -37,7 +37,7 @@ jobs:
                   fetch-depth: 0
 
             - name: Setup UV
-              uses: astral-sh/setup-uv@681c641aba71e4a1c380be3ab5e12ad51f415867 # v7
+              uses: astral-sh/setup-uv@61cb8a9741eeb8a550a1b8544337180c0fc8476b # v7
               with:
                   activate-environment: true
 
@@ -179,7 +179,7 @@ jobs:
                   git checkout -B ${{ github.ref_name }} ${{ github.sha }}
 
             - name: Setup | Install UV
-              uses: astral-sh/setup-uv@681c641aba71e4a1c380be3ab5e12ad51f415867 # v7
+              uses: astral-sh/setup-uv@61cb8a9741eeb8a550a1b8544337180c0fc8476b # v7
               with:
                   version: latest
                   enable-cache: true
