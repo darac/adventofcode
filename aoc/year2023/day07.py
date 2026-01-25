@@ -140,7 +140,7 @@ the new total winnings?
 # spell-checker: enable
 
 from collections.abc import Iterable
-from typing import Literal, NamedTuple
+from typing import Literal, NamedTuple, TypedDict
 
 from aoc.year2023 import LOG
 
@@ -183,6 +183,12 @@ class Card(NamedTuple):
 
     def __str__(self: "Card") -> str:
         return str(self.rank)
+
+
+class HandOfCards(TypedDict):
+    hand: str
+    cards: list[Card]
+    bid: int
 
 
 def parse_card(card: str) -> Card:
@@ -243,7 +249,7 @@ def evaluate_hand(cards: list[Card]) -> str:
     }[sum(ranks.count(r) for r in ranks)]
 
 
-def hand_score(hand: dict[str, list[Card]]) -> list[int]:
+def hand_score(hand: HandOfCards) -> list[int]:
     type_score = [
         "High card",
         "One pair",
@@ -270,7 +276,7 @@ def solve(
     global PART  # noqa: PLW0603
     PART = part
 
-    hands: list[dict] = []
+    hands: list[HandOfCards] = []
     winnings = 0
     for line in puzzle.splitlines():
         cards, bid = line.split()

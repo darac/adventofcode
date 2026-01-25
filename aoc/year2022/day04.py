@@ -83,7 +83,7 @@ def solve(
     count = 0
     parser = compile("{:d}-{:d},{:d}-{:d}")
     for line in puzzle.splitlines():
-        a_low, a_high, b_low, b_high = parser.parse(line)  # type: ignore  # noqa: PGH003
+        a_low, a_high, b_low, b_high = parser.parse(line)  # pyright: ignore[reportGeneralTypeIssues]
         o_low = o_high = 0
         assert a_low <= a_high, "Whoops, Pairs are not sorted"
         assert b_low <= b_high, "Whoops, Pairs are not sorted"

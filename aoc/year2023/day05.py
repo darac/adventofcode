@@ -186,11 +186,11 @@ from typing import Literal
 from aoc.year2023 import LOG
 
 try:
-    from itertools import batched  # type: ignore  # noqa: PGH003
+    from itertools import batched  # pyright: ignore[reportAssignmentType]
 except ImportError:
     from itertools import islice
 
-    def batched(iterable: Iterable, n: int) -> Generator:  # type: ignore  # noqa: PGH003
+    def batched(iterable: Iterable, n: int) -> Generator:
         # batched('ABCDEFG', 3) --> ABC DEF G
         if n < 1:
             msg = "n must be at least one"
