@@ -49,7 +49,7 @@ jobs:
             - uses: ConorMacBride/install-package@v1
               with:
                   brew: libjpeg
-                  apt: libjpeg
+                  apt: libjpeg8-dev
 
             - name: Install tox
               run:
