@@ -52,10 +52,10 @@ jobs:
                   brew:
                       libavif libjpeg libraqm libtiff little-cms2 openjpeg webp
                   apt:
-                      libtiff5-dev libjpeg8-dev libopenjp2-7-dev zlib1g-dev
-                      libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev
-                      tk8.6-dev python3-tk libharfbuzz-dev libfribidi-dev
-                      libxcb1-dev
+                      libfreetype6-dev libfribidi-dev libgl-dev libharfbuzz-dev
+                      libjpeg8-dev liblcms2-dev libopenjp2-7-dev libtiff5-dev
+                      libwebp-dev libxcb1-dev python3-tk tcl8.6-dev tk8.6-dev
+                      zlib1g-dev
 
             - name: Install tox
               run:
