@@ -83,15 +83,11 @@ def run_step(
         flashers = data > 9
         phase_flashes.append(int(np.count_nonzero(flashers)))
         # Flashed octopi cause their neighbours to increase by one
-        with np.nditer(
-            data, flags=["multi_index"], op_flags=[["readwrite"]]
-        ) as it:
-            for _ in it:
-                coord = it.multi_index
-                if flashers[coord] and not flashed[coord]:
-                    # New flasher
-                    for neighbour in get_neighbours(*coord, *data.shape):
-                        data[neighbour] += 1
+        for coord in np.ndindex(data.shape):
+            if flashers[coord] and not flashed[coord]:
+                # New flasher
+                for neighbour in get_neighbours(*coord, *data.shape):
+                    data[neighbour] += 1
         flashed |= flashers
     # Finally, if the octopus flashed, set its energy to zero
     data[flashed] = 0
