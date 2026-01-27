@@ -1,5 +1,6 @@
 {
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "configMigration": true,
     "customManagers": [
         {
             "customType": "regex",
@@ -28,8 +29,8 @@
                 "devDependencies"
             ],
             "matchPackageNames": [
-                "lint",
-                "prettier"
+                "ruff",
+                "ty"
             ]
         },
         {
@@ -42,6 +43,9 @@
         }
     ],
     "pre-commit": {
+        "enabled": true
+    },
+    "python": {
         "enabled": true
     }
 }

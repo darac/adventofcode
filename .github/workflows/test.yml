@@ -207,7 +207,7 @@ jobs:
         needs: release
         concurrency: release
         runs-on: ubuntu-latest
-        if: ${{ needs.release.outputs.released }} == "true"
+        if: needs.release.outputs.released == 'true'
         env:
             REGISTRY: ghcr.io
             IMAGE_NAME: ${{ github.repository }}
