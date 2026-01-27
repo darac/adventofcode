@@ -46,9 +46,15 @@ jobs:
               shell: bash
               run: echo "$USERPROFILE/.local/bin" >> $GITHUB_PATH
 
+            - uses: ConorMacBride/install-package@v1
+              with:
+                  brew: libjpeg
+                  apt: libjpeg
+
             - name: Install tox
-              run: uv tool install --python-preference only-managed --python
-                  3.13 tox --with tox-uv # --with tox-gh
+              run:
+                  uv tool install --python-preference only-managed --python 3.13
+                  tox --with tox-uv
 
             - name: Setup Python
               if: matrix.env != '3.13'
