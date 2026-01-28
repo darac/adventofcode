@@ -170,6 +170,13 @@
         "3.13" = ["3.13", "ruff", "type"]
         "3.14" = ["3.14", "ruff", "type"]
 
+    [tool.tox.gh-actions]
+        python = """
+3.12: 3.12
+3.13: 3.13
+3.14: 3.14, ruff, type
+"""
+
 
 [dependency-groups]
     dev = [

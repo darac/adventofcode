@@ -19,16 +19,16 @@ concurrency:
 
 jobs:
     test:
-        name: test with ${{ matrix.env }} on ${{ matrix.os }}
-        runs-on: ${{ matrix.os }}
+        name: test with ${{ matrix.python-version }} on ${{ matrix.platform }}
+        runs-on: ${{ matrix.platform }}
         strategy:
             fail-fast: false
             matrix:
-                env:
+                python-version:
                     - "3.14"
                     - "3.13"
                     - "3.12"
-                os:
+                platform:
                     - ubuntu-latest
                     - macos-latest
                     # - windows-latest
@@ -60,38 +60,38 @@ jobs:
             - name: Install tox
               run:
                   uv tool install --python-preference only-managed --python 3.13
-                  tox --with tox-uv
+                  tox --with tox-uv --with tox-gh-actions
 
             - name: Setup Python
-              if: matrix.env != '3.13'
+              if: matrix.python-version != '3.13'
               run:
                   uv python install --python-preference only-managed ${{
-                  matrix.env }}
+                  matrix.python-version }}
 
             - name: Setup Tests
               run: tox run -vv --notest --skip-missing-interpreters false
               env:
-                  TOX_GH_MAJOR_MINOR: ${{ matrix.env }}
+                  TOX_GH_MAJOR_MINOR: ${{ matrix.python-version }}
 
             - name: Run test suite
               run: tox run --skip-pkg-install
               env:
                   AOC_SESSION: ${{ secrets.AOC_SESSION }}
-                  TOX_GH_MAJOR_MINOR: ${{ matrix.env }}
+                  TOX_GH_MAJOR_MINOR: ${{ matrix.python-version }}
 
             - name: Rename reports
               if: success() || failure()
-              run: >-
-                  mv junit.xml "junit-${{ matrix.os }}-${{ matrix.env }}.xml" ;
-                  mv ruff.json "ruff-${{ matrix.os }}-${{ matrix.env }}.json" ;
-                  mv coverage.xml "coverage-${{ matrix.os }}-${{ matrix.env
-                  }}.xml"
+              run: |
+                  mv junit.xml "junit-${{ matrix.platform }}-${{ matrix.python-version }}.xml"
+                  mv ruff.json "ruff-${{ matrix.platform }}-${{ matrix.python-version }}.json"
+                  mv coverage.xml "coverage-${{ matrix.platform }}-${{ matrix.python-version }}.xml"
 
             - name: Upload JUnit results
               if: success() || failure()
               uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
               with:
-                  name: junit-${{ matrix.os }}-${{ matrix.env }}
+                  name:
+                      junit-${{ matrix.platform }}-${{ matrix.python-version }}
                   path: |
                       coverage*.xml
                       junit-*.xml
@@ -102,7 +102,7 @@ jobs:
               uses: dorny/test-reporter@b082adf0eced0765477756c2a610396589b8c637 # v2
               if: success() || failure()
               with:
-                  name: Tox Tests (${{ matrix.env }})
+                  name: Tox Tests (${{ matrix.python-version }})
                   path: "junit-*.xml"
                   reporter: java-junit
 
