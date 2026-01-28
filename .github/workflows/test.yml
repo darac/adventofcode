@@ -41,6 +41,7 @@ jobs:
               uses: astral-sh/setup-uv@61cb8a9741eeb8a550a1b8544337180c0fc8476b # v7
               with:
                   activate-environment: true
+                  python-version: ${{ matrix.python-version }}
 
             - name: Add .local/bin to Windows PATH
               if: runner.os == 'Windows'
@@ -59,11 +60,11 @@ jobs:
 
             - name: Install tox
               run:
-                  uv tool install --python-preference only-managed --python 3.13
-                  tox --with tox-uv --with tox-gh-actions
+                  uv tool install --python-preference only-managed --python ${{
+                  matrix.python-version }} tox --with tox-uv --with
+                  tox-gh-actions
 
             - name: Setup Python
-              if: matrix.python-version != '3.13'
               run:
                   uv python install --python-preference only-managed ${{
                   matrix.python-version }}
@@ -83,8 +84,8 @@ jobs:
               if: success() || failure()
               run: |
                   mv junit.xml "junit-${{ matrix.platform }}-${{ matrix.python-version }}.xml"
-                  mv ruff.json "ruff-${{ matrix.platform }}-${{ matrix.python-version }}.json"
-                  mv coverage.xml "coverage-${{ matrix.platform }}-${{ matrix.python-version }}.xml"
+                  [ -f ruff .json ] && mv ruff.json "ruff-${{ matrix.platform }}-${{ matrix.python-version }}.json"
+                  [ -f coverage.xml ] && mv coverage.xml "coverage-${{ matrix.platform }}-${{ matrix.python-version }}.xml"
 
             - name: Upload JUnit results
               if: success() || failure()
