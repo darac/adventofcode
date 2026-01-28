@@ -160,7 +160,7 @@
         runner = "uv-venv-lock-runner"
 
     [tool.tox.env.type]
-        commands    = [["uv", "run", "ty", "check", "tests"], ["uv", "run", "ty", "check", "aoc"]]
+        commands    = [["uv", "run", "ty", "check", "aoc", "tests"]]
         deps        = ["ty>=0.0.13", "types-cachetools>=5.5.0.20240820", "types-chardet>=5.0.4.6"]
         description = "Run type check on code base"
         runner      = "uv-venv-lock-runner"
