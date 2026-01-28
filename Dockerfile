@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1.21@sha256:27f9262d43452075f3c410287a2c43f5ef1bf7ec2bb06e8c9eeb1b8d453087bc
 # Keep this syntax directive! It's used to enable Docker BuildKit
 
-FROM debian:13.3-slim AS build
+FROM debian:13.3-slim@sha256:77ba0164de17b88dd0bf6cdc8f65569e6e5fa6cd256562998b62553134a00ef0 AS build
 
 SHELL ["sh", "-exc"]
 
@@ -27,7 +27,7 @@ apt-get install -qyy \
 apt-get clean
 EOT
 
-COPY --from=ghcr.io/astral-sh/uv:0.9-python3.13-trixie-slim /uv /usr/local/bin/uv
+COPY --from=ghcr.io/astral-sh/uv:0.9-python3.13-trixie-slim@sha256:60d8ba7994f52a56a34cb93411700a216e970f9dd5d3ccc39471eaed19062d2a /uv /usr/local/bin/uv
 
 # - Silence uv complaining about not being able to use hard links,
 # - tell uv to byte-compile packages for faster application startups,
@@ -75,7 +75,7 @@ RUN --mount=type=cache,target=/root/.cache \
 
 ##########################################################################
 
-FROM debian:13.3
+FROM debian:13.3@sha256:5cf544fad978371b3df255b61e209b373583cb88b733475c86e49faa15ac2104
 SHELL ["sh", "-exc"]
 
 # Optional: add the application virtualenv to search path.

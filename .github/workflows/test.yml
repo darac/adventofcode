@@ -48,7 +48,7 @@ jobs:
               shell: bash
               run: echo "$USERPROFILE/.local/bin" >> $GITHUB_PATH
 
-            - uses: ConorMacBride/install-package@v1
+            - uses: ConorMacBride/install-package@3e7ad059e07782ee54fa35f827df52aae0626f30 # v1
               with:
                   brew:
                       libavif libjpeg libraqm libtiff little-cms2 openjpeg webp
