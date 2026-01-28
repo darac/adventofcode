@@ -30,9 +30,9 @@
         "ghcr.io/devcontainers/features/node:1": {
             "installYarnUsingApt": true,
             "nodeGypDependencies": true,
-            "nvmVersion": "latest",
-            "pnpmVersion": "latest",
-            "version": "lts"
+            "nvmVersion": "v0.40.3",
+            "pnpmVersion": "10.28.2",
+            "version": "25.5.0"
         },
         "ghcr.io/va-h/devcontainers-features/uv:1": {
             "shellautocompletion": true,
@@ -42,7 +42,7 @@
     // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
     "image": "mcr.microsoft.com/devcontainers/python:2-3.12-bullseye",
     "name": "Advent of Code",
-    "postCreateCommand": "uv run pre-commit install",
+    "postCreateCommand": "uv run prek install",
     // Features to add to the dev container. More info: https://containers.dev/features.
     // "features": {},
     // Use 'forwardPorts' to make a list of ports inside the container available locally.

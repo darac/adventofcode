@@ -28,8 +28,8 @@
                 "devDependencies"
             ],
             "matchPackageNames": [
-                "lint",
-                "prettier"
+                "ruff",
+                "ty"
             ]
         },
         {

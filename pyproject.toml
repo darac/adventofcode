@@ -66,10 +66,17 @@
     warn_unused_configs    = true
 
 [tool.pyright]
-    exclude        = ["**/__pycache__", ".pytest_cache", ".ruff_cache", ".venv"]
+    exclude = [
+        "**/__pycache__",
+        ".pytest_cache",
+        ".ruff_cache",
+        ".venv",
+        "**/node_modules",
+        "**/.*",
+    ]
     pythonPlatform = "All"
-    pythonVersion  = "3.12"
-    venv           = "/home/vscode/.venv"
+    pythonVersion = "3.12"
+    venv = "/home/vscode/.venv"
 
 [tool.pytest.ini_options]
     addopts = """\
@@ -153,17 +160,22 @@
         runner = "uv-venv-lock-runner"
 
     [tool.tox.env.type]
-        commands    = [["uv", "run", "ty", "check", "tests"], ["uv", "run", "ty", "check", "aoc"]]
+        commands    = [["uv", "run", "ty", "check", "aoc", "tests"]]
         deps        = ["ty>=0.0.13", "types-cachetools>=5.5.0.20240820", "types-chardet>=5.0.4.6"]
         description = "Run type check on code base"
         runner      = "uv-venv-lock-runner"
 
     [tool.tox.gh.python]
-        "3.10" = ["3.10"]
-        "3.11" = ["3.11"]
         "3.12" = ["3.12", "ruff", "type"]
         "3.13" = ["3.13", "ruff", "type"]
         "3.14" = ["3.14", "ruff", "type"]
+
+    [tool.tox.gh-actions]
+        python = """
+3.12: 3.12
+3.13: 3.13
+3.14: 3.14, ruff, type
+"""
 
 
 [dependency-groups]
