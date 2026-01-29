@@ -103,7 +103,13 @@ def filter_reports(crit: str, data: list[str]) -> str:
         print(
             f"{crit.title()} Common Bit in position {position} is {common}"
         )
-        output = list(filter(lambda n: n[position] == common, output))
+        output = list(
+            filter(
+                lambda n, common=common, position=position: n[position]
+                == common,
+                output,
+            )
+        )
         position += 1
     return output[0]
 

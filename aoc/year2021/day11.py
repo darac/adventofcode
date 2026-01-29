@@ -11,6 +11,21 @@ from aocd.models import Puzzle
 from aoc.year2021 import LOG
 
 
+def visualise(data: np.ndarray, step: int = 0) -> None:
+    """Prints the current state of the octopi energy levels
+
+    Args:
+        data (np.ndarray): The array of Octopi
+    """
+    log_str: str = (
+        "Before any steps:\n" if step == 0 else f"After step {step}:\n"
+    )
+    for row in data:
+        log_str += "".join("_" if i == 0 else str(i) for i in row)
+        log_str += "\n"
+    LOG.debug("\n%s", log_str)
+
+
 def get_neighbours(
     r: int, c: int, rows: int, cols: int
 ) -> list[tuple[int, int]]:
@@ -92,7 +107,7 @@ def run_step(
     # Finally, if the octopus flashed, set its energy to zero
     data[flashed] = 0
     if (step < 10 or step % 10 == 0) and not runner:
-        LOG.debug("After Step {%d}:\n%s", step, data)
+        visualise(data, step)
     if part in ["training", "a"]:
         return [int(np.count_nonzero(flashed))]
     return phase_flashes
@@ -111,9 +126,10 @@ def solve(
         int: The Puzzle Solution
     """
     data = np.array([list(row) for row in puzzle.splitlines()], dtype="int")
-    LOG.debug("%s", data)
+    visualise(data, step=0)
     num_flashes = 0
-    if part == "training":
+    if part == "a" and len(puzzle.splitlines()) == 5:
+        # Training input - just do 2 steps
         for step in range(1, 3):
             num_flashes += run_step(data, step, part, _runner)[0]
         return num_flashes
@@ -127,7 +143,7 @@ def solve(
             step_data = run_step(data, step, part, _runner)
             for phase, flashers in enumerate(step_data):
                 if flashers == data.size and not _runner:
-                    LOG.debug("%s", data)
+                    visualise(data, step)
                     LOG.info(
                         "%d points. %d flashers on phase %d of step %d",
                         data.size,
