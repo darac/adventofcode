@@ -160,7 +160,7 @@ def scenic_score(df: pd.DataFrame, row_id: int, col_id: int) -> int:
         (reversed(row_parts[0]), "l"),
         (row_parts[1], "r"),
     ]:
-        for i in list(part_list):
+        for i in part_list:
             directions[direction] += 1
             if int(i) >= tree:
                 break
