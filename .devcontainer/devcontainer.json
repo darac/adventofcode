@@ -32,7 +32,7 @@
             "nodeGypDependencies": true,
             "nvmVersion": "v0.40.3",
             "pnpmVersion": "10.28.2",
-            "version": "25.6.0"
+            "version": "25.6.1"
         },
         "ghcr.io/va-h/devcontainers-features/uv:1": {
             "shellautocompletion": true,
