@@ -27,7 +27,7 @@ apt-get install -qyy \
 apt-get clean
 EOT
 
-COPY --from=ghcr.io/astral-sh/uv:0.10-python3.13-trixie-slim@sha256:645c625876d01c77393338e2bccf4342ee2447680b3069f37004231fb97e2a62 /uv /usr/local/bin/uv
+COPY --from=ghcr.io/astral-sh/uv:0.10-python3.13-trixie-slim@sha256:bf67fd56775d4ebdd8f6042664523136bc1210c7079cd687f2eb56dbb754e6ed /uv /usr/local/bin/uv
 
 # - Silence uv complaining about not being able to use hard links,
 # - tell uv to byte-compile packages for faster application startups,
