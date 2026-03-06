@@ -50,6 +50,9 @@ dependencies = [
 ]
 
 [package.dev-dependencies]
+ci = [
+    { name = "pytest-github-actions-annotate-failures" },
+]
 dev = [
     { name = "deptry" },
     { name = "pre-commit" },
@@ -60,7 +63,6 @@ dev = [
 ]
 test = [
     { name = "pytest-cov" },
-    { name = "pytest-gh-log-group" },
     { name = "pytest-randomly" },
     { name = "pytest-timeout" },
     { name = "pytest-xdist" },
@@ -78,6 +80,7 @@ requires-dist = [
 ]
 
 [package.metadata.requires-dev]
+ci = [{ name = "pytest-github-actions-annotate-failures" }]
 dev = [
     { name = "deptry", specifier = ">=0.19.0" },
     { name = "pre-commit", specifier = ">=3.8.0" },
@@ -88,7 +91,6 @@ dev = [
 ]
 test = [
     { name = "pytest-cov", specifier = ">=6.1.1" },
-    { name = "pytest-gh-log-group", specifier = ">=0.2.0" },
     { name = "pytest-randomly", specifier = ">=3.16.0" },
     { name = "pytest-timeout", specifier = ">=2.4.0" },
     { name = "pytest-xdist", specifier = ">=3.7.0" },
@@ -957,7 +959,7 @@ name = "pypiwin32"
 version = "223"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pywin32" },
+    { name = "pywin32", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/13/e8/4f38eb30c4dae36634a53c5b2cd73b517ea3607e10d00f61f2494449cec0/pypiwin32-223.tar.gz", hash = "sha256:71be40c1fbd28594214ecaecb58e7aa8b708eabfa0125c8a109ebd51edbd776a", size = 622, upload-time = "2018-02-26T00:43:23.994Z" }
 wheels = [
@@ -995,15 +997,15 @@ wheels = [
 ]
 
 [[package]]
-name = "pytest-gh-log-group"
-version = "0.2.0"
+name = "pytest-github-actions-annotate-failures"
+version = "0.4.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pytest" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/20/38/adf00e9251ffb6433f5d65603bff50e27f9c373c304531a373891e2be14e/pytest_gh_log_group-0.2.0.tar.gz", hash = "sha256:0a6725086b0842469dfed18a109f1a5d544bc5e588a9b940df0ed7e3ef91e212", size = 16310, upload-time = "2022-01-11T10:44:01.993Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/c2/e1/8f2c242e6d75a26a8e5ddcc23f652a411e4aac3eedc4b923808ac0582685/pytest_github_actions_annotate_failures-0.4.0.tar.gz", hash = "sha256:77d6baa29c8c61c2dacc494fa76eb95a185f0ee61666714ac43fb12ea672d217", size = 10857, upload-time = "2026-03-02T18:57:40.919Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/46/85/c7248176c0265e7b5195f0d5cfdc5a89eeca1b85c3ee06442373a100de6b/pytest_gh_log_group-0.2.0-py3-none-any.whl", hash = "sha256:bd2d907711f2d887020cdb273d6e51e19b0cc11a609ffcf1e49690e925634801", size = 5324, upload-time = "2022-01-11T10:44:00.915Z" },
+    { url = "https://files.pythonhosted.org/packages/0f/bd/11809f5c78d5d8da2d0e004845d2382768bc20798b3e0988bca61efd349f/pytest_github_actions_annotate_failures-0.4.0-py3-none-any.whl", hash = "sha256:285fed86e16b0b7a8eac6acdcde31913798fb739b15ef5b86895b4f5e32bf237", size = 6039, upload-time = "2026-03-02T18:57:39.991Z" },
 ]
 
 [[package]]

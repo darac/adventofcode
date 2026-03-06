@@ -142,6 +142,12 @@
         description       = "Run test under {base_python}"
         runner            = "uv-venv-lock-runner"
 
+    [tool.tox.env.ci_run_base]
+        commands          = [["uv", "run", "pytest", "-q"]]
+        dependency_groups = ["test", "ci"]
+        description       = "Run tests in CI under {base_python}"
+        runner            = "uv-venv-lock-runner"
+
     [tool.tox.env.ruff]
         commands = [
             [
@@ -165,10 +171,22 @@
         description = "Run type check on code base"
         runner      = "uv-venv-lock-runner"
 
+    [tool.tox.env."ci-3.12"]
+        base        = ["ci_run_base"]
+        base_python = "3.12"
+
+    [tool.tox.env."ci-3.13"]
+        base        = ["ci_run_base"]
+        base_python = "3.13"
+
+    [tool.tox.env."ci-3.14"]
+        base        = ["ci_run_base"]
+        base_python = "3.14"
+
     [tool.tox.gh.python]
-        "3.12" = ["3.12", "ruff", "type"]
-        "3.13" = ["3.13", "ruff", "type"]
-        "3.14" = ["3.14", "ruff", "type"]
+        "3.12" = ["ci-3.12", "ruff", "type"]
+        "3.13" = ["ci-3.13", "ruff", "type"]
+        "3.14" = ["ci-3.14", "ruff", "type"]
 
     [tool.tox.gh-actions]
         python = """
@@ -190,8 +208,9 @@
 
     test = [
         "pytest-cov>=6.1.1",
-        "pytest-gh-log-group>=0.2.0",
         "pytest-randomly>=3.16.0",
         "pytest-timeout>=2.4.0",
         "pytest-xdist>=3.7.0",
     ]
+
+    ci = ["pytest-github-actions-annotate-failures"]

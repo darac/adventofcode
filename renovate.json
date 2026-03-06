@@ -30,7 +30,10 @@
             "matchPackageNames": [
                 "ruff",
                 "ty"
-            ]
+            ],
+            "minimumReleaseAge": "14 days",
+            "prCreation": "not-pending",
+            "internalChecksFilter": "strict"
         },
         {
             "automerge": true,
@@ -38,7 +41,10 @@
             "matchUpdateTypes": [
                 "minor",
                 "patch"
-            ]
+            ],
+            "minimumReleaseAge": "14 days",
+            "prCreation": "not-pending",
+            "internalChecksFilter": "strict"
         }
     ],
     "pre-commit": {
