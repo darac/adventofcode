@@ -141,7 +141,7 @@ the filesystem to run the update. What is the total size of that directory?
 # spell-checker: enable
 
 import os
-from pathlib import Path
+from pathlib import PosixPath as Path
 from typing import Literal
 
 
