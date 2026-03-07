@@ -1,4 +1,226 @@
 ---
+concurrency:
+    cancel-in-progress: true
+    group: ${{ github.workflow }}-${{ github.ref }}
+jobs:
+    check_sonar_secret:
+        name: check if SONAR_TOKEN is set in github secrets
+        outputs:
+            is_SONAR_TOKEN_set: ${{ steps.checksecret_job.outputs.is_SONAR_TOKEN_set }}
+        runs-on: ubuntu-latest
+        steps:
+            - env:
+                  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+              id: checksecret_job
+              name: Check whether Sonar Scan should be done
+              run: |
+                  echo "is_SONAR_TOKEN_set: ${{ env.SONAR_TOKEN != '' }}"
+                  echo "is_SONAR_TOKEN_set=${{ env.SONAR_TOKEN != '' }}" >> $GITHUB_OUTPUT
+    docker-image:
+        concurrency: release
+        env:
+            IMAGE_NAME: ${{ github.repository }}
+            REGISTRY: ghcr.io
+        if: needs.release.outputs.released == 'true'
+        needs: release
+        permissions:
+            attestations: write
+            contents: read
+            id-token: write
+            packages: write
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+            - name: Log in to the container registry
+              uses: docker/login-action@db14339dbc0a1f0b184157be94b23a2138122354
+              with:
+                  password: ${{ secrets.GITHUB_TOKEN }}
+                  registry: ${{ env.REGISTRY }}
+                  username: ${{ github.actor }}
+            - id: meta
+              name: Extract metadata (tags, labels) for Docker
+              uses: docker/metadata-action@85e876bd3a78bcc6b9925c818c482e365cf13b71
+              with:
+                  images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+            - id: push
+              name: Build and push Docker image
+              uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
+              with:
+                  context: .
+                  labels: ${{ steps.meta.outputs.labels }}
+                  push: ${{ github.event_name != 'pull_request' }}
+                  tags: ${{ steps.meta.outputs.tags }}
+            - name: Generate artifact attestation
+              uses: actions/attest-build-provenance@a2bbfa25375fe432b6a289bc6b6cd05ecd0c4c32 # v4
+              with:
+                  push-to-registry: true
+                  subject-digest: ${{ steps.push.outputs.digest }}
+                  subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
+    lint:
+        name: Lint with ruff and ty
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+              with:
+                  fetch-depth: 0
+            - name: Setup Pixi
+              uses: prefix-dev/setup-pixi@a0af7a228712d6121d37aba47adf55c1332c9c2e # v0.9.4
+              with:
+                  cache: true
+            - name: Run ruff
+              run:
+                  pixi run --environment dev ruff check aoc tests --output-format json --output-file
+                  ruff.json
+            - if: github.event_name == 'pull_request'
+              name: Ruff for GitHub annotations
+              run: pixi run --environment dev ruff check aoc tests --output-format github
+            - if: success() || failure()
+              name: Upload ruff report
+              uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
+              with:
+                  name: ruff-${{ github.run_id }}
+                  path: ruff.json
+                  retention-days: 1
+            - name: Run type checks
+              run: pixi run --environment dev ty check aoc tests --output-format github
+    release:
+        concurrency: release
+        if:
+            github.event_name == 'push' && github.ref == 'refs/heads/main' &&
+            !contains(github.event.head_commit.message, 'chore(release):')
+        needs: test
+        outputs:
+            released: ${{ steps.release.outputs.released }}
+        permissions:
+            contents: write
+            id-token: write
+        runs-on: ubuntu-latest
+        steps:
+            # Note: we need to checkout the repository at the workflow sha in case during the workflow
+            # the branch was updated. To keep PSR working with the configured release branches,
+            # we force a checkout of the desired release branch but at the workflow sha HEAD.
+            - name: Setup | Checkout Repository at workflow sha
+              uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+              with:
+                  fetch-depth: 0
+                  ref: ${{ github.sha }}
+            - name: Setup | Force correct release branch on workflow sha
+              run: |
+                  git checkout -B ${{ github.ref_name }} ${{ github.sha }}
+            - name: Setup | Install UV
+              uses: astral-sh/setup-uv@5a095e7a2014a4212f075830d4f7277575a9d098 # v7
+              with:
+                  enable-cache: true
+                  version: latest
+            - name: Setup | Install Python
+              run: uv python install
+            - id: release
+              name: Action | Semantic Version Release
+              # Adjust tag with desired version if applicable.
+              uses: python-semantic-release/python-semantic-release@350c48fcb3ffcdfd2e0a235206bc2ecea6b69df0 # v10.5.3
+              with:
+                  git_committer_email: "actions@users.noreply.github.com"
+                  git_committer_name: "github-actions"
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+            - if: steps.release.outputs.released == 'true'
+              name: Publish | Upload to GitHub Release Assets
+              uses: python-semantic-release/publish-action@310a9983a0ae878b29f3aac778d7c77c1db27378 # v10.5.3
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  tag: ${{ steps.release.outputs.tag }}
+    sonar:
+        concurrency: release
+        needs:
+            - lint
+            - test
+            - check_sonar_secret
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+              with:
+                  fetch-depth: 0
+            - id: proj-version
+              name: Obtain Project Version
+              run: |
+                  pixi run python - <<'PYTHON'
+                  import os
+                  import tomllib
+                  from pathlib import Path
+
+                  data = tomllib.loads(Path("pyproject.toml").read_text(encoding="utf-8"))
+                  version = data["project"]["version"]
+
+                  with Path(os.environ["GITHUB_OUTPUT"]).open("a", encoding="utf-8") as fh:
+                      print(f"version={version}", file=fh)
+                  PYTHON
+            - name: Cache SonarQube packages
+              uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5
+              with:
+                  key: ${{ runner.os }}-sonar
+                  path: ~/.sonar/cache
+                  restore-keys: ${{ runner.os }}-sonar
+            - env:
+                  PARALLEL_DOWNLOADS: 1
+              name: Download JUnit reports
+              uses: actions/download-artifact@70fc10c6e5e1ce46ad2ea6f2b72d43f7d47b13c3 # v8
+              with:
+                  merge-multiple: true
+                  path: .
+            - env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
+                  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+              name: SonarCloud Scan
+              uses: SonarSource/sonarqube-scan-action@a31c9398be7ace6bbfaf30c0bd5d415f843d45e9 # v7.0.0
+              with:
+                  args: >
+                      -Dsonar.projectVersion=${{ steps.proj-version.outputs.version }}
+
+    test:
+        name: test with ${{ matrix.python-environment }} on ${{ matrix.os }}
+        runs-on: ${{ matrix.os }}
+        steps:
+            - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+              with:
+                  fetch-depth: 0
+            - name: Setup Pixi
+              uses: prefix-dev/setup-pixi@a0af7a228712d6121d37aba47adf55c1332c9c2e # v0.9.4
+              with:
+                  cache: true
+            - env:
+                  AOC_SESSION: "${{ secrets.AOC_SESSION }}"
+                  COVERAGE_XML: "coverage-${{ matrix.os }}-${{ matrix.python-environment }}.xml"
+                  JUNIT_XML: "junit-${{ matrix.os }}-${{ matrix.python-environment }}.xml"
+              name: Run test suite
+              run:
+                  pixi run --environment ${{ matrix.python-environment }} pytest -vv --junit-xml=${{
+                  env.JUNIT_XML }} --cov-report=xml:${{ env.COVERAGE_XML }}
+            - if: success() || failure()
+              name: Upload JUnit results
+              uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
+              with:
+                  name: junit-${{ matrix.os }}-${{ matrix.python-environment }}
+                  path: |
+                      coverage-*.xml
+                      junit-*.xml
+                  retention-days: 1
+            - if: success() || failure()
+              name: Publish Test Report
+              uses: dorny/test-reporter@3d76b34a4535afbd0600d347b09a6ee5deb3ed7f # v2
+              with:
+                  name: Tox Tests (${{ matrix.python-environment }})
+                  path: "junit-*.xml"
+                  reporter: java-junit
+        strategy:
+            fail-fast: false
+            matrix:
+                os:
+                    - macos-15 # renovate: runner
+                    - ubuntu-24.04 # renovate: runner
+                    - windows-2022 # renovate: runner
+                python-environment:
+                    - py312
+                    - py313
+                    - py314
 name: Test
 on:
     merge_group:
@@ -12,247 +234,3 @@ on:
             - main
         tags:
             - "*"
-
-concurrency:
-    group: ${{ github.workflow }}-${{ github.ref }}
-    cancel-in-progress: true
-
-jobs:
-    lint:
-        name: Lint with ruff and ty
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
-              with:
-                  fetch-depth: 0
-
-            - name: Setup Pixi
-              uses: prefix-dev/setup-pixi@a0af7a228712d6121d37aba47adf55c1332c9c2e # v0.9.4
-              with:
-                  cache: true
-
-            - name: Run ruff
-              run:
-                  pixi run --environment dev ruff check aoc tests --output-format json --output-file
-                  ruff.json
-
-            - name: Ruff for GitHub annotations
-              if: github.event_name == 'pull_request'
-              run: pixi run --environment dev ruff check aoc tests --output-format github
-
-            - name: Upload ruff report
-              if: success() || failure()
-              uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
-              with:
-                  name: ruff-${{ github.run_id }}
-                  path: ruff.json
-                  retention-days: 1
-
-            - name: Run type checks
-              run: pixi run --environment dev ty check aoc tests --output-format github
-
-    test:
-        name: test with ${{ matrix.python-environment }} on ${{ matrix.os }}
-        runs-on: ${{ matrix.os }}
-        strategy:
-            fail-fast: false
-            matrix:
-                python-environment:
-                    - py312
-                    - py313
-                    - py314
-                os:
-                    - ubuntu-24.04 # renovate: runner
-                    - macos-15 # renovate: runner
-                    - windows-2022 # renovate: runner
-        steps:
-            - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
-              with:
-                  fetch-depth: 0
-
-            - name: Setup Pixi
-              uses: prefix-dev/setup-pixi@a0af7a228712d6121d37aba47adf55c1332c9c2e # v0.9.4
-              with:
-                  cache: true
-
-            - name: Run test suite
-              env:
-                  AOC_SESSION: "${{ secrets.AOC_SESSION }}"
-                  JUNIT_XML: "junit-${{ matrix.os }}-${{ matrix.python-environment }}.xml"
-                  COVERAGE_XML: "coverage-${{ matrix.os }}-${{ matrix.python-environment }}.xml"
-              run:
-                  pixi run --environment ${{ matrix.python-environment }} pytest -vv --junit-xml=${{
-                  env.JUNIT_XML }} --cov-report=xml:${{ env.COVERAGE_XML }}
-
-            - name: Upload JUnit results
-              if: success() || failure()
-              uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
-              with:
-                  name: junit-${{ matrix.os }}-${{ matrix.python-environment }}
-                  path: |
-                      coverage-*.xml
-                      junit-*.xml
-                  retention-days: 1
-
-            - name: Publish Test Report
-              uses: dorny/test-reporter@3d76b34a4535afbd0600d347b09a6ee5deb3ed7f # v2
-              if: success() || failure()
-              with:
-                  name: Tox Tests (${{ matrix.python-environment }})
-                  path: "junit-*.xml"
-                  reporter: java-junit
-
-    check_sonar_secret:
-        name: check if SONAR_TOKEN is set in github secrets
-        runs-on: ubuntu-latest
-        outputs:
-            is_SONAR_TOKEN_set: ${{ steps.checksecret_job.outputs.is_SONAR_TOKEN_set }}
-        steps:
-            - name: Check whether Sonar Scan should be done
-              id: checksecret_job
-              env:
-                  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-              run: |
-                  echo "is_SONAR_TOKEN_set: ${{ env.SONAR_TOKEN != '' }}"
-                  echo "is_SONAR_TOKEN_set=${{ env.SONAR_TOKEN != '' }}" >> $GITHUB_OUTPUT
-
-    sonar:
-        needs:
-            - lint
-            - test
-            - check_sonar_secret
-        concurrency: release
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
-              with:
-                  fetch-depth: 0
-
-            - name: Obtain Project Version
-              uses: SebRollen/toml-action@b1b3628f55fc3a28208d4203ada8b737e9687876 # v1.2.0
-              id: proj-version
-              with:
-                  file: pyproject.toml
-                  field: project.version
-
-            - name: Cache SonarQube packages
-              uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5
-              with:
-                  path: ~/.sonar/cache
-                  key: ${{ runner.os }}-sonar
-                  restore-keys: ${{ runner.os }}-sonar
-
-            - name: Download JUnit reports
-              uses: actions/download-artifact@70fc10c6e5e1ce46ad2ea6f2b72d43f7d47b13c3 # v8
-              with:
-                  path: .
-                  merge-multiple: true
-              env:
-                  PARALLEL_DOWNLOADS: 1
-
-            - name: SonarCloud Scan
-              uses: SonarSource/sonarqube-scan-action@a31c9398be7ace6bbfaf30c0bd5d415f843d45e9 # v7.0.0
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
-                  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-              with:
-                  args: >
-                      -Dsonar.projectVersion=${{ steps.proj-version.outputs.value }}
-
-    release:
-        needs: test
-        concurrency: release
-        permissions:
-            id-token: write
-            contents: write
-        if:
-            github.event_name == 'push' && github.ref == 'refs/heads/main' &&
-            !contains(github.event.head_commit.message, 'chore(release):')
-        runs-on: ubuntu-latest
-        outputs:
-            released: ${{ steps.release.outputs.released }}
-        steps:
-            # Note: we need to checkout the repository at the workflow sha in case during the workflow
-            # the branch was updated. To keep PSR working with the configured release branches,
-            # we force a checkout of the desired release branch but at the workflow sha HEAD.
-            - name: Setup | Checkout Repository at workflow sha
-              uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
-              with:
-                  fetch-depth: 0
-                  ref: ${{ github.sha }}
-
-            - name: Setup | Force correct release branch on workflow sha
-              run: |
-                  git checkout -B ${{ github.ref_name }} ${{ github.sha }}
-
-            - name: Setup | Install UV
-              uses: astral-sh/setup-uv@5a095e7a2014a4212f075830d4f7277575a9d098 # v7
-              with:
-                  version: latest
-                  enable-cache: true
-
-            - name: Setup | Install Python
-              run: uv python install
-
-            - name: Action | Semantic Version Release
-              id: release
-              # Adjust tag with desired version if applicable.
-              uses: python-semantic-release/python-semantic-release@350c48fcb3ffcdfd2e0a235206bc2ecea6b69df0 # v10.5.3
-              with:
-                  github_token: ${{ secrets.GITHUB_TOKEN }}
-                  git_committer_name: "github-actions"
-                  git_committer_email: "actions@users.noreply.github.com"
-
-            - name: Publish | Upload to GitHub Release Assets
-              uses: python-semantic-release/publish-action@310a9983a0ae878b29f3aac778d7c77c1db27378 # v10.5.3
-              if: steps.release.outputs.released == 'true'
-              with:
-                  github_token: ${{ secrets.GITHUB_TOKEN }}
-                  tag: ${{ steps.release.outputs.tag }}
-
-    docker-image:
-        needs: release
-        concurrency: release
-        runs-on: ubuntu-latest
-        if: needs.release.outputs.released == 'true'
-        env:
-            REGISTRY: ghcr.io
-            IMAGE_NAME: ${{ github.repository }}
-
-        permissions:
-            contents: read
-            packages: write
-            attestations: write
-            id-token: write
-
-        steps:
-            - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
-
-            - name: Log in to the container registry
-              uses: docker/login-action@db14339dbc0a1f0b184157be94b23a2138122354
-              with:
-                  registry: ${{ env.REGISTRY }}
-                  username: ${{ github.actor }}
-                  password: ${{ secrets.GITHUB_TOKEN }}
-
-            - name: Extract metadata (tags, labels) for Docker
-              id: meta
-              uses: docker/metadata-action@85e876bd3a78bcc6b9925c818c482e365cf13b71
-              with:
-                  images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-
-            - name: Build and push Docker image
-              id: push
-              uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
-              with:
-                  context: .
-                  push: ${{ github.event_name != 'pull_request' }}
-                  tags: ${{ steps.meta.outputs.tags }}
-                  labels: ${{ steps.meta.outputs.labels }}
-
-            - name: Generate artifact attestation
-              uses: actions/attest-build-provenance@a2bbfa25375fe432b6a289bc6b6cd05ecd0c4c32 # v4
-              with:
-                  subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
-                  subject-digest: ${{ steps.push.outputs.digest }}
-                  push-to-registry: true
