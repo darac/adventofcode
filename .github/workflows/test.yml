@@ -139,6 +139,10 @@ jobs:
             - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
               with:
                   fetch-depth: 0
+            - name: Setup Pixi
+              uses: prefix-dev/setup-pixi@a0af7a228712d6121d37aba47adf55c1332c9c2e # v0.9.4
+              with:
+                  cache: true
             - id: proj-version
               name: Obtain Project Version
               run: |
