@@ -37,7 +37,7 @@ wheels = [
 
 [[package]]
 name = "aoc"
-version = "2025.4.1"
+version = "2025.4.2"
 source = { editable = "." }
 dependencies = [
     { name = "advent-of-code-data" },
