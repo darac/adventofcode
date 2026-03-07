@@ -51,6 +51,14 @@ repos:
           #         - -o
           #         - requirements.txt
           #         - --all-extras
+    - repo: local
+      hooks:
+          - id: pixi-lock-check
+            name: Ensure pixi.lock is up to date
+            entry: pixi lock --check
+            language: system
+            pass_filenames: false
+            files: ^(pyproject\.toml|pixi\.toml|pixi\.lock)$
     - repo: https://github.com/opensource-nepal/commitlint
       rev: v1.13.3
       hooks:
