@@ -18,6 +18,7 @@
             "description": "Update GitHub Actions runner labels in matrix.os",
             "datasourceTemplate": "github-runners",
             "depNameTemplate": "github-actions-runner",
+            "versioningTemplate": "docker",
             "managerFilePatterns": [
                 "/^\\.github\\/workflows\\/.*\\.ya?ml$/"
             ],
