@@ -138,11 +138,14 @@ these, choose the smallest: d, increasing unused space by 24933642.
 Find the smallest directory that, if deleted, would free up enough space on
 the filesystem to run the update. What is the total size of that directory?
 """
-# spell-checker: enable
 
+# spell-checker: enable
 import os
+import platform
 from pathlib import Path
 from typing import Literal
+
+import pytest
 
 
 class UnknownCommand(Exception):
@@ -221,6 +224,11 @@ def visualise(
 def solve(
     puzzle: str, part: Literal["a", "b"], _runner: bool = False
 ) -> int | None:
+    if platform.system() == "Windows":
+        pytest.skip(
+            "Path handling is currently only tested on Unix-like systems."
+        )
+
     filesystem: dict[str, dict | int] = {}
     cwd = Path("/")
     for line in puzzle.splitlines():

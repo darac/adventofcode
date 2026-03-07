@@ -152,7 +152,7 @@ def solve(
     parsing_rules = True
     result = 0
     rules = []
-    ruleset = defaultdict(lambda: set())
+    ruleset = defaultdict(set)
     for line in puzzle.splitlines():
         if line.strip() == "":
             parsing_rules = False

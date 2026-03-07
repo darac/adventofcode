@@ -18,92 +18,87 @@ concurrency:
     cancel-in-progress: true
 
 jobs:
-    test:
-        name: test with ${{ matrix.python-version }} on ${{ matrix.platform }}
-        runs-on: ${{ matrix.platform }}
-        strategy:
-            fail-fast: false
-            matrix:
-                python-version:
-                    - "3.14"
-                    - "3.13"
-                    - "3.12"
-                platform:
-                    - ubuntu-latest
-                    - macos-latest
-                    # - windows-latest
+    lint:
+        name: Lint with ruff and ty
+        runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
               with:
                   fetch-depth: 0
 
-            - name: Setup UV
-              uses: astral-sh/setup-uv@5a095e7a2014a4212f075830d4f7277575a9d098 # v7
+            - name: Setup Pixi
+              uses: prefix-dev/setup-pixi@v0.9.4
               with:
-                  activate-environment: true
-                  python-version: ${{ matrix.python-version }}
+                  cache: true
 
-            - name: Add .local/bin to Windows PATH
-              if: runner.os == 'Windows'
-              shell: bash
-              run: echo "$USERPROFILE/.local/bin" >> $GITHUB_PATH
+            - name: Run ruff
+              run:
+                  pixi run --environment dev ruff check aoc tests --output-format json --output-file
+                  ruff.json
 
-            - uses: ConorMacBride/install-package@3e7ad059e07782ee54fa35f827df52aae0626f30 # v1
+            - name: Ruff for GitHub annotations
+              if: github.event_name == 'pull_request'
+              run: pixi run --environment dev ruff check aoc tests --output-format github
+
+            - name: Upload ruff report
+              if: success() || failure()
+              uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
               with:
-                  brew:
-                      libavif libjpeg libraqm libtiff little-cms2 openjpeg webp
-                  apt:
-                      libfreetype6-dev libfribidi-dev libgl-dev libharfbuzz-dev
-                      libjpeg8-dev liblcms2-dev libopenjp2-7-dev libtiff5-dev
-                      libwebp-dev libxcb1-dev python3-tk tcl8.6-dev tk8.6-dev
-                      zlib1g-dev
+                  name: ruff-${{ github.run_id }}
+                  path: ruff.json
+                  retention-days: 1
 
-            - name: Install tox
-              run:
-                  uv tool install --python-preference only-managed --python ${{
-                  matrix.python-version }} tox --with tox-uv --with
-                  tox-gh-actions
+            - name: Run type checks
+              run: pixi run --environment dev ty check aoc tests --output-format github
 
-            - name: Setup Python
-              run:
-                  uv python install --python-preference only-managed ${{
-                  matrix.python-version }}
+    test:
+        name: test with ${{ matrix.python-environment }} on ${{ matrix.os }}
+        runs-on: ${{ matrix.os }}
+        strategy:
+            fail-fast: false
+            matrix:
+                python-environment:
+                    - py312
+                    - py313
+                    - py314
+                os:
+                    - ubuntu-24.04 # renovate: runner
+                    - macos-15 # renovate: runner
+                    - windows-2022 # renovate: runner
+        steps:
+            - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+              with:
+                  fetch-depth: 0
 
-            - name: Setup Tests
-              run: tox run -vv --notest --skip-missing-interpreters false
-              env:
-                  TOX_GH_MAJOR_MINOR: ${{ matrix.python-version }}
+            - name: Setup Pixi
+              uses: prefix-dev/setup-pixi@v0.9.4
+              with:
+                  cache: true
 
             - name: Run test suite
-              run: tox run --skip-pkg-install
               env:
-                  AOC_SESSION: ${{ secrets.AOC_SESSION }}
-                  TOX_GH_MAJOR_MINOR: ${{ matrix.python-version }}
-
-            - name: Rename reports
-              if: success() || failure()
-              run: |
-                  mv junit.xml "junit-${{ matrix.platform }}-${{ matrix.python-version }}.xml"
-                  [ -f ruff .json ] && mv ruff.json "ruff-${{ matrix.platform }}-${{ matrix.python-version }}.json"
-                  [ -f coverage.xml ] && mv coverage.xml "coverage-${{ matrix.platform }}-${{ matrix.python-version }}.xml"
+                  AOC_SESSION: "${{ secrets.AOC_SESSION }}"
+                  JUNIT_XML: "junit-${{ matrix.os }}-${{ matrix.python-environment }}.xml"
+                  COVERAGE_XML: "coverage-${{ matrix.os }}-${{ matrix.python-environment }}.xml"
+              run:
+                  pixi run --environment ${{ matrix.python-environment }} pytest -vv --junit-xml=${{
+                  env.JUNIT_XML }} --cov-report=xml:${{ env.COVERAGE_XML }}
 
             - name: Upload JUnit results
               if: success() || failure()
               uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
               with:
-                  name:
-                      junit-${{ matrix.platform }}-${{ matrix.python-version }}
+                  name: junit-${{ matrix.os }}-${{ matrix.python-environment }}
                   path: |
-                      coverage*.xml
+                      coverage-*.xml
                       junit-*.xml
-                      ruff-*.json
                   retention-days: 1
 
             - name: Publish Test Report
               uses: dorny/test-reporter@3d76b34a4535afbd0600d347b09a6ee5deb3ed7f # v2
               if: success() || failure()
               with:
-                  name: Tox Tests (${{ matrix.python-version }})
+                  name: Tox Tests (${{ matrix.python-environment }})
                   path: "junit-*.xml"
                   reporter: java-junit
 
@@ -111,8 +106,7 @@ jobs:
         name: check if SONAR_TOKEN is set in github secrets
         runs-on: ubuntu-latest
         outputs:
-            is_SONAR_TOKEN_set:
-                ${{ steps.checksecret_job.outputs.is_SONAR_TOKEN_set }}
+            is_SONAR_TOKEN_set: ${{ steps.checksecret_job.outputs.is_SONAR_TOKEN_set }}
         steps:
             - name: Check whether Sonar Scan should be done
               id: checksecret_job
@@ -124,6 +118,7 @@ jobs:
 
     sonar:
         needs:
+            - lint
             - test
             - check_sonar_secret
         concurrency: release
@@ -162,8 +157,7 @@ jobs:
                   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
               with:
                   args: >
-                      -Dsonar.projectVersion=${{
-                      steps.proj-version.outputs.value }}
+                      -Dsonar.projectVersion=${{ steps.proj-version.outputs.value }}
 
     release:
         needs: test
