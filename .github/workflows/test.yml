@@ -43,7 +43,9 @@ jobs:
                   cache: true
 
             - name: Run test suite
-              run: pixi run --environment ${{ matrix.python-environment }} test
+              run:
+                  pixi run --environment ${{ matrix.python-environment }}
+                  ci-test
               env:
                   AOC_SESSION: ${{ secrets.AOC_SESSION }}
 
