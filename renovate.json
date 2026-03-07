@@ -23,9 +23,9 @@
                 "/^\\.github\\/workflows\\/.*\\.ya?ml$/"
             ],
             "matchStrings": [
-                "(?:^|\\r\\n|\\r|\\n)\\s*-\\s*(?<platform>ubuntu|macos|windows)-(?<currentValue>latest|\\d{2}\\.\\d{2}|\\d{4}|\\d{2})\\s+#\\s*renovate:\\s*runner\\s*(?:\\r\\n|\\r|\\n|$)"
+                "(?<prefix>(?:^|\\r\\n|\\r|\\n)\\s*-\\s*(?<platform>ubuntu|macos|windows)-)(?<currentValue>latest|\\d{2}\\.\\d{2}|\\d{4}|\\d{2})(?<suffix>\\s+#\\s*renovate:\\s*runner\\s*(?:\\r\\n|\\r|\\n|$))"
             ],
-            "autoReplaceStringTemplate": "- {{packageName}}-{{newValue}} # renovate: runner"
+            "autoReplaceStringTemplate": "{{prefix}}{{newValue}}{{suffix}}"
         }
     ],
     "extends": [

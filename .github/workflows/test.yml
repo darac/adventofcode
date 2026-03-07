@@ -7,7 +7,7 @@ jobs:
         name: check if SONAR_TOKEN is set in github secrets
         outputs:
             is_SONAR_TOKEN_set: ${{ steps.checksecret_job.outputs.is_SONAR_TOKEN_set }}
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-latest # renovate: runner
         steps:
             - env:
                   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -28,7 +28,7 @@ jobs:
             contents: read
             id-token: write
             packages: write
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-latest # renovate: runner
         steps:
             - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
             - name: Log in to the container registry
@@ -58,7 +58,7 @@ jobs:
                   subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
     lint:
         name: Lint with ruff and ty
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-latest # renovate: runner
         steps:
             - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
               with:
@@ -94,7 +94,7 @@ jobs:
         permissions:
             contents: write
             id-token: write
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-latest # renovate: runner
         steps:
             # Note: we need to checkout the repository at the workflow sha in case during the workflow
             # the branch was updated. To keep PSR working with the configured release branches,
@@ -134,7 +134,7 @@ jobs:
             - lint
             - test
             - check_sonar_secret
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-latest # renovate: runner
         steps:
             - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
               with:
