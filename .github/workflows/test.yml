@@ -18,6 +18,33 @@ concurrency:
     cancel-in-progress: true
 
 jobs:
+    lint:
+        name: Lint with ruff and ty
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+              with:
+                  fetch-depth: 0
+
+            - name: Setup Pixi
+              uses: prefix-dev/setup-pixi@v0.9.4
+              with:
+                  cache: true
+
+            - name: Run ruff
+              run: pixi run ci-lint
+
+            - name: Upload ruff report
+              if: success() || failure()
+              uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
+              with:
+                  name: ruff-${{ github.run_id }}
+                  path: ruff.json
+                  retention-days: 1
+
+            - name: Run type checks
+              run: pixi run type
+
     test:
         name: test with ${{ matrix.python-environment }} on ${{ matrix.os }}
         runs-on: ${{ matrix.os }}
@@ -43,18 +70,15 @@ jobs:
                   cache: true
 
             - name: Run test suite
-              run:
-                  pixi run --environment ${{ matrix.python-environment }}
-                  ci-test
               env:
-                  AOC_SESSION: ${{ secrets.AOC_SESSION }}
-
-            - name: Rename reports
-              if: success() || failure()
+                  AOC_SESSION: "${{ secrets.AOC_SESSION }}"
+                  JUNIT_XML: "junit-${{ matrix.os }}-${{ matrix.python-environment }}.xml"
+                  COVERAGE_XML: "coverage-${{ matrix.os }}-${{ matrix.python-environment }}.xml"
               run: |
-                  mv junit.xml "junit-${{ matrix.os }}-${{ matrix.python-environment }}.xml"
-                  [ -f ruff .json ] && mv ruff.json "ruff-${{ matrix.os }}-${{ matrix.python-environment }}.json"
-                  [ -f coverage.xml ] && mv coverage.xml "coverage-${{ matrix.os }}-${{ matrix.python-environment }}.xml"
+                  pixi run --environment ${{ matrix.python-environment }} \
+                  pytest -vv \
+                  --junit-xml=${{ env.JUNIT_XML }} \
+                  --cov-report=xml:${{ env.COVERAGE_XML }}
 
             - name: Upload JUnit results
               if: success() || failure()
@@ -62,9 +86,8 @@ jobs:
               with:
                   name: junit-${{ matrix.os }}-${{ matrix.python-environment }}
                   path: |
-                      coverage*.xml
+                      coverage-*.xml
                       junit-*.xml
-                      ruff-*.json
                   retention-days: 1
 
             - name: Publish Test Report
@@ -79,8 +102,7 @@ jobs:
         name: check if SONAR_TOKEN is set in github secrets
         runs-on: ubuntu-latest
         outputs:
-            is_SONAR_TOKEN_set:
-                ${{ steps.checksecret_job.outputs.is_SONAR_TOKEN_set }}
+            is_SONAR_TOKEN_set: ${{ steps.checksecret_job.outputs.is_SONAR_TOKEN_set }}
         steps:
             - name: Check whether Sonar Scan should be done
               id: checksecret_job
@@ -130,8 +152,7 @@ jobs:
                   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
               with:
                   args: >
-                      -Dsonar.projectVersion=${{
-                      steps.proj-version.outputs.value }}
+                      -Dsonar.projectVersion=${{ steps.proj-version.outputs.value }}
 
     release:
         needs: test
