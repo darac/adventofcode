@@ -43,7 +43,7 @@ jobs:
                   cache: true
 
             - name: Install tox
-              run: pixi global install tox --with tox-uv --with tox-gh-actions
+              run: pixi global install tox --with tox-uv # --with tox-gh-actions
 
             - name: Setup Python
               uses: actions/setup-python@v6
