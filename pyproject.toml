@@ -202,8 +202,8 @@ uv build
     links.homepage              = "https://github.com/darac/adventofcode/"
     organization                = "darac"
     projectKey                  = "darac_adventofcode"
-    python.coverage.reportPaths = "*coverage*.xml"
-    python.ruff.reportPaths     = "ruff*.json"
+    python.coverage.reportPaths = "coverage*.xml"
+    python.ruff.reportPaths     = "ruff.json"
     python.version              = "3.12"
     python.xunit.reportPath     = "junit*.xml"
     python.xunit.skipDetails    = true
