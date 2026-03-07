@@ -80,11 +80,9 @@ jobs:
                   AOC_SESSION: "${{ secrets.AOC_SESSION }}"
                   JUNIT_XML: "junit-${{ matrix.os }}-${{ matrix.python-environment }}.xml"
                   COVERAGE_XML: "coverage-${{ matrix.os }}-${{ matrix.python-environment }}.xml"
-              run: |
-                  pixi run --environment ${{ matrix.python-environment }} \
-                  pytest -vv \
-                  --junit-xml=${{ env.JUNIT_XML }} \
-                  --cov-report=xml:${{ env.COVERAGE_XML }}
+              run:
+                  pixi run --environment ${{ matrix.python-environment }} pytest -vv --junit-xml=${{
+                  env.JUNIT_XML }} --cov-report=xml:${{ env.COVERAGE_XML }}
 
             - name: Upload JUnit results
               if: success() || failure()
