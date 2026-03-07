@@ -12,6 +12,19 @@
             ],
             "registryUrlTemplate": "https://deb.debian.org/debian?suite={{#if suite }}{{suite}}{{else}}stable{{/if}}&components=main,contrib,non-free&binaryArch=amd64",
             "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}deb{{/if}}"
+        },
+        {
+            "customType": "regex",
+            "description": "Update GitHub Actions runner labels in matrix.platform",
+            "datasourceTemplate": "github-runners",
+            "depNameTemplate": "github-actions-runner",
+            "versioningTemplate": "loose",
+            "managerFilePatterns": [
+                "/^\\.github\\/workflows\\/.*\\.ya?ml$/"
+            ],
+            "matchStrings": [
+                "(?m)^\\s*-\\s*(?<currentValue>(?:ubuntu|macos|windows)-(?:latest|\\d{2}\\.\\d{2}|\\d{4}))\\s+#\\s*renovate:\\s*runner\\s*$"
+            ]
         }
     ],
     "extends": [
