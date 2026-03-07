@@ -32,7 +32,13 @@ jobs:
                   cache: true
 
             - name: Run ruff
-              run: pixi run ci-lint
+              run:
+                  pixi run --environment dev ruff check aoc tests --output-format json --output-file
+                  ruff.json
+
+            - name: Ruff for GitHub annotations
+              if: github.event_name == 'pull_request'
+              run: pixi run --environment dev ruff check aoc tests --output-format github
 
             - name: Upload ruff report
               if: success() || failure()
@@ -43,7 +49,7 @@ jobs:
                   retention-days: 1
 
             - name: Run type checks
-              run: pixi run type
+              run: pixi run --environment dev ty check aoc tests --output-format github
 
     test:
         name: test with ${{ matrix.python-environment }} on ${{ matrix.os }}
@@ -114,6 +120,7 @@ jobs:
 
     sonar:
         needs:
+            - lint
             - test
             - check_sonar_secret
         concurrency: release
