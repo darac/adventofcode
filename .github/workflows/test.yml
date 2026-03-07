@@ -51,10 +51,10 @@ jobs:
                   python-version: ${{ matrix.python-version }}
 
             - name: Run test suite
-              run: tox run -vv
+              run: tox run -vv -e ci-${{ matrix.python-version }}
               env:
                   AOC_SESSION: ${{ secrets.AOC_SESSION }}
-                  TOX_GH_MAJOR_MINOR: ${{ matrix.python-version }}
+                  #   TOX_GH_MAJOR_MINOR: ${{ matrix.python-version }}
 
             - name: Rename reports
               if: success() || failure()
