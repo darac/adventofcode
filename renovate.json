@@ -26,6 +26,20 @@
                 "(?<prefix>(?:^|\\r\\n|\\r|\\n)[^\\S\\r\\n]*-[^\\S\\r\\n]*(?<platform>ubuntu|macos|windows)-)(?<currentValue>latest|\\d{2}\\.\\d{2}|\\d{4}|\\d{2})(?<suffix>[^\\S\\r\\n]*#[^\\S\\r\\n]*renovate:[^\\S\\r\\n]*runner[^\\S\\r\\n]*)"
             ],
             "autoReplaceStringTemplate": "{{prefix}}{{newValue}}{{suffix}}"
+        },
+        {
+            "customType": "regex",
+            "description": "Update Windows runner label in matrix.os",
+            "datasourceTemplate": "github-runners",
+            "packageNameTemplate": "windows",
+            "versioningTemplate": "docker",
+            "managerFilePatterns": [
+                "/^\\.github\\/workflows\\/test\\.ya?ml$/"
+            ],
+            "matchStrings": [
+                "(?<prefix>(?:^|\\r\\n|\\r|\\n)[^\\S\\r\\n]*-[^\\S\\r\\n]*windows-)(?<currentValue>latest|\\d{4})(?<suffix>[^\\S\\r\\n]*#[^\\S\\r\\n]*renovate:[^\\S\\r\\n]*runner[^\\S\\r\\n]*)"
+            ],
+            "autoReplaceStringTemplate": "{{prefix}}{{newValue}}{{suffix}}"
         }
     ],
     "extends": [
