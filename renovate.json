@@ -37,7 +37,7 @@
                 "/^\\.github\\/workflows\\/test\\.ya?ml$/"
             ],
             "matchStrings": [
-                "(?<prefix>(?:^|\r\n|\r|\n)\\s*-\\s*windows-)(?<currentValue>latest|\\d{4})(?<suffix>\\s*#\\s*renovate:\\s*runner)"
+                "(?m)^(?<prefix>\\s*-\\s*windows-)(?<currentValue>latest|\\d{4})(?<suffix>\\s*#\\s*renovate:\\s*runner\\s*)$"
             ],
             "autoReplaceStringTemplate": "{{prefix}}{{newValue}}{{suffix}}"
         }
