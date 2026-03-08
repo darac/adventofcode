@@ -220,7 +220,7 @@ jobs:
                 os:
                     - macos-15 # renovate: runner
                     - ubuntu-24.04 # renovate: runner
-                    - windows-2022 # renovate: runner
+                    - windows-2025 # renovate: runner
                 python-environment:
                     - py312
                     - py313
