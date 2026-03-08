@@ -13,33 +13,18 @@
             "registryUrlTemplate": "https://deb.debian.org/debian?suite={{#if suite }}{{suite}}{{else}}stable{{/if}}&components=main,contrib,non-free&binaryArch=amd64",
             "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}deb{{/if}}"
         },
-        // {
-        //     "customType": "regex",
-        //     "description": "Update GitHub Actions runner labels in matrix.os",
-        //     "datasourceTemplate": "github-runners",
-        //     "packageNameTemplate": "{{platform}}",
-        //     "versioningTemplate": "docker",
-        //     "managerFilePatterns": [
-        //         "/^\\.github\\/workflows\\/.*\\.ya?ml$/"
-        //     ],
-        //     "matchStrings": [
-        //         "(?<prefix>(?:^|\\r\\n|\\r|\\n)[^\\S\\r\\n]*-[^\\S\\r\\n]*(?<platform>ubuntu|macos|windows)-)(?<currentValue>latest|\\d{2}\\.\\d{2}|\\d{4}|\\d{2})(?<suffix>[^\\S\\r\\n]*#[^\\S\\r\\n]*renovate:[^\\S\\r\\n]*runner[^\\S\\r\\n]*)"
-        //     ],
-        //     "autoReplaceStringTemplate": "{{prefix}}{{newValue}}{{suffix}}"
-        // },
         {
             "customType": "regex",
-            "description": "Update Windows runner label in matrix.os",
+            "description": "Update GitHub runner labels in matrix.os",
             "datasourceTemplate": "github-runners",
-            "packageNameTemplate": "windows",
             "versioningTemplate": "docker",
             "managerFilePatterns": [
                 "/^\\.github\\/workflows\\/test\\.ya?ml$/"
             ],
             "matchStrings": [
-                "(?m)^\\s*-\\s*windows-(?<currentValue>latest|\\d{4})\\s*#\\s*renovate:\\s*runner\\s*$"
+                "(?m)^\\s*-\\s*(?<depName>ubuntu|windows|macos)-(?<currentValue>latest|\\d{4}|\\d+(?:\\.\\d+)?)\\s*#\\s*renovate:\\s*runner\\s*$"
             ],
-            "autoReplaceStringTemplate": "                    - windows-{{newValue}} # renovate: runner"
+            "autoReplaceStringTemplate": "                    - {{depName}}-{{newValue}} # renovate: runner"
         }
     ],
     "extends": [
