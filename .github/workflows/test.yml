@@ -39,7 +39,7 @@ jobs:
                   username: ${{ github.actor }}
             - id: meta
               name: Extract metadata (tags, labels) for Docker
-              uses: docker/metadata-action@85e876bd3a78bcc6b9925c818c482e365cf13b71
+              uses: docker/metadata-action@b13d25e5fcf2e04305d8aedc9a6c28ebe258e934
               with:
                   images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
             - id: push
