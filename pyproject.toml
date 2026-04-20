@@ -128,13 +128,11 @@
 [tool.pixi.tasks]
     ci-lint = "ruff check aoc --output-format json --output-file ruff.json"
     ci-test = "pytest -vv"
-    lint    = "ruff check aoc"
+    lint    = "ruff check aoc tests && ty check aoc tests"
     test    = "pytest"
-    type    = "ty check aoc tests"
 
     test-all = """
 pixi run lint &&
-pixi run type &&
 pixi run --environment py312 test &&
 pixi run --environment py313 test &&
 pixi run --environment py314 test

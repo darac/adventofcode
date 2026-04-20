@@ -2730,7 +2730,7 @@ packages:
 - pypi: ./
   name: aoc
   version: 2025.4.2
-  sha256: fc434387d46deddbcdd0b815903b99055bc23f54e1e05a45a5234a5aa4b2311d
+  sha256: 9754ab611b8e922dc0c955626b73ef990f21b637c9f6d885ccfd2e9581f73155
   requires_dist:
   - advent-of-code-data>=2.0.1
   - kivy[base]>=2.3.0
