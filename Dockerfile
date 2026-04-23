@@ -75,7 +75,7 @@ RUN --mount=type=cache,target=/root/.cache \
 
 ##########################################################################
 
-FROM debian:13.4@sha256:3352c2e13876c8a5c5873ef20870e1939e73cb9a3c1aeba5e3e72172a85ce9ed
+FROM debian:13.4@sha256:35b8ff74ead4880f22090b617372daff0ccae742eb5674455d542bef71ef1999
 SHELL ["sh", "-exc"]
 
 # Optional: add the application virtualenv to search path.
