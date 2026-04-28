@@ -27,7 +27,7 @@
             "ppa": true,
             "version": "os-provided"
         },
-        "ghcr.io/devcontainers/features/node:1": {
+        "ghcr.io/devcontainers/features/node:2": {
             "installYarnUsingApt": true,
             "nodeGypDependencies": true,
             "nvmVersion": "v0.40.3",
