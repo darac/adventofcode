@@ -175,6 +175,7 @@ jobs:
               with:
                   args: >
                       -Dsonar.projectVersion=${{ steps.proj-version.outputs.version }}
+                      -Dsonar.qualitygate.wait=true
 
     test:
         name: test with ${{ matrix.python-environment }} on ${{ matrix.os }}
