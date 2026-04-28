@@ -68,12 +68,10 @@ jobs:
               with:
                   cache: true
             - name: Run ruff
-              run:
-                  pixi run --environment dev ruff check aoc tests --output-format json --output-file
-                  ruff.json
+              run: pixi run --environment dev ruff check src tests --output-format json --output-file ruff.json
             - if: github.event_name == 'pull_request'
               name: Ruff for GitHub annotations
-              run: pixi run --environment dev ruff check aoc tests --output-format github
+              run: pixi run --environment dev ruff check src tests --output-format github
             - if: success() || failure()
               name: Upload ruff report
               uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
@@ -82,11 +80,10 @@ jobs:
                   path: ruff.json
                   retention-days: 1
             - name: Run type checks
-              run: pixi run --environment dev ty check aoc tests --output-format github
+              run: pixi run --environment dev ty check src tests --output-format github
     release:
         concurrency: release
-        if:
-            github.event_name == 'push' && github.ref == 'refs/heads/main' &&
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' &&
             !contains(github.event.head_commit.message, 'chore(release):')
         needs: test
         outputs:
@@ -195,8 +192,7 @@ jobs:
                   COVERAGE_XML: "coverage-${{ matrix.os }}-${{ matrix.python-environment }}.xml"
                   JUNIT_XML: "junit-${{ matrix.os }}-${{ matrix.python-environment }}.xml"
               name: Run test suite
-              run:
-                  pixi run --environment ${{ matrix.python-environment }} pytest -vv --junit-xml=${{
+              run: pixi run --environment ${{ matrix.python-environment }} pytest -vv --junit-xml=${{
                   env.JUNIT_XML }} --cov-report=xml:${{ env.COVERAGE_XML }}
             - if: success() || failure()
               name: Upload JUnit results
