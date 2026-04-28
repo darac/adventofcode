@@ -105,8 +105,9 @@ def filter_reports(crit: str, data: list[str]) -> str:
         )
         output = list(
             filter(
-                lambda n, common=common, position=position: n[position]
-                == common,
+                lambda n, common=common, position=position: (
+                    n[position] == common
+                ),
                 output,
             )
         )

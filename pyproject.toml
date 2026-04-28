@@ -54,7 +54,7 @@
     directory = "htmlcov"
 
 [tool.coverage.paths]
-    source = ["*/site-packages", "aoc"]
+    source = ["*/site-packages", "src/aoc"]
 
 [tool.coverage.report]
     exclude_lines = [
@@ -72,12 +72,15 @@
 
 [tool.coverage.run]
     branch         = true
-    omit           = ["aoc/__init__.py", "aoc/visualisations/*"]
+    omit           = ["src/aoc/__init__.py", "src/aoc/visualisations/*"]
     relative_files = true
-    source         = ["aoc"]
+    source         = ["src/aoc"]
+
+[tool.hatch.build.targets.wheel]
+    packages = ["src/aoc"]
 
 [tool.mypy]
-    files                  = ["aoc/"]
+    files                  = ["src/aoc/"]
     ignore_missing_imports = true
     warn_return_any        = true
     warn_unused_configs    = true
@@ -123,12 +126,14 @@
     pyyaml          = "*"
 
 [tool.pixi.pypi-dependencies]
-    aoc = { path = ".", editable = true }
+    aoc   = { path = ".", editable = true }
+    build = "*"
 
 [tool.pixi.tasks]
-    ci-lint = "ruff check aoc --output-format json --output-file ruff.json"
+    build   = "python -m build"
+    ci-lint = "ruff check src/aoc --output-format json --output-file ruff.json"
     ci-test = "pytest -vv"
-    lint    = "ruff check aoc tests && ty check aoc tests"
+    lint    = "ruff check src/aoc tests && ty check src/aoc tests"
     test    = "pytest"
 
     test-all = """
@@ -153,7 +158,6 @@ pixi run --environment py314 test
     ]
     pythonPlatform = "All"
     pythonVersion = "3.12"
-    venv = "/home/vscode/.venv"
 
 [tool.pytest.ini_options]
     addopts = """\
@@ -164,6 +168,7 @@ pixi run --environment py314 test
     --timeout=300 \
     """
     junit_suite_name = "aoc"
+    pythonpath = ["src/"]
 
 [tool.ruff]
     # The AOC website wraps at 76 chars, so should we.
@@ -183,20 +188,15 @@ pixi run --environment py314 test
     target-version = "py312"
 
 [tool.semantic_release]
-    build_command = """
-pip install uv
-uv lock
-git add uv.lock
-uv build
-"""
-    version_toml = ["pyproject.toml:project.version"]
-    version_variables = ["aoc/__init__.py:__version__"]
+    build_command     = "pixi run build"
+    version_toml      = ["pyproject.toml:project.version"]
+    version_variables = ["src/aoc/__init__.py:__version__"]
 
     [tool.semantic_release.changelog.environment]
         autoescape = true
 
 [tool.sonar]
-    coverage.exclusions         = "aoc/visualisations/**,**/__init__.py"
+    coverage.exclusions         = "src/aoc/visualisations/**,**/__init__.py"
     links.homepage              = "https://github.com/darac/adventofcode/"
     organization                = "darac"
     projectKey                  = "darac_adventofcode"
@@ -205,5 +205,5 @@ uv build
     python.version              = "3.12"
     python.xunit.reportPath     = "junit*.xml"
     python.xunit.skipDetails    = true
-    sources                     = "aoc/"
+    sources                     = "src/"
     tests                       = "tests/"
