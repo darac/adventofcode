@@ -7,7 +7,7 @@ years and days.
 import importlib
 import os
 
-__version__ = "2025.4.2"
+__version__ = "2025.5.0"
 
 
 def solve(year: int, day: int, data: str) -> tuple[int | None, ...]:
