@@ -111,6 +111,10 @@ jobs:
                   version: latest
             - name: Setup | Install Python
               run: uv python install
+            - name: Setup Pixi
+              uses: prefix-dev/setup-pixi@1b2de7f3351f171c8b4dfeb558c639cb58ed4ec0 # v0.9.5
+              with:
+                  cache: true
             - id: release
               name: Action | Semantic Version Release
               # Adjust tag with desired version if applicable.
