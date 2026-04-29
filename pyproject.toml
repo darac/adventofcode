@@ -60,14 +60,14 @@
     exclude_lines = [
         "def __repr__",
         "if 0:",
-        "if __name__ == __main__:",
+        "if __name__ == .__main__.:",
         "if self.debug",
         "if settings.DEBUG:",
         "pragma: no cover",
         "raise AssertionError",
         "raise NotImplementedError",
     ]
-    fail_under = 60
+    fail_under = 80
     show_missing = true
 
 [tool.coverage.run]

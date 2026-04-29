@@ -43,10 +43,12 @@
     "cSpell.language": "en-GB",
     "ruff.configuration": "pyproject.toml",
     "python.testing.pytestPath": "uv run pytest",
-    "python.defaultInterpreterPath": "/home/vscode/.venv/bin/python",
     "python.testing.pytestArgs": [
         "-p no:randomly"
     ],
+    "[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff"
+    },
     "ruff.lineLength": 76,
     "yaml.format.printWidth": 100,
     "evenBetterToml.formatter.columnWidth": 100,

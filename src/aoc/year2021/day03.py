@@ -1,4 +1,59 @@
+# spell-checker: disable
 """
+The submarine has been making some odd creaking noises, so you ask it to
+produce a diagnostic report just in case.
+
+The diagnostic report (your puzzle input) consists of a list of binary
+numbers which, when decoded properly, can tell you many useful things about
+the conditions of the submarine. The first parameter to check is the power
+consumption.
+
+You need to use the binary numbers in the diagnostic report to generate two
+new binary numbers (called the gamma rate and the epsilon rate). The power
+consumption can then be found by multiplying the gamma rate by the epsilon
+rate.
+
+Each bit in the gamma rate can be determined by finding the most common bit
+in the corresponding position of all numbers in the diagnostic report. For
+example, given the following diagnostic report:
+
+00100
+11110
+10110
+10111
+10101
+01111
+00111
+11100
+10000
+11001
+00010
+01010
+
+Considering only the first bit of each number, there are five 0 bits and
+seven 1 bits. Since the most common bit is 1, the first bit of the gamma
+rate is 1.
+
+The most common second bit of the numbers in the diagnostic report is 0, so
+the second bit of the gamma rate is 0.
+
+The most common value of the third, fourth, and fifth bits are 1, 1, and 0,
+respectively, and so the final three bits of the gamma rate are 110.
+
+So, the gamma rate is the binary number 10110, or 22 in decimal.
+
+The epsilon rate is calculated in a similar way; rather than use the most
+common bit, the least common bit from each position is used. So, the
+epsilon rate is 01001, or 9 in decimal. Multiplying the gamma rate (22) by
+the epsilon rate (9) produces the power consumption, 198.
+
+Use the binary numbers in your diagnostic report to calculate the gamma rate
+and epsilon rate, then multiply them together. What is the power
+consumption of the submarine? (Be sure to represent your answer in decimal,
+not binary.)
+
+---
+
 Next, you should verify the life support rating, which can be determined by
 multiplying the oxygen generator rating by the CO2 scrubber rating.
 
@@ -70,10 +125,15 @@ Use the binary numbers in your diagnostic report to calculate the oxygen
 generator rating and CO2 scrubber rating, then multiply them together. What
 is the life support rating of the submarine? (Be sure to represent your
 answer in decimal, not binary.)
-"""
 
-from aocd.models import Puzzle
-from rich import print  # noqa: A004
+"""
+# spell-checker: enable
+
+from typing import Literal
+
+from rich.progress import track
+
+from aoc.year2021 import LOG
 
 
 def common_bit(crit: str, position: int, data: list[str]) -> str:
@@ -115,13 +175,49 @@ def filter_reports(crit: str, data: list[str]) -> str:
     return output[0]
 
 
-reports = Puzzle(year=2021, day=3).input_data.splitlines()
-generator_rating = filter_reports("most", reports)
-scrubber_rating = filter_reports("least", reports)
+def solve(
+    puzzle: str, part: Literal["a", "b"], _runner: bool = False
+) -> int | None:
+    solution = None
+    if part == "a":
+        counts = {}
+        for report in track(puzzle.splitlines()):
+            for i, c in enumerate(report):
+                if i not in counts:
+                    counts[i] = {"0": 0, "1": 0}
+                counts[i][c] += 1
 
-print(f"O₂ Generator: {generator_rating} = {int(generator_rating, 2)}")
-print(f"CO₂ Scrubber: {scrubber_rating} = {int(scrubber_rating, 2)}")
-print(
-    "Power Consumption: "
-    f"{int(generator_rating, 2) * int(scrubber_rating, 2)}"
-)
+        gamma = epsilon = ""
+        for i in sorted(counts.keys()):
+            if counts[i]["0"] > counts[i]["1"]:
+                gamma += "0"
+                epsilon += "1"
+            else:
+                gamma += "1"
+                epsilon += "0"
+
+        LOG.info("Gamma: %s = %s", gamma, int(gamma, 2))
+        LOG.info("Epsilon: %s = %s", epsilon, int(epsilon, 2))
+        LOG.info("Power Consumption: %s", int(gamma, 2) * int(epsilon, 2))
+        solution = int(gamma, 2) * int(epsilon, 2)
+    else:
+        reports = puzzle.splitlines()
+        generator_rating = filter_reports("most", reports)
+        scrubber_rating = filter_reports("least", reports)
+
+        LOG.info(
+            "O₂ Generator: %s = %s",
+            generator_rating,
+            int(generator_rating, 2),
+        )
+        LOG.info(
+            "CO₂ Scrubber: %s = %s",
+            scrubber_rating,
+            int(scrubber_rating, 2),
+        )
+        LOG.info(
+            "Power Consumption: %s",
+            int(generator_rating, 2) * int(scrubber_rating, 2),
+        )
+        solution = int(generator_rating, 2) * int(scrubber_rating, 2)
+    return solution
