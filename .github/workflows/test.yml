@@ -117,12 +117,10 @@ jobs:
                   cache: true
             - id: release
               name: Action | Semantic Version Release
-              # Adjust tag with desired version if applicable.
-              uses: python-semantic-release/python-semantic-release@350c48fcb3ffcdfd2e0a235206bc2ecea6b69df0 # v10.5.3
-              with:
-                  git_committer_email: "actions@users.noreply.github.com"
-                  git_committer_name: "github-actions"
-                  github_token: ${{ secrets.GITHUB_TOKEN }}
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              run: |
+                  pixi run semantic-release publish
             - if: steps.release.outputs.released == 'true'
               name: Publish | Upload to GitHub Release Assets
               uses: python-semantic-release/publish-action@310a9983a0ae878b29f3aac778d7c77c1db27378 # v10.5.3
