@@ -1,95 +1,32 @@
 # syntax=docker/dockerfile:1.23@sha256:2780b5c3bab67f1f76c781860de469442999ed1a0d7992a5efdf2cffc0e3d769
 # Keep this syntax directive! It's used to enable Docker BuildKit
 
-FROM debian:13.4-slim@sha256:4ffb3a1511099754cddc70eb1b12e50ffdb67619aa0ab6c13fcd800a78ef7c7a AS build
+FROM ghcr.io/prefix-dev/pixi@sha256:dcbd578e3cd2ab21bb16ddb872704c41f7bd1b49a02be5a8a5c062ada14b12f8 AS build
 
 SHELL ["sh", "-exc"]
+WORKDIR /app
 
-# renovate: suite=trixie depName=build-essential
-ARG BUILD_ESSENTIAL_VERSION="12.12"
-# renovate: suite=trixie depName=ca-certificates
-ARG CA_CERTIFICATES_VERSION="20250419"
-# renovate: suite=trixie depName=python3-setuptools
-ARG PYTHON3_SETUPTOOLS_VERSION="78.1.1-0.1"
-# renovate: suite=trixie depName=python3-dev
-ARG PYTHON3_DEV_VERSION="3.13.5-1"
-
-## Start Build Prep
-RUN <<EOT
-apt-get update -qy
-apt-get install -qyy \
-    -o APT::Install-Recommends=false \
-    -o APT::Install-Suggests=false \
-    build-essential="${BUILD_ESSENTIAL_VERSION}" \
-    ca-certificates="${CA_CERTIFICATES_VERSION}" \
-    python3-dev="${PYTHON3_DEV_VERSION}" \
-    python3-setuptools="${PYTHON3_SETUPTOOLS_VERSION}"
-apt-get clean
-EOT
-
-COPY --from=ghcr.io/astral-sh/uv:0.11-python3.13-trixie-slim@sha256:3a99382378e1d3d67c6d671cddbfd7a17f3b064db802c3afe9d29406c36a6dc2 /uv /usr/local/bin/uv
-
-# - Silence uv complaining about not being able to use hard links,
-# - tell uv to byte-compile packages for faster application startups,
-# - prevent uv from accidentally downloading isolated Python builds,
-# - pick a Python,
-# - and finally declare `/app` as the target for `uv sync`.
-ENV UV_LINK_MODE=copy \
-    UV_COMPILE_BYTECODE=1 \
-    UV_PYTHON_DOWNLOADS=never \
-    UV_PYTHON=python3.13 \
-    UV_PROJECT_ENVIRONMENT=/app
-
-### End Build Prep -- this is where your Dockerfile should start.
-
-# Since there's no point in shipping lock files, we move them
-# into a directory that is NOT copied into the runtime image.
-# The trailing slash makes COPY create `/_lock/` automagically.
-COPY pyproject.toml /_lock/
-COPY uv.lock /_lock/
+# Copy only lock + manifest first (cache key layer)
+COPY pyproject.toml pixi.lock README.md ./
+COPY src/aoc src/aoc
 
 # Synchronize DEPENDENCIES without the application itself.
-# This layer is cached until uv.lock or pyproject.toml change.
+# This layer is cached until pixi.lock or pyproject.toml change.
 # You can create `/app` using `uv venv` in a separate `RUN`
-# step to have it cached, but with uv it's so fast, it's not worth
-# it and we let `uv sync` create it for us automagically.
-RUN --mount=type=cache,target=/root/.cache <<EOT
-cd /_lock
-uv sync \
-    --frozen \
-    --no-dev \
-    --no-install-project
-EOT
-
-# Now install the APPLICATION from `/src` without any dependencies.
-# `/src` will NOT be copied into the runtime container.
-# LEAVE THIS OUT if your application is NOT a proper Python package.
-# We can’t use `uv sync` here because that only does editable installs:
-# <https://github.com/astral-sh/uv/issues/5792>
-COPY . /src
+# step to have it cached, but with pixi it's so fast, it's not worth
+# it and we let `pixi install` create it for us automagically.
 RUN --mount=type=cache,target=/root/.cache \
-    uv pip install \
-    --python="$UV_PROJECT_ENVIRONMENT" \
-    --no-deps \
-    /src
+    pixi install --frozen
+
+# Copy Application code
+COPY . .
 
 ##########################################################################
 
-FROM debian:13.4@sha256:35b8ff74ead4880f22090b617372daff0ccae742eb5674455d542bef71ef1999
+FROM debian:13.4-slim@sha256:cedb1ef40439206b673ee8b33a46a03a0c9fa90bf3732f54704f99cb061d2c5a
+
 SHELL ["sh", "-exc"]
-
-# Optional: add the application virtualenv to search path.
-ENV PATH=/app/bin:$PATH
-
-# Don't run your app as root.
-RUN <<EOT
-groupadd -r app
-useradd -r -d /app -g app -N app
-EOT
-
-ENTRYPOINT ["aoc"]
-# See <https://hynek.me/articles/docker-signals/>.
-STOPSIGNAL SIGINT
+WORKDIR /app
 
 # renovate: suite=trixie depName=python3
 ARG PYTHON3_VERSION="3.13.5-1"
@@ -99,10 +36,19 @@ ARG LIBPYTHON3_VERSION="3.13.5-2"
 ARG PYTHON_IS_PYTHON3_VERSION="3.13.3-1"
 # renovate: suite=trixie depName=ca-certificates
 ARG CA_CERTIFICATES_VERSION="20250419"
-# # renovate: suite=trixie depName=libpcre3
-# ARG LIBPCRE3_VERSION="2:8.39-15build1"
 # renovate: suite=trixie depName=libxml2
 ARG LIBXML2_VERSION="2.12.7+dfsg+really2.9.14-2.1+deb13u2"
+# renovate: suite=trixie depName=libstdc++6
+ARG LIBSTDCXX6_VERSION="14.2.0-19"
+# renovate: suite=trixie depName=libgl1
+ARG LIBGL1_VERSION="1.7.0-1+b2"
+# renovate: suite=trixie depName=libx11-6
+ARG LIBX11_6_VERSION="2:1.8.12-1"
+# renovate: suite=trixie depName=libxext6
+ARG LIBXEXT6_VERSION="2:1.3.4-1+b3"
+# renovate: suite=trixie depName=libxrender1
+ARG LIBXRENDER1_VERSION="1:0.9.12-1"
+
 
 # Note how the runtime dependencies differ from build-time ones.
 # Notably, there is no uv either!
@@ -112,26 +58,27 @@ apt-get install -qyy \
     -o APT::Install-Recommends=false \
     -o APT::Install-Suggests=false \
     ca-certificates="${CA_CERTIFICATES_VERSION}" \
-    libpython3.13="${LIBPYTHON3_VERSION}" \
-    libxml2="${LIBXML2_VERSION}" \
-    python3="${PYTHON3_VERSION}" \
-    python-is-python3="${PYTHON_IS_PYTHON3_VERSION}"
-
+    libstdc++6="${LIBSTDCXX6_VERSION}" \
+    libgl1="${LIBGL1_VERSION}" \
+    libx11-6="${LIBX11_6_VERSION}" \
+    libxext6="${LIBXEXT6_VERSION}" \
+    libxrender1="${LIBXRENDER1_VERSION}"
 apt-get clean
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+groupadd --system app
+useradd --system --home-dir /app --gid app app
 EOT
+
+
+# Optional: add the application virtualenv to search path.
+ENV PATH="/app/.pixi/envs/default/bin:$PATH"
 
 # Copy the pre-built `/app` directory to the runtime container
 # and change the ownership to user app and group app in one step.
 COPY --from=build --chown=app:app /app /app
 
-# If your application is NOT a proper Python package that got
-# pip-installed above, you need to copy your application into
-# the container HERE:
-# COPY . /app/whereever-your-entrypoint-finds-it
-
 USER app
-WORKDIR /app
 
 # Strictly optional, but I like it for introspection of what I've built
 # and run a smoke test that the application can, in fact, be imported.
@@ -140,3 +87,7 @@ python -V
 python -Im site
 python -Ic 'import aoc'
 EOT
+
+ENTRYPOINT ["/app/.pixi/envs/default/bin/aoc"]
+# See <https://hynek.me/articles/docker-signals/>.
+STOPSIGNAL SIGINT

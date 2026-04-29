@@ -4,6 +4,7 @@
 
 # ... except for dependencies and source
 
+!src
 !aoc
 !docker-entrypoint.sh
 !LICENSE
