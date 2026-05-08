@@ -21,6 +21,6 @@ jobs:
         runs-on: ubuntu-latest # renovate: runner
         steps:
             # Drafts your next Release notes as Pull Requests are merged into "master"
-            - uses: release-drafter/release-drafter@563bf132657a13ded0b01fcb723c5a58cdd824e2 # v7
+            - uses: release-drafter/release-drafter@c2e2804cc59f45f57076a99af580d0fedb697927 # v7
               with:
                   config-name: release-drafter.yml
