@@ -68,6 +68,8 @@ jobs:
               with:
                   cache: true
                   locked: true
+                  frozen: true
+                  environments: dev
             - name: Run ruff
               run:
                   pixi run --environment dev ruff check src tests --output-format json --output-file
