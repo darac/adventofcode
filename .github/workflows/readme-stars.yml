@@ -21,7 +21,7 @@ jobs:
                   sessionCookie: ${{ secrets.AOC_SESSION }}
                   userId: 1594870
             - name: AoC-badges
-              uses: J0B10/aoc-badges-action@75cd611df531bd9aa0675cae13be418d73cbdf76 # v3.0.0
+              uses: joblo2213/aoc-badges-action
               with:
                   leaderboard: https://adventofcode.com/2024/leaderboard/private/view/197414.json
                   session: ${{ secrets.AOC_SESSION }}
