@@ -83,7 +83,7 @@ def solve(
     count = 0
     parser: Parser = compile("{:d}-{:d},{:d}-{:d}")
     for line in puzzle.splitlines():
-        results: Result = parser.parse(line)
+        results: Result | None = parser.parse(line)
         assert results is not None, (
             f"Whoops, line did not match expected format: {line}"
         )
