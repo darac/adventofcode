@@ -63,9 +63,9 @@ In how many assignment pairs does one range fully contain the other?
 """
 
 # spell-checker: disable
-from typing import Literal
+from typing import Literal, cast
 
-from parse import compile  # noqa: A004
+from parse import Parser, Result, compile  # noqa: A004
 
 from aoc.year2022 import LOG
 
@@ -81,10 +81,17 @@ def solve(
     puzzle: str, part: Literal["a", "b"], _runner: bool = False
 ) -> int | None:
     count = 0
-    parser = compile("{:d}-{:d},{:d}-{:d}")
+    parser: Parser = compile("{:d}-{:d},{:d}-{:d}")
     for line in puzzle.splitlines():
-        a_low, a_high, b_low, b_high = parser.parse(line)  # pyright: ignore[reportGeneralTypeIssues]
-        o_low = o_high = 0
+        results: Result | None = parser.parse(line)
+        assert results is not None, (
+            f"Whoops, line did not match expected format: {line}"
+        )
+        a_low, a_high, b_low, b_high = map(
+            int, cast("tuple[str, str, str, str]", results.fixed)
+        )
+        o_low: int = 0
+        o_high: int = 0
         assert a_low <= a_high, "Whoops, Pairs are not sorted"
         assert b_low <= b_high, "Whoops, Pairs are not sorted"
         LOG.debug("%s", visualise(a_low, a_high, max(a_high, b_high), "A"))
