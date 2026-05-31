@@ -64,7 +64,7 @@ jobs:
               with:
                   fetch-depth: 0
             - name: Setup Pixi
-              uses: prefix-dev/setup-pixi@1b2de7f3351f171c8b4dfeb558c639cb58ed4ec0 # v0.9.5
+              uses: prefix-dev/setup-pixi@5185adfbffb4bd703da3010310260805d89ebb11 # v0.9.6
               with:
                   cache: true
                   frozen: true
@@ -117,7 +117,7 @@ jobs:
             - name: Setup | Install Python
               run: uv python install
             - name: Setup Pixi
-              uses: prefix-dev/setup-pixi@1b2de7f3351f171c8b4dfeb558c639cb58ed4ec0 # v0.9.5
+              uses: prefix-dev/setup-pixi@5185adfbffb4bd703da3010310260805d89ebb11 # v0.9.6
               with:
                   cache: true
             - id: release
@@ -144,7 +144,7 @@ jobs:
               with:
                   fetch-depth: 0
             - name: Setup Pixi
-              uses: prefix-dev/setup-pixi@1b2de7f3351f171c8b4dfeb558c639cb58ed4ec0 # v0.9.5
+              uses: prefix-dev/setup-pixi@5185adfbffb4bd703da3010310260805d89ebb11 # v0.9.6
               with:
                   cache: true
             - id: proj-version
@@ -192,7 +192,7 @@ jobs:
               with:
                   fetch-depth: 0
             - name: Setup Pixi
-              uses: prefix-dev/setup-pixi@1b2de7f3351f171c8b4dfeb558c639cb58ed4ec0 # v0.9.5
+              uses: prefix-dev/setup-pixi@5185adfbffb4bd703da3010310260805d89ebb11 # v0.9.6
               with:
                   cache: true
             - env:
