@@ -31,7 +31,7 @@ WORKDIR /app
 # renovate: suite=trixie depName=python3
 ARG PYTHON3_VERSION="3.13.5-1"
 # renovate: suite=trixie depName=libpython3.13
-ARG LIBPYTHON3_VERSION="3.13.5-2"
+ARG LIBPYTHON3_VERSION="3.13.5-2+deb13u2"
 # renovate: suite=trixie depName=python-is-python3
 ARG PYTHON_IS_PYTHON3_VERSION="3.13.3-1"
 # renovate: suite=trixie depName=ca-certificates
