@@ -223,7 +223,7 @@ jobs:
             fail-fast: false
             matrix:
                 os:
-                    - macos-15 # renovate: runner
+                    - macos-26 # renovate: runner
                     - ubuntu-24.04 # renovate: runner
                     - windows-2025 # renovate: runner
                 python-environment:
