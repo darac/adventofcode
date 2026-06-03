@@ -30,7 +30,7 @@ jobs:
             packages: write
         runs-on: ubuntu-latest # renovate: runner
         steps:
-            - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+            - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
             - name: Log in to the container registry
               uses: docker/login-action@c144859092e8e353f3e118b0b329679a62351c3e
               with:
@@ -60,7 +60,7 @@ jobs:
         name: Lint with ruff and ty
         runs-on: ubuntu-latest # renovate: runner
         steps:
-            - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+            - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
               with:
                   fetch-depth: 0
             - name: Setup Pixi
@@ -102,7 +102,7 @@ jobs:
             # the branch was updated. To keep PSR working with the configured release branches,
             # we force a checkout of the desired release branch but at the workflow sha HEAD.
             - name: Setup | Checkout Repository at workflow sha
-              uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+              uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
               with:
                   fetch-depth: 0
                   ref: ${{ github.sha }}
@@ -140,7 +140,7 @@ jobs:
             - check_sonar_secret
         runs-on: ubuntu-latest # renovate: runner
         steps:
-            - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+            - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
               with:
                   fetch-depth: 0
             - name: Setup Pixi
@@ -188,7 +188,7 @@ jobs:
         name: test with ${{ matrix.python-environment }} on ${{ matrix.os }}
         runs-on: ${{ matrix.os }}
         steps:
-            - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+            - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
               with:
                   fetch-depth: 0
             - name: Setup Pixi
