@@ -37,7 +37,7 @@ ARG PYTHON_IS_PYTHON3_VERSION="3.13.3-1"
 # renovate: suite=trixie depName=ca-certificates
 ARG CA_CERTIFICATES_VERSION="20250419"
 # renovate: suite=trixie depName=libxml2
-ARG LIBXML2_VERSION="2.12.7+dfsg+really2.9.14-2.1+deb13u2"
+ARG LIBXML2_VERSION="2.12.7+dfsg+really2.9.14-2.1+deb13u3"
 # renovate: suite=trixie depName=libstdc++6
 ARG LIBSTDCXX6_VERSION="14.2.0-19"
 # renovate: suite=trixie depName=libgl1
