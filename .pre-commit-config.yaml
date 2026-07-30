@@ -60,7 +60,7 @@ repos:
             pass_filenames: false
             files: ^(pyproject\.toml|pixi\.toml|pixi\.lock)$
     - repo: https://github.com/opensource-nepal/commitlint
-      rev: v1.13.3
+      rev: v2
       hooks:
           - id: commitlint
     - repo: https://github.com/renovatebot/pre-commit-hooks
