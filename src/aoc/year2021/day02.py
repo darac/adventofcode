@@ -1,3 +1,4 @@
+# Copyright (c) 2021 Paul Saunders
 # spell-checker: disable
 """
 Now, you need to figure out how to pilot this thing.

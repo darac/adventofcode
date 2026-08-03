@@ -1,3 +1,4 @@
+# Copyright (c) 2015-2026 Paul Saunders
 import contextlib
 import datetime
 import importlib

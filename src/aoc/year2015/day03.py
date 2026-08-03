@@ -1,3 +1,4 @@
+# Copyright (c) 2015 Paul Saunders
 # spell-checker: disable
 """
 --- Day 3: Perfectly Spherical Houses in a Vacuum ---

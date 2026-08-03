@@ -1,3 +1,4 @@
+# Copyright (c) 2021 Paul Saunders
 # spell-checker: disable
 """
 --- Day 1: Sonar Sweep ---

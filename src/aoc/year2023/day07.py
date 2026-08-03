@@ -1,3 +1,4 @@
+# Copyright (c) 2023 Paul Saunders
 # spell-checker: disable
 """
 --- Day 7: Camel Cards ---

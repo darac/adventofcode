@@ -1,3 +1,4 @@
+# Copyright (c) 2015 Paul Saunders
 # spell-checker: disable
 """
 --- Day 6: Probably a Fire Hazard ---

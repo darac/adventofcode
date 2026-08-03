@@ -1,3 +1,4 @@
+# Copyright (c) 2025 Paul Saunders
 # spell-checker: disable
 """
 --- Day 1: Secret Entrance ---

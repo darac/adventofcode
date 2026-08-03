@@ -1,3 +1,4 @@
+# Copyright (c) 2021 Paul Saunders
 """
 --- Day 13: Transparent Origami ---
 """

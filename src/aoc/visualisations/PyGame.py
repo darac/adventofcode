@@ -1,4 +1,5 @@
-from collections.abc import Callable  # noqa: N999
+# Copyright (c) 2015-2026 Paul Saunders
+from collections.abc import Callable
 
 import pygame
 

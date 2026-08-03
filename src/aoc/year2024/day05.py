@@ -1,3 +1,4 @@
+# Copyright (c) 2024 Paul Saunders
 # spell-checker: disable
 """
 --- Day 5: Print Queue ---

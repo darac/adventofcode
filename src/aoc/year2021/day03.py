@@ -1,3 +1,4 @@
+# Copyright (c) 2021 Paul Saunders
 # spell-checker: disable
 """
 The submarine has been making some odd creaking noises, so you ask it to

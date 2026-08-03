@@ -1,3 +1,4 @@
+# Copyright (c) 2015-2026 Paul Saunders
 # Types
 type Point = tuple[int, int]
 type Grid = dict[Point, str]
