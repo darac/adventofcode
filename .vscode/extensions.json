@@ -4,6 +4,7 @@
         "ms-python.python",
         "streetsidesoftware.code-spell-checker",
         "sonarsource.sonarlint-vscode",
-        "charliermarsh.ruff"
+        "charliermarsh.ruff",
+        "renan-r-santos.pixi-code"
     ]
 }

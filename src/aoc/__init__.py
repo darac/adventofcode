@@ -1,3 +1,4 @@
+# Copyright (c) 2015-2026 Paul Saunders
 """
 This module is the _entrypoint_ for the aocd plugin. This allows
 advent-of-code-data runner to call our solutions with varying

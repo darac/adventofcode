@@ -1,3 +1,4 @@
+# Copyright (c) 2022 Paul Saunders
 # spell-checker: disable
 """
 --- Day 3: Rucksack Reorganization ---

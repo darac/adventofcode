@@ -1,4 +1,5 @@
-import re  # noqa: N999
+# Copyright (c) 2015-2026 Paul Saunders
+import re
 from io import BytesIO
 
 from kivy.app import App

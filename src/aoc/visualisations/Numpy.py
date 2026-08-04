@@ -1,4 +1,5 @@
-import numpy as np  # noqa: N999
+# Copyright (c) 2015-2026 Paul Saunders
+import numpy as np
 
 TWO_D_ARRAY_LEN = 2
 

@@ -1,3 +1,4 @@
+# Copyright (c) 2022 Paul Saunders
 # spell-checker: disable
 """
 --- Day 1: Calorie Counting ---
@@ -104,7 +105,7 @@ def solve(
         elf[elf_num] += int(line)
 
     if part == "a":
-        retval = (sorted(val for _, val in elf.items()))[-1]
+        retval = max(val for _, val in elf.items())
     else:
         retval = sum(sorted(val for _, val in elf.items())[-3:])
 

@@ -1,3 +1,4 @@
+# Copyright (c) 2015-2026 Paul Saunders
 import os
 from collections.abc import Callable
 from typing import Literal

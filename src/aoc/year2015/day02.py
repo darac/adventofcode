@@ -1,3 +1,4 @@
+# Copyright (c) 2015 Paul Saunders
 # spell-checker: disable
 """
 --- Day 2: I Was Told There Would Be No Math ---

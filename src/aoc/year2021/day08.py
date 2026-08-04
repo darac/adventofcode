@@ -1,3 +1,4 @@
+# Copyright (c) 2021 Paul Saunders
 # spell-checker: disable
 """--- Day 8: Seven Segment Search ---
 You barely reach the safety of the cave when the whale smashes into the

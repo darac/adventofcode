@@ -1,3 +1,4 @@
+# Copyright (c) 2022 Paul Saunders
 from typing import Literal
 
 

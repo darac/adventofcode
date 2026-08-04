@@ -1,3 +1,4 @@
+# Copyright (c) 2024 Paul Saunders
 # spell-checker: disable
 """
 --- Day 1: Historian Hysteria ---

@@ -1,3 +1,4 @@
+# Copyright (c) 2015 Paul Saunders
 # spell-checker: disable
 """
 --- Day 5: Doesn't He Have Intern-Elves For This? ---

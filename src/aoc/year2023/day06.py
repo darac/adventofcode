@@ -1,3 +1,4 @@
+# Copyright (c) 2023 Paul Saunders
 # spell-checker: disable
 """
 --- Day 6: Wait For It ---

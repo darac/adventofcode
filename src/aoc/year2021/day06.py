@@ -1,3 +1,4 @@
+# Copyright (c) 2021 Paul Saunders
 """
 --- Day 6: Lanternfish ---
 The sea floor is getting steeper. Maybe the sleigh keys got carried
