@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1.26@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295fc32
 # Keep this syntax directive! It's used to enable Docker BuildKit
 
-FROM ghcr.io/prefix-dev/pixi@sha256:66ae514a4421ca06587291beb037e5151b1b280a4f54eed82f57e9b70b94d5ca AS build
+FROM ghcr.io/prefix-dev/pixi@sha256:7727e6c7835c3865eee9325fe51d7a9f34a1a4462c5b16584d1694597a5405e6 AS build
 
 SHELL ["sh", "-exc"]
 WORKDIR /app
