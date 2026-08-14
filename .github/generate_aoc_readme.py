@@ -1,4 +1,7 @@
-from datetime import UTC, datetime  # noqa: INP001
+# noqa: INP001
+# Copyright (c) 2026 Paul Saunders
+from datetime import UTC, datetime
+from html import escape
 from pathlib import Path
 
 import yaml
@@ -17,7 +20,9 @@ IMG_PATH = Path(__file__).parent / "aoc_progress.svg"
 
 CELL = 18
 GAP = 4
-LEFT_PAD = 70
+GRID_X = 120
+LABEL_GAP = 10
+LABEL_X = GRID_X - LABEL_GAP
 TOP_PAD = 30
 
 
@@ -88,35 +93,25 @@ def build_data() -> list[dict]:
     return data
 
 
-def colors(is_current: bool) -> dict[int, tuple[int, int, int]]:
-    if is_current:
-        return {
-            0: (235, 237, 240),
-            1: (155, 233, 168),
-            2: (33, 110, 57),
-        }
-    return {
-        0: (22, 27, 34),
-        1: (0, 153, 0),
-        2: (255, 255, 102),
-    }
-
-
 years = build_data()
 
-width = LEFT_PAD + (CELL + GAP) * 25 + 20
+width = GRID_X + (CELL + GAP) * 25 + 20
 height = TOP_PAD + (CELL + GAP) * len(years) + 20
 
 
-def svg_cell(x: int, y: int, state: int) -> str:
+def svg_cell(x: int, y: int, state: int, today: bool = False) -> str:
     classes = {
         0: "unsolved",
         1: "one-star",
         2: "two-star",
     }
 
+    class_name = classes[state]
+    if today:
+        class_name += " today"
+
     return (
-        f'<rect class="{classes[state]}" '
+        f'<rect class="{class_name}" '
         f'x="{x}" y="{y}" '
         f'width="{CELL}" height="{CELL}" rx="3" />'
     )
@@ -125,31 +120,30 @@ def svg_cell(x: int, y: int, state: int) -> str:
 def svg_label(x: int, y: int, text: str) -> str:
     return (
         f'<text class="label" x="{x}" y="{y}" '
-        f'dominant-baseline="middle" text-anchor="start">'
-        f"{text}</text>"
+        f'dominant-baseline="middle" text-anchor="end" '
+        'xml:space="preserve">'
+        f"{escape(text)}</text>"
     )
 
 
 STYLESHEET = """
     <style>
         .label    {
-            fill: #24292f;
+            fill: #59636e;
             font-family: DejaVu Sans Mono, monospace;
             font-size: 13px;
         }
-        .unsolved { fill: #ebedf0 }
-        .one-star { fill: #009900 }
-        .two-star { fill: #999900 }
+        .unsolved { fill: #ebedf0; }
+        .one-star { fill: #009900; }
+        .two-star { fill: #999900; }
+        .today    { stroke: cf222e; stroke-width: 2px; }
 
         @media (prefers-color-scheme: dark) {
-            .label    {
-                fill: #24292f;
-                font-family: DejaVu Sans Mono, monospace;
-                font-size: 13px;
-            }
-            .unsolved { fill: #161b22 }
-            .one-star { fill: #00cc00 }
-            .two-star { fill: #ffff66 }
+            .label    { fill: #9198a1; }
+            .unsolved { fill: #161b22; }
+            .one-star { fill: #00cc00; }
+            .two-star { fill: #ffff66; }
+            .today    { stroke: #ff7b72; }
         }
     </style>
 """
@@ -161,13 +155,18 @@ for row, ydata in enumerate(years):
 
     svg_elements.append(
         svg_label(
-            10, y + CELL // 2, f"{ydata['year']}: ★ {ydata['solved']}"
+            LABEL_X,
+            y + CELL // 2,
+            f"{ydata['year']}: ★ {ydata['solved']:2d}/50",
         )
     )
 
-    for day, solved in enumerate(ydata["days"]):
-        x = LEFT_PAD + day * (CELL + GAP)
-        svg_elements.append(svg_cell(x, y, solved))
+    for day, solved in enumerate(ydata["days"], start=1):
+        x = GRID_X + (day - 1) * (CELL + GAP)
+
+        is_today = ydata["year"] == CURRENT_YEAR and day == TODAY
+
+        svg_elements.append(svg_cell(x, y, solved, is_today))
 
 svf = f"""\
 <svg xmlns="http://www.w3.org/2000/svg"

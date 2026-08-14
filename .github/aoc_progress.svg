@@ -1,183 +1,181 @@
 <svg xmlns="http://www.w3.org/2000/svg"
-    width="640" height="182"
-    viewBox="0 0 640 182">
+    width="690" height="182"
+    viewBox="0 0 690 182">
 
     <style>
         .label    {
-            fill: #24292f;
+            fill: #59636e;
             font-family: DejaVu Sans Mono, monospace;
             font-size: 13px;
         }
-        .unsolved { fill: #ebedf0 }
-        .one-star { fill: #009900 }
-        .two-star { fill: #999900 }
+        .unsolved { fill: #ebedf0; }
+        .one-star { fill: #009900; }
+        .two-star { fill: #999900; }
+        .today    { stroke: cf222e; stroke-width: 2px; }
 
         @media (prefers-color-scheme: dark) {
-            .label    {
-                fill: #24292f;
-                font-family: DejaVu Sans Mono, monospace;
-                font-size: 13px;
-            }
-            .unsolved { fill: #161b22 }
-            .one-star { fill: #00cc00 }
-            .two-star { fill: #ffff66 }
+            .label    { fill: #9198a1; }
+            .unsolved { fill: #161b22; }
+            .one-star { fill: #00cc00; }
+            .two-star { fill: #ffff66; }
+            .today    { stroke: #ff7b72; }
         }
     </style>
 
-    <text class="label" x="10" y="39" dominant-baseline="middle" text-anchor="start">2025: ★ 4</text>
-    <rect class="two-star" x="70" y="30" width="18" height="18" rx="3" />
-    <rect class="two-star" x="92" y="30" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="114" y="30" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="136" y="30" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="158" y="30" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="180" y="30" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="202" y="30" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="224" y="30" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="246" y="30" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="268" y="30" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="290" y="30" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="312" y="30" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="334" y="30" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="356" y="30" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="378" y="30" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="400" y="30" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="422" y="30" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="444" y="30" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="466" y="30" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="488" y="30" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="510" y="30" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="532" y="30" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="554" y="30" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="576" y="30" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="598" y="30" width="18" height="18" rx="3" />
-    <text class="label" x="10" y="61" dominant-baseline="middle" text-anchor="start">2024: ★ 12</text>
-    <rect class="two-star" x="70" y="52" width="18" height="18" rx="3" />
-    <rect class="two-star" x="92" y="52" width="18" height="18" rx="3" />
-    <rect class="two-star" x="114" y="52" width="18" height="18" rx="3" />
-    <rect class="two-star" x="136" y="52" width="18" height="18" rx="3" />
-    <rect class="two-star" x="158" y="52" width="18" height="18" rx="3" />
-    <rect class="two-star" x="180" y="52" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="202" y="52" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="224" y="52" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="246" y="52" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="268" y="52" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="290" y="52" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="312" y="52" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="334" y="52" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="356" y="52" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="378" y="52" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="400" y="52" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="422" y="52" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="444" y="52" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="466" y="52" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="488" y="52" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="510" y="52" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="532" y="52" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="554" y="52" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="576" y="52" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="598" y="52" width="18" height="18" rx="3" />
-    <text class="label" x="10" y="83" dominant-baseline="middle" text-anchor="start">2023: ★ 14</text>
-    <rect class="two-star" x="70" y="74" width="18" height="18" rx="3" />
-    <rect class="two-star" x="92" y="74" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="114" y="74" width="18" height="18" rx="3" />
-    <rect class="two-star" x="136" y="74" width="18" height="18" rx="3" />
-    <rect class="two-star" x="158" y="74" width="18" height="18" rx="3" />
-    <rect class="two-star" x="180" y="74" width="18" height="18" rx="3" />
-    <rect class="two-star" x="202" y="74" width="18" height="18" rx="3" />
-    <rect class="two-star" x="224" y="74" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="246" y="74" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="268" y="74" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="290" y="74" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="312" y="74" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="334" y="74" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="356" y="74" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="378" y="74" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="400" y="74" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="422" y="74" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="444" y="74" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="466" y="74" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="488" y="74" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="510" y="74" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="532" y="74" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="554" y="74" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="576" y="74" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="598" y="74" width="18" height="18" rx="3" />
-    <text class="label" x="10" y="105" dominant-baseline="middle" text-anchor="start">2022: ★ 20</text>
-    <rect class="two-star" x="70" y="96" width="18" height="18" rx="3" />
-    <rect class="two-star" x="92" y="96" width="18" height="18" rx="3" />
-    <rect class="two-star" x="114" y="96" width="18" height="18" rx="3" />
-    <rect class="two-star" x="136" y="96" width="18" height="18" rx="3" />
-    <rect class="two-star" x="158" y="96" width="18" height="18" rx="3" />
-    <rect class="two-star" x="180" y="96" width="18" height="18" rx="3" />
-    <rect class="two-star" x="202" y="96" width="18" height="18" rx="3" />
-    <rect class="two-star" x="224" y="96" width="18" height="18" rx="3" />
-    <rect class="two-star" x="246" y="96" width="18" height="18" rx="3" />
-    <rect class="two-star" x="268" y="96" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="290" y="96" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="312" y="96" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="334" y="96" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="356" y="96" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="378" y="96" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="400" y="96" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="422" y="96" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="444" y="96" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="466" y="96" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="488" y="96" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="510" y="96" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="532" y="96" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="554" y="96" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="576" y="96" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="598" y="96" width="18" height="18" rx="3" />
-    <text class="label" x="10" y="127" dominant-baseline="middle" text-anchor="start">2021: ★ 21</text>
-    <rect class="two-star" x="70" y="118" width="18" height="18" rx="3" />
-    <rect class="two-star" x="92" y="118" width="18" height="18" rx="3" />
-    <rect class="two-star" x="114" y="118" width="18" height="18" rx="3" />
-    <rect class="two-star" x="136" y="118" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="158" y="118" width="18" height="18" rx="3" />
-    <rect class="two-star" x="180" y="118" width="18" height="18" rx="3" />
-    <rect class="two-star" x="202" y="118" width="18" height="18" rx="3" />
-    <rect class="two-star" x="224" y="118" width="18" height="18" rx="3" />
-    <rect class="two-star" x="246" y="118" width="18" height="18" rx="3" />
-    <rect class="two-star" x="268" y="118" width="18" height="18" rx="3" />
-    <rect class="two-star" x="290" y="118" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="312" y="118" width="18" height="18" rx="3" />
-    <rect class="one-star" x="334" y="118" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="356" y="118" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="378" y="118" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="400" y="118" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="422" y="118" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="444" y="118" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="466" y="118" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="488" y="118" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="510" y="118" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="532" y="118" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="554" y="118" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="576" y="118" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="598" y="118" width="18" height="18" rx="3" />
-    <text class="label" x="10" y="149" dominant-baseline="middle" text-anchor="start">2015: ★ 11</text>
-    <rect class="two-star" x="70" y="140" width="18" height="18" rx="3" />
-    <rect class="two-star" x="92" y="140" width="18" height="18" rx="3" />
-    <rect class="two-star" x="114" y="140" width="18" height="18" rx="3" />
-    <rect class="one-star" x="136" y="140" width="18" height="18" rx="3" />
-    <rect class="two-star" x="158" y="140" width="18" height="18" rx="3" />
-    <rect class="two-star" x="180" y="140" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="202" y="140" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="224" y="140" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="246" y="140" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="268" y="140" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="290" y="140" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="312" y="140" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="334" y="140" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="356" y="140" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="378" y="140" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="400" y="140" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="422" y="140" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="444" y="140" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="466" y="140" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="488" y="140" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="510" y="140" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="532" y="140" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="554" y="140" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="576" y="140" width="18" height="18" rx="3" />
-    <rect class="unsolved" x="598" y="140" width="18" height="18" rx="3" />
+    <text class="label" x="110" y="39" dominant-baseline="middle" text-anchor="end" xml:space="preserve">2025: ★  4/50</text>
+    <rect class="two-star" x="120" y="30" width="18" height="18" rx="3" />
+    <rect class="two-star" x="142" y="30" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="164" y="30" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="186" y="30" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="208" y="30" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="230" y="30" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="252" y="30" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="274" y="30" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="296" y="30" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="318" y="30" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="340" y="30" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="362" y="30" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="384" y="30" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="406" y="30" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="428" y="30" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="450" y="30" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="472" y="30" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="494" y="30" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="516" y="30" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="538" y="30" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="560" y="30" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="582" y="30" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="604" y="30" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="626" y="30" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="648" y="30" width="18" height="18" rx="3" />
+    <text class="label" x="110" y="61" dominant-baseline="middle" text-anchor="end" xml:space="preserve">2024: ★ 12/50</text>
+    <rect class="two-star" x="120" y="52" width="18" height="18" rx="3" />
+    <rect class="two-star" x="142" y="52" width="18" height="18" rx="3" />
+    <rect class="two-star" x="164" y="52" width="18" height="18" rx="3" />
+    <rect class="two-star" x="186" y="52" width="18" height="18" rx="3" />
+    <rect class="two-star" x="208" y="52" width="18" height="18" rx="3" />
+    <rect class="two-star" x="230" y="52" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="252" y="52" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="274" y="52" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="296" y="52" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="318" y="52" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="340" y="52" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="362" y="52" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="384" y="52" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="406" y="52" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="428" y="52" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="450" y="52" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="472" y="52" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="494" y="52" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="516" y="52" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="538" y="52" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="560" y="52" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="582" y="52" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="604" y="52" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="626" y="52" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="648" y="52" width="18" height="18" rx="3" />
+    <text class="label" x="110" y="83" dominant-baseline="middle" text-anchor="end" xml:space="preserve">2023: ★ 14/50</text>
+    <rect class="two-star" x="120" y="74" width="18" height="18" rx="3" />
+    <rect class="two-star" x="142" y="74" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="164" y="74" width="18" height="18" rx="3" />
+    <rect class="two-star" x="186" y="74" width="18" height="18" rx="3" />
+    <rect class="two-star" x="208" y="74" width="18" height="18" rx="3" />
+    <rect class="two-star" x="230" y="74" width="18" height="18" rx="3" />
+    <rect class="two-star" x="252" y="74" width="18" height="18" rx="3" />
+    <rect class="two-star" x="274" y="74" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="296" y="74" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="318" y="74" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="340" y="74" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="362" y="74" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="384" y="74" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="406" y="74" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="428" y="74" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="450" y="74" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="472" y="74" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="494" y="74" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="516" y="74" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="538" y="74" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="560" y="74" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="582" y="74" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="604" y="74" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="626" y="74" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="648" y="74" width="18" height="18" rx="3" />
+    <text class="label" x="110" y="105" dominant-baseline="middle" text-anchor="end" xml:space="preserve">2022: ★ 20/50</text>
+    <rect class="two-star" x="120" y="96" width="18" height="18" rx="3" />
+    <rect class="two-star" x="142" y="96" width="18" height="18" rx="3" />
+    <rect class="two-star" x="164" y="96" width="18" height="18" rx="3" />
+    <rect class="two-star" x="186" y="96" width="18" height="18" rx="3" />
+    <rect class="two-star" x="208" y="96" width="18" height="18" rx="3" />
+    <rect class="two-star" x="230" y="96" width="18" height="18" rx="3" />
+    <rect class="two-star" x="252" y="96" width="18" height="18" rx="3" />
+    <rect class="two-star" x="274" y="96" width="18" height="18" rx="3" />
+    <rect class="two-star" x="296" y="96" width="18" height="18" rx="3" />
+    <rect class="two-star" x="318" y="96" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="340" y="96" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="362" y="96" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="384" y="96" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="406" y="96" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="428" y="96" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="450" y="96" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="472" y="96" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="494" y="96" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="516" y="96" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="538" y="96" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="560" y="96" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="582" y="96" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="604" y="96" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="626" y="96" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="648" y="96" width="18" height="18" rx="3" />
+    <text class="label" x="110" y="127" dominant-baseline="middle" text-anchor="end" xml:space="preserve">2021: ★ 21/50</text>
+    <rect class="two-star" x="120" y="118" width="18" height="18" rx="3" />
+    <rect class="two-star" x="142" y="118" width="18" height="18" rx="3" />
+    <rect class="two-star" x="164" y="118" width="18" height="18" rx="3" />
+    <rect class="two-star" x="186" y="118" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="208" y="118" width="18" height="18" rx="3" />
+    <rect class="two-star" x="230" y="118" width="18" height="18" rx="3" />
+    <rect class="two-star" x="252" y="118" width="18" height="18" rx="3" />
+    <rect class="two-star" x="274" y="118" width="18" height="18" rx="3" />
+    <rect class="two-star" x="296" y="118" width="18" height="18" rx="3" />
+    <rect class="two-star" x="318" y="118" width="18" height="18" rx="3" />
+    <rect class="two-star" x="340" y="118" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="362" y="118" width="18" height="18" rx="3" />
+    <rect class="one-star" x="384" y="118" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="406" y="118" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="428" y="118" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="450" y="118" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="472" y="118" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="494" y="118" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="516" y="118" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="538" y="118" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="560" y="118" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="582" y="118" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="604" y="118" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="626" y="118" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="648" y="118" width="18" height="18" rx="3" />
+    <text class="label" x="110" y="149" dominant-baseline="middle" text-anchor="end" xml:space="preserve">2015: ★ 11/50</text>
+    <rect class="two-star" x="120" y="140" width="18" height="18" rx="3" />
+    <rect class="two-star" x="142" y="140" width="18" height="18" rx="3" />
+    <rect class="two-star" x="164" y="140" width="18" height="18" rx="3" />
+    <rect class="one-star" x="186" y="140" width="18" height="18" rx="3" />
+    <rect class="two-star" x="208" y="140" width="18" height="18" rx="3" />
+    <rect class="two-star" x="230" y="140" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="252" y="140" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="274" y="140" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="296" y="140" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="318" y="140" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="340" y="140" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="362" y="140" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="384" y="140" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="406" y="140" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="428" y="140" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="450" y="140" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="472" y="140" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="494" y="140" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="516" y="140" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="538" y="140" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="560" y="140" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="582" y="140" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="604" y="140" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="626" y="140" width="18" height="18" rx="3" />
+    <rect class="unsolved" x="648" y="140" width="18" height="18" rx="3" />
 </svg>

@@ -1,6 +1,8 @@
 ---
 name: Update Progress Image
 on:
+    schedule:
+        - cron: "07 05 1-25 12 *" # 5:07 AM UTC, Dec 1-25
     workflow_dispatch: null
     workflow_run:
         types:
