@@ -7,6 +7,8 @@ Storage for my AdventOfCode solutions
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=darac_adventofcode&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=darac_adventofcode)[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=darac_adventofcode&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=darac_adventofcode)[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=darac_adventofcode&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=darac_adventofcode)
 
+![Advent of Code progress](.github/aoc_progress.svg)
+
 ## Setup
 
 ```sh
@@ -165,19 +167,6 @@ Custom options:
   --today               Run the latest available day (overrides --year and
                         --day)
 ```
-
-<!--- advent_readme_stars table --->
-## 2024 Results
-
-| Day | Part 1 | Part 2 |
-| :---: | :---: | :---: |
-| [Day 1](https://adventofcode.com/2024/day/1) | ⭐ | ⭐ |
-| [Day 2](https://adventofcode.com/2024/day/2) | ⭐ | ⭐ |
-| [Day 3](https://adventofcode.com/2024/day/3) | ⭐ | ⭐ |
-| [Day 4](https://adventofcode.com/2024/day/4) | ⭐ | ⭐ |
-| [Day 5](https://adventofcode.com/2024/day/5) | ⭐ | ⭐ |
-| [Day 6](https://adventofcode.com/2024/day/6) | ⭐ | ⭐ |
-<!--- advent_readme_stars table --->
 
 ## Credits
 
