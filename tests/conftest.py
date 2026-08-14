@@ -4,48 +4,17 @@ import datetime
 import importlib
 import itertools
 import logging
-import os
 from pathlib import Path
 from typing import TYPE_CHECKING
 
 import aocd
 import pytest
 import yaml
-from _pytest.config import Notset
-from _pytest.terminal import TerminalReporter
 
 if TYPE_CHECKING:
     from collections.abc import Callable
 
 LOG = logging.getLogger()
-
-
-def pytest_terminal_summary(
-    terminalreporter: TerminalReporter,
-    exitstatus: int,
-) -> None:
-    # on failures, don't add "Captured stdout call" as pytest does that
-    # already otherwise, the section "Captured stdout call" will be added
-    # twice
-    if exitstatus > 0:
-        return
-    # get all reports
-    reports = terminalreporter.getreports("")
-    # combine captured stdout of reports for tests named
-    # `<smth>::test_summary`
-    content = os.linesep.join(
-        report.capstdout for report in reports if report.capstdout
-    )
-    # add custom section that mimics pytest's one
-    if content:
-        terminalreporter.ensure_newline()
-        terminalreporter.section(
-            "Captured stdout call",
-            sep="-",
-            blue=True,
-            bold=True,
-        )
-        terminalreporter.line(content)
 
 
 def pytest_addoption(parser: pytest.Parser) -> None:
@@ -59,8 +28,10 @@ def pytest_addoption(parser: pytest.Parser) -> None:
             2015,
             datetime.datetime.now(tz=datetime.UTC).date().year + 1,
         ),
-        default=range(
-            2015, datetime.datetime.now(tz=datetime.UTC).date().year + 1
+        default=list(
+            range(
+                2015, datetime.datetime.now(tz=datetime.UTC).date().year + 1
+            )
         ),
         help="Run AOC tests from this year",
     )
@@ -70,7 +41,7 @@ def pytest_addoption(parser: pytest.Parser) -> None:
         nargs="*",
         action="store",
         choices=range(1, 25 + 1),
-        default=range(1, 25 + 1),
+        default=list(range(1, 25 + 1)),
         help="Run AOC tests from this day",
     )
     parser.addoption(
@@ -96,9 +67,6 @@ def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
     days = metafunc.config.getoption("day")
     parts = metafunc.config.getoption("part")
     today = metafunc.config.getoption("today")
-    assert not isinstance(years, Notset)
-    assert not isinstance(days, Notset)
-    assert not isinstance(parts, Notset)
 
     if today:
         # Look for the latest year and day that have test data
