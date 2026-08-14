@@ -1,7 +1,7 @@
-from datetime import UTC, datetime
+from datetime import UTC, datetime  # noqa: INP001
 from pathlib import Path
 
-from PIL import Image, ImageDraw, ImageFont
+import yaml
 
 BASE_DIR = Path(__file__).parent.parent / "src" / "aoc"
 if not BASE_DIR.is_dir():
@@ -13,7 +13,7 @@ NOW = datetime.now(UTC)
 CURRENT_YEAR = NOW.year
 TODAY = NOW.day if NOW.month == 12 else None
 
-IMG_PATH = Path(__file__).parent / "aoc_progress.png"
+IMG_PATH = Path(__file__).parent / "aoc_progress.svg"
 
 CELL = 18
 GAP = 4
@@ -36,18 +36,35 @@ def get_years() -> list[int]:
 
 
 def get_days(year: int) -> list[int]:
-    year_dir = BASE_DIR / f"year{year}"
+    """Return the list of days for which we have solutions"""
     days = [0] * 25
 
-    if not year_dir.is_dir():
-        return days
+    for day in range(1, 26):
+        test_file = (
+            BASE_DIR.parent.parent
+            / "tests"
+            / f"year{year}"
+            / f"day{day:02}.yml"
+        )
 
-    for d in range(1, 26):
-        day_file = year_dir / f"day{d:02}.py"
-        if not day_file.is_file():
+        if not test_file.is_file():
             continue
 
-        days[d - 1] = 1  # file exists → at least started
+        solved = 0
+
+        with test_file.open() as fh:
+            for doc in yaml.safe_load_all(fh):
+                if not isinstance(doc, dict):
+                    continue
+
+                if doc.get("b") is not None:
+                    solved = 2
+                    break
+
+                if doc.get("a") is not None:
+                    solved = 1
+
+        days[day - 1] = solved
 
     return days
 
@@ -63,7 +80,7 @@ def build_data() -> list[dict]:
             data.append(
                 {
                     "year": year,
-                    "stars": total,
+                    "solved": total,
                     "days": days,
                 }
             )
@@ -79,9 +96,9 @@ def colors(is_current: bool) -> dict[int, tuple[int, int, int]]:
             2: (33, 110, 57),
         }
     return {
-        0: (245, 245, 245),
-        1: (210, 210, 210),
-        2: (160, 160, 160),
+        0: (22, 27, 34),
+        1: (0, 153, 0),
+        2: (255, 255, 102),
     }
 
 
@@ -90,35 +107,76 @@ years = build_data()
 width = LEFT_PAD + (CELL + GAP) * 25 + 20
 height = TOP_PAD + (CELL + GAP) * len(years) + 20
 
-img = Image.new("RGB", (width, height), "white")
-draw = ImageDraw.Draw(img)
-font = ImageFont.load_default()
 
+def svg_cell(x: int, y: int, state: int) -> str:
+    classes = {
+        0: "unsolved",
+        1: "one-star",
+        2: "two-star",
+    }
+
+    return (
+        f'<rect class="{classes[state]}" '
+        f'x="{x}" y="{y}" '
+        f'width="{CELL}" height="{CELL}" rx="3" />'
+    )
+
+
+def svg_label(x: int, y: int, text: str) -> str:
+    return (
+        f'<text class="label" x="{x}" y="{y}" '
+        f'dominant-baseline="middle" text-anchor="start">'
+        f"{text}</text>"
+    )
+
+
+STYLESHEET = """
+    <style>
+        .label    {
+            fill: #24292f;
+            font-family: DejaVu Sans Mono, monospace;
+            font-size: 13px;
+        }
+        .unsolved { fill: #ebedf0 }
+        .one-star { fill: #009900 }
+        .two-star { fill: #999900 }
+
+        @media (prefers-color-scheme: dark) {
+            .label    {
+                fill: #24292f;
+                font-family: DejaVu Sans Mono, monospace;
+                font-size: 13px;
+            }
+            .unsolved { fill: #161b22 }
+            .one-star { fill: #00cc00 }
+            .two-star { fill: #ffff66 }
+        }
+    </style>
+"""
+
+svg_elements = []
 for row, ydata in enumerate(years):
-    year = ydata["year"]
-    days = ydata["days"]
-    total = ydata["stars"]
-
     y = TOP_PAD + row * (CELL + GAP)
-    is_current = year == CURRENT_YEAR
+    is_current = ydata["year"] == CURRENT_YEAR
 
-    palette = colors(is_current)
+    svg_elements.append(
+        svg_label(
+            10, y + CELL // 2, f"{ydata['year']}: ★ {ydata['solved']}"
+        )
+    )
 
-    label = f"{year}  * {total}"
-    draw.text((10, y + 2), label, fill=(0, 0, 0), font=font)
+    for day, solved in enumerate(ydata["days"]):
+        x = LEFT_PAD + day * (CELL + GAP)
+        svg_elements.append(svg_cell(x, y, solved))
 
-    for i, stars in enumerate(days):
-        x = LEFT_PAD + i * (CELL + GAP)
-        fill = palette[stars]
+svf = f"""\
+<svg xmlns="http://www.w3.org/2000/svg"
+    width="{width}" height="{height}"
+    viewBox="0 0 {width} {height}">
+{STYLESHEET}
+    {"\n    ".join(svg_elements)}
+</svg>
+"""
+Path(IMG_PATH).write_text(svf, encoding="utf-8")
 
-        draw.rectangle([x, y, x + CELL, y + CELL], fill=fill)
-
-        if is_current and TODAY and (i + 1) == TODAY:
-            draw.rectangle(
-                [x - 2, y - 2, x + CELL + 2, y + CELL + 2],
-                outline=(255, 0, 0),
-                width=2,
-            )
-
-img.save(IMG_PATH)
 print(f"Saved {IMG_PATH} ({width}x{height})")
