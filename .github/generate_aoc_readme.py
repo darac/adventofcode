@@ -24,6 +24,7 @@ GRID_X = 120
 LABEL_GAP = 10
 LABEL_X = GRID_X - LABEL_GAP
 TOP_PAD = 30
+DAYS_PER_ROW = 25
 
 
 def get_years() -> list[int]:
@@ -40,11 +41,15 @@ def get_years() -> list[int]:
     return sorted(years, reverse=True)
 
 
+def get_days_in_year(year: int) -> int:
+    return 25 if year < 2025 else 12
+
+
 def get_days(year: int) -> list[int]:
     """Return the list of days for which we have solutions"""
-    days = [0] * 25
+    days = [0] * get_days_in_year(year)
 
-    for day in range(1, 26):
+    for day in range(1, len(days) + 1):
         test_file = (
             BASE_DIR.parent.parent
             / "tests"
@@ -95,7 +100,7 @@ def build_data() -> list[dict]:
 
 years = build_data()
 
-width = GRID_X + (CELL + GAP) * 25 + 20
+width = GRID_X + (CELL + GAP) * DAYS_PER_ROW + 20
 height = TOP_PAD + (CELL + GAP) * len(years) + 20
 
 
@@ -157,7 +162,8 @@ for row, ydata in enumerate(years):
         svg_label(
             LABEL_X,
             y + CELL // 2,
-            f"{ydata['year']}: ★ {ydata['solved']:2d}/50",
+            f"{ydata['year']}: ★ "
+            f"{ydata['solved']:2d}/{len(ydata['days']) * 2}",
         )
     )
 
