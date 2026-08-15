@@ -104,7 +104,14 @@ width = GRID_X + (CELL + GAP) * DAYS_PER_ROW + 20
 height = TOP_PAD + (CELL + GAP) * len(years) + 20
 
 
-def svg_cell(x: int, y: int, state: int, today: bool = False) -> str:
+def svg_cell(
+    x: int,
+    y: int,
+    state: int,
+    year: int,
+    day: int,
+    today: bool = False,
+) -> str:
     classes = {
         0: "unsolved",
         1: "one-star",
@@ -115,16 +122,24 @@ def svg_cell(x: int, y: int, state: int, today: bool = False) -> str:
     if today:
         class_name += " today"
 
+    status = {
+        0: "Unsolved",
+        1: "Part A solved",
+        2: "Both parts solved",
+    }[state]
+
     return (
-        f'<rect class="{class_name}" '
+        f'    <rect class="{class_name}" '
         f'x="{x}" y="{y}" '
-        f'width="{CELL}" height="{CELL}" rx="3" />'
+        f'width="{CELL}" height="{CELL}" rx="3">'
+        f"\n        <title>{year} Day {day}: {status}</title>\n"
+        "    </rect>"
     )
 
 
 def svg_label(x: int, y: int, text: str) -> str:
     return (
-        f'<text class="label" x="{x}" y="{y}" '
+        f'    <text class="label" x="{x}" y="{y}" '
         f'dominant-baseline="middle" text-anchor="end" '
         'xml:space="preserve">'
         f"{escape(text)}</text>"
@@ -172,14 +187,16 @@ for row, ydata in enumerate(years):
 
         is_today = ydata["year"] == CURRENT_YEAR and day == TODAY
 
-        svg_elements.append(svg_cell(x, y, solved, is_today))
+        svg_elements.append(
+            svg_cell(x, y, solved, ydata["year"], day, is_today)
+        )
 
 svf = f"""\
 <svg xmlns="http://www.w3.org/2000/svg"
     width="{width}" height="{height}"
     viewBox="0 0 {width} {height}">
 {STYLESHEET}
-    {"\n    ".join(svg_elements)}
+    {"\n".join(svg_elements)}
 </svg>
 """
 Path(IMG_PATH).write_text(svf, encoding="utf-8")
