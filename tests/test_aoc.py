@@ -1,7 +1,8 @@
 # Copyright (c) 2015-2026 Paul Saunders
-import os
 from collections.abc import Callable
 from typing import Literal
+
+import pytest
 
 
 def test_solve(
@@ -9,8 +10,11 @@ def test_solve(
     puzzle: str,
     part: Literal["a", "b"],
     expected: int | str,
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    os.environ["KIVY_NO_ARGS"] = "1"
-    os.environ["KIVY_NO_CONSOLELOG"] = "1"  # spell-checker: disable-line
-    os.environ["KIVY_LOG_MODE"] = "PYTHON"
+    monkeypatch.setenv("KIVY_NO_ARGS", "1")
+    monkeypatch.setenv(
+        "KIVY_NO_CONSOLELOG", "1"
+    )  # spell-checker: disable-line
+    monkeypatch.setenv("KIVY_LOG_MODE", "PYTHON")
     assert solver(puzzle=puzzle, part=part) == expected

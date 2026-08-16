@@ -6,10 +6,8 @@ years and days.
 """
 
 import importlib
-import typing
 
-if typing.TYPE_CHECKING:
-    import pytest
+import pytest
 
 __version__ = "2025.5.0"
 
@@ -18,7 +16,7 @@ def solve(
     year: int,
     day: int,
     data: str,
-    monkeypatch: "pytest.MonkeyPatch",
+    monkeypatch: pytest.MonkeyPatch,
 ) -> tuple[int | None, ...]:
     """
     Finds today's solver, and runs it twice; once for part a and once for
