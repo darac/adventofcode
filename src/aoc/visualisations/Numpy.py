@@ -12,22 +12,7 @@ from matplotlib.backends import backend_registry
 from matplotlib.figure import Figure
 from matplotlib.widgets import Button, TextBox
 
-TWO_D_ARRAY_LEN = 2
 LOG = logging.getLogger()
-
-
-def boolean_array(arr: np.ndarray) -> None:
-    assert len(arr.shape) == TWO_D_ARRAY_LEN
-    print(f" {arr.shape} ".center(arr.shape[1], "-"))
-    for row in range(arr.shape[0]):
-        for column in range(arr.shape[1]):
-            print("#" if arr[row][column] else ".", end="")
-        print()
-
-
-def has_interactive_backend() -> bool:
-    _, gui = backend_registry.resolve_backend(mpl.get_backend())
-    return gui is not None
 
 
 class Visualiser:
