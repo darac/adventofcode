@@ -32,7 +32,7 @@ def create_sheet(puzzle: str) -> np.ndarray:
             break
         try:
             r, c = map(int, line.split(","))
-        except ValueError:
+        except ValueError:  # pragma: no cover
             LOG.error("Bad line on Line %d was: %s", lineno, line)
             raise
         rows = max(rows, r)
@@ -98,7 +98,7 @@ def solve(
                 [fold["line"], fold["line"] + 1],
                 axis=fold["axis"],
             )
-            if orig.shape > copy.shape:
+            if orig.shape > copy.shape:  # pragma: no cover
                 # The fold is asymmetrical, so we need to expand
                 # the second page before flipping
                 LOG.info("Shape is %s. Want %s", copy.shape, orig.shape)
@@ -114,7 +114,7 @@ def solve(
                     padding,
                     constant_values=False,
                 )
-            elif orig.shape < copy.shape:
+            elif orig.shape < copy.shape:  # pragma: no cover
                 # The fold is asymmetrical, so we need to expand
                 # the second page before flipping
                 LOG.info("Shape is %s. Want %s", copy.shape, orig.shape)

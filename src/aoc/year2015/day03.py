@@ -75,7 +75,7 @@ def solve(
                 position[actor]["y"] -= 1
             case "<":
                 position[actor]["x"] -= 1
-            case "_":
+            case "_":  # pragma: no cover
                 raise UnknownDirection(direction)
         locations_visited[actor].update({str(position[actor]): 1})
         if part == "b":

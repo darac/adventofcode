@@ -140,7 +140,7 @@ def solve(
                     )
                     aim += int(count)
 
-            case _:
+            case _:  # pragma: no cover
                 LOG.info(f"Captain : Belay that {command} order!")
 
     LOG.info("Captain : Helmsman, Report Position!")

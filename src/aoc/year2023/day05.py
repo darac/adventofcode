@@ -188,7 +188,7 @@ from aoc.year2023 import LOG
 
 try:
     from itertools import batched  # pyright: ignore[reportAssignmentType]
-except ImportError:
+except ImportError:  # pragma: no cover
     from itertools import islice
 
     def batched(iterable: Iterable, n: int) -> Generator:

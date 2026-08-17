@@ -6,7 +6,6 @@ years and days.
 """
 
 import importlib
-import os
 
 __version__ = "2025.5.0"
 
@@ -22,9 +21,6 @@ def solve(
     The results are combined and returned to aocd-runner for submission.
     """
     solver_name = f"aoc.year{year:4d}.day{day:02d}"
-    os.environ["KIVY_NO_ARGS"] = "1"
-    os.environ["KIVY_NO_CONSOLELOG"] = "1"
-    os.environ["KIVY_LOG_MODE"] = "PYTHON"
     try:
         solver = importlib.import_module(solver_name)
     except ModuleNotFoundError:

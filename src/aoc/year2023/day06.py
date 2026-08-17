@@ -167,11 +167,11 @@ def get_winning_bounds(
     LOG.debug("Rounding that to (%d, %d)", lower, upper)
 
     # Could use max() and min(), but I want to log this
-    if lower < 0:
+    if lower < 0:  # pragma: no cover
         LOG.debug("Capping lower to 0")
         lower = 0
 
-    if upper > game_time:
+    if upper > game_time:  # pragma: no cover
         LOG.debug("Capping upper to game_time (%d)", game_time)
         upper = game_time
 

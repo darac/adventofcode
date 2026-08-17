@@ -213,7 +213,7 @@ def solve(
                             line_corrupted = True
                         else:
                             printout += f"[green]{char}[/]"
-                    case _:
+                    case _:  # pragma: no cover
                         if not _runner:
                             print(f"Unknown chunk {char}")
                         printout += f"[on red]{char}[/]"
@@ -235,7 +235,7 @@ def solve(
                     case "<":
                         printout += ">"
                         this_autocomplete_score += 4
-                    case _:
+                    case _:  # pragma: no cover
                         if not _runner:
                             print(f"Unknown Chunk {chunk}")
             error = (
