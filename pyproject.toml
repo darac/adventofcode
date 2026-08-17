@@ -1,9 +1,9 @@
 [build-system]
     build-backend = "hatchling.build"
-    requires      = [ "hatchling" ]
+    requires      = ["hatchling"]
 
 [dependency-groups]
-    ci = [ "pytest-github-actions-annotate-failures" ]
+    ci = ["pytest-github-actions-annotate-failures"]
     dev = [
         "deptry>=0.19.0",
         "pre-commit>=3.8.0",
@@ -20,18 +20,16 @@
     ]
 
 [project]
-    authors = [ { name = "Paul Saunders", email = "darac+github@darac.org.uk" } ]
+    authors = [{ name = "Paul Saunders", email = "darac+github@darac.org.uk" }]
     classifiers = [
         "Programming Language :: Python :: 3",
         "Topic :: Games/Entertainment :: Puzzle Games",
     ]
     dependencies = [
         "advent-of-code-data>=2.0.1",
-        "kivy[base]>=2.3.0",
         "numpy>=2.1.3",
         "pandas>=2.2.2",
         "parse>=1.20.2",
-        "pygame-ce>=2.5.6",
         "rich>=13.7.1",
     ]
     description = "darac's solutions for http://adventofcode.com"
@@ -48,13 +46,13 @@
 
 [tool.black]
     line-length    = 76
-    target-version = [ "py312" ]
+    target-version = ["py312"]
 
 [tool.coverage.html]
     directory = "htmlcov"
 
 [tool.coverage.paths]
-    source = [ "*/site-packages", "src/aoc" ]
+    source = ["*/site-packages", "src/aoc"]
 
 [tool.coverage.report]
     exclude_lines = [
@@ -72,29 +70,29 @@
 
 [tool.coverage.run]
     branch         = true
-    omit           = [ "src/aoc/__init__.py", "src/aoc/visualisations/*" ]
+    omit           = ["src/aoc/__init__.py", "src/aoc/visualisations/*"]
     relative_files = true
-    source         = [ "src/aoc" ]
+    source         = ["src/aoc"]
 
 [tool.hatch.build.targets.wheel]
-    packages = [ "src/aoc" ]
+    packages = ["src/aoc"]
 
 [tool.mypy]
-    files                  = [ "src/aoc/" ]
+    files                  = ["src/aoc/"]
     ignore_missing_imports = true
     warn_return_any        = true
     warn_unused_configs    = true
 
 [tool.pixi.dependencies]
-    kivy = ">=2.3.1,<3"
+    matplotlib = ">=3.11.1,<4"
 
 [tool.pixi.environments]
-    ci      = { features = [ "ci", "py312", "test" ] }
-    default = { features = [ "py312" ] }
-    dev     = { features = [ "dev", "py312", "test" ] }
-    py312   = { features = [ "py312", "test" ] }
-    py313   = { features = [ "py313", "test" ] }
-    py314   = { features = [ "py314", "test" ] }
+    ci      = { features = ["ci", "py312", "test"] }
+    default = { features = ["py312"] }
+    dev     = { features = ["dev", "py312", "test"] }
+    py312   = { features = ["py312", "test"] }
+    py313   = { features = ["py313", "test"] }
+    py314   = { features = ["py314", "test"] }
 
 [tool.pixi.feature.ci.pypi-dependencies]
     pytest-github-actions-annotate-failures = ">=0"
@@ -144,8 +142,8 @@ pixi run --environment py314 test
 """
 
 [tool.pixi.workspace]
-    channels  = [ "https://prefix.dev/conda-forge" ]
-    platforms = [ "linux-64", "osx-64", "win-64" ]
+    channels  = ["https://prefix.dev/conda-forge"]
+    platforms = ["linux-64", "osx-64", "win-64"]
 
 [tool.pyright]
     exclude = [
@@ -168,7 +166,7 @@ pixi run --environment py314 test
     --timeout=300 \
     """
     junit_suite_name = "aoc"
-    pythonpath = [ "src/" ]
+    pythonpath = ["src/"]
 
 [tool.ruff]
     # The AOC website wraps at 76 chars, so should we.
@@ -185,13 +183,13 @@ pixi run --environment py314 test
         "S101",   # Of course we want to use assert
         "T201",   # Allow use of `print`
     ]
-    lint.select = [ "ALL" ]
+    lint.select = ["ALL"]
     target-version = "py312"
 
 [tool.semantic_release]
     build_command     = "pixi run build"
-    version_toml      = [ "pyproject.toml:project.version" ]
-    version_variables = [ "src/aoc/__init__.py:__version__" ]
+    version_toml      = ["pyproject.toml:project.version"]
+    version_variables = ["src/aoc/__init__.py:__version__"]
 
     [tool.semantic_release.changelog.environment]
         autoescape = true

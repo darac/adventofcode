@@ -11,3 +11,14 @@ input: |
     toggle 0,0 through 999,999
 a: 999999
 b: 2000001
+---
+# Extra tests for coverage
+input: |
+    turn off 0,0 through 0,0
+    dance 0,0 through 0,0
+a: 0
+---
+input: |
+    turn off 0,0 through 999,999
+a: 0
+b: 0

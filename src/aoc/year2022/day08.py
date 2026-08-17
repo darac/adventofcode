@@ -111,7 +111,8 @@ from typing import Literal
 
 import numpy as np
 import pandas as pd
-from rich import print  # noqa: A004
+
+from aoc.visualisations.Numpy import Visualiser
 
 
 def visible(df: pd.DataFrame, row_id: int, col_id: int) -> int:
@@ -175,31 +176,31 @@ def solve(
     data_frame = pd.DataFrame(
         [[int(char) for char in line] for line in puzzle.splitlines()]
     )
-    if not _runner:
-        print(data_frame)
+    with Visualiser(
+        delay=0.1 if _runner else 0.25,
+        title="2022 Day 08: Treetop Tree House",
+    ) as vis:
+        vis.update(data_frame)
 
-    out_frame = data_frame.copy()
-    if not _runner:
-        print(out_frame)
+        out_frame = data_frame.copy()
+        vis.update(out_frame)
 
-    for column_name, column in data_frame.items():
-        for row_name, _cell in enumerate(column):
-            column_name = int(column_name)  # type: ignore  # noqa: PGH003, PLW2901
-            if part == "a":
-                out_frame.loc[row_name, column_name] = visible(
-                    data_frame,
-                    row_id=row_name,
-                    col_id=column_name,
-                )
-            else:
-                out_frame.loc[row_name, column_name] = scenic_score(
-                    data_frame,
-                    row_id=row_name,
-                    col_id=column_name,
-                )
-
-    if not _runner:
-        print(out_frame)
+        for column_name, column in data_frame.items():
+            for row_name, _cell in enumerate(column):
+                column_name = int(column_name)  # type: ignore  # noqa: PGH003, PLW2901
+                if part == "a":
+                    out_frame.loc[row_name, column_name] = visible(
+                        data_frame,
+                        row_id=row_name,
+                        col_id=column_name,
+                    )
+                else:
+                    out_frame.loc[row_name, column_name] = scenic_score(
+                        data_frame,
+                        row_id=row_name,
+                        col_id=column_name,
+                    )
+        vis.update(out_frame)
 
     if part == "a":
         return int(out_frame.to_numpy().sum().sum())

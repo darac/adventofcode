@@ -95,6 +95,8 @@ from aocd import submit
 from aocd.models import Puzzle
 from rich import print  # noqa: A004
 
+from aoc.visualisations.Numpy import Visualiser
+
 
 def get_neighbours(
     row: int, column: int, rows: int, cols: int
@@ -174,8 +176,12 @@ def solve(
     data_frame = pd.DataFrame(
         [[int(char) for char in line] for line in puzzle.splitlines()]
     )
-    if not _runner:
-        print(data_frame)
+    with Visualiser(
+        delay=0.1 if _runner else 0.25,
+        title="2021 Day 09: Smoke Basin",
+    ) as vis:
+        vis.update(data_frame)
+
     risk_level = 0
     low_points = []
     for column_name, column in data_frame.items():
@@ -193,8 +199,7 @@ def solve(
     data = np.array(
         [list(map(int, list(row))) for row in puzzle.splitlines()]
     )
-    if not _runner:
-        print(data)
+    vis.update(data)
     basins = sorted(
         [flood(data, low_point, []) for low_point in low_points]
     )

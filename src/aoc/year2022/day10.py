@@ -370,7 +370,6 @@ on your CRT?
 """
 # spell-checker: enable
 
-import os
 import sys
 from collections.abc import Generator
 from dataclasses import dataclass, field
@@ -378,9 +377,8 @@ from typing import Any, Literal
 
 import numpy as np
 import parse
-from PIL import Image
 
-from aoc.visualisations import Numpy
+from aoc.visualisations.Numpy import Visualiser
 from aoc.year2022 import LOG
 
 
@@ -392,11 +390,12 @@ class IllegalInstruction(Exception):
 
 
 class Clock:
-    def __init__(self: "Clock", instruction: str) -> None:
+    def __init__(self: "Clock", instruction: str, vis: Visualiser) -> None:
         self.CPU = CPU()
         self.CRT = CRT()
         self.ticks = 1
         self.command_reader = self.read_instruction(instruction)
+        self.vis = vis
 
     def read_instruction(
         self: "Clock", instruction: str
@@ -404,7 +403,7 @@ class Clock:
         yield from instruction.splitlines()
 
     def run(
-        self: "Clock", stop_at_tick: int = -1, visual: bool = False
+        self: "Clock", stop_at_tick: int = -1, _visual: bool = False
     ) -> None:
         while self.ticks != stop_at_tick:
             if not self.CPU.busy:
@@ -415,8 +414,7 @@ class Clock:
             else:
                 self.CPU.process()
             self.CRT.draw(self.ticks, self.CPU.register["X"])
-            if visual:
-                self.CRT.display()
+            self.vis.update(self.CRT.read())
             self.ticks += 1
 
 
@@ -429,9 +427,6 @@ class CRT:
         target = cpu_cycle
         if target % 40 in sprite:
             self.crt_pixels[target] = True
-
-    def display(self: "CRT") -> None:
-        Numpy.boolean_array(self.read())
 
     def read(self: "CRT") -> np.ndarray:
         return np.copy(self.crt_pixels).reshape((6, 40))
@@ -469,21 +464,21 @@ class CPU:
 def solve(
     puzzle: str, part: Literal["a", "b"], _runner: bool = False
 ) -> int | str | None:
-    clock = Clock(puzzle)
-    signal_strengths = {}
-    for stop_point in [20, 60, 100, 140, 180, 220]:
-        clock.run(stop_at_tick=stop_point, visual=not _runner)
-        signal_strengths[stop_point] = clock.CPU.register["X"] * stop_point
-        LOG.info(signal_strengths)
-    clock.run(visual=not _runner)
+    with Visualiser(
+        0.01,
+        title="2022 Day 10: Cathode-Ray Tube",
+        interactive="pytest" not in sys.modules,
+    ) as vis:
+        clock = Clock(puzzle, vis=vis)
+        signal_strengths = {}
+        for stop_point in [20, 60, 100, 140, 180, 220]:
+            clock.run(stop_at_tick=stop_point)
+            signal_strengths[stop_point] = (
+                clock.CPU.register["X"] * stop_point
+            )
+            LOG.info(signal_strengths)
+        clock.run()
 
-    if part == "a":
-        return sum(signal_strengths.values())
-    if os.environ.get("DISPLAY", "") != "" and "pytest" not in sys.modules:
-        from aoc.visualisations import Kivy  # noqa: PLC0415
-
-        vis = Kivy.ManualOCR()
-        vis.image = Image.fromarray(clock.CRT.read())
-        vis.run()
-        return Kivy.answer
-    return "TEST"
+        if part == "a":
+            return sum(signal_strengths.values())
+        return vis.perform_ocr(default="TEST")

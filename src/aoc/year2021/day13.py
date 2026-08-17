@@ -3,28 +3,18 @@
 --- Day 13: Transparent Origami ---
 """
 
+import logging
 import os
 import re
+import sys
 from typing import Literal
 
 import numpy as np
 from aocd import submit
 from aocd.models import Puzzle
 
+from aoc.visualisations.Numpy import Visualiser
 from aoc.year2021 import LOG
-
-
-def print_sheet(sheet: np.ndarray) -> None:
-    """Prints out the sheet using blocks and spaces
-    NOTE: We use np.transpose, otherwise you have to cock your head :)
-
-    Args:
-        sheet (np.ndarray): The sheet, as it currently stands
-    """
-    out_string = ""
-    for row in np.transpose(sheet):
-        out_string += "".join(["█" if x else " " for x in row])
-    LOG.debug("%s", out_string)
 
 
 def create_sheet(puzzle: str) -> np.ndarray:
@@ -42,7 +32,7 @@ def create_sheet(puzzle: str) -> np.ndarray:
             break
         try:
             r, c = map(int, line.split(","))
-        except ValueError:
+        except ValueError:  # pragma: no cover
             LOG.error("Bad line on Line %d was: %s", lineno, line)
             raise
         rows = max(rows, r)
@@ -54,7 +44,7 @@ def create_sheet(puzzle: str) -> np.ndarray:
 
 def solve(
     puzzle: str, part: Literal["a", "b"], _runner: bool = False
-) -> int | None:
+) -> int | str | None:
     """Calculates the solution
 
     Args:
@@ -64,6 +54,9 @@ def solve(
     Returns:
         int: The Puzzle Solution
     """
+    LOG.setLevel(logging.ERROR if _runner else logging.DEBUG)
+    if sys.gettrace():
+        LOG.setLevel(logging.DEBUG)
     # Start by reading the input to find the size of the sheet
     sheet = create_sheet(puzzle)
 
@@ -85,59 +78,63 @@ def solve(
                         "line": int(m.group(2)),
                     }
                 )
-    print_sheet(sheet)
-    LOG.debug("%s", folds)
 
-    # Now start folding
-    for fold in folds:
-        LOG.debug(
-            "Fold along %s=%s",
-            "x" if fold["axis"] == 0 else "y",
-            fold["line"],
-        )
-        # pylint: disable=W0632
-        (orig, _, copy) = np.split(
-            sheet, [fold["line"], fold["line"] + 1], axis=fold["axis"]
-        )
-        if orig.shape > copy.shape:
-            # The fold is asymmetrical, so we need to expand the second page
-            # before flipping
-            LOG.info("Shape is %s. Want %s", copy.shape, orig.shape)
-            # ((top,bottom), (left,right))  # noqa: ERA001
-            padding = (
-                (0, orig.shape[0] - copy.shape[0]),
-                (0, orig.shape[1] - copy.shape[1]),
-            )
-            LOG.info(" Therefore, pad with %s", padding)
+    with Visualiser(
+        delay=0.1 if _runner else 1.0,
+        title="2021 Day 03: Transparent Origami",
+    ) as vis:
+        vis.update(sheet)
+        LOG.debug("%s", folds)
 
-            copy = np.pad(
-                copy,
-                padding,
-                constant_values=False,
+        # Now start folding
+        for fold in folds:
+            LOG.debug(
+                "Fold along %s=%s",
+                "x" if fold["axis"] == 0 else "y",
+                fold["line"],
             )
-        elif orig.shape < copy.shape:
-            # The fold is asymmetrical, so we need to expand the second page
-            # before flipping
-            LOG.info("Shape is %s. Want %s", copy.shape, orig.shape)
-            # ((top,bottom), (left,right))  # noqa: ERA001
-            padding = (
-                (0, copy.shape[0] - orig.shape[0]),
-                (0, copy.shape[1] - orig.shape[1]),
+            (orig, _, copy) = np.split(
+                sheet,
+                [fold["line"], fold["line"] + 1],
+                axis=fold["axis"],
             )
-            LOG.info(" Therefore, pad with %s", padding)
-            orig = np.pad(
-                orig,
-                padding,
-                constant_values=False,
-            )
+            if orig.shape > copy.shape:  # pragma: no cover
+                # The fold is asymmetrical, so we need to expand
+                # the second page before flipping
+                LOG.info("Shape is %s. Want %s", copy.shape, orig.shape)
+                # ((top,bottom), (left,right))  # noqa: ERA001
+                padding = (
+                    (0, orig.shape[0] - copy.shape[0]),
+                    (0, orig.shape[1] - copy.shape[1]),
+                )
+                LOG.info(" Therefore, pad with %s", padding)
 
-        sheet = orig | np.flip(copy, axis=fold["axis"])
-        if part == "a":
-            print_sheet(sheet)
-            return int(np.count_nonzero(sheet))
-        print("=== Fold ===")
-        print_sheet(sheet)
-    return int(np.count_nonzero(sheet))
+                copy = np.pad(
+                    copy,
+                    padding,
+                    constant_values=False,
+                )
+            elif orig.shape < copy.shape:  # pragma: no cover
+                # The fold is asymmetrical, so we need to expand
+                # the second page before flipping
+                LOG.info("Shape is %s. Want %s", copy.shape, orig.shape)
+                # ((top,bottom), (left,right))  # noqa: ERA001
+                padding = (
+                    (0, copy.shape[0] - orig.shape[0]),
+                    (0, copy.shape[1] - orig.shape[1]),
+                )
+                LOG.info(" Therefore, pad with %s", padding)
+                orig = np.pad(
+                    orig,
+                    padding,
+                    constant_values=False,
+                )
+
+            sheet = orig | np.flip(copy, axis=fold["axis"])
+            vis.update(sheet)
+            if part == "a":
+                return int(np.count_nonzero(sheet))
+        return vis.perform_ocr()
 
 
 if __name__ == "__main__":

@@ -9,22 +9,8 @@ import numpy as np
 from aocd import submit
 from aocd.models import Puzzle
 
+from aoc.visualisations.Numpy import Visualiser
 from aoc.year2021 import LOG
-
-
-def visualise(data: np.ndarray, step: int = 0) -> None:
-    """Prints the current state of the octopi energy levels
-
-    Args:
-        data (np.ndarray): The array of Octopi
-    """
-    log_str: str = (
-        "Before any steps:\n" if step == 0 else f"After step {step}:\n"
-    )
-    for row in data:
-        log_str += "".join("_" if i == 0 else str(i) for i in row)
-        log_str += "\n"
-    LOG.debug("\n%s", log_str)
 
 
 def get_neighbours(
@@ -64,7 +50,11 @@ def get_neighbours(
 
 
 def run_step(
-    data: np.ndarray, step: int, part: str, runner: bool = False
+    data: np.ndarray,
+    step: int,
+    part: str,
+    vis: Visualiser,
+    runner: bool = False,
 ) -> list[int]:
     """Runs a "step".
 
@@ -108,7 +98,7 @@ def run_step(
     # Finally, if the octopus flashed, set its energy to zero
     data[flashed] = 0
     if (step < 10 or step % 10 == 0) and not runner:
-        visualise(data, step)
+        vis.update(data)
     if part in ["training", "a"]:
         return [int(np.count_nonzero(flashed))]
     return phase_flashes
@@ -127,34 +117,44 @@ def solve(
         int: The Puzzle Solution
     """
     data = np.array([list(row) for row in puzzle.splitlines()], dtype="int")
-    visualise(data, step=0)
-    num_flashes = 0
-    if part == "a" and len(puzzle.splitlines()) == 5:
-        # Training input - just do 2 steps
-        for step in range(1, 3):
-            num_flashes += run_step(data, step, part, _runner)[0]
-        return num_flashes
-    if part == "a":
-        for step in range(100):
-            num_flashes += run_step(data, step, part, _runner)[0]
-        return num_flashes
-    if part == "b":
-        step = 1
-        while True:
-            step_data = run_step(data, step, part, _runner)
-            for phase, flashers in enumerate(step_data):
-                if flashers == data.size and not _runner:
-                    visualise(data, step)
-                    LOG.info(
-                        "%d points. %d flashers on phase %d of step %d",
-                        data.size,
-                        flashers,
-                        phase,
-                        step,
-                    )
+    with Visualiser(
+        delay=0.1 if _runner else 0.25,
+        title="2021 Day 11: Dumbo Octopus",
+    ) as vis:
+        vis.update(data)
+        num_flashes = 0
+        if part == "a" and len(puzzle.splitlines()) == 5:
+            # Training input - just do 2 steps
+            for step in range(1, 3):
+                num_flashes += run_step(
+                    data, step, part, runner=_runner, vis=vis
+                )[0]
+            return num_flashes
+        if part == "a":
+            for step in range(100):
+                num_flashes += run_step(
+                    data, step, part, runner=_runner, vis=vis
+                )[0]
+            return num_flashes
+        if part == "b":
+            step = 1
+            while True:
+                step_data = run_step(
+                    data, step, part, runner=_runner, vis=vis
+                )
+                for phase, flashers in enumerate(step_data):
+                    if flashers == data.size and not _runner:
+                        vis.update(data)
+                        LOG.info(
+                            "%d points. %d flashers on phase %d of step %d",
+                            data.size,
+                            flashers,
+                            phase,
+                            step,
+                        )
 
-                    return step
-            step += 1
+                        return step
+                step += 1
     return None
 
 
