@@ -82,6 +82,7 @@ Would they take over the entire ocean?
 After 256 days in the example above, there would be a total of 26984457539
 lanternfish!"""
 
+import logging
 from collections import Counter
 from typing import Literal
 
@@ -90,7 +91,7 @@ from aocd.models import Puzzle
 from rich import print  # noqa: A004
 from rich.progress import track
 
-from aoc.year2021 import LOG
+LOG = logging.getLogger(__name__)
 
 TEST_INPUT = "3,4,3,1,2"
 PUZZLE = Puzzle(year=2021, day=6)

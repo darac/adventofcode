@@ -126,13 +126,14 @@ because there are the same number of scores smaller and larger than it.
 Find the completion string for each incomplete line, score the completion
 strings, and sort the scores. What is the middle score?"""
 
+import logging
 from typing import Literal
 
 from aocd import submit
 from aocd.exceptions import AocdError
 from aocd.models import Puzzle
 
-from aoc.year2021 import LOG
+LOG = logging.getLogger(__name__)
 
 
 def solve(
@@ -218,7 +219,7 @@ def solve(
                             print(f"Unknown chunk {char}")
                         printout += f"[on red]{char}[/]"
         if not line_corrupted and len(chunk_deck) > 0:
-            LOG.debug("Autoccomplete needed: {%s}", "".join(chunk_deck))
+            LOG.debug("Autocomplete needed: {%s}", "".join(chunk_deck))
             this_autocomplete_score = 0
             for chunk in reversed(chunk_deck):
                 this_autocomplete_score *= 5
@@ -246,7 +247,6 @@ def solve(
             autocomplete_scores.append(this_autocomplete_score)
         if error:
             printout = f"{printout}  {error}"
-        LOG.debug("%s", printout)
     return (
         checker_score
         if part == "a"

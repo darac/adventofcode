@@ -101,7 +101,7 @@ from rich import print, traceback  # noqa: A004
 from rich.live import Live
 from rich.table import Table
 
-from aoc.year2021 import LOG
+LOG = logging.getLogger(__name__)
 
 traceback.install(show_locals=True)
 FORMAT = "%(message)s"
@@ -302,7 +302,7 @@ def parse_input(string: str) -> dict:
         dict: Draws and Boards
     """
     draws = [int(n) for n in string.splitlines()[0].split(",")]
-    print(f"Got {len(draws)} draws")
+    LOG.info("Got %d draws", len(draws))
     boards: list[BingoBoard] = []
 
     this_board: BingoBoard | None = None
@@ -403,7 +403,7 @@ if __name__ == "__main__":
                         if not FIRST_BOARD:
                             # We've not reported the first board yet.
                             print(ex_board.board.as_table())
-                            print(f"Score: {ex_board.board.score()}")
+                            LOG.info("Score: %d", ex_board.board.score())
                             if not DEBUG and not SUBMITTED_A:
                                 submit(
                                     str(ex_board.board.score()),
@@ -421,6 +421,6 @@ if __name__ == "__main__":
                 input("Press enter to continue")
     assert LAST_BOARD is not None
     print(LAST_BOARD.as_table())
-    print(f"Score: {LAST_BOARD.score()}")
+    LOG.info("Score: %d", LAST_BOARD.score())
     if not SUBMITTED_B and not DEBUG:
         submit(LAST_BOARD.score(), part="b", day=4, year=2021)

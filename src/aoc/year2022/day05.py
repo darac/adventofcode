@@ -145,12 +145,13 @@ on top of each stack?
 """
 
 # spell-checker: enable
+import logging
 from collections import deque
 from typing import Literal
 
 from parse import Result, compile  # noqa: A004
 
-from aoc.year2022 import LOG
+LOG = logging.getLogger(__name__)
 
 
 def solve(

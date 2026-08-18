@@ -134,9 +134,10 @@ Using password method 0x434C49434B, what is the password to open the door?
 """
 # spell-checker: enable
 
+import logging
 from typing import Literal
 
-from aoc.year2025 import LOG
+LOG = logging.getLogger(__name__)
 
 
 def solve(

@@ -108,13 +108,14 @@ take before you're only on nodes that end with Z?
 """
 # spell-checker: enable
 
+import logging
 import math
 from itertools import cycle
 from typing import Literal
 
 from parse import Result, parse
 
-from aoc.year2023 import LOG
+LOG = logging.getLogger(__name__)
 
 PART = ""
 

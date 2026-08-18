@@ -93,10 +93,12 @@ side and try again. How many times does an X-MAS appear?
 # spell-checker: enable
 
 import itertools
+import logging
 from typing import Literal
 
 from aoc.parsers.grid import Grid, Point, grid_of_chars
-from aoc.year2024 import LOG
+
+LOG = logging.getLogger(__name__)
 
 directions = {
     "North    ": (0, -1),

@@ -85,10 +85,11 @@ What do you get if you add up all of the invalid IDs using these new rules?
 """
 # spell-checker: enable
 
+import logging
 from itertools import batched
 from typing import Literal
 
-from aoc.year2025 import LOG
+LOG = logging.getLogger(__name__)
 
 
 def invalid_id(gift_id: str, check_len: int) -> bool:

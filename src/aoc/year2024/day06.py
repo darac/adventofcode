@@ -239,12 +239,14 @@ obstruction?
 # spell-checker: enable
 
 import itertools
+import logging
 from copy import deepcopy
 from dataclasses import dataclass
 from typing import Literal
 
 import aoc.parsers.grid
-from aoc.year2024 import LOG
+
+LOG = logging.getLogger(__name__)
 
 
 def grid2str(grid: aoc.parsers.grid.Grid, x_size: int, y_size: int) -> str:

@@ -58,13 +58,15 @@ For example:
 """
 # spell-checker: enable
 
+import logging
 from typing import Literal
 
 import numpy as np
 import parse
 
 from aoc.visualisations.Numpy import Visualiser
-from aoc.year2015 import LOG
+
+LOG = logging.getLogger(__name__)
 
 
 def solve_steps_a(

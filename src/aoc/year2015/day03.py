@@ -45,10 +45,11 @@ For example:
 """
 # spell-checker: enable
 
+import logging
 from collections import Counter
 from typing import Literal
 
-from aoc.year2015 import LOG
+LOG = logging.getLogger(__name__)
 
 
 class UnknownDirection(Exception):

@@ -82,9 +82,10 @@ depth?
 """
 # spell-checker: enable
 
+import logging
 from typing import Literal
 
-from aoc.year2021 import LOG
+LOG = logging.getLogger(__name__)
 
 ## Padding, so that log lines start at 100
 ##
@@ -125,7 +126,10 @@ def solve(
                     elif depth < 0:
                         LOG.info("COMPUTER: FLYING!")
                 else:
-                    LOG.info(f"Helmsman: Aye-aye, sir. Raising Aim {count}")
+                    LOG.info(
+                        "Helmsman: Aye-aye, sir. Raising Aim %d",
+                        int(count),
+                    )
                     aim -= int(count)
             case "down":
                 if part == "a":
@@ -141,7 +145,7 @@ def solve(
                     aim += int(count)
 
             case _:  # pragma: no cover
-                LOG.info(f"Captain : Belay that {command} order!")
+                LOG.info("Captain : Belay that %s order!", command)
 
     LOG.info("Captain : Helmsman, Report Position!")
     LOG.info("Helmsman: Sir! Forward %s, Depth %s, Sir!", position, depth)

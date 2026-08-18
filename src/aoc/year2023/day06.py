@@ -121,10 +121,11 @@ How many ways can you beat the record in this one much longer race?
 """
 # spell-checker: enable
 
+import logging
 import math
 from typing import Literal
 
-from aoc.year2023 import LOG
+LOG = logging.getLogger(__name__)
 
 
 def get_winning_bounds(

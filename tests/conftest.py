@@ -7,14 +7,20 @@ import logging
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-import aocd
 import pytest
 import yaml
+from aocd.exceptions import AocdError
+
+LOG = logging.getLogger(__name__)
 
 if TYPE_CHECKING:
     from collections.abc import Callable
 
-LOG = logging.getLogger()
+
+def pytest_configure() -> None:
+    logging.getLogger("aocd.get").setLevel(logging.INFO)
+    logging.getLogger("matplotlib").setLevel(logging.WARNING)
+    logging.getLogger("parse").setLevel(logging.WARNING)
 
 
 def pytest_addoption(parser: pytest.Parser) -> None:
@@ -98,9 +104,7 @@ def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
     _id_list: list[str] = []
     for year, day in itertools.product(years, days):
         solver_name = f"aoc.year{year:4d}.day{day:02d}"
-        with contextlib.suppress(
-            ModuleNotFoundError, aocd.exceptions.AocdError
-        ):
+        with contextlib.suppress(ModuleNotFoundError, AocdError):
             solver = importlib.import_module(solver_name)
             with Path(f"tests/year{year:4d}/day{day:02d}.yml").open() as fh:
                 for doc_num, doc in enumerate(

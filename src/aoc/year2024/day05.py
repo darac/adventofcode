@@ -139,10 +139,11 @@ add up the middle page numbers after correctly ordering just those updates?
 """
 # spell-checker: enable
 
+import logging
 from collections import defaultdict
 from typing import Literal
 
-from aoc.year2024 import LOG
+LOG = logging.getLogger(__name__)
 
 
 def solve(

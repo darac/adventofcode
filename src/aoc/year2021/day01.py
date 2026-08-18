@@ -118,12 +118,13 @@ How many sums are larger than the previous sum?
 """
 # spell-checker: enable
 
+import logging
 from collections.abc import Generator
 from typing import Any, Literal
 
 from rich.progress import track
 
-from aoc.year2021 import LOG
+LOG = logging.getLogger(__name__)
 
 A_UPPERCASE = ord("A")
 ALPHABET_SIZE = 26
@@ -196,13 +197,13 @@ def solve(
             value = int(line)
             if prev is not None:
                 if value > prev:
-                    LOG.debug(f"{value} ([bold]increased[/bold])")
+                    LOG.debug("%d (increased)", value)
                     count += 1
                 else:
-                    LOG.debug(f"{value} (decreased)")
+                    LOG.debug("%d (decreased)", value)
             prev = value
 
-        LOG.info(f"count = {count}")
+        LOG.info("count = %d", count)
     elif part == "b":
         windows = []
         for depth in track([int(n) for n in puzzle.splitlines()]):
@@ -215,13 +216,13 @@ def solve(
             value = window.sum_values()
             if prev is not None and value is not None:
                 if value > prev:
-                    LOG.debug(f"{name}: {value} ([bold]increased[/bold])")
+                    LOG.debug("%s: %d (increased)", name, value)
                     count += 1
                 elif value < prev:
-                    LOG.debug(f"{name}: {value} ([bold]decreased[/bold])")
+                    LOG.debug("%s: %d (decreased)", name, value)
                 else:
-                    LOG.debug(f"{name}: {value} ([bold]no change[/bold])")
+                    LOG.debug("%s: %d (no change)", name, value)
             prev = value
 
-        LOG.info(f"count = {count}")
+        LOG.info("count = %d", count)
     return count

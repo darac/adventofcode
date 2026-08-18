@@ -27,9 +27,10 @@ Now find one that starts with six zeroes.
 # spell-checker: enable
 
 import hashlib
+import logging
 from typing import Literal
 
-from aoc.year2015 import LOG
+LOG = logging.getLogger(__name__)
 
 
 def solve(
@@ -42,6 +43,7 @@ def solve(
         .hexdigest()
         .startswith("0" * (5 if part == "a" else 6))
     ):
-        LOG.debug(count)
+        if count < 10 or count % 100000 == 0:
+            LOG.debug("count = %d", count)
         count += 1
     return count

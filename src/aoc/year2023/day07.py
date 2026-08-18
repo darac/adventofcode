@@ -140,10 +140,11 @@ the new total winnings?
 """
 # spell-checker: enable
 
+import logging
 from collections.abc import Iterable
 from typing import Literal, NamedTuple, TypedDict
 
-from aoc.year2023 import LOG
+LOG = logging.getLogger(__name__)
 
 PART = ""
 

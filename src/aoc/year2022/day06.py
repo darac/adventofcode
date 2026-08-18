@@ -79,10 +79,11 @@ marker is detected?
 """
 
 # spell-checker: disable
+import logging
 from collections import deque
 from typing import Literal
 
-from aoc.year2022 import LOG
+LOG = logging.getLogger(__name__)
 
 
 def solve(

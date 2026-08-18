@@ -81,11 +81,12 @@ remove a single level from unsafe reports. How many reports are now safe?
 # spell-checker: enable
 
 import itertools
+import logging
 import textwrap
 from collections.abc import Iterable
 from typing import Literal
 
-from aoc.year2024 import LOG
+LOG = logging.getLogger(__name__)
 
 
 def check_safety(levels: Iterable[int]) -> bool:

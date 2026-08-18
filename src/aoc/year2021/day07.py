@@ -78,6 +78,7 @@ Determine the horizontal position that the crabs can align to using the
 least fuel possible so they can make you an escape route! How much fuel
 must they spend to align to that position?"""
 
+import logging
 from typing import Literal
 
 from aocd import submit
@@ -85,7 +86,7 @@ from aocd.models import Puzzle
 from rich import print  # noqa: A004
 from rich.progress import track
 
-from aoc.year2021 import LOG
+LOG = logging.getLogger(__name__)
 
 TEST_INPUT = "16,1,2,0,4,2,7,1,2,14"
 PUZZLE = Puzzle(year=2021, day=7)
