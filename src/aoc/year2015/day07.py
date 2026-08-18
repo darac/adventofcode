@@ -1,3 +1,4 @@
+# Copyright (c) 2015 Paul Saunders
 # spell-checker: disable
 """
 --- Day 7: Some Assembly Required ---
@@ -70,9 +71,8 @@ from typing import Literal
 LOG = logging.getLogger(__name__)
 
 
-REGISTERS: dict[str, int] = {}
 MASK = 2**16 - 1
-_DEBUGMSG = "  %s becomes %d"
+DEBUGMSG = "  %s becomes %d"
 
 
 def is_number(x: str) -> bool:
@@ -83,16 +83,16 @@ def is_number(x: str) -> bool:
     return True
 
 
-def get(reg: str) -> int:
-    if is_number(reg):
-        return int(reg)
-    if reg not in REGISTERS:
-        raise SequencingError(reg)
-    return REGISTERS[reg]
+class Registers(dict[str, int]):
+    def __getitem__(self, key: str) -> int:
+        if is_number(key):
+            return int(key)
+        if key not in self:
+            raise SequencingError(key)
+        return super().__getitem__(key)
 
-
-def put(reg: str, val: int) -> None:
-    REGISTERS[reg] = val
+    def __setitem__(self, key: str, value: int) -> None:
+        super().__setitem__(key, value & MASK)
 
 
 class SequencingError(Exception):
@@ -105,8 +105,9 @@ class UnknownCommands(Exception):
         super().__init__(f"Unknown Commands: {args}")
 
 
-def parse_commands(puzzle: str) -> None:
+def parse_commands(puzzle: str) -> dict[str, int]:
     lines = puzzle.splitlines()
+    registers: Registers = Registers()
 
     while lines:
         line = lines.pop()
@@ -117,85 +118,86 @@ def parse_commands(puzzle: str) -> None:
                     LOG.debug(
                         "Assign %s(%s) to %s",
                         args[0],
-                        get(args[0]),
+                        registers[args[0]],
                         args[2],
                     )
-                    put(args[2], get(args[0]))
-                    LOG.debug(_DEBUGMSG, args[2], get(args[2]))
+                    registers[args[2]] = registers[args[0]]
                 case ["NOT", _, "->", _]:
                     LOG.debug(
                         "Invert %s(%s) into %s",
                         args[1],
-                        get(args[1]),
+                        registers[args[1]],
                         args[3],
                     )
-                    put(args[3], (~get(args[1])) & MASK)
-                    LOG.debug(_DEBUGMSG, args[3], get(args[3]))
+                    registers[args[3]] = (~registers[args[1]]) & MASK
                 case [_, "AND", _, "->", _]:
                     LOG.debug(
                         "%s(%s) AND %s(%s) into %s",
                         args[0],
-                        get(args[0]),
+                        registers[args[0]],
                         args[2],
-                        get(args[2]),
+                        registers[args[2]],
                         args[4],
                     )
-                    put(args[4], (get(args[0]) & get(args[2])) & MASK)
-                    LOG.debug(_DEBUGMSG, args[4], get(args[4]))
+                    registers[args[4]] = (
+                        registers[args[0]] & registers[args[2]]
+                    ) & MASK
                 case [_, "OR", _, "->", _]:
                     LOG.debug(
                         "%s(%s) OR %s(%s) into %s",
                         args[0],
-                        get(args[0]),
+                        registers[args[0]],
                         args[2],
-                        get(args[2]),
+                        registers[args[2]],
                         args[4],
                     )
-                    put(args[4], (get(args[0]) | get(args[2])) & MASK)
-                    LOG.debug(_DEBUGMSG, args[4], get(args[4]))
+                    registers[args[4]] = (
+                        registers[args[0]] | registers[args[2]]
+                    ) & MASK
                 case [_, "LSHIFT", _, "->", _]:
                     LOG.debug(
                         "%s(%s) LSHIFT %s(%s) into %s",
                         args[0],
-                        get(args[0]),
+                        registers[args[0]],
                         args[2],
-                        get(args[2]),
+                        registers[args[2]],
                         args[4],
                     )
-                    put(args[4], (get(args[0]) << get(args[2])) & MASK)
-                    LOG.debug(_DEBUGMSG, args[4], get(args[4]))
+                    registers[args[4]] = (
+                        registers[args[0]] << registers[args[2]]
+                    ) & MASK
                 case [_, "RSHIFT", _, "->", _]:
-                    LOG.info(
+                    LOG.debug(
                         "%s(%s) RSHIFT %s(%s) into %s",
                         args[0],
-                        get(args[0]),
+                        registers[args[0]],
                         args[2],
-                        get(args[2]),
+                        registers[args[2]],
                         args[4],
                     )
-                    put(args[4], (get(args[0]) >> get(args[2])) & MASK)
-                    LOG.info(_DEBUGMSG, args[4], get(args[4]))
+                    registers[args[4]] = (
+                        registers[args[0]] >> registers[args[2]]
+                    ) & MASK
                 case _:
                     raise UnknownCommands(args)
+            LOG.debug("  %s becomes %d", args[-1], registers[args[-1]])
         except SequencingError:
             lines = [line, *lines]
+
+    return registers
 
 
 def solve(
     puzzle: str, part: Literal["a", "b"], _runner: bool = False
 ) -> int | None:
-    global REGISTERS
-    parse_commands(puzzle)
+    registers = parse_commands(puzzle)
 
     if part == "a":
-        return REGISTERS["a"]
+        return registers["a"]
 
     new_puzzle = re.sub(
-        r"\n(\d+) -> b\n", "\n{} -> b\n".format(REGISTERS["a"]), puzzle
+        r"\n(\d+) -> b\n", "\n{} -> b\n".format(registers["a"]), puzzle
     )
     assert new_puzzle != puzzle
 
-    REGISTERS = {}
-
-    parse_commands(new_puzzle)
-    return REGISTERS["a"]
+    return registers["a"]
