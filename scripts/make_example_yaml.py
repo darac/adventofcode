@@ -42,8 +42,17 @@ def make_example_yaml(year: int, day: int, force: bool) -> None:
     examples = (
         {
             "input": example.input_data,
-            "a": example.answer_a,
-            "b": example.answer_b,
+            # Only include part "a" or "b" if their expectation is NOT NONE
+            **(
+                {"a": example.answer_a}
+                if example.answer_a is not None
+                else {}
+            ),
+            **(
+                {"b": example.answer_b}
+                if example.answer_b is not None
+                else {}
+            ),
         }
         for example in puzzle.examples
     )
@@ -73,7 +82,7 @@ def make_example_yaml(year: int, day: int, force: bool) -> None:
             indent=4,
             Dumper=AOCDumper,
         )
-    print(f"{len(list(examples))} examples written to {outfile}")
+    print(f"Examples written to {outfile}")
 
 
 if __name__ == "__main__":

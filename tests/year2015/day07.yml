@@ -9,7 +9,6 @@ input: |-
     NOT x -> h
     NOT y -> i
 a: 72
-b: ~
 ---
 input: |-
     123 -> x
@@ -21,7 +20,6 @@ input: |-
     NOT x -> h
     NOT y -> i
 a: 507
-b: ~
 ---
 input: |-
     123 -> x
@@ -33,7 +31,6 @@ input: |-
     NOT x -> h
     NOT y -> i
 a: 492
-b: ~
 ---
 input: |-
     123 -> x
@@ -45,7 +42,6 @@ input: |-
     NOT x -> h
     NOT y -> i
 a: 114
-b: ~
 ---
 input: |-
     123 -> x
@@ -57,7 +53,6 @@ input: |-
     NOT x -> a
     NOT y -> i
 a: 65412
-b: ~
 ---
 input: |-
     123 -> x
@@ -69,7 +64,6 @@ input: |-
     NOT x -> h
     NOT y -> a
 a: 65079
-b: ~
 ---
 input: |-
     123 -> a
@@ -81,7 +75,6 @@ input: |-
     NOT a -> h
     NOT y -> i
 a: 123
-b: ~
 ---
 input: |-
     123 -> x
@@ -93,4 +86,28 @@ input: |-
     NOT x -> h
     NOT a -> i
 a: 456
-b: ~
+---
+input: |-
+    123 -> x
+    456 -> y
+    x AND y -> d
+    x OR y -> e
+    x LSHIFT 2 -> f
+    y RSHIFT 2 -> g
+    NOT x -> h
+    NOT y -> i
+    d OR g -> j
+    e AND f -> k
+    h AND i -> m
+    j LSHIFT 1 -> n
+    k RSHIFT 2 -> p
+    n OR p -> q
+    q AND m -> r
+    r OR d -> b
+    b RSHIFT 1 -> s
+    b AND e -> t
+    s OR t -> u
+    u LSHIFT 1 -> v
+    v AND 65535 -> a
+a: 220
+b: 508

@@ -65,7 +65,6 @@ ultimately provided to wire a?
 """
 
 import logging
-import re
 from typing import Literal
 
 LOG = logging.getLogger(__name__)
@@ -100,7 +99,7 @@ class SequencingError(Exception):
         super().__init__(f"Unknown Register {reg} at this time.")
 
 
-class UnknownCommands(Exception):
+class UnknownCommands(Exception):  # pragma: no cover
     def __init__(self: "UnknownCommands", *args: object) -> None:
         super().__init__(f"Unknown Commands: {args}")
 
@@ -178,7 +177,7 @@ def parse_commands(puzzle: str) -> dict[str, int]:
                     registers[args[4]] = (
                         registers[args[0]] >> registers[args[2]]
                     ) & MASK
-                case _:
+                case _:  # pragma: no cover
                     raise UnknownCommands(args)
             LOG.debug("  %s becomes %d", args[-1], registers[args[-1]])
         except SequencingError:
@@ -195,9 +194,9 @@ def solve(
     if part == "a":
         return registers["a"]
 
-    new_puzzle = re.sub(
-        r"\n(\d+) -> b\n", "\n{} -> b\n".format(registers["a"]), puzzle
-    )
+    # Append "<answer from part a> -> b" to the puzzle and try again
+    new_puzzle = f"{puzzle}\n{registers['a']} -> b"
     assert new_puzzle != puzzle
 
+    registers = parse_commands(new_puzzle)
     return registers["a"]
