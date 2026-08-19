@@ -441,18 +441,17 @@ def solve(
             pending.targets[p["test"] == "true"] = p["monkey"]
             if pending.targets[True] != -1 and pending.targets[False] != 1:
                 LOG.debug(pending.targets)
-    if len(pending.holding):
-        LOG.info(
-            "Create #%d with %d items",
-            pending.monkey,
-            len(pending.holding),
-        )
-        MONKEYS[pending.monkey] = Monkey(
-            starting_items=pending.holding,
-            operation=pending.operation,
-            test=pending.test,
-            throw_targets=pending.targets,
-        )
+    LOG.info(
+        "Create #%d with %d items",
+        pending.monkey,
+        len(pending.holding),
+    )
+    MONKEYS[pending.monkey] = Monkey(
+        starting_items=pending.holding,
+        operation=pending.operation,
+        test=pending.test,
+        throw_targets=pending.targets,
+    )
 
     play_rounds(20 if part == "a" else 200)
     for monkey_id, monkey in MONKEYS.items():
