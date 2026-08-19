@@ -385,6 +385,7 @@ def solve(
     puzzle: str, part: Literal["a", "b"], _runner: bool = False
 ) -> int | str | None:
     pending = Pending()
+    MONKEYS.clear()
     for line in puzzle.splitlines():
         LOG.debug("»%s«", line)
         if p := parse.parse("Monkey {monkey:d}:", line):

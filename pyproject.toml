@@ -139,9 +139,9 @@
 
     test-all = """
 pixi run --environment dev   lint &&
-pixi run --environment py312 test &&
-pixi run --environment py313 test &&
-pixi run --environment py314 test
+pixi run --environment py312 pytest &&
+pixi run --environment py313 pytest &&
+pixi run --environment py314 pytest
 """
 
 [tool.pixi.workspace]
