@@ -14,7 +14,7 @@ def solve(
     year: int,
     day: int,
     data: str,
-) -> tuple[int | None, ...]:
+) -> tuple[str | int | None, ...]:
     """
     Finds today's solver, and runs it twice; once for part a and once for
     part b.
@@ -26,10 +26,11 @@ def solve(
     except ModuleNotFoundError:
         return None, None
 
-    try:
-        a = solver.solve(puzzle=data, part="a", _runner=True)
-        b = solver.solve(puzzle=data, part="b", _runner=True)
-    except AttributeError:
+    solve_day = getattr(solver, "solve", None)
+    if solve_day is None:
         return None, None
+
+    a = solve_day(puzzle=data, part="a", _runner=True)
+    b = solve_day(puzzle=data, part="b", _runner=True)
 
     return a, b

@@ -105,6 +105,10 @@
     ty                      = ">=0.0.13"
     types-pyyaml            = ">=6.0.12.20240808"
 
+[tool.pixi.feature.dev.tasks]
+    make_example_yaml = "python scripts/make_example_yaml.py"
+    test              = "pytest"
+
 [tool.pixi.feature.py312.dependencies]
     python = "3.12.*"
 
@@ -132,13 +136,12 @@
     ci-lint = "ruff check src/aoc --output-format json --output-file ruff.json"
     ci-test = "pytest -vv"
     lint    = "ruff check src/aoc tests && ty check src/aoc tests"
-    test    = "pytest"
 
     test-all = """
 pixi run --environment dev   lint &&
-pixi run --environment py312 test &&
-pixi run --environment py313 test &&
-pixi run --environment py314 test
+pixi run --environment py312 pytest &&
+pixi run --environment py313 pytest &&
+pixi run --environment py314 pytest
 """
 
 [tool.pixi.workspace]

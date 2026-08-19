@@ -13,10 +13,10 @@ Storage for my AdventOfCode solutions
 
 ```sh
 # Install dependencies
-uv sync --dev
+pixi install
 
 # Setup pre-commit and pre-push hooks
-uv run pre-commit install --install-hooks
+pixi run pre-commit install --install-hooks
 ```
 
 ## Goals
@@ -91,6 +91,8 @@ Note how we use the multiple Documents feature of YAML to store multiple test ca
 single file. Each test case can provide an answer for part A, part B or both (it's legal to
 provide an answer for neither, but not useful).
 
+YAML files can be generated from aocd puzzles by `pixi run make_example_yaml`.
+
 ## Helpers
 
 In order to run the tests, I have written a "[runner function](aoc/__init__.py#L18)" around the
@@ -159,13 +161,15 @@ general:
   ...
 
 Custom options:
-  --year=[{2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025} ...]
+  --year=[{2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026} ...]
                         Run AOC tests from this year
   --day=[{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25} ...]
                         Run AOC tests from this day
   --part=[{a,b} ...]    Run this part
   --today               Run the latest available day (overrides --year and
                         --day)
+
+...
 ```
 
 ## Credits
