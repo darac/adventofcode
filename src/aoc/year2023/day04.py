@@ -121,12 +121,13 @@ total scratchcards do you end up with?
 """
 # spell-checker: enable
 
+import logging
 from collections import defaultdict
 from typing import Literal
 
 from parse import Result, parse
 
-from aoc.year2023 import LOG
+LOG = logging.getLogger(__name__)
 
 
 def solve(

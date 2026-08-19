@@ -14,7 +14,8 @@ from aocd import submit
 from aocd.models import Puzzle
 
 from aoc.visualisations.Numpy import Visualiser
-from aoc.year2021 import LOG
+
+LOG = logging.getLogger(__name__)
 
 
 def create_sheet(puzzle: str) -> np.ndarray:
@@ -33,7 +34,7 @@ def create_sheet(puzzle: str) -> np.ndarray:
         try:
             r, c = map(int, line.split(","))
         except ValueError:  # pragma: no cover
-            LOG.error("Bad line on Line %d was: %s", lineno, line)
+            LOG.exception("Bad line on Line %d was: %s", lineno, line)
             raise
         rows = max(rows, r)
         cols = max(cols, c)

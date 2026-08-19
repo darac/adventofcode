@@ -370,6 +370,7 @@ on your CRT?
 """
 # spell-checker: enable
 
+import logging
 import sys
 from collections.abc import Generator
 from dataclasses import dataclass, field
@@ -379,7 +380,8 @@ import numpy as np
 import parse
 
 from aoc.visualisations.Numpy import Visualiser
-from aoc.year2022 import LOG
+
+LOG = logging.getLogger(__name__)
 
 
 class IllegalInstruction(Exception):

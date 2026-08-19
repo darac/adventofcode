@@ -141,12 +141,15 @@ the filesystem to run the update. What is the total size of that directory?
 """
 
 # spell-checker: enable
+import logging
 import os
 import platform
 from pathlib import Path
 from typing import Literal
 
 import pytest
+
+LOG = logging.getLogger(__name__)
 
 
 class UnknownCommand(Exception):
@@ -214,11 +217,13 @@ def visualise(
         else:
             assert isinstance(value, int)
             dirent_size = int(value)
-        if not runner:
-            print(
-                f"{str(root) + os.sep + dirent:80}\t{dir_marker:7}"
-                f"{dirent_size:-12,}{pick_me}"
-            )
+        LOG.debug(
+            "%-80s\t%-7s%-12s%s",
+            str(root) + os.sep + dirent,
+            dir_marker,
+            format(dirent_size, ","),
+            pick_me,
+        )
     return picked_directories
 
 
@@ -256,8 +261,11 @@ def solve(
     disk_size = 70_000_000
     free_space = disk_size - dir_size(filesystem)
     needed_space = 30_000_000 - free_space
-    if not _runner:
-        print(f"{free_space:,} free. Need {needed_space:,} more.")
+    LOG.info(
+        "%s free. Need %s more.",
+        format(free_space, ","),
+        format(needed_space, ","),
+    )
     return min(
         [
             i

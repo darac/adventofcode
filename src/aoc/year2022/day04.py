@@ -64,11 +64,12 @@ In how many assignment pairs does one range fully contain the other?
 """
 
 # spell-checker: disable
+import logging
 from typing import Literal, cast
 
 from parse import Parser, Result, compile  # noqa: A004
 
-from aoc.year2022 import LOG
+LOG = logging.getLogger(__name__)
 
 
 def visualise(low: int, high: int, upper: int, char: str = "+") -> str:

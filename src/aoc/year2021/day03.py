@@ -130,11 +130,12 @@ answer in decimal, not binary.)
 """
 # spell-checker: enable
 
+import logging
 from typing import Literal
 
 from rich.progress import track
 
-from aoc.year2021 import LOG
+LOG = logging.getLogger(__name__)
 
 
 def common_bit(crit: str, position: int, data: list[str]) -> str:
@@ -159,10 +160,13 @@ def filter_reports(crit: str, data: list[str]) -> str:
     position = 0
     output = data
     while len(output) > 1:
-        print(f"{len(output)} items")
+        LOG.debug("%d items", len(output))
         common = common_bit(crit, position, output)
-        print(
-            f"{crit.title()} Common Bit in position {position} is {common}"
+        LOG.debug(
+            "%s Commit Bit in position %d is %s",
+            crit.title(),
+            position,
+            common,
         )
         output = list(
             filter(

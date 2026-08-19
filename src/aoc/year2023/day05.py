@@ -181,10 +181,11 @@ any of the initial seed numbers?
 # spell-checker: enable
 
 import contextlib
+import logging
 from collections.abc import Generator, Iterable
 from typing import Literal
 
-from aoc.year2023 import LOG
+LOG = logging.getLogger(__name__)
 
 try:
     from itertools import batched  # pyright: ignore[reportAssignmentType]

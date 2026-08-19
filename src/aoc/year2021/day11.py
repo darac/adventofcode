@@ -3,6 +3,7 @@
 --- Day 11: Dumbo Octopus ---
 """
 
+import logging
 from typing import Literal
 
 import numpy as np
@@ -10,7 +11,8 @@ from aocd import submit
 from aocd.models import Puzzle
 
 from aoc.visualisations.Numpy import Visualiser
-from aoc.year2021 import LOG
+
+LOG = logging.getLogger(__name__)
 
 
 def get_neighbours(

@@ -68,10 +68,11 @@ What is the sum of all of the calibration values?
 """
 # spell-checker: enable
 
+import logging
 import re
 from typing import Literal
 
-from aoc.year2023 import LOG
+LOG = logging.getLogger(__name__)
 
 
 def get_digits(in_str: str) -> list[str]:

@@ -29,11 +29,12 @@ How many strings are nice?
 """
 # spell-checker: disable
 
+import logging
 import re
 from collections import Counter
 from typing import Literal
 
-from aoc.year2015 import LOG
+LOG = logging.getLogger(__name__)
 
 
 def solve(

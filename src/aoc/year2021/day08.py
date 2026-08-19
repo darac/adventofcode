@@ -161,9 +161,10 @@ the four-digit output values. What do you get if you add up all of the
 output values?"""
 # spell-checker: enable
 
+import logging
 from typing import Literal
 
-from aoc.year2021 import LOG
+LOG = logging.getLogger(__name__)
 
 
 def solve(

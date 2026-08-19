@@ -20,15 +20,17 @@
             "aoc"
         ],
         "body": [
+            "# Copyright (c) ${1:year} Paul Saunders",
             "# spell-checker: disable",
             "\"\"\"",
             "$0",
             "\"\"\"",
             "# spell-checker: enable",
             "",
+            "import logging",
             "from typing import Literal",
             "",
-            "from aoc.year${1:year} import LOG",
+            "LOG = logging.getLogger(__name__)",
             "",
             "",
             "def solve(",

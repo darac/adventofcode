@@ -163,13 +163,17 @@ pixi run --environment py314 pytest
 [tool.pytest.ini_options]
     addopts = """\
     --cov \
+    --cov-report=term-missing \
     --cov-report=xml:coverage.xml \
     --junit-xml=junit.xml \
     --tb=auto \
     --timeout=300 \
     """
+
     junit_suite_name = "aoc"
-    pythonpath = ["src/"]
+    log_cli_format   = "%(levelname)10s %(name)s:%(lineno)d %(message)s"
+    log_cli_level    = "INFO"
+    pythonpath       = ["src/"]
 
 [tool.ruff]
     # The AOC website wraps at 76 chars, so should we.

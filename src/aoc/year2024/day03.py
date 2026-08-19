@@ -66,10 +66,11 @@ results of just the enabled multiplications?
 """
 # spell-checker: enable
 
+import logging
 import re
 from typing import Literal
 
-from aoc.year2024 import LOG
+LOG = logging.getLogger(__name__)
 
 
 def solve(
