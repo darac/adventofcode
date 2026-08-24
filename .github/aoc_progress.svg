@@ -3,440 +3,612 @@
     viewBox="0 0 690 182">
 
     <style>
-        .label    {
-            fill: #59636e;
-            font-family: DejaVu Sans Mono, monospace;
-            font-size: 13px;
+        :root {
+            --label: #59636e;
+            --unsolved: #ebedf0;
+            --one-star: #009900;
+            --two-star: #999900;
+            --today: #cf222e;
+
+            --unsolved-text: #59636e;
+            --one-star-text: #ffffff;
+            --two-star-text: #24292f;
         }
-        .unsolved { fill: #ebedf0; }
-        .one-star { fill: #009900; }
-        .two-star { fill: #999900; }
-        .today    { stroke: cf222e; stroke-width: 2px; }
 
         @media (prefers-color-scheme: dark) {
-            .label    { fill: #9198a1; }
-            .unsolved { fill: #161b22; }
-            .one-star { fill: #00cc00; }
-            .two-star { fill: #ffff66; }
-            .today    { stroke: #ff7b72; }
+            :root {
+                --label: #9198a1;
+                --unsolved: #161b22;
+                --one-star: #00cc00;
+                --two-star: #ffff66;
+                --today: #ff7b72;
+
+                --unsolved-text: #9198a1;
+                --one-star-text: #0d1117;
+                --two-star-text: #0d1117;
+            }
+        }
+
+        .label {
+            fill: var(--label);
+            font-family: "DejaVu Sans Mono", monospace;
+            font-size: 13px;
+        }
+
+        .day {
+            font-family: "DejaVu Sans Mono", monospace;
+            font-size: 9px;
+            text-anchor: middle;
+            dominant-baseline: middle;
+            pointer-events: none;
+        }
+
+        .unsolved { fill: var(--unsolved); }
+        .one-star { fill: var(--one-star); }
+        .two-star { fill: var(--two-star); }
+
+        .unsolved-text { fill: var(--unsolved-text); }
+        .one-star-text { fill: var(--one-star-text); }
+        .two-star-text { fill: var(--two-star-text); }
+
+        .today {
+            stroke: var(--today);
+            stroke-width: 2px;
         }
     </style>
 
-        <text class="label" x="110" y="39" dominant-baseline="middle" text-anchor="end" xml:space="preserve">2025: ★  4/24</text>
+    <text class="label" x="110" y="39" dominant-baseline="middle" text-anchor="end" xml:space="preserve">2025: ★  4/24</text>
     <rect class="two-star" x="120" y="30" width="18" height="18" rx="3">
         <title>2025 Day 1: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="129.0" y="39.0">1</text>
     <rect class="two-star" x="142" y="30" width="18" height="18" rx="3">
         <title>2025 Day 2: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="151.0" y="39.0">2</text>
     <rect class="unsolved" x="164" y="30" width="18" height="18" rx="3">
         <title>2025 Day 3: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="173.0" y="39.0">3</text>
     <rect class="unsolved" x="186" y="30" width="18" height="18" rx="3">
         <title>2025 Day 4: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="195.0" y="39.0">4</text>
     <rect class="unsolved" x="208" y="30" width="18" height="18" rx="3">
         <title>2025 Day 5: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="217.0" y="39.0">5</text>
     <rect class="unsolved" x="230" y="30" width="18" height="18" rx="3">
         <title>2025 Day 6: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="239.0" y="39.0">6</text>
     <rect class="unsolved" x="252" y="30" width="18" height="18" rx="3">
         <title>2025 Day 7: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="261.0" y="39.0">7</text>
     <rect class="unsolved" x="274" y="30" width="18" height="18" rx="3">
         <title>2025 Day 8: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="283.0" y="39.0">8</text>
     <rect class="unsolved" x="296" y="30" width="18" height="18" rx="3">
         <title>2025 Day 9: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="305.0" y="39.0">9</text>
     <rect class="unsolved" x="318" y="30" width="18" height="18" rx="3">
         <title>2025 Day 10: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="327.0" y="39.0">10</text>
     <rect class="unsolved" x="340" y="30" width="18" height="18" rx="3">
         <title>2025 Day 11: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="349.0" y="39.0">11</text>
     <rect class="unsolved" x="362" y="30" width="18" height="18" rx="3">
         <title>2025 Day 12: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="371.0" y="39.0">12</text>
     <text class="label" x="110" y="61" dominant-baseline="middle" text-anchor="end" xml:space="preserve">2024: ★ 12/50</text>
     <rect class="two-star" x="120" y="52" width="18" height="18" rx="3">
         <title>2024 Day 1: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="129.0" y="61.0">1</text>
     <rect class="two-star" x="142" y="52" width="18" height="18" rx="3">
         <title>2024 Day 2: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="151.0" y="61.0">2</text>
     <rect class="two-star" x="164" y="52" width="18" height="18" rx="3">
         <title>2024 Day 3: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="173.0" y="61.0">3</text>
     <rect class="two-star" x="186" y="52" width="18" height="18" rx="3">
         <title>2024 Day 4: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="195.0" y="61.0">4</text>
     <rect class="two-star" x="208" y="52" width="18" height="18" rx="3">
         <title>2024 Day 5: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="217.0" y="61.0">5</text>
     <rect class="two-star" x="230" y="52" width="18" height="18" rx="3">
         <title>2024 Day 6: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="239.0" y="61.0">6</text>
     <rect class="unsolved" x="252" y="52" width="18" height="18" rx="3">
         <title>2024 Day 7: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="261.0" y="61.0">7</text>
     <rect class="unsolved" x="274" y="52" width="18" height="18" rx="3">
         <title>2024 Day 8: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="283.0" y="61.0">8</text>
     <rect class="unsolved" x="296" y="52" width="18" height="18" rx="3">
         <title>2024 Day 9: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="305.0" y="61.0">9</text>
     <rect class="unsolved" x="318" y="52" width="18" height="18" rx="3">
         <title>2024 Day 10: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="327.0" y="61.0">10</text>
     <rect class="unsolved" x="340" y="52" width="18" height="18" rx="3">
         <title>2024 Day 11: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="349.0" y="61.0">11</text>
     <rect class="unsolved" x="362" y="52" width="18" height="18" rx="3">
         <title>2024 Day 12: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="371.0" y="61.0">12</text>
     <rect class="unsolved" x="384" y="52" width="18" height="18" rx="3">
         <title>2024 Day 13: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="393.0" y="61.0">13</text>
     <rect class="unsolved" x="406" y="52" width="18" height="18" rx="3">
         <title>2024 Day 14: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="415.0" y="61.0">14</text>
     <rect class="unsolved" x="428" y="52" width="18" height="18" rx="3">
         <title>2024 Day 15: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="437.0" y="61.0">15</text>
     <rect class="unsolved" x="450" y="52" width="18" height="18" rx="3">
         <title>2024 Day 16: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="459.0" y="61.0">16</text>
     <rect class="unsolved" x="472" y="52" width="18" height="18" rx="3">
         <title>2024 Day 17: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="481.0" y="61.0">17</text>
     <rect class="unsolved" x="494" y="52" width="18" height="18" rx="3">
         <title>2024 Day 18: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="503.0" y="61.0">18</text>
     <rect class="unsolved" x="516" y="52" width="18" height="18" rx="3">
         <title>2024 Day 19: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="525.0" y="61.0">19</text>
     <rect class="unsolved" x="538" y="52" width="18" height="18" rx="3">
         <title>2024 Day 20: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="547.0" y="61.0">20</text>
     <rect class="unsolved" x="560" y="52" width="18" height="18" rx="3">
         <title>2024 Day 21: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="569.0" y="61.0">21</text>
     <rect class="unsolved" x="582" y="52" width="18" height="18" rx="3">
         <title>2024 Day 22: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="591.0" y="61.0">22</text>
     <rect class="unsolved" x="604" y="52" width="18" height="18" rx="3">
         <title>2024 Day 23: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="613.0" y="61.0">23</text>
     <rect class="unsolved" x="626" y="52" width="18" height="18" rx="3">
         <title>2024 Day 24: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="635.0" y="61.0">24</text>
     <rect class="unsolved" x="648" y="52" width="18" height="18" rx="3">
         <title>2024 Day 25: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="657.0" y="61.0">25</text>
     <text class="label" x="110" y="83" dominant-baseline="middle" text-anchor="end" xml:space="preserve">2023: ★ 14/50</text>
     <rect class="two-star" x="120" y="74" width="18" height="18" rx="3">
         <title>2023 Day 1: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="129.0" y="83.0">1</text>
     <rect class="two-star" x="142" y="74" width="18" height="18" rx="3">
         <title>2023 Day 2: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="151.0" y="83.0">2</text>
     <rect class="unsolved" x="164" y="74" width="18" height="18" rx="3">
         <title>2023 Day 3: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="173.0" y="83.0">3</text>
     <rect class="two-star" x="186" y="74" width="18" height="18" rx="3">
         <title>2023 Day 4: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="195.0" y="83.0">4</text>
     <rect class="two-star" x="208" y="74" width="18" height="18" rx="3">
         <title>2023 Day 5: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="217.0" y="83.0">5</text>
     <rect class="two-star" x="230" y="74" width="18" height="18" rx="3">
         <title>2023 Day 6: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="239.0" y="83.0">6</text>
     <rect class="two-star" x="252" y="74" width="18" height="18" rx="3">
         <title>2023 Day 7: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="261.0" y="83.0">7</text>
     <rect class="two-star" x="274" y="74" width="18" height="18" rx="3">
         <title>2023 Day 8: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="283.0" y="83.0">8</text>
     <rect class="unsolved" x="296" y="74" width="18" height="18" rx="3">
         <title>2023 Day 9: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="305.0" y="83.0">9</text>
     <rect class="unsolved" x="318" y="74" width="18" height="18" rx="3">
         <title>2023 Day 10: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="327.0" y="83.0">10</text>
     <rect class="unsolved" x="340" y="74" width="18" height="18" rx="3">
         <title>2023 Day 11: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="349.0" y="83.0">11</text>
     <rect class="unsolved" x="362" y="74" width="18" height="18" rx="3">
         <title>2023 Day 12: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="371.0" y="83.0">12</text>
     <rect class="unsolved" x="384" y="74" width="18" height="18" rx="3">
         <title>2023 Day 13: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="393.0" y="83.0">13</text>
     <rect class="unsolved" x="406" y="74" width="18" height="18" rx="3">
         <title>2023 Day 14: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="415.0" y="83.0">14</text>
     <rect class="unsolved" x="428" y="74" width="18" height="18" rx="3">
         <title>2023 Day 15: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="437.0" y="83.0">15</text>
     <rect class="unsolved" x="450" y="74" width="18" height="18" rx="3">
         <title>2023 Day 16: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="459.0" y="83.0">16</text>
     <rect class="unsolved" x="472" y="74" width="18" height="18" rx="3">
         <title>2023 Day 17: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="481.0" y="83.0">17</text>
     <rect class="unsolved" x="494" y="74" width="18" height="18" rx="3">
         <title>2023 Day 18: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="503.0" y="83.0">18</text>
     <rect class="unsolved" x="516" y="74" width="18" height="18" rx="3">
         <title>2023 Day 19: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="525.0" y="83.0">19</text>
     <rect class="unsolved" x="538" y="74" width="18" height="18" rx="3">
         <title>2023 Day 20: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="547.0" y="83.0">20</text>
     <rect class="unsolved" x="560" y="74" width="18" height="18" rx="3">
         <title>2023 Day 21: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="569.0" y="83.0">21</text>
     <rect class="unsolved" x="582" y="74" width="18" height="18" rx="3">
         <title>2023 Day 22: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="591.0" y="83.0">22</text>
     <rect class="unsolved" x="604" y="74" width="18" height="18" rx="3">
         <title>2023 Day 23: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="613.0" y="83.0">23</text>
     <rect class="unsolved" x="626" y="74" width="18" height="18" rx="3">
         <title>2023 Day 24: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="635.0" y="83.0">24</text>
     <rect class="unsolved" x="648" y="74" width="18" height="18" rx="3">
         <title>2023 Day 25: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="657.0" y="83.0">25</text>
     <text class="label" x="110" y="105" dominant-baseline="middle" text-anchor="end" xml:space="preserve">2022: ★ 21/50</text>
     <rect class="two-star" x="120" y="96" width="18" height="18" rx="3">
         <title>2022 Day 1: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="129.0" y="105.0">1</text>
     <rect class="two-star" x="142" y="96" width="18" height="18" rx="3">
         <title>2022 Day 2: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="151.0" y="105.0">2</text>
     <rect class="two-star" x="164" y="96" width="18" height="18" rx="3">
         <title>2022 Day 3: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="173.0" y="105.0">3</text>
     <rect class="two-star" x="186" y="96" width="18" height="18" rx="3">
         <title>2022 Day 4: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="195.0" y="105.0">4</text>
     <rect class="two-star" x="208" y="96" width="18" height="18" rx="3">
         <title>2022 Day 5: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="217.0" y="105.0">5</text>
     <rect class="two-star" x="230" y="96" width="18" height="18" rx="3">
         <title>2022 Day 6: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="239.0" y="105.0">6</text>
     <rect class="two-star" x="252" y="96" width="18" height="18" rx="3">
         <title>2022 Day 7: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="261.0" y="105.0">7</text>
     <rect class="two-star" x="274" y="96" width="18" height="18" rx="3">
         <title>2022 Day 8: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="283.0" y="105.0">8</text>
     <rect class="two-star" x="296" y="96" width="18" height="18" rx="3">
         <title>2022 Day 9: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="305.0" y="105.0">9</text>
     <rect class="two-star" x="318" y="96" width="18" height="18" rx="3">
         <title>2022 Day 10: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="327.0" y="105.0">10</text>
     <rect class="one-star" x="340" y="96" width="18" height="18" rx="3">
         <title>2022 Day 11: Part A solved</title>
     </rect>
+    <text class="day one-star-text" x="349.0" y="105.0">11</text>
     <rect class="unsolved" x="362" y="96" width="18" height="18" rx="3">
         <title>2022 Day 12: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="371.0" y="105.0">12</text>
     <rect class="unsolved" x="384" y="96" width="18" height="18" rx="3">
         <title>2022 Day 13: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="393.0" y="105.0">13</text>
     <rect class="unsolved" x="406" y="96" width="18" height="18" rx="3">
         <title>2022 Day 14: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="415.0" y="105.0">14</text>
     <rect class="unsolved" x="428" y="96" width="18" height="18" rx="3">
         <title>2022 Day 15: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="437.0" y="105.0">15</text>
     <rect class="unsolved" x="450" y="96" width="18" height="18" rx="3">
         <title>2022 Day 16: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="459.0" y="105.0">16</text>
     <rect class="unsolved" x="472" y="96" width="18" height="18" rx="3">
         <title>2022 Day 17: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="481.0" y="105.0">17</text>
     <rect class="unsolved" x="494" y="96" width="18" height="18" rx="3">
         <title>2022 Day 18: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="503.0" y="105.0">18</text>
     <rect class="unsolved" x="516" y="96" width="18" height="18" rx="3">
         <title>2022 Day 19: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="525.0" y="105.0">19</text>
     <rect class="unsolved" x="538" y="96" width="18" height="18" rx="3">
         <title>2022 Day 20: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="547.0" y="105.0">20</text>
     <rect class="unsolved" x="560" y="96" width="18" height="18" rx="3">
         <title>2022 Day 21: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="569.0" y="105.0">21</text>
     <rect class="unsolved" x="582" y="96" width="18" height="18" rx="3">
         <title>2022 Day 22: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="591.0" y="105.0">22</text>
     <rect class="unsolved" x="604" y="96" width="18" height="18" rx="3">
         <title>2022 Day 23: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="613.0" y="105.0">23</text>
     <rect class="unsolved" x="626" y="96" width="18" height="18" rx="3">
         <title>2022 Day 24: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="635.0" y="105.0">24</text>
     <rect class="unsolved" x="648" y="96" width="18" height="18" rx="3">
         <title>2022 Day 25: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="657.0" y="105.0">25</text>
     <text class="label" x="110" y="127" dominant-baseline="middle" text-anchor="end" xml:space="preserve">2021: ★ 21/50</text>
     <rect class="two-star" x="120" y="118" width="18" height="18" rx="3">
         <title>2021 Day 1: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="129.0" y="127.0">1</text>
     <rect class="two-star" x="142" y="118" width="18" height="18" rx="3">
         <title>2021 Day 2: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="151.0" y="127.0">2</text>
     <rect class="two-star" x="164" y="118" width="18" height="18" rx="3">
         <title>2021 Day 3: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="173.0" y="127.0">3</text>
     <rect class="two-star" x="186" y="118" width="18" height="18" rx="3">
         <title>2021 Day 4: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="195.0" y="127.0">4</text>
     <rect class="unsolved" x="208" y="118" width="18" height="18" rx="3">
         <title>2021 Day 5: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="217.0" y="127.0">5</text>
     <rect class="two-star" x="230" y="118" width="18" height="18" rx="3">
         <title>2021 Day 6: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="239.0" y="127.0">6</text>
     <rect class="two-star" x="252" y="118" width="18" height="18" rx="3">
         <title>2021 Day 7: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="261.0" y="127.0">7</text>
     <rect class="two-star" x="274" y="118" width="18" height="18" rx="3">
         <title>2021 Day 8: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="283.0" y="127.0">8</text>
     <rect class="two-star" x="296" y="118" width="18" height="18" rx="3">
         <title>2021 Day 9: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="305.0" y="127.0">9</text>
     <rect class="two-star" x="318" y="118" width="18" height="18" rx="3">
         <title>2021 Day 10: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="327.0" y="127.0">10</text>
     <rect class="two-star" x="340" y="118" width="18" height="18" rx="3">
         <title>2021 Day 11: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="349.0" y="127.0">11</text>
     <rect class="unsolved" x="362" y="118" width="18" height="18" rx="3">
         <title>2021 Day 12: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="371.0" y="127.0">12</text>
     <rect class="one-star" x="384" y="118" width="18" height="18" rx="3">
         <title>2021 Day 13: Part A solved</title>
     </rect>
+    <text class="day one-star-text" x="393.0" y="127.0">13</text>
     <rect class="unsolved" x="406" y="118" width="18" height="18" rx="3">
         <title>2021 Day 14: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="415.0" y="127.0">14</text>
     <rect class="unsolved" x="428" y="118" width="18" height="18" rx="3">
         <title>2021 Day 15: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="437.0" y="127.0">15</text>
     <rect class="unsolved" x="450" y="118" width="18" height="18" rx="3">
         <title>2021 Day 16: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="459.0" y="127.0">16</text>
     <rect class="unsolved" x="472" y="118" width="18" height="18" rx="3">
         <title>2021 Day 17: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="481.0" y="127.0">17</text>
     <rect class="unsolved" x="494" y="118" width="18" height="18" rx="3">
         <title>2021 Day 18: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="503.0" y="127.0">18</text>
     <rect class="unsolved" x="516" y="118" width="18" height="18" rx="3">
         <title>2021 Day 19: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="525.0" y="127.0">19</text>
     <rect class="unsolved" x="538" y="118" width="18" height="18" rx="3">
         <title>2021 Day 20: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="547.0" y="127.0">20</text>
     <rect class="unsolved" x="560" y="118" width="18" height="18" rx="3">
         <title>2021 Day 21: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="569.0" y="127.0">21</text>
     <rect class="unsolved" x="582" y="118" width="18" height="18" rx="3">
         <title>2021 Day 22: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="591.0" y="127.0">22</text>
     <rect class="unsolved" x="604" y="118" width="18" height="18" rx="3">
         <title>2021 Day 23: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="613.0" y="127.0">23</text>
     <rect class="unsolved" x="626" y="118" width="18" height="18" rx="3">
         <title>2021 Day 24: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="635.0" y="127.0">24</text>
     <rect class="unsolved" x="648" y="118" width="18" height="18" rx="3">
         <title>2021 Day 25: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="657.0" y="127.0">25</text>
     <text class="label" x="110" y="149" dominant-baseline="middle" text-anchor="end" xml:space="preserve">2015: ★ 13/50</text>
     <rect class="two-star" x="120" y="140" width="18" height="18" rx="3">
         <title>2015 Day 1: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="129.0" y="149.0">1</text>
     <rect class="two-star" x="142" y="140" width="18" height="18" rx="3">
         <title>2015 Day 2: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="151.0" y="149.0">2</text>
     <rect class="two-star" x="164" y="140" width="18" height="18" rx="3">
         <title>2015 Day 3: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="173.0" y="149.0">3</text>
     <rect class="one-star" x="186" y="140" width="18" height="18" rx="3">
         <title>2015 Day 4: Part A solved</title>
     </rect>
+    <text class="day one-star-text" x="195.0" y="149.0">4</text>
     <rect class="two-star" x="208" y="140" width="18" height="18" rx="3">
         <title>2015 Day 5: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="217.0" y="149.0">5</text>
     <rect class="two-star" x="230" y="140" width="18" height="18" rx="3">
         <title>2015 Day 6: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="239.0" y="149.0">6</text>
     <rect class="two-star" x="252" y="140" width="18" height="18" rx="3">
         <title>2015 Day 7: Both parts solved</title>
     </rect>
+    <text class="day two-star-text" x="261.0" y="149.0">7</text>
     <rect class="unsolved" x="274" y="140" width="18" height="18" rx="3">
         <title>2015 Day 8: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="283.0" y="149.0">8</text>
     <rect class="unsolved" x="296" y="140" width="18" height="18" rx="3">
         <title>2015 Day 9: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="305.0" y="149.0">9</text>
     <rect class="unsolved" x="318" y="140" width="18" height="18" rx="3">
         <title>2015 Day 10: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="327.0" y="149.0">10</text>
     <rect class="unsolved" x="340" y="140" width="18" height="18" rx="3">
         <title>2015 Day 11: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="349.0" y="149.0">11</text>
     <rect class="unsolved" x="362" y="140" width="18" height="18" rx="3">
         <title>2015 Day 12: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="371.0" y="149.0">12</text>
     <rect class="unsolved" x="384" y="140" width="18" height="18" rx="3">
         <title>2015 Day 13: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="393.0" y="149.0">13</text>
     <rect class="unsolved" x="406" y="140" width="18" height="18" rx="3">
         <title>2015 Day 14: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="415.0" y="149.0">14</text>
     <rect class="unsolved" x="428" y="140" width="18" height="18" rx="3">
         <title>2015 Day 15: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="437.0" y="149.0">15</text>
     <rect class="unsolved" x="450" y="140" width="18" height="18" rx="3">
         <title>2015 Day 16: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="459.0" y="149.0">16</text>
     <rect class="unsolved" x="472" y="140" width="18" height="18" rx="3">
         <title>2015 Day 17: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="481.0" y="149.0">17</text>
     <rect class="unsolved" x="494" y="140" width="18" height="18" rx="3">
         <title>2015 Day 18: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="503.0" y="149.0">18</text>
     <rect class="unsolved" x="516" y="140" width="18" height="18" rx="3">
         <title>2015 Day 19: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="525.0" y="149.0">19</text>
     <rect class="unsolved" x="538" y="140" width="18" height="18" rx="3">
         <title>2015 Day 20: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="547.0" y="149.0">20</text>
     <rect class="unsolved" x="560" y="140" width="18" height="18" rx="3">
         <title>2015 Day 21: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="569.0" y="149.0">21</text>
     <rect class="unsolved" x="582" y="140" width="18" height="18" rx="3">
         <title>2015 Day 22: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="591.0" y="149.0">22</text>
     <rect class="unsolved" x="604" y="140" width="18" height="18" rx="3">
         <title>2015 Day 23: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="613.0" y="149.0">23</text>
     <rect class="unsolved" x="626" y="140" width="18" height="18" rx="3">
         <title>2015 Day 24: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="635.0" y="149.0">24</text>
     <rect class="unsolved" x="648" y="140" width="18" height="18" rx="3">
         <title>2015 Day 25: Unsolved</title>
     </rect>
+    <text class="day unsolved-text" x="657.0" y="149.0">25</text>
 </svg>
