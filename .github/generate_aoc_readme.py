@@ -26,6 +26,63 @@ LABEL_X = GRID_X - LABEL_GAP
 TOP_PAD = 30
 DAYS_PER_ROW = 25
 
+STYLESHEET = """
+    <style>
+        :root {
+            --label: #59636e;
+            --unsolved: #ebedf0;
+            --one-star: #009900;
+            --two-star: #999900;
+            --today: #cf222e;
+
+            --unsolved-text: #59636e;
+            --one-star-text: #ffffff;
+            --two-star-text: #24292f;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --label: #9198a1;
+                --unsolved: #161b22;
+                --one-star: #00cc00;
+                --two-star: #ffff66;
+                --today: #ff7b72;
+
+                --unsolved-text: #9198a1;
+                --one-star-text: #0d1117;
+                --two-star-text: #0d1117;
+            }
+        }
+
+        .label {
+            fill: var(--label);
+            font-family: "DejaVu Sans Mono", monospace;
+            font-size: 13px;
+        }
+
+        .day {
+            font-family: "DejaVu Sans Mono", monospace;
+            font-size: 9px;
+            text-anchor: middle;
+            dominant-baseline: middle;
+            pointer-events: none;
+        }
+
+        .unsolved { fill: var(--unsolved); }
+        .one-star { fill: var(--one-star); }
+        .two-star { fill: var(--two-star); }
+
+        .unsolved-text { fill: var(--unsolved-text); }
+        .one-star-text { fill: var(--one-star-text); }
+        .two-star-text { fill: var(--two-star-text); }
+
+        .today {
+            stroke: var(--today);
+            stroke-width: 2px;
+        }
+    </style>
+"""
+
 
 def get_years() -> list[int]:
     years = []
@@ -112,15 +169,21 @@ def svg_cell(
     day: int,
     today: bool = False,
 ) -> str:
-    classes = {
+    state_class = {
         0: "unsolved",
         1: "one-star",
         2: "two-star",
-    }
+    }[state]
 
-    class_name = classes[state]
+    text_class = {
+        0: "unsolved-text",
+        1: "one-star-text",
+        2: "two-star-text",
+    }[state]
+
+    classes = state_class
     if today:
-        class_name += " today"
+        classes += " today"
 
     status = {
         0: "Unsolved",
@@ -129,11 +192,13 @@ def svg_cell(
     }[state]
 
     return (
-        f'    <rect class="{class_name}" '
+        f'    <rect class="{classes}" '
         f'x="{x}" y="{y}" '
         f'width="{CELL}" height="{CELL}" rx="3">'
         f"\n        <title>{year} Day {day}: {status}</title>\n"
-        "    </rect>"
+        "    </rect>\n"
+        f'    <text class="day {text_class}" '
+        f'x="{x + CELL / 2}" y="{y + CELL / 2}">{day}</text>'
     )
 
 
@@ -145,28 +210,6 @@ def svg_label(x: int, y: int, text: str) -> str:
         f"{escape(text)}</text>"
     )
 
-
-STYLESHEET = """
-    <style>
-        .label    {
-            fill: #59636e;
-            font-family: DejaVu Sans Mono, monospace;
-            font-size: 13px;
-        }
-        .unsolved { fill: #ebedf0; }
-        .one-star { fill: #009900; }
-        .two-star { fill: #999900; }
-        .today    { stroke: cf222e; stroke-width: 2px; }
-
-        @media (prefers-color-scheme: dark) {
-            .label    { fill: #9198a1; }
-            .unsolved { fill: #161b22; }
-            .one-star { fill: #00cc00; }
-            .two-star { fill: #ffff66; }
-            .today    { stroke: #ff7b72; }
-        }
-    </style>
-"""
 
 svg_elements = []
 for row, ydata in enumerate(years):
@@ -196,7 +239,7 @@ svf = f"""\
     width="{width}" height="{height}"
     viewBox="0 0 {width} {height}">
 {STYLESHEET}
-    {"\n".join(svg_elements)}
+{"\n".join(svg_elements)}
 </svg>
 """
 Path(IMG_PATH).write_text(svf, encoding="utf-8")
