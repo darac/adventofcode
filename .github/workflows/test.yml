@@ -237,7 +237,7 @@ jobs:
               with:
                   cache: true
             - name: Update AOC Progress
-              run: pixi run --environment dev python .github/generate_aoc_progress.py
+              run: pixi run --environment dev python .github/generate_aoc_readme.py
             - if: github.event_name == 'pull_request'
               name: Commit and push changes
               run: |
