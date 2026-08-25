@@ -238,7 +238,7 @@ jobs:
                   cache: true
             - name: Update AOC Progress
               run: pixi run --environment dev python scripts/update_aoc_progress.py
-            - if: github.event_name == "pull_request"
+            - if: github.event_name == 'pull_request'
               name: Commit and push changes
               run: |
                   git config --global user.name "github-actions[bot]"
