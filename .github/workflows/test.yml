@@ -67,12 +67,10 @@ jobs:
               uses: prefix-dev/setup-pixi@f00437f565399d418b0acc85936d12c1fb668347 # v0.10.1
               with:
                   cache: true
-                  frozen: true
                   environments: dev
+                  frozen: true
             - name: Run ruff
-              run:
-                  pixi run --environment dev ruff check src tests --output-format json --output-file
-                  ruff.json
+              run: pixi run --environment dev ruff check src tests --output-format json --output-file ruff.json
             - if: github.event_name == 'pull_request'
               name: Ruff for GitHub annotations
               run: pixi run --environment dev ruff check src tests --output-format github
@@ -87,9 +85,7 @@ jobs:
               run: pixi run --environment dev ty check src tests --output-format github
     release:
         concurrency: release
-        if:
-            github.event_name == 'push' && github.ref == 'refs/heads/main' &&
-            !contains(github.event.head_commit.message, 'chore(release):')
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && !contains(github.event.head_commit.message, 'chore(release):')
         needs: test
         outputs:
             released: ${{ steps.release.outputs.released }}
@@ -120,10 +116,10 @@ jobs:
               uses: prefix-dev/setup-pixi@f00437f565399d418b0acc85936d12c1fb668347 # v0.10.1
               with:
                   cache: true
-            - id: release
-              name: Action | Semantic Version Release
-              env:
+            - env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              id: release
+              name: Action | Semantic Version Release
               run: |
                   pixi run -e dev semantic-release publish
             - if: steps.release.outputs.released == 'true'
@@ -181,8 +177,7 @@ jobs:
               uses: SonarSource/sonarqube-scan-action@22918119ff8e1ca75a623e15c8296b6ea4fbe28f # v8.2
               with:
                   args: >
-                      -Dsonar.projectVersion=${{ steps.proj-version.outputs.version }}
-                      -Dsonar.qualitygate.wait=true
+                      -Dsonar.projectVersion=${{ steps.proj-version.outputs.version }} -Dsonar.qualitygate.wait=true
 
     test:
         name: test with ${{ matrix.python-environment }} on ${{ matrix.os }}
@@ -200,9 +195,7 @@ jobs:
                   COVERAGE_XML: "coverage-${{ matrix.os }}-${{ matrix.python-environment }}.xml"
                   JUNIT_XML: "junit-${{ matrix.os }}-${{ matrix.python-environment }}.xml"
               name: Run test suite
-              run:
-                  pixi run --environment ${{ matrix.python-environment }} pytest -vv --junit-xml=${{
-                  env.JUNIT_XML }} --cov-report=xml:${{ env.COVERAGE_XML }}
+              run: pixi run --environment ${{ matrix.python-environment }} pytest -vv --junit-xml=${{ env.JUNIT_XML }} --cov-report=xml:${{ env.COVERAGE_XML }}
             - if: success() || failure()
               name: Upload JUnit results
               uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
@@ -230,6 +223,31 @@ jobs:
                     - py312
                     - py313
                     - py314
+    update-aoc-progress:
+        needs: test
+        permissions:
+            contents: write
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+              with:
+                  ref: ${{ github.head_ref }}
+                  fetch-depth: 0
+            - name: Setup Pixi
+              uses: prefix-dev/setup-pixi@f00437f565399d418b0acc85936d12c1fb668347 # v0.10.1
+              with:
+                  cache: true
+            - name: Update AOC Progress
+              run: pixi run --environment dev python .github/generate_aoc_readme.py
+            - if: github.event_name == 'pull_request'
+              name: Commit and push changes
+              run: |
+                  git config --global user.name "github-actions[bot]"
+                  git config --global user.email "github-actions[bot]@users.noreply.github.com"
+                  git add .github/aoc_progress.svg
+                  git diff --cached --quiet && exit 0
+                  git commit -m "Update AOC progress"
+                  git push
 name: Test
 on:
     merge_group:

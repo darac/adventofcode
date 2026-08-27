@@ -54,5 +54,6 @@
     "evenBetterToml.formatter.columnWidth": 100,
     "files.insertFinalNewline": true,
     "python-envs.defaultEnvManager": "renan-r-santos.pixi-code:pixi",
-    "python-envs.defaultPackageManager": "renan-r-santos.pixi-code:pixi"
+    "python-envs.defaultPackageManager": "renan-r-santos.pixi-code:pixi",
+    "python.analysis.autoImportCompletions": true
 }
