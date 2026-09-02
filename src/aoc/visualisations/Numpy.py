@@ -43,6 +43,11 @@ class Visualiser:
         plt.ion()
 
         if self.interactive:
+            manager = self.fig.canvas.manager
+            if manager is not None:
+                toolbar = getattr(manager, "toolbar", None)
+                if toolbar is not None and hasattr(toolbar, "hide"):
+                    toolbar.hide()
             self.ax.axis("off")
             self.ax.set_aspect("equal")
             if self.title != "":
