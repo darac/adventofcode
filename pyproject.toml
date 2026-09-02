@@ -6,7 +6,6 @@
     ci = [ "pytest-github-actions-annotate-failures" ]
     dev = [
         "deptry>=0.19.0",
-        "pre-commit>=3.8.0",
         "python-semantic-release>=9.8.7",
         "ruff>=0.5.7",
         "ty>=0.0.13",
@@ -99,7 +98,6 @@
 
 [tool.pixi.feature.dev.pypi-dependencies]
     deptry                  = ">=0.25.1, <0.26"
-    pre-commit              = ">=4.6.2, <5"
     python-semantic-release = ">=10.6.2, <11"
     ruff                    = ">=0.16.5, <0.17"
     ty                      = ">=0.0.77, <0.0.78"
