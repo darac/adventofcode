@@ -100,7 +100,7 @@
     deptry                  = ">=0.25.1, <0.26"
     python-semantic-release = ">=10.6.2, <11"
     ruff                    = ">=0.16.5, <0.17"
-    ty                      = ">=0.0.77, <0.0.78"
+    ty                      = ">=0.0.78, <0.0.79"
     types-pyyaml            = ">=6.0.12.20260815, <7"
 
 [tool.pixi.feature.dev.tasks]
