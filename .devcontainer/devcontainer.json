@@ -1,12 +1,14 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/python
 {
+    "$schema": "https://raw.githubusercontent.com/devcontainers/spec/main/schemas/devContainer.schema.json",
+    "build": {
+        "context": "..",
+        "dockerfile": "Dockerfile"
+    },
     "containerEnv": {
         "DISPLAY": "dummy",
-        "PYTHONUNBUFFERED": "True",
-        "UV_LINK_MODE": "copy",
-        "UV_PROJECT_ENVIRONMENT": "/home/vscode/.venv",
-        "VIRTUAL_ENV": "/home/vscode/.venv"
+        "PYTHONUNBUFFERED": "True"
     },
     "customizations": {
         "vscode": {
@@ -18,10 +20,12 @@
                 "streetsidesoftware.code-spell-checker",
                 "tamasfe.even-better-toml",
                 "eamodio.gitlens",
-                "github.vscode-github-actions"
+                "github.vscode-github-actions",
+                "renan-r-santos.pixi-code"
             ]
         }
     },
+    // Features to add to the dev container. More info: https://containers.dev/features.
     "features": {
         "ghcr.io/devcontainers/features/git:1": {
             "ppa": true,
@@ -32,23 +36,14 @@
             "nodeGypDependencies": true,
             "nvmVersion": "v0.40.3",
             "pnpmVersion": "10.28.2",
-            "version": "25.9.0"
-        },
-        "ghcr.io/va-h/devcontainers-features/uv:1": {
-            "shellautocompletion": true,
-            "version": "latest"
+            "version": "24"
         }
     },
-    // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-    "image": "mcr.microsoft.com/devcontainers/python:2-3.12-bullseye",
+    "mounts": [
+        "source=${localWorkspaceFolderBasename}-pixi,target=${containerWorkspaceFolder}/.pixi,type=volume"
+    ],
     "name": "Advent of Code",
-    "postCreateCommand": "uv run prek install",
-    // Features to add to the dev container. More info: https://containers.dev/features.
-    // "features": {},
-    // Use 'forwardPorts' to make a list of ports inside the container available locally.
-    // "forwardPorts": [],
-    // Use 'postCreateCommand' to run commands after the container is created.
-    "postStartCommand": "uv sync --frozen",
+    "postCreateCommand": "sudo chown vscode .pixi && pixi install && pixi run prek install",
     // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
     "remoteUser": "vscode"
 }

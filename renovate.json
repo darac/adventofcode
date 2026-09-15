@@ -5,26 +5,36 @@
             "customType": "regex",
             "datasourceTemplate": "deb",
             "managerFilePatterns": [
-                "/^Dockerfile$/"
+                "/(^|/)Dockerfile$/"
             ],
             "matchStrings": [
-                "#\\s*renovate:\\s*?(suite=(?<suite>.*?))?\\s*depName=(?<depName>.*?)?\\s(ARG|ENV) .*?_VERSION=\"(?<currentValue>.*)\""
+                "#\\s*renovate:\\s*debian\\s+(?:suite=(?<suite>\\S+)\\s+)?depName=(?<depName>\\S+)\\s+(?:ARG|ENV)\\s+\\S+_VERSION=\"(?<currentValue>[^\"]+)\""
             ],
-            "registryUrlTemplate": "https://deb.debian.org/debian?suite={{#if suite }}{{suite}}{{else}}stable{{/if}}&components=main,contrib,non-free&binaryArch=amd64",
-            "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}deb{{/if}}"
+            "registryUrlTemplate": "https://deb.debian.org/debian?suite={{#if suite}}{{suite}}{{else}}stable{{/if}}&components=main,contrib,non-free&binaryArch=amd64",
+            "versioningTemplate": "deb"
         },
         {
+            "autoReplaceStringTemplate": "                    - {{depName}}-{{newValue}} # renovate: runner",
             "customType": "regex",
-            "description": "Update GitHub runner labels in matrix.os",
             "datasourceTemplate": "github-runners",
-            "versioningTemplate": "docker",
+            "description": "Update GitHub runner labels in matrix.os",
             "managerFilePatterns": [
                 "/^\\.github\\/workflows\\/test\\.ya?ml$/"
             ],
             "matchStrings": [
                 "(?m)^\\s*-\\s*(?<depName>ubuntu|windows|macos)-(?<currentValue>latest|\\d{4}|\\d+(?:\\.\\d+)?)\\s*#\\s*renovate:\\s*runner\\s*$"
             ],
-            "autoReplaceStringTemplate": "                    - {{depName}}-{{newValue}} # renovate: runner"
+            "versioningTemplate": "docker"
+        },
+        {
+            "customType": "regex",
+            "datasourceTemplate": "github-releases",
+            "managerFilePatterns": [
+                "/(^|/)Dockerfile$/"
+            ],
+            "matchStrings": [
+                "#\\s*renovate:\\s*github-release\\s+depName=(?<depName>\\S+)\\s+(?:ARG|ENV)\\s+\\S+_VERSION=\"(?<currentValue>[^\"]+)\""
+            ]
         }
     ],
     "extends": [
@@ -34,15 +44,12 @@
         "automerge": true,
         "enabled": true
     },
+    "minimumReleaseAge": "7 days",
     "packageRules": [
         {
             "automerge": true,
             "matchDepTypes": [
                 "devDependencies"
-            ],
-            "matchPackageNames": [
-                "ruff",
-                "ty"
             ]
         },
         {
