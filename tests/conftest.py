@@ -1,6 +1,6 @@
 # Copyright (c) 2015-2026 Paul Saunders
 import contextlib
-import datetime
+import datetime as dt
 import importlib
 import itertools
 import logging
@@ -32,12 +32,10 @@ def pytest_addoption(parser: pytest.Parser) -> None:
         action="store",
         choices=range(
             2015,
-            datetime.datetime.now(tz=datetime.UTC).date().year + 1,
+            dt.datetime.now(tz=dt.UTC).date().year + 1,
         ),
         default=list(
-            range(
-                2015, datetime.datetime.now(tz=datetime.UTC).date().year + 1
-            )
+            range(2015, dt.datetime.now(tz=dt.UTC).date().year + 1)
         ),
         help="Run AOC tests from this year",
     )

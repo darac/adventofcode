@@ -14,14 +14,14 @@
         "vscode": {
             "extensions": [
                 "charliermarsh.ruff",
+                "eamodio.gitlens",
                 "editorconfig.editorconfig",
+                "github.vscode-github-actions",
                 "ms-python.python",
+                "renan-r-santos.pixi-code",
                 "sonarsource.sonarlint-vscode",
                 "streetsidesoftware.code-spell-checker",
-                "tamasfe.even-better-toml",
-                "eamodio.gitlens",
-                "github.vscode-github-actions",
-                "renan-r-santos.pixi-code"
+                "tamasfe.even-better-toml"
             ]
         }
     },
@@ -34,7 +34,7 @@
         "ghcr.io/devcontainers/features/node:2": {
             "installYarnUsingApt": true,
             "nodeGypDependencies": true,
-            "nvmVersion": "v0.40.3",
+            "nvmVersion": "0.40.3",
             "pnpmVersion": "10.28.2",
             "version": "24"
         }
@@ -43,7 +43,7 @@
         "source=${localWorkspaceFolderBasename}-pixi,target=${containerWorkspaceFolder}/.pixi,type=volume"
     ],
     "name": "Advent of Code",
-    "postCreateCommand": "sudo chown vscode .pixi && pixi install && pixi run prek install",
+    "postCreateCommand": "pixi run install-git-hooks",
     // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
     "remoteUser": "vscode"
 }
