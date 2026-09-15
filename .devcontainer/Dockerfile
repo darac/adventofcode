@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/devcontainers/python:2-3.12-bullseye
 
 # renovate: github-release depName=prefix-dev/pixi
-ARG PIXI_VERSION="v0.80.0"
+ARG PIXI_VERSION="v0.81.0"
 
 
 RUN --mount=type=bind,source=.devcontainer/cacerts,target=/tmp/cacerts \
