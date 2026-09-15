@@ -1,6 +1,6 @@
 # noqa: INP001
 # Copyright (c) 2026 Paul Saunders
-from datetime import UTC, datetime
+import datetime as dt
 from html import escape
 from pathlib import Path
 
@@ -12,7 +12,7 @@ if not BASE_DIR.is_dir():
     exit(1)
 START_YEAR = 2015
 
-NOW = datetime.now(UTC)
+NOW = dt.datetime.now(dt.UTC)
 CURRENT_YEAR = NOW.year
 TODAY = NOW.day if NOW.month == 12 else None
 

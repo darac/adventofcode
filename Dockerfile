@@ -28,25 +28,25 @@ FROM debian:13.6-slim@sha256:d7e12182ce18b85b93007c1dedf31f2d29e01ccf3182cc4017c
 SHELL ["sh", "-exc"]
 WORKDIR /app
 
-# renovate: suite=trixie depName=python3
+# renovate: debian suite=trixie depName=python3
 ARG PYTHON3_VERSION="3.13.5-1"
-# renovate: suite=trixie depName=libpython3.13
+# renovate: debian suite=trixie depName=libpython3.13
 ARG LIBPYTHON3_VERSION="3.13.5-2+deb13u5"
-# renovate: suite=trixie depName=python-is-python3
+# renovate: debian suite=trixie depName=python-is-python3
 ARG PYTHON_IS_PYTHON3_VERSION="3.13.3-1"
-# renovate: suite=trixie depName=ca-certificates
+# renovate: debian suite=trixie depName=ca-certificates
 ARG CA_CERTIFICATES_VERSION="20250419"
-# renovate: suite=trixie depName=libxml2
+# renovate: debian suite=trixie depName=libxml2
 ARG LIBXML2_VERSION="2.12.7+dfsg+really2.9.14-2.1+deb13u3"
-# renovate: suite=trixie depName=libstdc++6
+# renovate: debian suite=trixie depName=libstdc++6
 ARG LIBSTDCXX6_VERSION="14.2.0-19"
-# renovate: suite=trixie depName=libgl1
+# renovate: debian suite=trixie depName=libgl1
 ARG LIBGL1_VERSION="1.7.0-1+b2"
-# renovate: suite=trixie depName=libx11-6
+# renovate: debian suite=trixie depName=libx11-6
 ARG LIBX11_6_VERSION="2:1.8.12-1"
-# renovate: suite=trixie depName=libxext6
+# renovate: debian suite=trixie depName=libxext6
 ARG LIBXEXT6_VERSION="2:1.3.4-1+b3"
-# renovate: suite=trixie depName=libxrender1
+# renovate: debian suite=trixie depName=libxrender1
 ARG LIBXRENDER1_VERSION="1:0.9.12-1"
 
 

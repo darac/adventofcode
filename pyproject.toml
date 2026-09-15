@@ -26,6 +26,7 @@
     ]
     dependencies = [
         "advent-of-code-data>=2.2.0,<3",
+        "matplotlib>=3.11.1,<4",
         "numpy",
         "pandas>=3.0.5,<4",
         "parse>=1.22.1,<2",
@@ -86,26 +87,38 @@
     matplotlib = ">=3.11.1,<4"
 
 [tool.pixi.environments]
-    ci      = { features = [ "ci", "py312", "test" ] }
     default = { features = [ "py312" ] }
-    dev     = { features = [ "dev", "py312", "test" ] }
     py312   = { features = [ "py312", "test" ] }
     py313   = { features = [ "py313", "test" ] }
     py314   = { features = [ "py314", "test" ] }
+
+    [tool.pixi.environments.ci]
+        features = [ "ci", "py312", "test" ]
+
+        [tool.pixi.environments.ci.tasks]
+            ci-lint = "ruff check src/aoc --output-format json --output-file ruff.json"
+            ci-test = "pytest -vv"
+
+    [tool.pixi.environments.dev]
+        features = [ "dev", "py312", "test" ]
+
+        [tool.pixi.environments.dev.tasks]
+            install-git-hooks = "prek install"
+            lint              = "ruff check src/aoc tests && ty check src/aoc tests"
+            make_example_yaml = "python scripts/make_example_yaml.py"
+            test              = "pytest"
 
 [tool.pixi.feature.ci.pypi-dependencies]
     pytest-github-actions-annotate-failures = ">=0.4.2, <0.5"
 
 [tool.pixi.feature.dev.pypi-dependencies]
     deptry                  = ">=0.25.1, <0.26"
+    prek                    = ">=0.5.3, <0.6"
     python-semantic-release = ">=10.6.2, <11"
     ruff                    = ">=0.16.5, <0.17"
     ty                      = ">=0.0.80, <0.0.81"
     types-pyyaml            = ">=6.0.12.20260815, <7"
 
-[tool.pixi.feature.dev.tasks]
-    make_example_yaml = "python scripts/make_example_yaml.py"
-    test              = "pytest"
 
 [tool.pixi.feature.py312.dependencies]
     python = "3.12.*"
@@ -130,13 +143,9 @@
     build = ">=1.6.0, <2"
 
 [tool.pixi.tasks]
-    build   = "python -m build"
-    ci-lint = "ruff check src/aoc --output-format json --output-file ruff.json"
-    ci-test = "pytest -vv"
-    lint    = "ruff check src/aoc tests && ty check src/aoc tests"
-
+    build = "python -m build"
     test-all = """
-pixi run --environment dev   lint &&
+pixi run                     lint &&
 pixi run --environment py312 pytest &&
 pixi run --environment py313 pytest &&
 pixi run --environment py314 pytest
