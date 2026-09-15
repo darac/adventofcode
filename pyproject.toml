@@ -163,8 +163,10 @@ pixi run --environment py314 pytest
     --cov \
     --cov-report=term-missing \
     --cov-report=xml:coverage.xml \
+    --dist=worksteal \
+    --durations=20 \
     --junit-xml=junit.xml \
-    --tb=auto \
+    --numprocesses=auto \
     --timeout=300 \
     """
 

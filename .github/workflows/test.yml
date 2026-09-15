@@ -194,6 +194,7 @@ jobs:
                   AOC_SESSION: "${{ secrets.AOC_SESSION }}"
                   COVERAGE_XML: "coverage-${{ matrix.os }}-${{ matrix.python-environment }}.xml"
                   JUNIT_XML: "junit-${{ matrix.os }}-${{ matrix.python-environment }}.xml"
+                  PYTEST_XDIST_AUTO_NUM_WORKERS: 4
               name: Run test suite
               run: pixi run --environment ${{ matrix.python-environment }} pytest -vv --junit-xml=${{ env.JUNIT_XML }} --cov-report=xml:${{ env.COVERAGE_XML }}
             - if: success() || failure()
