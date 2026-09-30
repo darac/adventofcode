@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2006 Paul Saunders
+# Copyright (c) 2026 Paul Saunders
 
 import sys
 from pathlib import Path
@@ -16,6 +16,13 @@ class AOCDumper(yaml.SafeDumper):
 def str_presenter(
     dumper: AOCDumper | yaml.Dumper, data: str
 ) -> yaml.ScalarNode:
+    try:
+        int(data)
+    except ValueError:
+        pass
+    else:
+        return dumper.represent_scalar("tag:yaml.org,2002:int", data)
+
     style = "|" if "\n" in data else None
     return dumper.represent_scalar(
         "tag:yaml.org,2002:str", data, style=style
