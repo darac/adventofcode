@@ -65,8 +65,6 @@ def solve(
 
     for line in puzzle.splitlines():
         p = route_parser.parse(line)
-        if p is None:
-            continue
         if p[0] not in roads:
             roads[p[0]] = {}
         if p[1] not in roads:
