@@ -70,7 +70,9 @@ jobs:
                   environments: dev
                   frozen: true
             - name: Run ruff
-              run: pixi run --environment dev ruff check src tests --output-format json --output-file ruff.json
+              run:
+                  pixi run --environment dev ruff check src tests --output-format json --output-file
+                  ruff.json
             - if: github.event_name == 'pull_request'
               name: Ruff for GitHub annotations
               run: pixi run --environment dev ruff check src tests --output-format github
@@ -85,7 +87,9 @@ jobs:
               run: pixi run --environment dev ty check src tests --output-format github
     release:
         concurrency: release
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && !contains(github.event.head_commit.message, 'chore(release):')
+        if:
+            github.event_name == 'push' && github.ref == 'refs/heads/main' &&
+            !contains(github.event.head_commit.message, 'chore(release):')
         needs: test
         outputs:
             released: ${{ steps.release.outputs.released }}
@@ -177,7 +181,8 @@ jobs:
               uses: SonarSource/sonarqube-scan-action@d209202bc7d53ff1cc128f7f907dac145c9d6ae9 # v8.3
               with:
                   args: >
-                      -Dsonar.projectVersion=${{ steps.proj-version.outputs.version }} -Dsonar.qualitygate.wait=true
+                      -Dsonar.projectVersion=${{ steps.proj-version.outputs.version }}
+                      -Dsonar.qualitygate.wait=true
 
     test:
         name: test with ${{ matrix.python-environment }} on ${{ matrix.os }}
@@ -196,7 +201,9 @@ jobs:
                   JUNIT_XML: "junit-${{ matrix.os }}-${{ matrix.python-environment }}.xml"
                   PYTEST_XDIST_AUTO_NUM_WORKERS: 4
               name: Run test suite
-              run: pixi run --environment ${{ matrix.python-environment }} pytest -vv --junit-xml=${{ env.JUNIT_XML }} --cov-report=xml:${{ env.COVERAGE_XML }}
+              run:
+                  pixi run --environment ${{ matrix.python-environment }} pytest -vv --junit-xml=${{
+                  env.JUNIT_XML }} --cov-report=xml:${{ env.COVERAGE_XML }}
             - if: success() || failure()
               name: Upload JUnit results
               uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
@@ -224,6 +231,7 @@ jobs:
                     - py312
                     - py313
                     - py314
+                    - py315
     update-aoc-progress:
         needs: test
         permissions:
