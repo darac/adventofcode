@@ -1,9 +1,9 @@
 [build-system]
     build-backend = "hatchling.build"
-    requires      = [ "hatchling" ]
+    requires      = ["hatchling"]
 
 [dependency-groups]
-    ci = [ "pytest-github-actions-annotate-failures" ]
+    ci = ["pytest-github-actions-annotate-failures"]
     dev = [
         "deptry>=0.19.0",
         "python-semantic-release>=9.8.7",
@@ -19,7 +19,7 @@
     ]
 
 [project]
-    authors = [ { name = "Paul Saunders", email = "darac+github@darac.org.uk" } ]
+    authors = [{ name = "Paul Saunders", email = "darac+github@darac.org.uk" }]
     classifiers = [
         "Programming Language :: Python :: 3",
         "Topic :: Games/Entertainment :: Puzzle Games",
@@ -38,7 +38,7 @@
     # It's common to not specify an upper bound,
     # but some of the dependencies are slow to update,
     # so we limit here until they update.
-    requires-python = "<3.15,>=3.12"
+    requires-python = "<3.16,>=3.12"
     version         = "2025.5.0"
 
     [project.entry-points."adventofcode.user"]
@@ -46,13 +46,13 @@
 
 [tool.black]
     line-length    = 76
-    target-version = [ "py312" ]
+    target-version = ["py312"]
 
 [tool.coverage.html]
     directory = "htmlcov"
 
 [tool.coverage.paths]
-    source = [ "*/site-packages", "src/aoc" ]
+    source = ["*/site-packages", "src/aoc"]
 
 [tool.coverage.report]
     exclude_lines = [
@@ -70,15 +70,15 @@
 
 [tool.coverage.run]
     branch         = true
-    omit           = [ "src/aoc/__init__.py", "src/aoc/visualisations/*" ]
+    omit           = ["src/aoc/__init__.py", "src/aoc/visualisations/*"]
     relative_files = true
-    source         = [ "src/aoc" ]
+    source         = ["src/aoc"]
 
 [tool.hatch.build.targets.wheel]
-    packages = [ "src/aoc" ]
+    packages = ["src/aoc"]
 
 [tool.mypy]
-    files                  = [ "src/aoc/" ]
+    files                  = ["src/aoc/"]
     ignore_missing_imports = true
     warn_return_any        = true
     warn_unused_configs    = true
@@ -87,20 +87,21 @@
     matplotlib = ">=3.11.1,<4"
 
 [tool.pixi.environments]
-    default = { features = [ "py312" ] }
-    py312   = { features = [ "py312", "test" ] }
-    py313   = { features = [ "py313", "test" ] }
-    py314   = { features = [ "py314", "test" ] }
+    default = { features = ["py312"] }
+    py312   = { features = ["py312", "test"] }
+    py313   = { features = ["py313", "test"] }
+    py314   = { features = ["py314", "test"] }
+    py315   = { features = ["py315", "test"] }
 
     [tool.pixi.environments.ci]
-        features = [ "ci", "py312", "test" ]
+        features = ["ci", "py312", "test"]
 
         [tool.pixi.environments.ci.tasks]
             ci-lint = "ruff check src/aoc --output-format json --output-file ruff.json"
             ci-test = "pytest -vv"
 
     [tool.pixi.environments.dev]
-        features = [ "dev", "py312", "test" ]
+        features = ["dev", "py312", "test"]
 
         [tool.pixi.environments.dev.tasks]
             install-git-hooks = "prek install"
@@ -129,6 +130,9 @@
 [tool.pixi.feature.py314.dependencies]
     python = "3.14.*"
 
+[tool.pixi.feature.py315.dependencies]
+    python = "3.15.*"
+
 [tool.pixi.feature.test.pypi-dependencies]
     pytest          = ">=9.1.1, <10"
     pytest-cov      = ">=7.1.0, <8"
@@ -148,12 +152,13 @@
 pixi run                     lint &&
 pixi run --environment py312 pytest &&
 pixi run --environment py313 pytest &&
-pixi run --environment py314 pytest
+pixi run --environment py314 pytest &&
+pixi run --environment py315 pytest
 """
 
 [tool.pixi.workspace]
-    channels  = [ "https://prefix.dev/conda-forge" ]
-    platforms = [ "linux-64", "osx-64", "win-64" ]
+    channels  = ["https://prefix.dev/conda-forge"]
+    platforms = ["linux-64", "osx-64", "win-64"]
 
 [tool.pyright]
     exclude = [
@@ -182,7 +187,7 @@ pixi run --environment py314 pytest
     junit_suite_name = "aoc"
     log_cli_format   = "%(levelname)10s %(name)s:%(lineno)d %(message)s"
     log_cli_level    = "INFO"
-    pythonpath       = [ "src/" ]
+    pythonpath       = ["src/"]
 
 [tool.ruff]
     # The AOC website wraps at 76 chars, so should we.
@@ -199,13 +204,13 @@ pixi run --environment py314 pytest
         "S101",   # Of course we want to use assert
         "T201",   # Allow use of `print`
     ]
-    lint.select = [ "ALL" ]
+    lint.select = ["ALL"]
     target-version = "py312"
 
 [tool.semantic_release]
     build_command     = "pixi run build"
-    version_toml      = [ "pyproject.toml:project.version" ]
-    version_variables = [ "src/aoc/__init__.py:__version__" ]
+    version_toml      = ["pyproject.toml:project.version"]
+    version_variables = ["src/aoc/__init__.py:__version__"]
 
     [tool.semantic_release.changelog.environment]
         autoescape = true
