@@ -225,7 +225,7 @@ jobs:
             matrix:
                 os:
                     - macos-26 # renovate: runner
-                    - ubuntu-24.04 # renovate: runner
+                    - ubuntu-26.04 # renovate: runner
                     - windows-2025 # renovate: runner
                 python-environment:
                     - py312
