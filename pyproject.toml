@@ -122,13 +122,13 @@
 
 
 [tool.pixi.feature.py312.dependencies]
-    python = "3.12.*"
+    python = "3.15.*"
 
 [tool.pixi.feature.py313.dependencies]
-    python = "3.13.*"
+    python = "3.15.*"
 
 [tool.pixi.feature.py314.dependencies]
-    python = "3.14.*"
+    python = "3.15.*"
 
 [tool.pixi.feature.py315.dependencies]
     python = "3.15.*"
