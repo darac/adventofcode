@@ -22,7 +22,7 @@
                 "/^\\.github\\/workflows\\/test\\.ya?ml$/"
             ],
             "matchStrings": [
-                "(?m)^\\s*-\\s*(?<depName>ubuntu|windows|macos)-(?<currentValue>latest|\\d{4}|\\d+(?:\\.\\d+)?)\\s*#\\s*renovate:\\s*runner\\s*$"
+                "(?:^|\\n)[ \\t]*-[ \\t]*(?<depName>ubuntu|windows|macos)-(?<currentValue>latest|\\d{4}|\\d+(?:\\.\\d+)?)[ \\t]*#[ \\t]*renovate:[ \\t]*runner[ \\t]*(?=\\r?\\n|$)"
             ],
             "versioningTemplate": "docker"
         },
@@ -60,6 +60,16 @@
                 "minor",
                 "patch"
             ]
+        },
+        {
+            "description": "Allow GitHub Actions digest updates without release-age checks",
+            "matchManagers": [
+                "github-actions"
+            ],
+            "matchUpdateTypes": [
+                "digest"
+            ],
+            "minimumReleaseAge": null
         }
     ],
     "pre-commit": {
