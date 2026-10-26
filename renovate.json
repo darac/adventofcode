@@ -22,7 +22,7 @@
                 "/^\\.github\\/workflows\\/test\\.ya?ml$/"
             ],
             "matchStrings": [
-                "(?:^|\\n)[ \\t]*-[ \\t]*(?<depName>ubuntu|windows|macos)-(?<currentValue>latest|\\d{4}|\\d+(?:\\.\\d+)?)[ \\t]*#[ \\t]*renovate:[ \\t]*runner[ \\t]*(?=\\r?\\n|$)"
+                "(?:^|\\n)[ \\t]*-[ \\t]*(?<depName>ubuntu|windows|macos)-(?<currentValue>latest|\\d{4}|\\d+(?:\\.\\d+)?)[ \\t]*#[ \\t]*renovate:[ \\t]*runner[ \\t]*(?:\\r?\\n|$)"
             ],
             "versioningTemplate": "docker"
         },
