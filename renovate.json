@@ -64,7 +64,8 @@
         {
             "description": "Allow GitHub Actions digest updates without release-age checks",
             "matchManagers": [
-                "github-actions"
+                "github-actions",
+                "dockerfile"
             ],
             "matchUpdateTypes": [
                 "digest"
