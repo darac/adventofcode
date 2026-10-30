@@ -134,7 +134,7 @@
     python = "3.15.*"
 
 [tool.pixi.feature.test.pypi-dependencies]
-    pytest          = ">=9.1.1, <10"
+    pytest          = ">=9.1.1, <9.2" # pytest-sugar doesn't like 9.2: https://github.com/Teemu/pytest-sugar/issues/312
     pytest-cov      = ">=7.1.0, <8"
     pytest-randomly = ">=5.0.0, <6"
     pytest-sugar    = ">=1.1.1, <2"
