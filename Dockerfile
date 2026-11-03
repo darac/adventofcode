@@ -53,6 +53,7 @@ ARG LIBXRENDER1_VERSION="1:0.9.12-1"
 # Note how the runtime dependencies differ from build-time ones.
 # Notably, there is no uv either!
 RUN <<EOT
+export DEBIAN_FRONTEND=noninteractive
 apt-get update -qy
 apt-get install -qyy \
     -o APT::Install-Recommends=false \
