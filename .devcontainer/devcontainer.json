@@ -36,7 +36,7 @@
             "nodeGypDependencies": true,
             "nvmVersion": "0.40.3",
             "pnpmVersion": "10.28.2",
-            "version": "24"
+            "version": "26"
         }
     },
     "mounts": [
