@@ -31,7 +31,7 @@ jobs:
         runs-on: ubuntu-latest # renovate: runner
         steps:
             - name: Harden Runner
-              uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
+              uses: step-security/harden-runner@46b06cea07f9e64621fdf066ba77ac6915163d43 # v2.22.3
               with:
                   egress-policy: audit
             - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -65,7 +65,7 @@ jobs:
         runs-on: ubuntu-latest # renovate: runner
         steps:
             - name: Harden Runner
-              uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
+              uses: step-security/harden-runner@46b06cea07f9e64621fdf066ba77ac6915163d43 # v2.22.3
               with:
                   egress-policy: audit
             - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -107,7 +107,7 @@ jobs:
         runs-on: ubuntu-latest # renovate: runner
         steps:
             - name: Harden Runner
-              uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
+              uses: step-security/harden-runner@46b06cea07f9e64621fdf066ba77ac6915163d43 # v2.22.3
               with:
                   egress-policy: audit
             # Note: we need to checkout the repository at the workflow sha in case during the workflow
@@ -153,7 +153,7 @@ jobs:
         runs-on: ubuntu-latest # renovate: runner
         steps:
             - name: Harden Runner
-              uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
+              uses: step-security/harden-runner@46b06cea07f9e64621fdf066ba77ac6915163d43 # v2.22.3
               with:
                   egress-policy: audit
             - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -205,7 +205,7 @@ jobs:
         runs-on: ${{ matrix.os }}
         steps:
             - name: Harden Runner
-              uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
+              uses: step-security/harden-runner@46b06cea07f9e64621fdf066ba77ac6915163d43 # v2.22.3
               with:
                   egress-policy: audit
             - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -259,7 +259,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Harden Runner
-              uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
+              uses: step-security/harden-runner@46b06cea07f9e64621fdf066ba77ac6915163d43 # v2.22.3
               with:
                   egress-policy: audit
             - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
