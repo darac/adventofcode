@@ -71,6 +71,20 @@
                 "digest"
             ],
             "minimumReleaseAge": null
+        },
+        {
+            "description": "Reduce Renovate pre-commit hook update noise",
+            "matchManagers": [
+                "pre-commit"
+            ],
+            "matchPackageNames": [
+                "renovatebot/pre-commit-hooks"
+            ],
+            "schedule": [
+                "* * * * 1"
+            ],
+            "minimumReleaseAge": "7 days",
+            "automerge": true
         }
     ],
     "pre-commit": {
