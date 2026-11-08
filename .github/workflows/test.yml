@@ -64,7 +64,7 @@ jobs:
               with:
                   fetch-depth: 0
             - name: Setup Pixi
-              uses: prefix-dev/setup-pixi@ad1da6449d9e506fd127fd67ab2d054a769f6a94 # v0.11.2
+              uses: prefix-dev/setup-pixi@9936258fee697aff89b3fed6ca1f80a382ef694e # v0.11.3
               with:
                   cache: true
                   environments: dev
@@ -117,7 +117,7 @@ jobs:
             - name: Setup | Install Python
               run: uv python install
             - name: Setup Pixi
-              uses: prefix-dev/setup-pixi@ad1da6449d9e506fd127fd67ab2d054a769f6a94 # v0.11.2
+              uses: prefix-dev/setup-pixi@9936258fee697aff89b3fed6ca1f80a382ef694e # v0.11.3
               with:
                   cache: true
             - env:
@@ -144,7 +144,7 @@ jobs:
               with:
                   fetch-depth: 0
             - name: Setup Pixi
-              uses: prefix-dev/setup-pixi@ad1da6449d9e506fd127fd67ab2d054a769f6a94 # v0.11.2
+              uses: prefix-dev/setup-pixi@9936258fee697aff89b3fed6ca1f80a382ef694e # v0.11.3
               with:
                   cache: true
             - id: proj-version
@@ -192,7 +192,7 @@ jobs:
               with:
                   fetch-depth: 0
             - name: Setup Pixi
-              uses: prefix-dev/setup-pixi@ad1da6449d9e506fd127fd67ab2d054a769f6a94 # v0.11.2
+              uses: prefix-dev/setup-pixi@9936258fee697aff89b3fed6ca1f80a382ef694e # v0.11.3
               with:
                   cache: true
             - env:
@@ -243,7 +243,7 @@ jobs:
                   ref: ${{ github.head_ref }}
                   fetch-depth: 0
             - name: Setup Pixi
-              uses: prefix-dev/setup-pixi@ad1da6449d9e506fd127fd67ab2d054a769f6a94 # v0.11.2
+              uses: prefix-dev/setup-pixi@9936258fee697aff89b3fed6ca1f80a382ef694e # v0.11.3
               with:
                   cache: true
             - name: Update AOC Progress
