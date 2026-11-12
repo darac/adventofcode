@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/devcontainers/python:3.3.2-3.12-trixie
 
 # renovate: github-release depName=prefix-dev/pixi
-ARG PIXI_VERSION="v0.84.0"
+ARG PIXI_VERSION="v0.84.1"
 
 
 RUN --mount=type=bind,source=.devcontainer/cacerts,target=/tmp/cacerts \
