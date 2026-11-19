@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1.28@sha256:bb22d9815c728170f72750f4e5b0d672e06176142e1d602c7e66c050100b7e5b
+# syntax=docker/dockerfile:1.29@sha256:572cebbc2b15e6f84c077742952674889cb63cd5e9b80abdffcbe587b6f19183
 # Keep this syntax directive! It's used to enable Docker BuildKit
 
 FROM ghcr.io/prefix-dev/pixi@sha256:8201f134655a8261f382ee565ddf1498e5f215887bb14e812e1f47c09f4f7196 AS build
