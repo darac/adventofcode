@@ -51,9 +51,6 @@
 [tool.coverage.html]
     directory = "htmlcov"
 
-[tool.coverage.paths]
-    source = ["*/site-packages", "src/aoc"]
-
 [tool.coverage.report]
     exclude_lines = [
         "def __repr__",
